@@ -314,22 +314,121 @@ cmd_backup() {
 }
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  DOMAIN
+#  DOMAIN — detailed DNS inspector
 # ══════════════════════════════════════════════════════════════════════════════
 cmd_domain() {
   header
-  command -v dig &>/dev/null || apt-get install -y -qq dnsutils
-  DOMAIN=$(grep -oP 'Host\(`\K[^`]+' "$APP_DIR/docker-compose.yml" 2>/dev/null | head -1 || echo "unknown")
+  command -v dig  &>/dev/null || apt-get install -y -qq dnsutils
+  command -v curl &>/dev/null || apt-get install -y -qq curl
+
+  DOMAIN=$(grep -oP 'Host\(`\K[^`]+' "$APP_DIR/docker-compose.yml" 2>/dev/null | head -1 || echo "")
+  [[ -z "$DOMAIN" ]] && fail "Could not detect domain from docker-compose.yml" && exit 1
+  DOMAIN_WWW="www.$DOMAIN"
   SERVER_IP=$(curl -s --max-time 5 ifconfig.me 2>/dev/null || echo "unknown")
-  DNS_IP=$(dig +short "$DOMAIN" 2>/dev/null | tail -1 || echo "not resolving")
+
+  # ── Public DNS resolvers to cross-check propagation ──────────────────────
+  declare -A RESOLVERS=(
+    ["Cloudflare"]="1.1.1.1"
+    ["Google"]="8.8.8.8"
+    ["OpenDNS"]="208.67.222.222"
+    ["Quad9"]="9.9.9.9"
+  )
+
+  _check_record() {
+    local HOST="$1" TYPE="$2" RESOLVER="$3"
+    dig +short "$TYPE" "$HOST" "@$RESOLVER" 2>/dev/null | grep -v '^;' | tail -1 || echo ""
+  }
+
+  _ttl() {
+    dig "$1" "$2" 2>/dev/null | awk '/ANSWER SECTION/{f=1;next} f && /'"$2"'/{print $2; exit}' || echo "—"
+  }
+
   echo ""
-  echo -e "  ${BOLD}Domain   :${NC}  $DOMAIN"
-  echo -e "  ${BOLD}Server IP:${NC}  $SERVER_IP"
-  echo -e "  ${BOLD}DNS → IP :${NC}  $DNS_IP"
+  echo -e "  ${BOLD}${W}Your server IP${NC}  →  ${BOLD}${C}$SERVER_IP${NC}"
   echo ""
-  [[ "$DNS_IP" == "$SERVER_IP" ]] \
-    && ok "DNS is correctly pointed to this server" \
-    || warn "DNS mismatch — update your A record to point to $SERVER_IP"
+  divider
+
+  # ── A Records ─────────────────────────────────────────────────────────────
+  for HOST in "$DOMAIN" "$DOMAIN_WWW"; do
+    echo ""
+    echo -e "  ${BOLD}A record — $HOST${NC}"
+    echo ""
+
+    ALL_MATCH=true
+    ANY_RESOLVES=false
+
+    for NAME in "${!RESOLVERS[@]}"; do
+      IP=$(_check_record "$HOST" "A" "${RESOLVERS[$NAME]}")
+      if [[ -z "$IP" ]]; then
+        echo -e "  ${Y}⚠${NC}  ${DIM}$NAME (${RESOLVERS[$NAME]})${NC}  →  ${Y}not resolving yet${NC}"
+      elif [[ "$IP" == "$SERVER_IP" ]]; then
+        echo -e "  ${G}✔${NC}  ${DIM}$NAME (${RESOLVERS[$NAME]})${NC}  →  ${G}${IP}${NC}  ${DIM}✓ matches${NC}"
+        ANY_RESOLVES=true
+      else
+        echo -e "  ${R}✖${NC}  ${DIM}$NAME (${RESOLVERS[$NAME]})${NC}  →  ${R}${IP}${NC}  ${DIM}← wrong IP${NC}"
+        ALL_MATCH=false
+        ANY_RESOLVES=true
+      fi
+    done
+
+    TTL=$(_ttl "$HOST" "A")
+    echo ""
+    echo -e "  ${DIM}TTL : ${TTL}s   (how long DNS servers cache this record)${NC}"
+
+    echo ""
+    if $ALL_MATCH && $ANY_RESOLVES; then
+      ok "$HOST is fully propagated ✓"
+    elif ! $ANY_RESOLVES; then
+      warn "$HOST — not resolving on any resolver yet. DNS changes take 1–30 min."
+      echo ""
+      echo -e "  ${DIM}Set this record in your registrar / Hostinger DNS panel:${NC}"
+      echo ""
+      echo -e "  ${BOLD}  Type : A${NC}"
+      echo -e "  ${BOLD}  Name : $(echo "$HOST" | sed "s/\.$DOMAIN$//" | sed "s/$DOMAIN/@/")${NC}"
+      echo -e "  ${BOLD}  Value: $SERVER_IP${NC}"
+      echo -e "  ${BOLD}  TTL  : 300 (or Auto)${NC}"
+    else
+      warn "$HOST — partially propagated or wrong IP on some resolvers"
+      echo ""
+      echo -e "  ${DIM}Expected value: ${BOLD}$SERVER_IP${NC}"
+    fi
+    divider
+  done
+
+  # ── CNAME www check ───────────────────────────────────────────────────────
+  echo ""
+  echo -e "  ${BOLD}CNAME — $DOMAIN_WWW (alternative to A record)${NC}"
+  echo ""
+  CNAME=$(dig +short CNAME "$DOMAIN_WWW" 2>/dev/null | tail -1 || echo "")
+  if [[ -n "$CNAME" ]]; then
+    echo -e "  ${C}ℹ${NC}  CNAME → ${BOLD}$CNAME${NC}  ${DIM}(using CNAME instead of A record — OK)${NC}"
+  else
+    echo -e "  ${DIM}No CNAME set (using A record — OK)${NC}"
+  fi
+
+  # ── Overall summary ───────────────────────────────────────────────────────
+  echo ""
+  divider
+  echo ""
+  A_MAIN=$(_check_record "$DOMAIN"     "A" "1.1.1.1")
+  A_WWW=$( _check_record "$DOMAIN_WWW" "A" "1.1.1.1")
+
+  if [[ "$A_MAIN" == "$SERVER_IP" && "$A_WWW" == "$SERVER_IP" ]]; then
+    ok "${BOLD}All DNS records are correct and propagated.${NC}${G}"
+    echo ""
+    echo -e "  ${DIM}You can now run ${BOLD}vocazai ssl${NC}${DIM} to verify your SSL certificate.${NC}"
+  else
+    echo -e "  ${Y}${BOLD}⚠  DNS not fully propagated yet.${NC}"
+    echo ""
+    echo -e "  ${DIM}Required records to set in your DNS panel:${NC}"
+    echo ""
+    echo -e "  ${BOLD}  Type   Name    Value          TTL${NC}"
+    echo -e "  ${DIM}  ─────  ──────  ─────────────  ─────${NC}"
+    echo -e "  ${BOLD}  A      @       $SERVER_IP   300${NC}"
+    echo -e "  ${BOLD}  A      www     $SERVER_IP   300${NC}"
+    echo ""
+    echo -e "  ${DIM}After saving, wait 5–30 min then run ${BOLD}vocazai domain${NC}${DIM} again.${NC}"
+  fi
   echo ""
 }
 
