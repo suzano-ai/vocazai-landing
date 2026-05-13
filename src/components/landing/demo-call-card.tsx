@@ -436,7 +436,7 @@ export function DemoCallCard({ locale }: { locale?: string }) {
 
         recog.onresult = (e: any) => {
           const transcript = Array.from(e.results)
-            .map((r) => r[0]?.transcript ?? "")
+            .map((r: any) => r[0]?.transcript ?? "")
             .join(" ")
             .trim();
           settle(transcript);
