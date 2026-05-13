@@ -297,14 +297,14 @@ if docker ps --format '{{.Names}}' | grep -q '^traefik$'; then
 else
   info "Starting Traefik reverse proxy"
   cd "$APP_DIR"
-  docker compose up -d traefik
+  docker compose -f "$APP_DIR/docker-compose.yml" --env-file "$APP_DIR/.env.local" up -d traefik
 fi
 
 # ── Build and launch app + TTS ────────────────────────────────────────────────
 step "Building and launching app (this takes ~5 min on first run)"
 echo -e "  ${DIM}Kokoro TTS model download ~320 MB — please wait…${NC}"
 cd "$APP_DIR"
-docker compose up -d --build app tts 2>&1 | grep -E "(Step|=>|error|Error|warn)" || true
+docker compose -f docker-compose.yml --env-file .env.local up -d --build app tts 2>&1 | grep -E "(Step|=>|error|Error|warn)" || true
 info "All containers started"
 
 # ── Wait for app ──────────────────────────────────────────────────────────────

@@ -5,8 +5,12 @@
 # ==============================================================================
 
 APP_DIR="/var/www/vocazai-landing"
-COMPOSE="docker compose -f $APP_DIR/docker-compose.yml"
 ENV_FILE="$APP_DIR/.env.local"
+# --env-file makes compose substitute ${DOMAIN}, ${APP_PORT} etc from .env.local
+COMPOSE="docker compose -f $APP_DIR/docker-compose.yml --env-file $ENV_FILE"
+
+# Helper: read a value from .env.local
+_env() { grep -E "^${1}=" "$ENV_FILE" 2>/dev/null | cut -d= -f2- || echo ""; }
 
 # ── Colours ───────────────────────────────────────────────────────────────────
 R='\033[0;31m' G='\033[0;32m' Y='\033[1;33m'
@@ -114,7 +118,8 @@ cmd_doctor() {
 
   # 3. App health endpoint
   step "App"
-  HEALTH_RESP=$(curl -sf --max-time 5 http://127.0.0.1:3000/api/health 2>/dev/null || echo "")
+  APP_PORT=$(_env APP_PORT); APP_PORT="${APP_PORT:-3000}"
+  HEALTH_RESP=$(curl -sf --max-time 5 "http://127.0.0.1:${APP_PORT}/api/health" 2>/dev/null || echo "")
   if [[ -n "$HEALTH_RESP" ]]; then
     APP_STATUS=$(echo "$HEALTH_RESP" | grep -o '"status":"[^"]*"' | cut -d'"' -f4)
     _ok "Health endpoint  ${DIM}→ $APP_STATUS${NC}${G}"
@@ -135,7 +140,7 @@ cmd_doctor() {
 
   # 5. Domain & DNS
   step "Domain & DNS"
-  DOMAIN=$(grep -oP 'Host\(`\K[^`]+' "$APP_DIR/docker-compose.yml" 2>/dev/null | head -1 || echo "")
+  DOMAIN=$(_env DOMAIN)
   if [[ -n "$DOMAIN" ]]; then
     SERVER_IP=$(curl -s --max-time 5 ifconfig.me 2>/dev/null || echo "")
     DNS_IP=$(dig +short "$DOMAIN" 2>/dev/null | tail -1 || echo "")
@@ -321,7 +326,7 @@ cmd_domain() {
   command -v dig  &>/dev/null || apt-get install -y -qq dnsutils
   command -v curl &>/dev/null || apt-get install -y -qq curl
 
-  DOMAIN=$(grep -oP 'Host\(`\K[^`]+' "$APP_DIR/docker-compose.yml" 2>/dev/null | head -1 || echo "")
+  DOMAIN=$(_env DOMAIN)
   [[ -z "$DOMAIN" ]] && fail "Could not detect domain from docker-compose.yml" && exit 1
   DOMAIN_WWW="www.$DOMAIN"
   SERVER_IP=$(curl -4 -s --max-time 5 ifconfig.me 2>/dev/null || curl -4 -s --max-time 5 api.ipify.org 2>/dev/null || echo "unknown")
@@ -437,7 +442,7 @@ cmd_domain() {
 # ══════════════════════════════════════════════════════════════════════════════
 cmd_ssl() {
   header
-  DOMAIN=$(grep -oP 'Host\(`\K[^`]+' "$APP_DIR/docker-compose.yml" 2>/dev/null | head -1 || echo "")
+  DOMAIN=$(_env DOMAIN)
   [[ -z "$DOMAIN" ]] && fail "Could not detect domain." && exit 1
   echo ""
   echo -e "  Checking SSL for ${BOLD}$DOMAIN${NC}…"
