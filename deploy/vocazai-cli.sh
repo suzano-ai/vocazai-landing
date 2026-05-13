@@ -50,7 +50,8 @@ show_help() {
   echo -e "  ${BOLD}Usage:${NC}  vocazai <command>"
   echo ""
   echo -e "  ${BOLD}${C}Management${NC}"
-  echo -e "  ${BOLD}  update${NC}              Pull latest code and rebuild the app"
+  echo -e "  ${BOLD}  update${NC}              Pull code, update CLI, rebuild changed services"
+  echo -e "  ${BOLD}  update --all${NC}        Force rebuild of ALL services (tts + stt + app)"
   echo -e "  ${BOLD}  start${NC}               Start all services"
   echo -e "  ${BOLD}  stop${NC}                Stop all services"
   echo -e "  ${BOLD}  restart${NC} [service]   Restart app / tts / traefik (default: app)"
@@ -62,6 +63,7 @@ show_help() {
   echo -e "  ${BOLD}  domain${NC}              Check domain DNS and SSL"
   echo -e "  ${BOLD}  ssl${NC}                 Show SSL certificate details"
   echo -e "  ${BOLD}  tts${NC}                 Check Kokoro TTS service"
+  echo -e "  ${BOLD}  stt${NC}                 Check Faster-Whisper STT service"
   echo ""
   echo -e "  ${BOLD}${C}Configuration${NC}"
   echo -e "  ${BOLD}  env${NC}                 Open .env.local in editor"
@@ -106,7 +108,7 @@ cmd_doctor() {
 
   # 2. Containers
   step "Containers"
-  for svc in traefik vocazai-app vocazai-tts; do
+  for svc in traefik vocazai-app vocazai-tts vocazai-stt; do
     STATUS=$(docker inspect --format='{{.State.Status}}' "$svc" 2>/dev/null || echo "missing")
     HEALTH=$(docker inspect --format='{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' "$svc" 2>/dev/null || echo "")
     if [[ "$STATUS" == "running" ]]; then
@@ -131,11 +133,24 @@ cmd_doctor() {
   step "Kokoro TTS"
   TTS_RESP=$(curl -sf --max-time 10 http://127.0.0.1:3000/api/tts 2>/dev/null || echo "")
   if echo "$TTS_RESP" | grep -q '"model_loaded":true'; then
-    _ok "TTS model loaded and ready"
+    _ok "TTS model loaded and ready  ${DIM}(voice: $(echo "$TTS_RESP" | grep -o '"voice":"[^"]*"' | cut -d'"' -f4))${NC}${G}"
   elif echo "$TTS_RESP" | grep -q '"model_loaded":false'; then
     _warn "TTS service up but model still loading"
   else
     _fail "TTS service not responding"
+  fi
+
+  # 5. STT service
+  step "Faster-Whisper STT"
+  STT_RESP=$(curl -sf --max-time 10 http://127.0.0.1:3000/api/stt 2>/dev/null || echo "")
+  if echo "$STT_RESP" | grep -q '"model_loaded":true'; then
+    _ok "STT model loaded and ready"
+  elif echo "$STT_RESP" | grep -q '"model_loaded":false'; then
+    _warn "STT service up but model still loading"
+  elif docker inspect --format='{{.State.Status}}' vocazai-stt 2>/dev/null | grep -q running; then
+    _warn "STT container running but not reachable via app proxy"
+  else
+    _fail "STT service not running"
   fi
 
   # 5. Domain & DNS
@@ -222,13 +237,44 @@ cmd_doctor() {
 # ══════════════════════════════════════════════════════════════════════════════
 cmd_update() {
   header
-  step "Pulling latest code"
+  FLAG="${1:-}"
+
+  # ── 1. Pull latest code ───────────────────────────────────────────────────
+  step "Pulling latest code from GitHub"
   git -C "$APP_DIR" pull --ff-only
   echo ""
-  step "Rebuilding and restarting app"
-  $COMPOSE up -d --build app
+
+  # ── 2. Always reinstall the CLI itself so new commands are available ──────
+  step "Updating CLI"
+  cp "$APP_DIR/deploy/vocazai-cli.sh" /usr/local/bin/vocazai
+  chmod +x /usr/local/bin/vocazai
+  ok "vocazai CLI updated"
   echo ""
-  ok "Update complete"
+
+  # ── 3. Detect which services need rebuilding ──────────────────────────────
+  if [[ "$FLAG" == "--all" ]]; then
+    step "Rebuilding ALL services (tts + stt + app)"
+    DOCKER_BUILDKIT=1 $COMPOSE up -d --build tts stt app
+  else
+    # Smart rebuild: always rebuild app; rebuild tts/stt only if their
+    # Dockerfile or source changed in this pull
+    REBUILD_SVCS="app"
+    if git -C "$APP_DIR" diff --name-only HEAD@{1} HEAD 2>/dev/null \
+        | grep -qE '^services/tts/'; then
+      REBUILD_SVCS="tts $REBUILD_SVCS"
+      info "TTS source changed — rebuilding tts"
+    fi
+    if git -C "$APP_DIR" diff --name-only HEAD@{1} HEAD 2>/dev/null \
+        | grep -qE '^services/stt/'; then
+      REBUILD_SVCS="stt $REBUILD_SVCS"
+      info "STT source changed — rebuilding stt"
+    fi
+    step "Rebuilding: $REBUILD_SVCS"
+    DOCKER_BUILDKIT=1 $COMPOSE up -d --build $REBUILD_SVCS
+  fi
+
+  echo ""
+  ok "Update complete  ${DIM}(use ${NC}${BOLD}vocazai update --all${NC}${DIM} to force rebuild tts+stt too)${NC}"
   echo ""
 }
 
@@ -483,6 +529,24 @@ cmd_tts() {
 }
 
 # ══════════════════════════════════════════════════════════════════════════════
+#  STT
+# ══════════════════════════════════════════════════════════════════════════════
+cmd_stt() {
+  header
+  echo ""
+  step "Faster-Whisper STT Service"
+  CONTAINER=$(docker inspect --format='{{.State.Status}}' vocazai-stt 2>/dev/null || echo "missing")
+  echo -e "  Container : $CONTAINER"
+  HEALTH=$(curl -sf --max-time 10 http://127.0.0.1:3000/api/stt 2>/dev/null || echo "{}")
+  echo -e "  Response  : $HEALTH"
+  echo ""
+  echo -e "  ${DIM}Live logs (last 20 lines):${NC}"
+  echo ""
+  docker logs vocazai-stt --tail=20 2>&1 || true
+  echo ""
+}
+
+# ══════════════════════════════════════════════════════════════════════════════
 #  ROUTER
 # ══════════════════════════════════════════════════════════════════════════════
 CMD="${1:-help}"
@@ -490,7 +554,7 @@ shift || true
 
 case "$CMD" in
   doctor)             cmd_doctor ;;
-  update)             cmd_update ;;
+  update)             cmd_update "${1:-}" ;;
   status)             cmd_status ;;
   logs)               cmd_logs "${1:-app}" ;;
   restart)            cmd_restart "${1:-app}" ;;
@@ -501,6 +565,7 @@ case "$CMD" in
   domain)             cmd_domain ;;
   ssl)                cmd_ssl ;;
   tts)                cmd_tts ;;
+  stt)                cmd_stt ;;
   help|--help|-h|"")  show_help ;;
   *)
     echo -e "\n  ${R}Unknown command:${NC} $CMD\n"
