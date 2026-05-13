@@ -7,7 +7,9 @@ services:
     name: vocazai-landing
     runtime: node
     region: frankfurt        # closest to Maghreb / EU users
-    plan: starter            # adjust as needed
+    plan: free               # Free tier — service sleeps after 15min inactivity,
+                             # ~30s cold start. Switch to "starter" ($7/mo) before
+                             # connecting real customers (webhooks need always-on).
     branch: main
     autoDeploy: true
     buildCommand: npm ci && npm run build
