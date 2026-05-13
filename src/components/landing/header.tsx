@@ -9,6 +9,7 @@ import { ArrowUpRight } from "lucide-react";
 
 export function Header({ locale }: { locale: string }) {
   const t = useTranslations("common");
+  const tNav = useTranslations("nav");
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -29,7 +30,6 @@ export function Header({ locale }: { locale: string }) {
       }`}
     >
       <div className="container flex h-16 items-center justify-between">
-        {/* Logo */}
         <Link href={`/${locale}`} className="group flex items-center gap-2.5">
           <span className="grid h-8 w-8 place-items-center rounded-md bg-ink-900 font-display text-base font-extrabold italic text-saffron-500 transition-colors duration-220 dark:bg-saffron-500 dark:text-ink-900">
             V
@@ -39,23 +39,33 @@ export function Header({ locale }: { locale: string }) {
           </span>
         </Link>
 
-        {/* Center nav */}
-        <nav className="hidden items-center gap-8 text-sm md:flex">
-          <a href="#how" className="text-muted-foreground transition-colors duration-180 hover:text-foreground">
-            Comment ça marche
-          </a>
-          <a href="#uses" className="text-muted-foreground transition-colors duration-180 hover:text-foreground">
-            Cas d&apos;usage
-          </a>
-          <a href="#pricing" className="text-muted-foreground transition-colors duration-180 hover:text-foreground">
-            Tarifs
-          </a>
-          <a href="#faq" className="text-muted-foreground transition-colors duration-180 hover:text-foreground">
-            FAQ
-          </a>
+        <nav className="hidden items-center gap-7 text-sm md:flex">
+          <Link
+            href={`/${locale}/use-cases`}
+            className="text-muted-foreground transition-colors duration-180 hover:text-foreground"
+          >
+            {tNav("useCases")}
+          </Link>
+          <Link
+            href={`/${locale}/pricing`}
+            className="text-muted-foreground transition-colors duration-180 hover:text-foreground"
+          >
+            {tNav("pricing")}
+          </Link>
+          <Link
+            href={`/${locale}/about`}
+            className="text-muted-foreground transition-colors duration-180 hover:text-foreground"
+          >
+            {tNav("about")}
+          </Link>
+          <Link
+            href={`/${locale}#faq`}
+            className="text-muted-foreground transition-colors duration-180 hover:text-foreground"
+          >
+            {tNav("faq")}
+          </Link>
         </nav>
 
-        {/* Right cluster */}
         <div className="flex items-center gap-2">
           <LocaleSwitch currentLocale={locale} />
           <ThemeToggle />

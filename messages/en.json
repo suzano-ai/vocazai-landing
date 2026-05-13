@@ -14,6 +14,20 @@
     "switchTheme": "Switch theme",
     "language": "Language"
   },
+  "nav": {
+    "how": "How it works",
+    "useCases": "Use cases",
+    "pricing": "Pricing",
+    "faq": "FAQ",
+    "about": "About",
+    "contact": "Contact",
+    "signIn": "Sign in",
+    "product": "Product",
+    "company": "Company",
+    "legal": "Legal",
+    "terms": "Terms",
+    "privacy": "Privacy"
+  },
   "landing": {
     "kicker": "Built in Morocco · For Africa",
     "heroTitle1": "The voice agent",
@@ -24,8 +38,8 @@
     "trustBar": "Trusted with their inbound calls",
     "stats": {
       "available": "Availability",
-      "languages": "Languages supported",
-      "latency": "Average latency",
+      "languages": "Languages",
+      "latency": "Latency",
       "missed": "0 calls missed"
     },
     "howItWorks": {
@@ -83,6 +97,130 @@
       "tagline": "The AI voice agent for French-speaking Africa.",
       "made": "Built in Casablanca",
       "rights": "All rights reserved"
+    }
+  },
+  "about": {
+    "kicker": "About · VocazAI",
+    "title1": "Make AI voice agents",
+    "title2": "accessible to all of Africa.",
+    "intro": "VocazAI was born in Casablanca in 2025. We believe SMBs that power Morocco and Africa deserve the same tools as the big groups — without the complexity or the CIO budget.",
+    "mission": {
+      "kicker": "Mission",
+      "title": "A receptionist for everyone.",
+      "p1": "Too many small businesses still lose 40% of their inbound calls. Overflowing clinics, restaurants in rush, real estate agents on viewings — humans can't be everywhere.",
+      "p2": "We build AI voice agents that sound like your best receptionist. They pick up in under a second, understand darija, French and English, and know when to hand off to a human.",
+      "p3": "Goal: no SMB ever loses a customer to a missed call again."
+    },
+    "values": {
+      "kicker": "Values",
+      "title": "What keeps us standing.",
+      "v1": {
+        "title": "Local first",
+        "body": "We speak darija, we know how appointment booking works in the region, we configure from Casablanca. Not a US Vapi clone."
+      },
+      "v2": {
+        "title": "Radical transparency",
+        "body": "Prices displayed. No opaque contracts. Your data is yours, exportable or deletable in one click."
+      },
+      "v3": {
+        "title": "Tech without hype",
+        "body": "We use what works — GPT-4o, ElevenLabs, Deepgram. No vague AI promises, just calls that get answered."
+      }
+    },
+    "story": {
+      "kicker": "Story",
+      "title": "Born from a missed call.",
+      "p1": "One evening in 2024, the founder of VocazAI tried to call a clinic for a loved one. Eight rings. Nobody. A second clinic. Same. A third. Finally someone — but the appointment was three weeks out.",
+      "p2": "At the same time, OpenAI released GPT-4o with voice mode. ElevenLabs published a North African French voice that sounded almost human. Deepgram hit 200ms French speech-to-text. All the bricks were there.",
+      "p3": "Six months later, VocazAI launched its MVP with three pilot medical practices in Casablanca. None of them miss a call anymore."
+    },
+    "contact": {
+      "kicker": "Contact",
+      "title": "Let's talk.",
+      "body": "A question, a project, a 15-minute demo — we're reachable.",
+      "cta": "Book a demo"
+    }
+  },
+  "pricing": {
+    "kicker": "Pricing · VocazAI",
+    "title1": "Three plans.",
+    "title2": "All transparent.",
+    "subtitle": "Pick what fits. Switch plans anytime, prorated. No surprises.",
+    "trial": "First week free — no credit card",
+    "compare": {
+      "kicker": "Compare",
+      "title": "Everything that's included.",
+      "feature": "Feature",
+      "rows": {
+        "minutes": "Minutes / month",
+        "agents": "Voice agents",
+        "languages": "Languages",
+        "crm": "CRM integration",
+        "api": "API access",
+        "sla": "99.9% SLA",
+        "support": "Support",
+        "priority": "Priority",
+        "dedicated": "Dedicated",
+        "onprem": "On-premise"
+      }
+    },
+    "faq": {
+      "kicker": "Pricing FAQ",
+      "title": "Common questions.",
+      "q1": "What happens if I exceed my minutes?",
+      "a1": "You're billed prorated at $0.08 per extra minute. No call interruption.",
+      "q2": "Can I switch plans?",
+      "a2": "Yes, anytime. The change is prorated from the day of switch.",
+      "q3": "Are there setup fees?",
+      "a3": "Zero. Our team configures your first agent for free during the trial."
+    },
+    "cta": {
+      "title": "Ready to stop missing calls?",
+      "body": "We configure your first agent within 24 hours, no commitment. The first week is on us.",
+      "button": "Start the trial"
+    }
+  },
+  "useCases": {
+    "kicker": "Use cases",
+    "title1": "One agent per industry.",
+    "title2": "Not a copy-paste.",
+    "intro": "Every sector has its scenarios, vocabulary, priorities. We configure your agent so it sounds native to your business.",
+    "clinic": {
+      "title": "Clinics & medical practices",
+      "lede": "Never again a patient on voicemail.",
+      "body": "Your agent picks up in under a second, triages urgency (red/yellow/green), proposes a slot in your calendar and sends an SMS confirmation. For urgent cases, it transfers immediately to the on-call line.",
+      "b1": "Doctolib / Google Calendar / custom calendar integration",
+      "b2": "Urgency triage per your protocols",
+      "b3": "Automated 24h appointment reminders"
+    },
+    "realty": {
+      "title": "Real estate agencies",
+      "lede": "More leads. Better qualified.",
+      "body": "Your agent takes every inbound call, qualifies the buyer or renter profile (budget, area, surface, urgency), books a viewing and syncs with your CRM. Your salespeople only call hot leads.",
+      "b1": "Budget / area / typology qualification",
+      "b2": "HubSpot / Pipedrive / Salesforce sync",
+      "b3": "Auto-distribution based on agent availability"
+    },
+    "ecom": {
+      "title": "E-commerce & delivery",
+      "lede": "Cash-on-delivery confirmations on autopilot.",
+      "body": "In Morocco, 70% of e-commerce is paid cash-on-delivery. Your agent calls back every customer within 5 minutes of order, confirms address and availability, and drastically cuts return rates.",
+      "b1": "Confirmation in darija or French",
+      "b2": "Webhook to your back-office (Shopify, WooCommerce, custom)",
+      "b3": "Auto-reschedule if customer unavailable"
+    },
+    "restau": {
+      "title": "Restaurants & hospitality",
+      "lede": "Reservations never sleep.",
+      "body": "Your agent takes reservations 24/7, in 3 languages. It knows your menu, handles special requests (allergies, birthdays), proposes available slots and adds the booking to your floor management software.",
+      "b1": "TheFork / Zenchef / SevenRooms integration",
+      "b2": "Allergies and special requests handling",
+      "b3": "Multilingual SMS confirmation"
+    },
+    "cta": {
+      "title": "Your industry not in the list?",
+      "body": "We configure custom agents for pretty much anything that involves a phone. Let's talk.",
+      "button": "Discuss a specific case"
     }
   },
   "dashboard": {

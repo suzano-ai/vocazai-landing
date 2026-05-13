@@ -14,6 +14,20 @@
     "switchTheme": "Changer de thème",
     "language": "Langue"
   },
+  "nav": {
+    "how": "Comment ça marche",
+    "useCases": "Cas d'usage",
+    "pricing": "Tarifs",
+    "faq": "FAQ",
+    "about": "À propos",
+    "contact": "Contact",
+    "signIn": "Se connecter",
+    "product": "Produit",
+    "company": "Entreprise",
+    "legal": "Légal",
+    "terms": "Conditions",
+    "privacy": "Confidentialité"
+  },
   "landing": {
     "kicker": "Conçu au Maroc · Pour l'Afrique",
     "heroTitle1": "L'agent vocal",
@@ -24,8 +38,8 @@
     "trustBar": "Ils nous confient leurs appels",
     "stats": {
       "available": "Disponibilité",
-      "languages": "Langues supportées",
-      "latency": "Latence moyenne",
+      "languages": "Langues",
+      "latency": "Latence",
       "missed": "0 appel manqué"
     },
     "howItWorks": {
@@ -83,6 +97,130 @@
       "tagline": "L'agent vocal IA pour l'Afrique francophone.",
       "made": "Conçu à Casablanca",
       "rights": "Tous droits réservés"
+    }
+  },
+  "about": {
+    "kicker": "À propos · VocazAI",
+    "title1": "Rendre l'agent vocal IA",
+    "title2": "accessible à toute l'Afrique.",
+    "intro": "VocazAI est née à Casablanca en 2025. Nous croyons que les PME qui font tourner l'économie marocaine et africaine méritent les mêmes outils que les grands groupes — sans complexité ni budget de DSI.",
+    "mission": {
+      "kicker": "Mission",
+      "title": "Un standard pour tous.",
+      "p1": "Trop de petites entreprises perdent encore 40% de leurs appels entrants. Cliniques surchargées, restaurants au coup de feu, agences immobilières en RDV — l'humain ne peut pas être partout.",
+      "p2": "Nous bâtissons des agents vocaux IA qui parlent comme votre meilleure standardiste. Ils décrochent en moins d'une seconde, comprennent le darija, le français et l'anglais, et savent quand passer la main à un humain.",
+      "p3": "L'objectif : qu'aucune PME ne perde un client à cause d'un appel raté."
+    },
+    "values": {
+      "kicker": "Valeurs",
+      "title": "Ce qui nous tient debout.",
+      "v1": {
+        "title": "Local d'abord",
+        "body": "On parle darija, on connaît la prise de RDV à l'orientale, on configure depuis Casablanca. Pas une copie de Vapi US."
+      },
+      "v2": {
+        "title": "Transparence radicale",
+        "body": "Prix affichés. Pas de contrats opaques. Vos données sont vôtres, exportables ou supprimables en un clic."
+      },
+      "v3": {
+        "title": "Tech sans hype",
+        "body": "On utilise ce qui marche — GPT-4o, ElevenLabs, Deepgram. Pas de promesses IA fumeuses, juste des appels qui aboutissent."
+      }
+    },
+    "story": {
+      "kicker": "Histoire",
+      "title": "L'idée est née d'un appel raté.",
+      "p1": "Un soir de 2024, le fondateur de VocazAI essaie d'appeler une clinique pour un proche. Sonnerie 8 fois. Personne. Il essaie une deuxième clinique. Pareil. Une troisième. Enfin quelqu'un — mais le RDV est dans trois semaines.",
+      "p2": "Au même moment, OpenAI sort GPT-4o avec son mode vocal. ElevenLabs publie une voix française MENA qui sonne presque humaine. Deepgram fait du speech-to-text français à 200ms. Toutes les briques sont là.",
+      "p3": "Six mois plus tard, VocazAI lance son MVP avec trois cabinets médicaux pilotes à Casablanca. Aucun ne manque plus un appel."
+    },
+    "contact": {
+      "kicker": "Contact",
+      "title": "Parlons.",
+      "body": "Une question, un projet, une démo en 15 minutes — on est joignables.",
+      "cta": "Réserver une démo"
+    }
+  },
+  "pricing": {
+    "kicker": "Tarifs · VocazAI",
+    "title1": "Trois formules.",
+    "title2": "Toutes transparentes.",
+    "subtitle": "Choisissez ce qui vous convient. Vous pouvez passer d'une formule à l'autre n'importe quand, au prorata.",
+    "trial": "Première semaine gratuite — sans carte bancaire",
+    "compare": {
+      "kicker": "Comparer",
+      "title": "Tout ce qui est inclus.",
+      "feature": "Fonctionnalité",
+      "rows": {
+        "minutes": "Minutes incluses / mois",
+        "agents": "Agents vocaux",
+        "languages": "Langues",
+        "crm": "Intégration CRM",
+        "api": "Accès API",
+        "sla": "SLA 99.9%",
+        "support": "Support",
+        "priority": "Prioritaire",
+        "dedicated": "Dédié",
+        "onprem": "On-premise"
+      }
+    },
+    "faq": {
+      "kicker": "FAQ tarifs",
+      "title": "Questions fréquentes.",
+      "q1": "Que se passe-t-il si je dépasse mes minutes ?",
+      "a1": "Vous êtes facturé au prorata, à 0,80 MAD par minute supplémentaire. Aucune coupure d'appel.",
+      "q2": "Puis-je changer de formule en cours de route ?",
+      "a2": "Oui, à tout moment. Le changement est facturé au prorata du jour de la bascule.",
+      "q3": "Y a-t-il des frais de mise en place ?",
+      "a3": "Zéro. Notre équipe configure votre premier agent gratuitement pendant l'essai."
+    },
+    "cta": {
+      "title": "Prêt à ne plus rater un appel ?",
+      "body": "On configure votre premier agent en 24h, sans engagement. La première semaine est offerte.",
+      "button": "Commencer l'essai"
+    }
+  },
+  "useCases": {
+    "kicker": "Cas d'usage",
+    "title1": "Un agent par métier.",
+    "title2": "Pas un copier-coller.",
+    "intro": "Chaque secteur a ses propres scénarios, son vocabulaire, ses priorités. On configure votre agent pour qu'il sonne natif de votre activité.",
+    "clinic": {
+      "title": "Cliniques & cabinets médicaux",
+      "lede": "Plus jamais un patient au répondeur.",
+      "body": "Votre agent décroche en moins d'une seconde, qualifie l'urgence (rouge/jaune/vert), propose un créneau dans votre agenda et envoie un SMS de confirmation. Pour les cas urgents, il transfère immédiatement à l'astreinte.",
+      "b1": "Intégration Doctolib / Google Calendar / agendas propriétaires",
+      "b2": "Tri d'urgence selon vos protocoles",
+      "b3": "Rappels automatiques 24h avant le RDV"
+    },
+    "realty": {
+      "title": "Agences immobilières",
+      "lede": "Plus de leads. Mieux qualifiés.",
+      "body": "Votre agent prend tous les appels entrants, qualifie le profil acheteur ou locataire (budget, zone, surface, urgence), planifie une visite et synchronise avec votre CRM. Vos commerciaux n'appellent que les leads chauds.",
+      "b1": "Qualification budget / zone / typologie",
+      "b2": "Synchronisation HubSpot / Pipedrive / Salesforce",
+      "b3": "Distribution automatique selon agent disponible"
+    },
+    "ecom": {
+      "title": "E-commerce & livraison",
+      "lede": "Confirmation cash-on-delivery en pilote auto.",
+      "body": "Au Maroc, 70% du e-commerce se règle en cash à la livraison. Votre agent rappelle chaque client en moins de 5 minutes après commande, confirme l'adresse et la disponibilité, et réduit drastiquement le taux de retour.",
+      "b1": "Confirmation en darija ou français",
+      "b2": "Webhook vers votre back-office (Shopify, WooCommerce, custom)",
+      "b3": "Re-prog automatique si client absent"
+    },
+    "restau": {
+      "title": "Restaurants & hôtellerie",
+      "lede": "Les réservations ne dorment jamais.",
+      "body": "Votre agent prend les réservations 24/7, dans 3 langues. Il connaît votre carte, gère les demandes spéciales (allergies, anniversaire), propose les créneaux libres et ajoute la réservation dans votre logiciel de salle.",
+      "b1": "Intégration TheFork / Zenchef / SevenRooms",
+      "b2": "Gestion des allergies et demandes spéciales",
+      "b3": "Confirmation SMS multilingue"
+    },
+    "cta": {
+      "title": "Votre métier n'est pas dans la liste ?",
+      "body": "On configure des agents sur mesure pour à peu près tout ce qui implique un téléphone. Parlons-en.",
+      "button": "Discuter d'un cas spécifique"
     }
   },
   "dashboard": {
