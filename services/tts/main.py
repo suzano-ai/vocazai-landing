@@ -1,8 +1,8 @@
 """
 VocazAI — Kokoro TTS microservice
-Model  : kokoro-v1.0.onnx + voices-v1.0.bin (26 voix)
-Voices : ff_siwis (Français femme — France & Maroc)
-         af_heart (Anglais femme — fallback)
+Model : kokoro-v1.0.onnx + voices-v1.0.bin
+Voice : af_heart  — #1 ranked on TTS Arena (warm, natural, female)
+Lang  : fr-fr     — French phonemes for Moroccan/French market
 """
 
 from fastapi import FastAPI, HTTPException
@@ -16,7 +16,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("tts")
 
-app = FastAPI(title="VocazAI TTS", version="2.0.0")
+app = FastAPI(title="VocazAI TTS", version="2.1.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -25,12 +25,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Voix disponibles (kokoro-v1.0, 26 voix) ──────────────────────────────────
-# Français femme   → ff_siwis           (France + Maroc)
-# Anglais femme    → af_heart / af_bella / af_nova / af_sarah
-# Anglais femme GB → bf_emma / bf_isabella
-VOICE_FR = "ff_siwis"   # seule voix française femme disponible dans Kokoro
-VOICE_EN = "af_heart"   # voix anglaise femme chaude et naturelle
+# ── Voice config ──────────────────────────────────────────────────────────────
+# af_heart = #1 ranked Kokoro voice (TTS Arena leaderboard)
+# Warm, breathy, natural female — rated best for clarity and naturalness
+VOICE_PRIMARY = "af_heart"
+VOICE_FR_ALT  = "ff_siwis"   # French-specific fallback
 
 _kokoro = None
 
@@ -42,16 +41,16 @@ def load_model():
     try:
         from kokoro_onnx import Kokoro
         _kokoro = Kokoro("kokoro-v1.0.onnx", "voices-v1.0.bin")
-        log.info(f"✓ Kokoro ready — French: {VOICE_FR}  English: {VOICE_EN}")
+        log.info(f"✓ Kokoro ready — primary voice: {VOICE_PRIMARY}")
     except Exception as e:
         log.error(f"Failed to load Kokoro: {e}")
 
 
 class TTSRequest(BaseModel):
     text:  str
-    voice: str   = VOICE_FR   # ff_siwis par défaut (Yasmine)
-    speed: float = 1.0
-    lang:  str   = "fr-fr"    # fr-fr pour France + Maroc
+    voice: str   = VOICE_PRIMARY
+    speed: float = 0.92          # légèrement ralenti = meilleure diction
+    lang:  str   = "fr-fr"
 
 
 @app.get("/health")
@@ -59,14 +58,12 @@ def health():
     return {
         "status": "ok",
         "model_loaded": _kokoro is not None,
-        "voice_fr": VOICE_FR,
-        "voice_en": VOICE_EN,
+        "voice": VOICE_PRIMARY,
     }
 
 
 @app.get("/voices")
 def list_voices():
-    """Liste toutes les voix disponibles dans voices-v1.0.bin"""
     if _kokoro is None:
         raise HTTPException(status_code=503, detail="Model not loaded")
     try:
@@ -75,8 +72,8 @@ def list_voices():
         try:
             voices = sorted(_kokoro.voices.keys())
         except Exception:
-            voices = [VOICE_FR, VOICE_EN]
-    return {"voices": voices, "yasmine": VOICE_FR, "english": VOICE_EN}
+            voices = [VOICE_PRIMARY]
+    return {"voices": voices, "primary": VOICE_PRIMARY}
 
 
 @app.post("/tts")
@@ -90,13 +87,17 @@ async def synthesize(req: TTSRequest):
     if len(text) > 500:
         raise HTTPException(status_code=400, detail="text too long (max 500 chars)")
 
-    # Sécurité : n'accepter que des voix féminines connues
-    allowed = {VOICE_FR, VOICE_EN, "af_bella", "af_nova", "af_sarah",
-               "af_sky", "bf_emma", "bf_isabella", "af_alloy"}
-    voice = req.voice if req.voice in allowed else VOICE_FR
+    # Sécurité : voix féminines uniquement
+    female_voices = {
+        "af_heart", "af_bella", "af_nova", "af_sarah", "af_sky",
+        "af_jessica", "af_nicole", "af_alloy", "af_aoede", "af_kore",
+        "af_river", "bf_emma", "bf_isabella", "bf_alice", "bf_lily",
+        "ff_siwis",
+    }
+    voice = req.voice if req.voice in female_voices else VOICE_PRIMARY
 
     try:
-        log.info(f"Synthesising [{voice}] lang={req.lang} ({len(text)} chars)")
+        log.info(f"Synthesising [{voice}] lang={req.lang} speed={req.speed} ({len(text)} chars)")
         samples, sample_rate = _kokoro.create(
             text,
             voice=voice,

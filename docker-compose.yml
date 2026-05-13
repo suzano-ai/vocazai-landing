@@ -48,6 +48,18 @@ services:
     networks:
       - traefik_net
 
+  # ---------- Faster-Whisper STT microservice (internal only) ----------------
+  stt:
+    build:
+      context: ./services/stt
+      dockerfile: Dockerfile
+    container_name: vocazai-stt
+    restart: unless-stopped
+    expose:
+      - "9000"
+    networks:
+      - traefik_net
+
   # ---------- Next.js app ----------------------------------------------------
   app:
     build:
@@ -67,6 +79,7 @@ services:
       - PORT=${APP_PORT:-3000}
     depends_on:
       - tts
+      - stt
     networks:
       - traefik_net
     labels:
