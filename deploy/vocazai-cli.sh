@@ -323,22 +323,21 @@ sys.stdout.buffer.write(r.content)
           /tmp/yasmine_sample.mp3 -loglevel quiet 2>/dev/null && SAMPLE_FILE="/tmp/yasmine_sample.mp3"
       fi
 
-      SAMPLE_B64=$(base64 -w 0 "$SAMPLE_FILE")
       SAMPLE_FNAME=$(basename "$SAMPLE_FILE")
-      # Write payload to temp file — avoids "Argument list too long" with large base64
       PAYLOAD_FILE="/tmp/yasmine_voice_payload.json"
-      python3 -c "
+      # Pipe base64 through stdin — never touches shell argument list
+      base64 -w 0 "$SAMPLE_FILE" | python3 -c "
 import json, sys
 payload = {
   'name': 'yasmine-vocazai',
-  'sample_audio': sys.argv[1],
-  'sample_filename': sys.argv[2],
+  'sample_audio': sys.stdin.read().strip(),
+  'sample_filename': '$SAMPLE_FNAME',
   'languages': ['fr', 'en', 'ar'],
   'gender': 'female',
   'tags': ['french', 'vocazai', 'yasmine']
 }
 print(json.dumps(payload))
-" "$SAMPLE_B64" "$SAMPLE_FNAME" > "$PAYLOAD_FILE"
+" > "$PAYLOAD_FILE"
 
       RESPONSE=$(curl -s -X POST https://api.mistral.ai/v1/audio/voices \
         -H "Authorization: Bearer $MISTRAL_KEY" \
