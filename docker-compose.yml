@@ -23,7 +23,7 @@ services:
   # NOTE: The installer skips this if Traefik is already running on the server.
   # Manages HTTPS for ALL projects via domain routing — not ports.
   traefik:
-    image: traefik:v3.1
+    image: traefik:v2.11
     container_name: traefik
     restart: unless-stopped
     ports:
