@@ -1,0 +1,29 @@
+# Auto-deploy to Hostinger VPS on every push to main
+# Required GitHub Secrets:
+#   VPS_HOST     — your server IP or hostname (e.g. 31.170.x.x)
+#   VPS_SSH_KEY  — private SSH key (contents of ~/.ssh/id_rsa)
+#   VPS_USER     — SSH user (default: root)
+
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER || 'root' }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /var/www/vocazai-landing
+            vocazai update
+          timeout: 900s
+          command_timeout: 900s
