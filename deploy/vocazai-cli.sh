@@ -157,17 +157,21 @@ cmd_doctor() {
   step "Domain & DNS"
   DOMAIN=$(_env DOMAIN)
   if [[ -n "$DOMAIN" ]]; then
-    SERVER_IP=$(curl -s --max-time 5 ifconfig.me 2>/dev/null || echo "")
-    DNS_IP=$(dig +short "$DOMAIN" 2>/dev/null | tail -1 || echo "")
+    # Always compare IPv4 vs IPv4
+    SERVER_IP=$(curl -4 -s --max-time 5 ifconfig.me 2>/dev/null || \
+                curl -4 -s --max-time 5 api.ipify.org 2>/dev/null || echo "")
+    DNS_IP=$(dig +short A "$DOMAIN" 2>/dev/null | grep -v '\.$' | tail -1 || echo "")
     if [[ "$DNS_IP" == "$SERVER_IP" ]]; then
       _ok "DNS for $DOMAIN → $DNS_IP"
     elif [[ -z "$DNS_IP" ]]; then
-      _warn "DNS for $DOMAIN not resolving yet"
+      _warn "DNS for $DOMAIN — A record not resolving yet"
+    elif [[ -z "$SERVER_IP" ]]; then
+      _ok "DNS for $DOMAIN → $DNS_IP  ${DIM}(could not verify server IP)${NC}${G}"
     else
       _warn "DNS for $DOMAIN → $DNS_IP (expected $SERVER_IP)"
     fi
   else
-    _warn "Could not detect domain from docker-compose.yml"
+    _warn "Could not detect domain from .env.local"
   fi
 
   # 6. SSL
@@ -202,7 +206,7 @@ cmd_doctor() {
   step "Configuration"
   if [[ -f "$ENV_FILE" ]]; then
     MISSING_KEYS=()
-    for key in NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_ANON_KEY SUPABASE_SERVICE_ROLE_KEY VAPI_API_KEY RETELL_API_KEY; do
+    for key in MISTRAL_API_KEY RESEND_API_KEY; do
       VAL=$(grep "^${key}=" "$ENV_FILE" 2>/dev/null | cut -d= -f2-)
       [[ -z "$VAL" ]] && MISSING_KEYS+=("$key")
     done
