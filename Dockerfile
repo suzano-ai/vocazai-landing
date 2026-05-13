@@ -12,7 +12,7 @@ WORKDIR /app
 # ---- Dependencies -----------------------------------------------------------
 FROM base AS deps
 COPY package.json package-lock.json* ./
-RUN npm ci --no-audit --no-fund
+RUN npm install --no-audit --no-fund
 
 # ---- Builder ----------------------------------------------------------------
 FROM base AS builder
