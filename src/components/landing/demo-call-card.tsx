@@ -30,7 +30,7 @@ const LANG_CFG: Record<Lang, {
   closing:    (name: string, slot: string, email: string) => string;
 }> = {
   fr: {
-    bcp47:  "fr-CA",
+    bcp47:  "fr-FR",
     voice:  "ff_siwis",
     stt:    "fr",
     dir:    "ltr",
@@ -307,38 +307,38 @@ export function DemoCallCard({ locale }: { locale?: string }) {
   }, []);
 
   // ── TTS dispatcher ────────────────────────────────────────────────────────
-  // French  → Kokoro ff_siwis directly (better quality than browser voices)
-  // EN / AR → Web Speech API with double-fire guard, Kokoro as fallback
+  // All languages: Web Speech API first (instant) → Kokoro fallback if unavailable
   const speak = useCallback(async (text: string): Promise<void> => {
     const cfg = LANG_CFG[langRef.current];
 
-    // French: always Kokoro (ff_siwis native > any browser TTS)
-    if (langRef.current === "fr") {
-      return speakViaApi(text, "ff_siwis");
-    }
-
-    // English / Arabic: Web Speech API primary
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       return new Promise((resolve) => {
         setDemoState("speaking");
         window.speechSynthesis.cancel();
 
-        // `settled` prevents onend AND onerror both resolving
+        // `settled` prevents onend AND onerror from both resolving
         let settled = false;
         const settle = (fn: () => void) => { if (settled) return; settled = true; fn(); };
 
         const doSpeak = () => {
           const voice = pickVoice(cfg.bcp47);
+
+          // No voice found for this language → skip to Kokoro immediately
+          if (!voice) {
+            settle(() => speakViaApi(text, cfg.voice).then(resolve));
+            return;
+          }
+
           const utter = new SpeechSynthesisUtterance(text);
           utter.lang   = cfg.bcp47;
-          utter.rate   = langRef.current === "ar" ? 0.90 : 0.93;
-          utter.pitch  = 1.08;
+          utter.rate   = langRef.current === "ar" ? 0.88 : 0.92;
+          utter.pitch  = 1.05;
           utter.volume = 1;
-          if (voice) utter.voice = voice;
+          utter.voice  = voice;
 
           utter.onend = () => settle(resolve);
           utter.onerror = (e) => {
-            // "interrupted"/"canceled" can fire after a successful onend — ignore
+            // "interrupted"/"canceled" fire after a successful onend in some browsers
             if (e.error === "interrupted" || e.error === "canceled") {
               settle(resolve);
             } else {
@@ -353,7 +353,7 @@ export function DemoCallCard({ locale }: { locale?: string }) {
         if (voices.length > 0) {
           doSpeak();
         } else {
-          // Fire exactly once between onvoiceschanged and the safety timeout
+          // Fires exactly once — guards against both onvoiceschanged AND setTimeout
           let fired = false;
           const onceFire = () => { if (!fired) { fired = true; doSpeak(); } };
           window.speechSynthesis.onvoiceschanged = onceFire;
@@ -365,8 +365,8 @@ export function DemoCallCard({ locale }: { locale?: string }) {
     return speakViaApi(text, cfg.voice);
   }, [pickVoice, speakViaApi]);
 
-  // ── STT: record → faster-whisper ──────────────────────────────────────────
-  const listen = useCallback((): Promise<string> => {
+  // ── STT: record → faster-whisper (server fallback) ───────────────────────
+  const listenViaServer = useCallback((): Promise<string> => {
     return new Promise((resolve) => {
       setDemoState("listening");
       navigator.mediaDevices.getUserMedia({ audio: true })
@@ -401,6 +401,66 @@ export function DemoCallCard({ locale }: { locale?: string }) {
         .catch(() => resolve(""));
     });
   }, []);
+
+  // ── STT: Web Speech API (primary) → server fallback ──────────────────────
+  // Web Speech API uses Google/Apple cloud models — instant, accurate, no server
+  // round-trip. Falls back to faster-whisper when unavailable (Firefox, etc.).
+  const listen = useCallback((): Promise<string> => {
+    return new Promise((resolve) => {
+      setDemoState("listening");
+
+      const SpeechRecog =
+        typeof window !== "undefined" &&
+        ((window as unknown as Record<string, unknown>).SpeechRecognition ||
+         (window as unknown as Record<string, unknown>).webkitSpeechRecognition) as
+          | (new () => SpeechRecognition)
+          | false;
+
+      if (SpeechRecog) {
+        const recog = new SpeechRecog();
+        recog.lang              = LANG_CFG[langRef.current].bcp47;
+        recog.continuous        = false;
+        recog.interimResults    = false;
+        recog.maxAlternatives   = 3;
+
+        let settled = false;
+        const settle = (text: string) => {
+          if (settled) return;
+          settled = true;
+          resolve(text);
+        };
+
+        recog.onresult = (e) => {
+          const transcript = Array.from(e.results)
+            .map((r) => r[0]?.transcript ?? "")
+            .join(" ")
+            .trim();
+          settle(transcript);
+        };
+
+        recog.onerror = (e) => {
+          if (settled) return;
+          // no-speech: user was silent — return empty so retry logic kicks in
+          if (e.error === "no-speech" || e.error === "audio-capture") {
+            settle("");
+          } else {
+            // network / service-not-allowed / etc. → try server
+            settled = true;
+            listenViaServer().then(resolve);
+          }
+        };
+
+        recog.onend = () => { if (!settled) settle(""); };
+
+        try { recog.start(); }
+        catch { listenViaServer().then(resolve); }
+        return;
+      }
+
+      // No Web Speech API → fall back to faster-whisper
+      listenViaServer().then(resolve);
+    });
+  }, [listenViaServer]);
 
   // ── Send confirmation email ────────────────────────────────────────────────
   const sendEmail = useCallback(async () => {
@@ -485,7 +545,7 @@ export function DemoCallCard({ locale }: { locale?: string }) {
     } else {
       await runTurn(nextIdx);
     }
-  }, [speak, listen, sendEmail, stopTimer]);
+  }, [speak, listen, listenViaServer, sendEmail, stopTimer]);
 
   // ── Start demo ─────────────────────────────────────────────────────────────
   const startDemo = useCallback(async () => {
