@@ -413,12 +413,12 @@ export function DemoCallCard({ locale }: { locale?: string }) {
     return new Promise((resolve) => {
       setDemoState("listening");
 
-      const SpeechRecog =
-        typeof window !== "undefined" &&
-        ((window as unknown as Record<string, unknown>).SpeechRecognition ||
-         (window as unknown as Record<string, unknown>).webkitSpeechRecognition) as
-          | (new () => SpeechRecognition)
-          | false;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      type AnySpeechRecog = new () => any;
+      const SpeechRecog: AnySpeechRecog | false =
+        typeof window !== "undefined"
+          ? ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition || false)  // eslint-disable-line @typescript-eslint/no-explicit-any
+          : false;
 
       if (SpeechRecog) {
         const recog = new SpeechRecog();
