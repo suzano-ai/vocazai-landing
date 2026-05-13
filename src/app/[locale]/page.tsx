@@ -87,9 +87,9 @@ export default async function LandingPage({
           {/* LEFT — copy */}
           <div className="max-w-xl">
             <Reveal>
-              <div className="mb-8 inline-flex items-center gap-2.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-saffron-500" />
-                <span className="font-mono text-kicker uppercase text-muted-foreground">
+              <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-saffron-500/30 bg-saffron-500/8 px-3.5 py-1.5">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-saffron-500" />
+                <span className="font-mono text-kicker uppercase text-saffron-700 dark:text-saffron-400">
                   {t("landing.kicker")}
                 </span>
               </div>
@@ -130,7 +130,7 @@ export default async function LandingPage({
             </Reveal>
 
             <Reveal delay={320}>
-              <dl className="mt-10 grid max-w-md grid-cols-3 gap-3 sm:gap-6">
+              <dl className="mt-10 grid max-w-md grid-cols-3 gap-3 divide-x divide-border border-t border-border pt-6 sm:gap-6">
                 <Stat value="24/7" label={t("landing.stats.available")} />
                 <Stat value="< 800ms" label={t("landing.stats.latency")} />
                 <Stat value="FR · AR · EN" label={t("landing.stats.languages")} />
@@ -452,7 +452,7 @@ export default async function LandingPage({
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
-    <div>
+    <div className="pl-3 first:pl-0 sm:pl-6">
       <dt className="font-display text-lg font-semibold tabular-nums sm:text-2xl">{value}</dt>
       <dd className="mt-1 text-[10px] uppercase tracking-wider text-muted-foreground sm:text-xs">
         {label}
@@ -471,10 +471,13 @@ function SectionKicker({
   color: "saffron" | "teal";
 }) {
   const dotColor = color === "saffron" ? "bg-saffron-500" : "bg-teal-500";
+  const pillColor = color === "saffron"
+    ? "border-saffron-500/30 bg-saffron-500/8 text-saffron-700 dark:text-saffron-400"
+    : "border-teal-500/30 bg-teal-500/8 text-teal-700 dark:text-teal-400";
   return (
-    <div className="inline-flex items-center gap-2.5">
+    <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 ${pillColor}`}>
       <span className={`h-1.5 w-1.5 rounded-full ${dotColor}`} />
-      <span className="font-mono text-kicker uppercase text-muted-foreground">
+      <span className="font-mono text-kicker uppercase">
         {number} — {label}
       </span>
     </div>
@@ -493,15 +496,16 @@ function Step({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="group relative h-full bg-elevated p-8 transition-colors duration-220 hover:bg-surface lg:p-10">
+    <div className="group relative h-full bg-elevated p-8 transition-all duration-220 hover:bg-surface lg:p-10">
       <div className="flex items-start justify-between">
-        <span className="font-mono text-xs text-muted-foreground">{num}</span>
-        <span className="grid h-9 w-9 place-items-center rounded-full border border-border text-muted-foreground transition-colors duration-220 group-hover:border-saffron-500 group-hover:text-saffron-500">
+        <span className="font-display text-4xl font-semibold text-border transition-colors duration-220 group-hover:text-saffron-500/40">{num}</span>
+        <span className="grid h-10 w-10 place-items-center rounded-2xl border border-border bg-background text-muted-foreground shadow-sm transition-all duration-220 group-hover:border-saffron-500 group-hover:bg-saffron-500/8 group-hover:text-saffron-500">
           {icon}
         </span>
       </div>
-      <h3 className="mt-10 font-display text-2xl font-medium">{title}</h3>
+      <h3 className="mt-8 font-display text-2xl font-medium">{title}</h3>
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{body}</p>
+      <div className="mt-6 h-0.5 w-8 rounded-full bg-border transition-all duration-300 group-hover:w-12 group-hover:bg-saffron-500" />
     </div>
   );
 }
@@ -516,12 +520,12 @@ function UseCase({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="group relative cursor-default rounded-lg border border-border bg-elevated p-6 transition-all duration-260 ease-soft hover:-translate-y-1 hover:border-saffron-500">
-      <span className="mb-6 inline-grid h-10 w-10 place-items-center rounded-full bg-saffron-50 text-saffron-600 dark:bg-saffron-50 dark:text-saffron-500">
+    <div className="group relative cursor-default rounded-xl border border-border bg-elevated p-6 transition-all duration-260 ease-soft hover:-translate-y-1 hover:border-saffron-500/60 hover:shadow-md hover:shadow-saffron-500/5">
+      <span className="mb-5 inline-grid h-11 w-11 place-items-center rounded-2xl border border-border bg-background text-muted-foreground shadow-sm transition-all duration-220 group-hover:border-saffron-500/50 group-hover:bg-saffron-500/8 group-hover:text-saffron-600">
         {icon}
       </span>
       <h3 className="font-display text-lg font-medium">{title}</h3>
-      <p className="mt-2 text-sm text-muted-foreground">{body}</p>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
     </div>
   );
 }
@@ -549,8 +553,10 @@ function PriceCard({
 }) {
   return (
     <div
-      className={`relative flex h-full flex-col rounded-lg border bg-elevated p-7 transition-colors duration-220 ${
-        featured ? "border-saffron-500" : "border-border"
+      className={`relative flex h-full flex-col rounded-xl border p-7 transition-all duration-260 ${
+        featured
+          ? "border-saffron-500/80 bg-elevated shadow-lg shadow-saffron-500/10 lg:scale-[1.03]"
+          : "border-border bg-elevated hover:border-border/80 hover:shadow-sm"
       }`}
     >
       {featured && (
@@ -595,16 +601,16 @@ function PriceCard({
 
 function Faq({ q, a }: { q: string; a: string }) {
   return (
-    <details className="group cursor-pointer py-6">
-      <summary className="flex list-none items-start justify-between gap-6">
-        <span className="font-display text-xl font-medium transition-colors duration-220 group-hover:text-saffron-600">
+    <details className="group cursor-pointer py-5">
+      <summary className="flex list-none items-start justify-between gap-6 rounded-lg px-1 py-1 transition-colors duration-180 hover:text-foreground">
+        <span className="font-display text-lg font-medium transition-colors duration-220 group-hover:text-saffron-600">
           {q}
         </span>
-        <span className="mt-1 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-border text-muted-foreground transition-all duration-220 group-open:rotate-45 group-open:border-saffron-500 group-open:text-saffron-500">
+        <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-border bg-elevated text-muted-foreground shadow-sm transition-all duration-220 group-open:rotate-45 group-open:border-saffron-500 group-open:bg-saffron-500/8 group-open:text-saffron-500">
           <Plus className="h-3.5 w-3.5" />
         </span>
       </summary>
-      <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground">
+      <p className="mt-3 max-w-3xl pb-2 pl-1 text-base leading-relaxed text-muted-foreground">
         {a}
       </p>
     </details>

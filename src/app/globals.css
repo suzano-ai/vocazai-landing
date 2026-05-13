@@ -142,4 +142,49 @@
   .hr-thin {
     @apply h-px w-full bg-border;
   }
+
+  /* ── Global polish ──────────────────────────────────────────────────── */
+
+  /* Smooth scroll — respect reduced-motion */
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+
+  /* Saffron text selection */
+  ::selection {
+    background-color: hsl(var(--saffron-500) / 0.2);
+    color: hsl(var(--fg));
+  }
+
+  /* Thin custom scrollbar */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-fg)); }
+
+  /* Focus visible — saffron ring */
+  :focus-visible {
+    outline: 2px solid hsl(var(--saffron-500) / 0.6);
+    outline-offset: 2px;
+  }
+
+  /* Gradient shimmer utility — for skeleton loading */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--elevated)) 25%,
+      hsl(var(--surface)) 50%,
+      hsl(var(--elevated)) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  @keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
 }
+

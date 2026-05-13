@@ -341,7 +341,7 @@ export function DemoCallCard({ locale }: { locale?: string }) {
           utter.voice  = voice;
 
           utter.onend = () => settle(resolve);
-          utter.onerror = (e: any) => {  // eslint-disable-line @typescript-eslint/no-explicit-any
+          utter.onerror = (e: any) => {
             // "interrupted"/"canceled" fire after a successful onend in some browsers
             if (e.error === "interrupted" || e.error === "canceled") {
               settle(resolve);
@@ -383,7 +383,7 @@ export function DemoCallCard({ locale }: { locale?: string }) {
           mediaRecRef.current = rec;
           chunksRef.current   = [];
 
-          rec.ondataavailable = (e: any) => {  // eslint-disable-line @typescript-eslint/no-explicit-any if (e.data.size > 0) chunksRef.current.push(e.data); };
+          rec.ondataavailable = (e: any) => { if (e.data.size > 0) chunksRef.current.push(e.data); };
           rec.onstop = () => {
             stream.getTracks().forEach((t) => t.stop());
             setDemoState("processing");
@@ -417,7 +417,7 @@ export function DemoCallCard({ locale }: { locale?: string }) {
       type AnySpeechRecog = new () => any;
       const SpeechRecog: AnySpeechRecog | false =
         typeof window !== "undefined"
-          ? ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition || false)  // eslint-disable-line @typescript-eslint/no-explicit-any
+          ? ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition || false)
           : false;
 
       if (SpeechRecog) {
@@ -434,7 +434,7 @@ export function DemoCallCard({ locale }: { locale?: string }) {
           resolve(text);
         };
 
-        recog.onresult = (e: any) => {  // eslint-disable-line @typescript-eslint/no-explicit-any
+        recog.onresult = (e: any) => {
           const transcript = Array.from(e.results)
             .map((r) => r[0]?.transcript ?? "")
             .join(" ")
@@ -442,7 +442,7 @@ export function DemoCallCard({ locale }: { locale?: string }) {
           settle(transcript);
         };
 
-        recog.onerror = (e: any) => {  // eslint-disable-line @typescript-eslint/no-explicit-any
+        recog.onerror = (e: any) => {
           if (settled) return;
           // no-speech: user was silent — return empty so retry logic kicks in
           if (e.error === "no-speech" || e.error === "audio-capture") {
