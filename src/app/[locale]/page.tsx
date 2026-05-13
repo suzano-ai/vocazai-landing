@@ -4,6 +4,7 @@ import Link from "next/link";
 import {
   ArrowRight,
   ArrowUpRight,
+  Phone,
   Calendar,
   Languages,
   ShieldCheck,
