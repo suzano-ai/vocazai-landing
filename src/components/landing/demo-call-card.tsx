@@ -8,25 +8,26 @@ import { Waveform } from "@/components/zellige";
 type Lang      = "fr" | "en" | "ar";
 type DemoState = "idle" | "loading" | "speaking" | "listening" | "processing" | "done" | "error";
 type Message   = { role: "agent" | "user"; text: string };
+type Collected = { name?: string; slot?: string; email?: string };
 
 // ─── Per-language config ──────────────────────────────────────────────────────
 const LANG_CFG: Record<Lang, {
-  bcp47:   string;       // Web Speech locale
-  voice:   string;       // Kokoro voice (fallback)
-  stt:     string;       // faster-whisper language code
+  bcp47:   string;
+  voice:   string;
+  stt:     string;
   dir:     "ltr" | "rtl";
   label:   string;
   script: {
-    id:      string;
-    speak:   string;
-    hint:    string;
-    mode:    "intent" | "free" | "choice" | "email";
+    id:       string;
+    speak:    string | ((c: Collected) => string);
+    hint:     string;
+    mode:     "intent" | "free" | "choice" | "email";
     choices?: string[];
   }[];
-  retry:        string;
-  retryEmail:   string;
-  retrySlot:    string;
-  closing:      (name: string, slot: string, email: string) => string;
+  retry:      string;
+  retryEmail: string;
+  retrySlot:  string;
+  closing:    (name: string, slot: string, email: string) => string;
 }> = {
   fr: {
     bcp47:  "fr-CA",
@@ -49,14 +50,18 @@ const LANG_CFG: Record<Lang, {
       },
       {
         id:      "slot",
-        speak:   "Merci. J'ai deux créneaux disponibles ce mercredi : 9h30 ou 11h15. Lequel vous convient ?",
+        speak:   (c) => c.name
+          ? `Merci ${c.name}. J'ai deux créneaux disponibles ce mercredi : 9h30 ou 11h15. Lequel vous convient ?`
+          : `Parfait. J'ai deux créneaux disponibles ce mercredi : 9h30 ou 11h15. Lequel vous convient ?`,
         hint:    "Dites « 9h30 » ou « 11h15 »",
         mode:    "choice",
         choices: ["9h30", "11h15"],
       },
       {
         id:    "email",
-        speak: "Très bien. Quelle est votre adresse email pour la confirmation ?",
+        speak: (c) => c.slot
+          ? `${c.name ? `${c.name}, votre` : "Votre"} créneau de ${c.slot} est retenu. Quelle est votre adresse email pour la confirmation ?`
+          : `Quelle est votre adresse email pour la confirmation ?`,
         hint:  "Épelez votre email ou dites-le clairement",
         mode:  "email",
       },
@@ -65,7 +70,7 @@ const LANG_CFG: Record<Lang, {
     retryEmail: "Je n'ai pas pu noter votre email. Pouvez-vous le répéter ?",
     retrySlot:  "Je n'ai pas bien compris. Dites 9h30 ou 11h15.",
     closing: (name, slot, email) =>
-      `Parfait${name ? `, ${name}` : ""} ! Votre rendez-vous${slot ? ` à ${slot}` : ""} ce mercredi est confirmé. Un email vous a été envoyé${email ? ` à ${email}` : ""}. À très bientôt !`,
+      `Parfait${name ? `, ${name}` : ""}. Votre rendez-vous${slot ? ` à ${slot}` : ""} ce mercredi est confirmé. Un email de confirmation${email ? ` a été envoyé à ${email}` : " vous sera envoyé"}. À très bientôt.`,
   },
 
   en: {
@@ -89,14 +94,18 @@ const LANG_CFG: Record<Lang, {
       },
       {
         id:      "slot",
-        speak:   "Thank you. I have two slots available this Wednesday: 9:30 AM or 11:15 AM. Which works for you?",
+        speak:   (c) => c.name
+          ? `Thank you, ${c.name}. I have two slots this Wednesday: 9:30 AM or 11:15 AM. Which works for you?`
+          : `Thank you. I have two slots this Wednesday: 9:30 AM or 11:15 AM. Which works for you?`,
         hint:    'Say "9:30" or "11:15"',
         mode:    "choice",
         choices: ["9:30 AM", "11:15 AM"],
       },
       {
         id:    "email",
-        speak: "Perfect. What's your email address for the confirmation?",
+        speak: (c) => c.slot
+          ? `${c.name ? `${c.name}, your` : "Your"} ${c.slot} slot is locked in. What is your email address for the confirmation?`
+          : `What is your email address for the confirmation?`,
         hint:  "Spell out your email clearly",
         mode:  "email",
       },
@@ -105,7 +114,7 @@ const LANG_CFG: Record<Lang, {
     retryEmail: "I couldn't catch your email. Could you repeat it clearly?",
     retrySlot:  "I didn't understand. Please say 9:30 or 11:15.",
     closing: (name, slot, email) =>
-      `Perfect${name ? `, ${name}` : ""}! Your appointment${slot ? ` at ${slot}` : ""} this Wednesday is confirmed. A confirmation email has been sent${email ? ` to ${email}` : ""}. Talk soon!`,
+      `Perfect${name ? `, ${name}` : ""}. Your appointment${slot ? ` at ${slot}` : ""} this Wednesday is confirmed. A confirmation email${email ? ` has been sent to ${email}` : " will be sent to you"}. Talk soon.`,
   },
 
   ar: {
@@ -129,14 +138,18 @@ const LANG_CFG: Record<Lang, {
       },
       {
         id:      "slot",
-        speak:   "شكراً. لديّ موعدان متاحان هذا الأربعاء: التاسعة والنصف، أو الحادية عشرة والربع. أيهما يناسبك؟",
+        speak:   (c) => c.name
+          ? `شكراً ${c.name}. لديّ موعدان متاحان هذا الأربعاء: التاسعة والنصف، أو الحادية عشرة والربع. أيهما يناسبك؟`
+          : `شكراً. لديّ موعدان متاحان هذا الأربعاء: التاسعة والنصف، أو الحادية عشرة والربع. أيهما يناسبك؟`,
         hint:    "قل «9:30» أو «11:15»",
         mode:    "choice",
         choices: ["9:30", "11:15"],
       },
       {
         id:    "email",
-        speak: "ممتاز. ما هو بريدك الإلكتروني لإرسال التأكيد؟",
+        speak: (c) => c.slot
+          ? `${c.name ? `${c.name}، ` : ""}موعدك${` الساعة ${c.slot}`} محجوز. ما هو بريدك الإلكتروني لإرسال التأكيد؟`
+          : `ما هو بريدك الإلكتروني لإرسال التأكيد؟`,
         hint:  "أملِ بريدك الإلكتروني بوضوح",
         mode:  "email",
       },
@@ -145,7 +158,7 @@ const LANG_CFG: Record<Lang, {
     retryEmail: "لم أتمكن من فهم بريدك الإلكتروني. هل يمكنك تكراره؟",
     retrySlot:  "لم أفهم جيداً. قل 9:30 أو 11:15.",
     closing: (name, slot, email) =>
-      `ممتاز${name ? `، ${name}` : ""}! تم تأكيد موعدك${slot ? ` الساعة ${slot}` : ""} هذا الأربعاء. تم إرسال بريد تأكيد${email ? ` إلى ${email}` : ""}. إلى اللقاء!`,
+      `ممتاز${name ? `، ${name}` : ""}. تم تأكيد موعدك${slot ? ` الساعة ${slot}` : ""} هذا الأربعاء. ${email ? `تم إرسال بريد التأكيد إلى ${email}` : "سيصلك بريد التأكيد قريباً"}. إلى اللقاء.`,
   },
 };
 
@@ -387,9 +400,15 @@ export function DemoCallCard({ locale }: { locale?: string }) {
     if (idx >= script.length) return;
 
     const step = script[idx];
+    // Resolve personalized text using what's been collected so far
+    const speakText = typeof step.speak === "function"
+      ? step.speak(collected.current)
+      : step.speak;
+
     setHint(step.hint ?? "");
-    setMessages((m) => [...m, { role: "agent", text: step.speak }]);
-    await speak(step.speak);
+    // Speak FIRST — then show the transcript
+    await speak(speakText);
+    setMessages((m) => [...m, { role: "agent", text: speakText }]);
 
     let transcript = await listen();
     if (!transcript) {
@@ -436,8 +455,8 @@ export function DemoCallCard({ locale }: { locale?: string }) {
     if (nextIdx >= script.length) {
       const { name, slot, email } = collected.current;
       const closingText = cfg.closing(name ?? "", slot ?? "", email ?? "");
-      setMessages((m) => [...m, { role: "agent", text: closingText }]);
       await speak(closingText);
+      setMessages((m) => [...m, { role: "agent", text: closingText }]);
       await sendEmail();
       setDemoState("done");
       stopTimer();
@@ -472,9 +491,9 @@ export function DemoCallCard({ locale }: { locale?: string }) {
 
   // UI strings per language
   const UI = {
-    fr: { idle: "Appuyez sur Démarrer — Yasmine vous guidera entièrement par la voix.", start: "Démarrer la démo", live: "En direct", waiting: "En attente", recording: "🔴 Enregistrement", active: "Appel IA en cours", demo: "Démo interactive", loading: "Yasmine prépare sa réponse…", listening: "Yasmine vous écoute…", processing: "Traitement…", email: "Email de confirmation envoyé ✓", error: "Je n'ai pas pu comprendre. Veuillez recommencer.", restart: "Recommencer" },
-    en: { idle: "Press Start — Yasmine will guide you entirely by voice.", start: "Start demo", live: "Live", waiting: "Waiting", recording: "🔴 Recording", active: "AI call in progress", demo: "Interactive demo", loading: "Yasmine is preparing…", listening: "Yasmine is listening…", processing: "Processing…", email: "Confirmation email sent ✓", error: "I couldn't understand. Please try again.", restart: "Restart" },
-    ar: { idle: "اضغط ابدأ — ياسمين ستوجهك بالكامل عبر الصوت.", start: "ابدأ التجربة", live: "مباشر", waiting: "في انتظار", recording: "🔴 تسجيل", active: "مكالمة ذكاء اصطناعي", demo: "عرض تفاعلي", loading: "ياسمين تحضّر ردّها…", listening: "ياسمين تستمع إليك…", processing: "معالجة…", email: "تم إرسال بريد التأكيد ✓", error: "لم أتمكن من الفهم. حاول مجدداً.", restart: "إعادة" },
+    fr: { idle: "Appuyez sur Démarrer — Yasmine vous guidera entièrement par la voix.", start: "Démarrer la démo", live: "En direct", waiting: "En attente", recording: "Enregistrement", active: "Appel IA en cours", demo: "Démo interactive", loading: "Yasmine prépare sa réponse…", listening: "Yasmine vous écoute…", processing: "Traitement…", email: "Email de confirmation envoyé", error: "Je n'ai pas pu comprendre. Veuillez recommencer.", restart: "Recommencer" },
+    en: { idle: "Press Start — Yasmine will guide you entirely by voice.", start: "Start demo", live: "Live", waiting: "Waiting", recording: "Recording", active: "AI call in progress", demo: "Interactive demo", loading: "Yasmine is preparing…", listening: "Yasmine is listening…", processing: "Processing…", email: "Confirmation email sent", error: "I couldn't understand. Please try again.", restart: "Restart" },
+    ar: { idle: "اضغط ابدأ — ياسمين ستوجهك بالكامل عبر الصوت.", start: "ابدأ التجربة", live: "مباشر", waiting: "في انتظار", recording: "تسجيل", active: "مكالمة ذكاء اصطناعي", demo: "عرض تفاعلي", loading: "ياسمين تحضّر ردّها…", listening: "ياسمين تستمع إليك…", processing: "معالجة…", email: "تم إرسال بريد التأكيد", error: "لم أتمكن من الفهم. حاول مجدداً.", restart: "إعادة" },
   }[lang];
 
   // ─── Render ────────────────────────────────────────────────────────────────

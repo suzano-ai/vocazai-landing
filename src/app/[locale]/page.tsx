@@ -20,7 +20,8 @@ import {
   Arch,
   Quatrefoil,
   HexLattice,
-  VerticalLines,
+  NeuralNetwork,
+  GlowOrb,
 } from "@/components/zellige";
 import { Reveal } from "@/components/reveal";
 
@@ -52,23 +53,37 @@ export default async function LandingPage({
       <Header locale={locale} />
 
       {/* ============ HERO ============ */}
-      <section className="relative overflow-hidden">
-        {/* Layered geometric decoratives — different shapes, not just stars */}
+      <section className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden">
+
+        {/* Neural network — full-bleed AI background */}
+        <NeuralNetwork className="pointer-events-none absolute inset-0 h-full w-full text-saffron-500/[0.07]" />
+
+        {/* Glow orbs — ambient depth */}
+        <GlowOrb
+          size={640}
+          color="saffron"
+          className="pointer-events-none absolute -right-32 -top-32"
+        />
+        <GlowOrb
+          size={480}
+          color="teal"
+          className="pointer-events-none absolute -bottom-24 -left-24"
+        />
+
+        {/* Moroccan geometry — editorial anchors */}
         <Khatam
-          size={520}
-          className="pointer-events-none absolute -right-32 -top-16 text-saffron-500/12"
+          size={420}
+          className="pointer-events-none absolute -right-20 top-8 text-saffron-500/[0.06]"
         />
         <Arch
-          size={320}
-          className="pointer-events-none absolute -left-16 top-44 text-teal-500/10 opacity-60"
+          size={260}
+          className="pointer-events-none absolute -left-12 bottom-12 text-teal-500/[0.07]"
         />
-        <VerticalLines
-          count={32}
-          className="pointer-events-none absolute inset-y-0 left-1/2 -translate-x-1/2 w-full max-w-7xl px-12 text-saffron-500/8"
-        />
+
+        {/* Dot paper texture */}
         <div className="pointer-events-none absolute inset-0 paper" />
 
-        <div className="container relative grid gap-16 pb-24 pt-16 lg:grid-cols-[1.2fr_1fr] lg:gap-12 lg:pb-32 lg:pt-24">
+        <div className="container relative grid items-center gap-10 py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16 lg:py-0">
           {/* LEFT — copy */}
           <div className="max-w-xl">
             <Reveal>
@@ -115,7 +130,7 @@ export default async function LandingPage({
             </Reveal>
 
             <Reveal delay={320}>
-              <dl className="mt-16 grid max-w-md grid-cols-3 gap-6">
+              <dl className="mt-10 grid max-w-md grid-cols-3 gap-6">
                 <Stat value="24/7" label={t("landing.stats.available")} />
                 <Stat value="< 800ms" label={t("landing.stats.latency")} />
                 <Stat value="FR · AR · EN" label={t("landing.stats.languages")} />
@@ -123,13 +138,9 @@ export default async function LandingPage({
             </Reveal>
           </div>
 
-          {/* RIGHT — Live call card (interactive Kokoro TTS demo) */}
+          {/* RIGHT — Live call card */}
           <Reveal delay={200}>
             <div className="relative">
-              <Quatrefoil
-                size={280}
-                className="pointer-events-none absolute -right-8 -top-10 text-teal-500/12"
-              />
               <DemoCallCard locale={locale} />
             </div>
           </Reveal>

@@ -1,11 +1,9 @@
 /**
  * Geometric primitives — Moroccan-rooted, refined.
- * Used sparingly at low opacity as editorial accents.
- *
- * No blobs, no clouds, no Memphis sprinkles. Three families only:
- *   1. Khatam (8-pointed star) — heritage anchor
- *   2. Arch (keyhole) — architectural reference
- *   3. Waveform / Lines — voice-AI signature
+ * Three families:
+ *   1. Heritage shapes  — Khatam, Arch, Quatrefoil
+ *   2. Grid/Line accents — HexLattice, VerticalLines
+ *   3. Voice-AI          — Waveform, NeuralNetwork, GlowOrb
  */
 
 export function Khatam({
@@ -31,10 +29,6 @@ export function Khatam({
   );
 }
 
-/**
- * Moorish keyhole arch — architectural Moroccan reference.
- * Use as section divider or backdrop element.
- */
 export function Arch({
   size = 280,
   className = "",
@@ -61,10 +55,6 @@ export function Arch({
   );
 }
 
-/**
- * Hexagonal lattice (subtle).
- * Use as repeating background for a "data infrastructure" feel.
- */
 export function HexLattice({
   size = 320,
   className = "",
@@ -89,9 +79,6 @@ export function HexLattice({
   );
 }
 
-/**
- * Vertical hairlines — minimalist rhythm marker.
- */
 export function VerticalLines({
   count = 24,
   className = "",
@@ -112,9 +99,6 @@ export function VerticalLines({
   );
 }
 
-/**
- * Quatrefoil — four-lobed Moroccan motif.
- */
 export function Quatrefoil({
   size = 180,
   className = "",
@@ -132,10 +116,6 @@ export function Quatrefoil({
   );
 }
 
-/**
- * Animated audio waveform — voice-AI essence.
- * Respects prefers-reduced-motion via globals.
- */
 export function Waveform({
   bars = 28,
   className = "",
@@ -157,5 +137,157 @@ export function Waveform({
         );
       })}
     </div>
+  );
+}
+
+/**
+ * Neural network — animated AI topology.
+ * Nodes pulse, edges flow with traveling dashes.
+ * Designed to evoke voice routing and AI inference.
+ */
+export function NeuralNetwork({
+  className = "",
+}: {
+  className?: string;
+}) {
+  // Nodes: [x, y] in 800×500 viewBox
+  const nodes: [number, number][] = [
+    [400, 250], // central hub
+    [160,  80], [400,  55], [640,  80],
+    [ 60, 210], [200, 175], [600, 175], [740, 210],
+    [ 80, 350], [220, 400], [400, 430], [580, 400], [720, 350],
+    [300, 140], [500, 140], [300, 340], [500, 340],
+    [150, 270], [650, 270],
+  ];
+
+  // Edges: pairs of node indices
+  const edges: [number, number][] = [
+    [0, 5], [0, 6], [0, 15], [0, 16],
+    [1, 4], [1, 5], [1, 13],
+    [2, 13], [2, 14],
+    [3, 6], [3, 7], [3, 14],
+    [4, 8], [4, 17],
+    [5, 9], [5, 13], [5, 17],
+    [6, 11], [6, 14], [6, 18],
+    [7, 12], [7, 18],
+    [8, 9], [9, 10], [10, 11], [11, 12],
+    [13, 15], [14, 16], [15, 16],
+    [15, 9], [16, 11],
+  ];
+
+  return (
+    <svg
+      viewBox="0 0 800 500"
+      width="100%"
+      height="100%"
+      className={className}
+      aria-hidden
+      style={{ overflow: "visible" }}
+    >
+      <defs>
+        <style>{`
+          @keyframes nn-flow {
+            from { stroke-dashoffset: 60; }
+            to   { stroke-dashoffset: 0; }
+          }
+          @keyframes nn-pulse {
+            0%, 100% { opacity: 0.25; transform-box: fill-box; transform-origin: center; transform: scale(1); }
+            50%       { opacity: 0.7;  transform: scale(1.6); }
+          }
+          @keyframes nn-hub {
+            0%, 100% { opacity: 0.5; transform-box: fill-box; transform-origin: center; transform: scale(1); }
+            50%       { opacity: 1;   transform: scale(1.35); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .nn-e, .nn-n, .nn-h { animation: none !important; }
+          }
+        `}</style>
+      </defs>
+
+      {/* Edges */}
+      {edges.map(([a, b], k) => {
+        const [x1, y1] = nodes[a];
+        const [x2, y2] = nodes[b];
+        const len = Math.hypot(x2 - x1, y2 - y1);
+        return (
+          <line
+            key={k}
+            className="nn-e"
+            x1={x1} y1={y1} x2={x2} y2={y2}
+            stroke="currentColor"
+            strokeWidth="0.6"
+            strokeDasharray="8 5"
+            style={{
+              animation: `nn-flow ${2.5 + (k % 5) * 0.6}s linear infinite`,
+              animationDelay: `${(k % 9) * 0.28}s`,
+              opacity: Math.max(0.08, 0.35 - len / 1600),
+            }}
+          />
+        );
+      })}
+
+      {/* Outer nodes */}
+      {nodes.slice(1).map(([cx, cy], i) => (
+        <circle
+          key={i}
+          className="nn-n"
+          cx={cx} cy={cy} r="3.5"
+          fill="currentColor"
+          style={{
+            animation: `nn-pulse ${1.8 + (i % 6) * 0.35}s ease-in-out infinite`,
+            animationDelay: `${(i % 10) * 0.18}s`,
+          }}
+        />
+      ))}
+
+      {/* Central hub — larger, prominent */}
+      <circle
+        className="nn-h"
+        cx={nodes[0][0]} cy={nodes[0][1]} r="7"
+        fill="currentColor"
+        style={{ animation: "nn-hub 2.2s ease-in-out infinite" }}
+      />
+      <circle
+        cx={nodes[0][0]} cy={nodes[0][1]} r="14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="0.5"
+        strokeDasharray="3 4"
+        opacity="0.2"
+      />
+    </svg>
+  );
+}
+
+/**
+ * Ambient glow orb — soft radial gradient blob.
+ * Use behind content for depth.
+ */
+export function GlowOrb({
+  size = 500,
+  color = "saffron",
+  className = "",
+}: {
+  size?: number;
+  color?: "saffron" | "teal";
+  className?: string;
+}) {
+  const gradient =
+    color === "teal"
+      ? "radial-gradient(circle, hsl(181 79% 26% / 0.14) 0%, transparent 70%)"
+      : "radial-gradient(circle, hsl(36 82% 54% / 0.12) 0%, transparent 70%)";
+
+  return (
+    <div
+      className={className}
+      style={{
+        width: size,
+        height: size,
+        borderRadius: "50%",
+        background: gradient,
+        filter: `blur(${Math.round(size * 0.08)}px)`,
+      }}
+      aria-hidden
+    />
   );
 }
