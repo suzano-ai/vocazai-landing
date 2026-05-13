@@ -4,7 +4,7 @@
 
 services:
   - type: web
-    name: vocazai
+    name: vocazai-landing
     runtime: node
     region: frankfurt        # closest to Maghreb / EU users
     plan: starter            # adjust as needed
