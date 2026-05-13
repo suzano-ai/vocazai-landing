@@ -30,16 +30,23 @@ _kokoro         = None
 _available_voices: list[str] = []
 _yasmine_voice  = "ff_siwis"   # will be resolved at startup
 
-# French voice preference order — first one found in voices.bin wins
-_FRENCH_VOICE_CANDIDATES = [
-    "ff_siwis",   # SIWIS French female (preferred)
-    "ff",
-    "fr_female",
-    "fr-fr_female",
+# Voice preference order — first one found in voices.bin wins
+# ff_ = French female, af_ = American female, bf_ = British female
+# NEVER use am_ / bm_ / fm_ (male voices)
+_VOICE_CANDIDATES = [
+    "ff_siwis",     # French female SIWIS (ideal)
+    "ff_camille",   # French female alternate
+    "ff",           # any French female
+    "af_bella",     # American female (warm, natural)
+    "af_heart",
+    "af_nicole",
+    "af_sky",
+    "bf_emma",      # British female
+    "bf_isabella",
 ]
 
-# English fallback if no French voice is found
-_ENGLISH_FALLBACK = "af_bella"
+# Male voice prefixes — never use these as fallback
+_MALE_PREFIXES = ("am_", "bm_", "fm_", "jm_")
 
 
 @app.on_event("startup")
@@ -63,23 +70,42 @@ def load_model():
 
         log.info(f"Available voices ({len(_available_voices)}): {sorted(_available_voices)}")
 
-        # Pick best French voice
-        for candidate in _FRENCH_VOICE_CANDIDATES:
-            if candidate in _available_voices:
-                _yasmine_voice = candidate
-                log.info(f"Yasmine voice resolved → {_yasmine_voice}")
+        # Pick best voice — prefer French female, then any female, never male
+        def is_female(v: str) -> bool:
+            return not any(v.startswith(p) for p in _MALE_PREFIXES)
+
+        resolved = None
+
+        # 1. Exact / prefix match against ordered candidates
+        for candidate in _VOICE_CANDIDATES:
+            matches = [v for v in _available_voices if v == candidate or v.startswith(candidate)]
+            female_matches = [v for v in matches if is_female(v)]
+            if female_matches:
+                resolved = sorted(female_matches)[0]
                 break
+
+        # 2. Any French female by prefix
+        if not resolved:
+            french_female = sorted(v for v in _available_voices if v.startswith(("ff", "fr")) and is_female(v))
+            if french_female:
+                resolved = french_female[0]
+
+        # 3. Any female voice at all
+        if not resolved:
+            any_female = sorted(v for v in _available_voices if is_female(v))
+            if any_female:
+                resolved = any_female[0]
+
+        # 4. Last resort — whatever is there
+        if not resolved and _available_voices:
+            resolved = sorted(_available_voices)[0]
+            log.warning(f"No female voice found — last resort: {resolved}")
+
+        if resolved:
+            _yasmine_voice = resolved
+            log.info(f"✓ Yasmine voice resolved → {_yasmine_voice}")
         else:
-            # Try prefix match: any voice starting with 'ff' or 'fr'
-            french = [v for v in _available_voices if v.startswith(("ff", "fr"))]
-            if french:
-                _yasmine_voice = sorted(french)[0]
-                log.info(f"Yasmine voice (prefix match) → {_yasmine_voice}")
-            elif _available_voices:
-                _yasmine_voice = _ENGLISH_FALLBACK if _ENGLISH_FALLBACK in _available_voices else _available_voices[0]
-                log.warning(f"No French voice found — using fallback: {_yasmine_voice}")
-            else:
-                log.error("No voices found at all! Check voices.bin download.")
+            log.error("No voices found at all! Check voices.bin download.")
 
         log.info("Kokoro ready.")
     except Exception as e:
