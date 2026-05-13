@@ -83,7 +83,7 @@ export default async function LandingPage({
         {/* Dot paper texture */}
         <div className="pointer-events-none absolute inset-0 paper" />
 
-        <div className="container relative grid items-center gap-10 py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16 lg:py-0">
+        <div className="container relative grid items-center gap-10 py-16 sm:py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16 lg:py-0">
           {/* LEFT — copy */}
           <div className="max-w-xl">
             <Reveal>
@@ -96,7 +96,7 @@ export default async function LandingPage({
             </Reveal>
 
             <Reveal delay={80}>
-              <h1 className="font-display text-display-2xl font-medium">
+              <h1 className="font-display text-display-xl font-medium lg:text-display-2xl">
                 <span className="block">{t("landing.heroTitle1")}</span>
                 <span className="block italic text-saffron-500">
                   {t("landing.heroTitle2")}
@@ -130,7 +130,7 @@ export default async function LandingPage({
             </Reveal>
 
             <Reveal delay={320}>
-              <dl className="mt-10 grid max-w-md grid-cols-3 gap-6">
+              <dl className="mt-10 grid max-w-md grid-cols-3 gap-3 sm:gap-6">
                 <Stat value="24/7" label={t("landing.stats.available")} />
                 <Stat value="< 800ms" label={t("landing.stats.latency")} />
                 <Stat value="FR · AR · EN" label={t("landing.stats.languages")} />
@@ -179,7 +179,7 @@ export default async function LandingPage({
               .map((name, i) => (
                 <span
                   key={i}
-                  className="whitespace-nowrap font-display text-2xl font-medium italic"
+                  className="whitespace-nowrap font-display text-xl font-medium italic sm:text-2xl"
                 >
                   {name}
                 </span>
@@ -425,7 +425,7 @@ export default async function LandingPage({
                 <Sparkles className="h-3 w-3" />
                 {t("landing.finalCta.kicker")}
               </span>
-              <h2 className="mt-6 font-display text-display-xl font-medium">
+              <h2 className="mt-6 font-display text-display-lg font-medium lg:text-display-xl">
                 {t("landing.finalCta.title")}
               </h2>
               <p className="mt-6 max-w-xl text-lg text-saffron-50/70">
@@ -453,8 +453,8 @@ export default async function LandingPage({
 function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div>
-      <dt className="font-display text-2xl font-semibold tabular-nums">{value}</dt>
-      <dd className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
+      <dt className="font-display text-lg font-semibold tabular-nums sm:text-2xl">{value}</dt>
+      <dd className="mt-1 text-[10px] uppercase tracking-wider text-muted-foreground sm:text-xs">
         {label}
       </dd>
     </div>
