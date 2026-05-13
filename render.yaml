@@ -12,7 +12,7 @@ services:
                              # connecting real customers (webhooks need always-on).
     branch: main
     autoDeploy: true
-    buildCommand: npm ci && npm run build
+    buildCommand: npm install --no-audit --no-fund && npm run build
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:
