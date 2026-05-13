@@ -90,7 +90,7 @@ const LANG_CFG: Record<Lang, {
       {
         id:      "slot",
         speak:   "Thank you. I have two slots available this Wednesday: 9:30 AM or 11:15 AM. Which works for you?",
-        hint:    "Say "9:30" or "11:15"",
+        hint:    'Say "9:30" or "11:15"',
         mode:    "choice",
         choices: ["9:30 AM", "11:15 AM"],
       },
