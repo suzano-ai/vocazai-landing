@@ -62,7 +62,7 @@ show_help() {
   echo -e "  ${BOLD}  doctor${NC}              Full health check of the entire stack"
   echo -e "  ${BOLD}  domain${NC}              Check domain DNS and SSL"
   echo -e "  ${BOLD}  ssl${NC}                 Show SSL certificate details"
-  echo -e "  ${BOLD}  tts${NC}                 Check Kokoro TTS service"
+  echo -e "  ${BOLD}  tts${NC}                 Live Voxtral synthesis test + Kokoro status"
   echo -e "  ${BOLD}  stt${NC}                 Check Faster-Whisper STT service"
   echo ""
   echo -e "  ${BOLD}${C}Configuration${NC}"
@@ -233,67 +233,153 @@ cmd_doctor() {
 }
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  UPDATE
+#  UPDATE  — pull + keys + voice setup + rebuild, all in one
 # ══════════════════════════════════════════════════════════════════════════════
 cmd_update() {
   header
   FLAG="${1:-}"
 
   # ── 1. Pull latest code ───────────────────────────────────────────────────
-  step "Pulling latest code from GitHub"
+  step "① Pulling latest code"
   git -C "$APP_DIR" pull --ff-only
   echo ""
 
-  # ── 1b. Check for new required API keys added since last install ──────────
-  _check_key() {
-    local KEY="$1" LABEL="$2" URL="$3"
-    local VAL=$(_env "$KEY")
-    if [[ -z "$VAL" ]]; then
-      echo ""
-      warn "New key required: ${BOLD}$KEY${NC}"
-      echo -e "  ${DIM}Get it at: $URL${NC}"
-      echo -ne "  ${B}›${NC}  Enter $LABEL (or press Enter to skip): "
-      read -r NEW_VAL
-      if [[ -n "$NEW_VAL" ]]; then
-        echo "${KEY}=${NEW_VAL}" >> "$ENV_FILE"
-        ok "$KEY saved to .env.local"
-      fi
-    fi
-  }
-  _check_key "MISTRAL_API_KEY"  "Mistral API key"  "https://console.mistral.ai/api-keys"
-  _check_key "RESEND_API_KEY"   "Resend API key"   "https://resend.com/api-keys"
-
-  # ── 2. Always reinstall the CLI itself so new commands are available ──────
-  step "Updating CLI"
+  # ── 2. Reinstall CLI so new commands are live immediately ─────────────────
+  step "② Updating CLI"
   cp "$APP_DIR/deploy/vocazai-cli.sh" /usr/local/bin/vocazai
   chmod +x /usr/local/bin/vocazai
   ok "vocazai CLI updated"
   echo ""
 
-  # ── 3. Detect which services need rebuilding ──────────────────────────────
+  # ── 3. Check / prompt for every required API key ─────────────────────────
+  step "③ API keys"
+
+  _upsert_key() {
+    local KEY="$1" LABEL="$2" URL="$3" SECRET="${4:-yes}"
+    local CURRENT=$(_env "$KEY")
+    if [[ -z "$CURRENT" ]]; then
+      warn "${BOLD}$KEY${NC} is missing"
+      echo -e "  ${DIM}Get it at: $URL${NC}"
+    else
+      echo -ne "  ${DIM}$KEY already set — press Enter to keep, or paste new value: ${NC}"
+    fi
+    if [[ "$SECRET" == "yes" ]]; then
+      read -rsp "  › $LABEL: " NEW_VAL; echo
+    else
+      read -rp  "  › $LABEL: " NEW_VAL
+    fi
+    if [[ -n "$NEW_VAL" ]]; then
+      # Replace existing line or append
+      if grep -q "^${KEY}=" "$ENV_FILE" 2>/dev/null; then
+        sed -i "s|^${KEY}=.*|${KEY}=${NEW_VAL}|" "$ENV_FILE"
+      else
+        echo "${KEY}=${NEW_VAL}" >> "$ENV_FILE"
+      fi
+      ok "$KEY updated"
+    else
+      [[ -n "$CURRENT" ]] && ok "$KEY kept" || warn "$KEY skipped — some features may not work"
+    fi
+  }
+
+  _upsert_key "MISTRAL_API_KEY" "Mistral API key"  "https://console.mistral.ai/api-keys"
+  _upsert_key "RESEND_API_KEY"  "Resend API key"   "https://resend.com/api-keys"
+  echo ""
+
+  # ── 4. Voxtral voice setup (if no voice ID yet) ───────────────────────────
+  MISTRAL_KEY=$(_env "MISTRAL_API_KEY")
+  VOICE_ID=$(_env "MISTRAL_VOICE_ID")
+
+  if [[ -n "$MISTRAL_KEY" && -z "$VOICE_ID" ]]; then
+    step "④ Registering Yasmine voice with Mistral Voxtral"
+
+    # Generate audio sample via Kokoro container
+    info "Generating reference audio via Kokoro…"
+    docker exec vocazai-tts \
+      python3 -c "
+import requests, sys
+r = requests.post('http://localhost:8000/tts', json={
+    'text': 'Bonjour, je suis Yasmine, votre assistante vocale VocazAI.',
+    'voice': 'af_heart', 'speed': 0.92, 'lang': 'fr-fr'
+})
+sys.stdout.buffer.write(r.content)
+" > /tmp/yasmine_sample.wav 2>/dev/null || true
+
+    # Fallback: app proxy
+    if [[ ! -s /tmp/yasmine_sample.wav ]]; then
+      APP_PORT=$(_env APP_PORT); APP_PORT="${APP_PORT:-3000}"
+      curl -sf -X POST "http://localhost:${APP_PORT}/api/tts" \
+        -H "Content-Type: application/json" \
+        -d '{"text":"Bonjour, je suis Yasmine, votre assistante vocale VocazAI.","voice":"af_heart","speed":0.92,"lang":"fr-fr"}' \
+        -o /tmp/yasmine_sample.wav 2>/dev/null || true
+    fi
+
+    if [[ ! -s /tmp/yasmine_sample.wav ]]; then
+      warn "Could not generate voice sample — run 'vocazai update' again after 'vocazai start'"
+    else
+      # Convert to MP3 if ffmpeg available
+      SAMPLE_FILE="/tmp/yasmine_sample.wav"
+      if command -v ffmpeg &>/dev/null; then
+        ffmpeg -y -i /tmp/yasmine_sample.wav -codec:a libmp3lame -q:a 4 \
+          /tmp/yasmine_sample.mp3 -loglevel quiet 2>/dev/null && SAMPLE_FILE="/tmp/yasmine_sample.mp3"
+      fi
+
+      SAMPLE_B64=$(base64 -w 0 "$SAMPLE_FILE")
+      RESPONSE=$(curl -s -X POST https://api.mistral.ai/v1/audio/voices \
+        -H "Authorization: Bearer $MISTRAL_KEY" \
+        -H "Content-Type: application/json" \
+        -d "{\"name\":\"yasmine-vocazai\",\"sample_audio\":\"$SAMPLE_B64\",
+             \"sample_filename\":\"$(basename $SAMPLE_FILE)\",
+             \"languages\":[\"fr\",\"en\",\"ar\"],\"gender\":\"female\",
+             \"tags\":[\"french\",\"vocazai\",\"yasmine\"]}")
+
+      NEW_VOICE_ID=$(echo "$RESPONSE" | python3 -c \
+        "import sys,json; print(json.load(sys.stdin).get('id',''))" 2>/dev/null || echo "")
+
+      if [[ -n "$NEW_VOICE_ID" ]]; then
+        if grep -q "^MISTRAL_VOICE_ID=" "$ENV_FILE" 2>/dev/null; then
+          sed -i "s|^MISTRAL_VOICE_ID=.*|MISTRAL_VOICE_ID=$NEW_VOICE_ID|" "$ENV_FILE"
+        else
+          echo "MISTRAL_VOICE_ID=$NEW_VOICE_ID" >> "$ENV_FILE"
+        fi
+        ok "Yasmine voice registered → ${BOLD}$NEW_VOICE_ID${NC}${G}"
+      else
+        warn "Mistral voice registration failed. Response: $RESPONSE"
+        warn "Run 'vocazai update' again once the stack is up."
+      fi
+    fi
+    echo ""
+  elif [[ -n "$VOICE_ID" ]]; then
+    step "④ Voxtral voice"
+    ok "Voice ID already set → ${DIM}${VOICE_ID:0:12}…${NC}${G}  (skip)"
+    echo ""
+  else
+    step "④ Voxtral voice"
+    warn "MISTRAL_API_KEY not set — voice setup skipped"
+    echo ""
+  fi
+
+  # ── 5. Rebuild services ───────────────────────────────────────────────────
   if [[ "$FLAG" == "--all" ]]; then
-    step "Rebuilding ALL services (tts + stt + app)"
+    step "⑤ Rebuilding ALL services (tts + stt + app)"
     DOCKER_BUILDKIT=1 $COMPOSE up -d --build tts stt app
   else
-    # Smart rebuild: always rebuild app; rebuild tts/stt only if their
-    # Dockerfile or source changed in this pull
     REBUILD_SVCS="app"
     if git -C "$APP_DIR" diff --name-only HEAD@{1} HEAD 2>/dev/null \
         | grep -qE '^services/tts/'; then
       REBUILD_SVCS="tts $REBUILD_SVCS"
-      info "TTS source changed — rebuilding tts"
+      info "TTS source changed — will rebuild tts"
     fi
     if git -C "$APP_DIR" diff --name-only HEAD@{1} HEAD 2>/dev/null \
         | grep -qE '^services/stt/'; then
       REBUILD_SVCS="stt $REBUILD_SVCS"
-      info "STT source changed — rebuilding stt"
+      info "STT source changed — will rebuild stt"
     fi
-    step "Rebuilding: $REBUILD_SVCS"
+    step "⑤ Rebuilding: $REBUILD_SVCS"
     DOCKER_BUILDKIT=1 $COMPOSE up -d --build $REBUILD_SVCS
   fi
 
   echo ""
-  ok "Update complete  ${DIM}(use ${NC}${BOLD}vocazai update --all${NC}${DIM} to force rebuild tts+stt too)${NC}"
+  ok "${BOLD}Update complete ✅${NC}${G}  ${DIM}(use ${NC}${BOLD}vocazai update --all${NC}${DIM} to force-rebuild tts+stt)${NC}"
   echo ""
 }
 
@@ -530,20 +616,71 @@ cmd_ssl() {
 }
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  TTS
+#  TTS — live Voxtral synthesis test + Kokoro container status
 # ══════════════════════════════════════════════════════════════════════════════
 cmd_tts() {
   header
   echo ""
-  step "Kokoro TTS Service"
+
+  MISTRAL_KEY=$(_env "MISTRAL_API_KEY")
+  VOICE_ID=$(_env "MISTRAL_VOICE_ID")
+  APP_PORT=$(_env APP_PORT); APP_PORT="${APP_PORT:-3000}"
+
+  # ── Voxtral live test ─────────────────────────────────────────────────────
+  step "Mistral Voxtral TTS — live test"
+  if [[ -z "$MISTRAL_KEY" ]]; then
+    warn "MISTRAL_API_KEY not set — run 'vocazai update' to add it"
+  elif [[ -z "$VOICE_ID" ]]; then
+    warn "MISTRAL_VOICE_ID not set — run 'vocazai update' to register Yasmine"
+  else
+    echo -e "  ${DIM}Voice ID  : ${VOICE_ID:0:16}…${NC}"
+    echo -e "  ${DIM}Model     : voxtral-mini-tts-2603${NC}"
+    echo -e "  ${DIM}Testing synthesis…${NC}"
+    echo ""
+
+    TTS_OUT="/tmp/yasmine_tts_test.mp3"
+    HTTP_CODE=$(curl -s -o "$TTS_OUT" -w "%{http_code}" \
+      -X POST "https://api.mistral.ai/v1/audio/speech" \
+      -H "Authorization: Bearer $MISTRAL_KEY" \
+      -H "Content-Type: application/json" \
+      -d "{
+        \"model\": \"voxtral-mini-tts-2603\",
+        \"input\": \"Bonjour, je suis Yasmine, votre assistante VocazAI. Le système fonctionne parfaitement.\",
+        \"voice\": \"$VOICE_ID\",
+        \"response_format\": \"mp3\"
+      }" 2>/dev/null)
+
+    if [[ "$HTTP_CODE" == "200" ]] && [[ -s "$TTS_OUT" ]]; then
+      SIZE=$(du -h "$TTS_OUT" | cut -f1)
+      ok "${G}Voxtral synthesis OK${NC}  ${DIM}→ ${SIZE} audio generated${NC}"
+      ok "Saved to ${BOLD}$TTS_OUT${NC}"
+      echo ""
+      echo -e "  ${DIM}Play with:  ${BOLD}aplay $TTS_OUT${NC}${DIM}  or  ${BOLD}mpg123 $TTS_OUT${NC}"
+    else
+      # Show error response
+      ERR=$(cat "$TTS_OUT" 2>/dev/null || echo "no response")
+      fail "Voxtral API returned HTTP $HTTP_CODE"
+      echo -e "  ${DIM}Response: $ERR${NC}"
+      echo ""
+      warn "Check MISTRAL_API_KEY and MISTRAL_VOICE_ID — run 'vocazai update' to fix"
+    fi
+  fi
+
+  echo ""
+  divider
+
+  # ── Kokoro container status ───────────────────────────────────────────────
+  step "Kokoro TTS container (fallback)"
   CONTAINER=$(docker inspect --format='{{.State.Status}}' vocazai-tts 2>/dev/null || echo "missing")
-  echo -e "  Container : $CONTAINER"
-  HEALTH=$(curl -sf --max-time 10 http://127.0.0.1:3000/api/tts 2>/dev/null || echo "{}")
-  echo -e "  Response  : $HEALTH"
+  [[ "$CONTAINER" == "running" ]] && ok "vocazai-tts  ${DIM}running${NC}${G}" \
+                                   || fail "vocazai-tts  ${DIM}$CONTAINER${NC}"
+
+  APP_RESP=$(curl -sf --max-time 8 "http://127.0.0.1:${APP_PORT}/api/tts" 2>/dev/null || echo "{}")
+  ENGINE=$(echo "$APP_RESP" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('engine','?'))" 2>/dev/null || echo "?")
+  echo -e "  Active engine : ${BOLD}$ENGINE${NC}"
   echo ""
-  echo -e "  ${DIM}Live logs (last 20 lines):${NC}"
-  echo ""
-  docker logs vocazai-tts --tail=20 2>&1 || true
+  echo -e "  ${DIM}Kokoro logs (last 10):${NC}"
+  docker logs vocazai-tts --tail=10 2>&1 || true
   echo ""
 }
 
