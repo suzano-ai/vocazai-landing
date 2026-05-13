@@ -228,6 +228,12 @@ for i in $(seq 1 24); do
   sleep 5
 done
 
+# ── Install vocazai CLI ───────────────────────────────────────────────────────
+step "Installing vocazai CLI"
+cp "$APP_DIR/deploy/vocazai-cli.sh" /usr/local/bin/vocazai
+chmod +x /usr/local/bin/vocazai
+info "vocazai CLI installed → run 'vocazai' from anywhere"
+
 # ══════════════════════════════════════════════════════════════════════════════
 #  DONE
 # ══════════════════════════════════════════════════════════════════════════════
@@ -238,11 +244,15 @@ echo -e "${BOLD}${G}  ✅  VocazAI is live!${NC}"
 echo ""
 echo -e "  ${BOLD}🌐  https://$DOMAIN${NC}"
 echo ""
-echo -e "  ${DIM}Useful commands:${NC}"
-echo -e "  ${DIM}  View logs    →  ${NC}docker compose -f $APP_DIR/docker-compose.yml logs -f app"
-echo -e "  ${DIM}  Update app   →  ${NC}cd $APP_DIR && git pull && docker compose up -d --build app"
-echo -e "  ${DIM}  Restart      →  ${NC}docker compose -f $APP_DIR/docker-compose.yml restart app"
-echo -e "  ${DIM}  Stop all     →  ${NC}docker compose -f $APP_DIR/docker-compose.yml down"
+echo -e "  ${DIM}Manage your stack with the${NC} ${BOLD}vocazai${NC} ${DIM}CLI:${NC}"
+echo ""
+echo -e "  ${BOLD}  vocazai doctor${NC}       ${DIM}full health check"
+echo -e "  ${BOLD}  vocazai update${NC}       ${DIM}pull latest code + rebuild"
+echo -e "  ${BOLD}  vocazai logs${NC}         ${DIM}live app logs"
+echo -e "  ${BOLD}  vocazai status${NC}       ${DIM}container status"
+echo -e "  ${BOLD}  vocazai restart${NC}      ${DIM}restart the app"
+echo -e "  ${BOLD}  vocazai env${NC}          ${DIM}edit API keys"
+echo -e "  ${BOLD}  vocazai ssl${NC}          ${DIM}check SSL certificate${NC}"
 echo ""
 divider
 echo ""
