@@ -40,15 +40,36 @@ echo ""
 # ── Root check ────────────────────────────────────────────────────────────────
 [[ "$EUID" -ne 0 ]] && error "Please run as root: sudo bash deploy/install.sh"
 
-SERVER_IP=$(curl -s --max-time 5 ifconfig.me 2>/dev/null || echo "unknown")
+# Force IPv4 — DNS A records require IPv4, not IPv6
+SERVER_IP=$(curl -4 -s --max-time 5 ifconfig.me 2>/dev/null \
+  || curl -4 -s --max-time 5 api.ipify.org 2>/dev/null \
+  || curl -4 -s --max-time 5 ipv4.icanhazip.com 2>/dev/null \
+  || echo "")
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  STEP 1 — Domain
 # ══════════════════════════════════════════════════════════════════════════════
 step "Domain configuration"
 echo ""
-echo -e "  ${DIM}Your server IP is: ${BOLD}${W}$SERVER_IP${NC}"
+
+if [[ -z "$SERVER_IP" ]]; then
+  warn "Could not auto-detect your IPv4 address."
+  ask "Enter your server IPv4 address manually (find it in Hostinger → VPS → Manage):"
+  echo -ne "  ${B}›${NC} "
+  read -r SERVER_IP
+  [[ -z "$SERVER_IP" ]] && error "Server IP cannot be empty."
+fi
+
 echo ""
+echo -e "  ${DIM}┌──────────────────────────────────────────────┐${NC}"
+echo -e "  ${DIM}│${NC}  ${BOLD}Your server IPv4 address:${NC}                    ${DIM}│${NC}"
+echo -e "  ${DIM}│${NC}                                              ${DIM}│${NC}"
+echo -e "  ${DIM}│${NC}      ${BOLD}${C}${SERVER_IP}${NC}                              ${DIM}│${NC}"
+echo -e "  ${DIM}│${NC}                                              ${DIM}│${NC}"
+echo -e "  ${DIM}│${NC}  ${DIM}Copy this — you will need it in your DNS     │${NC}"
+echo -e "  ${DIM}└──────────────────────────────────────────────┘${NC}"
+echo ""
+
 ask "What is your domain name? (e.g. vocazai.com)"
 echo -ne "  ${B}›${NC} "
 read -r DOMAIN
@@ -57,17 +78,29 @@ DOMAIN="${DOMAIN#https://}" ; DOMAIN="${DOMAIN#http://}" ; DOMAIN="${DOMAIN%/}"
 DOMAIN_WWW="www.$DOMAIN"
 
 echo ""
-warn "Make sure these DNS A records exist BEFORE continuing:"
+echo -e "  ${BOLD}${Y}  DNS records to create${NC}"
 echo ""
-echo -e "     ${BOLD}$DOMAIN${NC}     →  $SERVER_IP"
-echo -e "     ${BOLD}$DOMAIN_WWW${NC}  →  $SERVER_IP"
+echo -e "  ${DIM}Go to your domain registrar or Hostinger DNS panel and add:${NC}"
 echo ""
-echo -e "  ${DIM}(Set them in your registrar or Hostinger DNS. Changes take 1-30 min.)${NC}"
+echo -e "  ${DIM}  ┌────────┬────────┬───────────────────┬──────┐${NC}"
+echo -e "  ${DIM}  │${NC} ${BOLD}Type${NC}   ${DIM}│${NC} ${BOLD}Name${NC}   ${DIM}│${NC} ${BOLD}Value (IP)${NC}         ${DIM}│${NC} ${BOLD}TTL${NC}  ${DIM}│${NC}"
+echo -e "  ${DIM}  ├────────┼────────┼───────────────────┼──────┤${NC}"
+echo -e "  ${DIM}  │${NC}  A     ${DIM}│${NC}  @     ${DIM}│${NC}  ${C}${BOLD}${SERVER_IP}${NC}  ${DIM}│${NC}  300 ${DIM}│${NC}"
+echo -e "  ${DIM}  │${NC}  A     ${DIM}│${NC}  www   ${DIM}│${NC}  ${C}${BOLD}${SERVER_IP}${NC}  ${DIM}│${NC}  300 ${DIM}│${NC}"
+echo -e "  ${DIM}  └────────┴────────┴───────────────────┴──────┘${NC}"
 echo ""
-ask "Have you set the DNS records? [y/N]"
+echo -e "  ${DIM}  • Type  = A  (not AAAA, not CNAME)${NC}"
+echo -e "  ${DIM}  • Name  = @  means your root domain (${DOMAIN})${NC}"
+echo -e "  ${DIM}  • Value = the IPv4 address above${NC}"
+echo -e "  ${DIM}  • TTL   = 300 or Auto — both are fine${NC}"
+echo ""
+echo -e "  ${DIM}  DNS changes take 1–30 minutes to propagate.${NC}"
+echo -e "  ${DIM}  Run ${BOLD}vocazai domain${NC}${DIM} after install to verify.${NC}"
+echo ""
+ask "Have you added the DNS records? [y/N]"
 echo -ne "  ${B}›${NC} "
 read -r DNS_READY
-[[ ! "$DNS_READY" =~ ^[Yy]$ ]] && warn "You can re-run this script once DNS is ready." && exit 0
+[[ ! "$DNS_READY" =~ ^[Yy]$ ]] && echo "" && warn "No problem — re-run this installer once your DNS is ready." && exit 0
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  STEP 2 — SSL email

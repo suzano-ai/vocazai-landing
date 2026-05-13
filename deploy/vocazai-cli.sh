@@ -324,7 +324,7 @@ cmd_domain() {
   DOMAIN=$(grep -oP 'Host\(`\K[^`]+' "$APP_DIR/docker-compose.yml" 2>/dev/null | head -1 || echo "")
   [[ -z "$DOMAIN" ]] && fail "Could not detect domain from docker-compose.yml" && exit 1
   DOMAIN_WWW="www.$DOMAIN"
-  SERVER_IP=$(curl -s --max-time 5 ifconfig.me 2>/dev/null || echo "unknown")
+  SERVER_IP=$(curl -4 -s --max-time 5 ifconfig.me 2>/dev/null || curl -4 -s --max-time 5 api.ipify.org 2>/dev/null || echo "unknown")
 
   # ── Public DNS resolvers to cross-check propagation ──────────────────────
   declare -A RESOLVERS=(
