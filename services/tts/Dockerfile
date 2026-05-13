@@ -1,39 +1,58 @@
 # =============================================================================
-# VocazAI — Kokoro TTS microservice
-# Model: kokoro-v1.0 (310 MB) + voices-v1.0.bin (26 voix)
-# Voix utilisées:
-#   ff_siwis  — Français femme (France + Maroc)
-#   af_heart  — Anglais femme (fallback)
+# VocazAI — Piper TTS microservice
+# rhasspy/piper — ONNX neural TTS, real-time on CPU, 100% self-hosted
+#
+# Voice models downloaded from HuggingFace at build time (~60 MB each):
+#   fr_FR-siwis-medium  — French female
+#   en_US-jenny-medium  — English female
+#   ar_JO-kareem-medium — Arabic  male
 # =============================================================================
 
 FROM python:3.11-slim
 
 WORKDIR /app
 
-# System deps for soundfile
+# espeak-ng is required by piper-tts for phonemization
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libsndfile1 \
+    espeak-ng \
+    espeak-ng-data \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Python deps
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# ── Download Kokoro v1.0 model files (~310 MB) ───────────────────────────────
-# Source: https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.0
-RUN for i in 1 2 3; do \
-      wget -q --timeout=180 --tries=3 \
-        -O kokoro-v1.0.onnx \
-        "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx" && \
-      wget -q --timeout=120 --tries=3 \
-        -O voices-v1.0.bin \
-        "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin" && \
-      echo "✓ Models downloaded (kokoro-v1.0 + voices-v1.0)" && break || \
-      (echo "Attempt $i failed, retrying in 5s…" && sleep 5); \
-    done && \
-    test -f kokoro-v1.0.onnx || (echo "ERROR: kokoro-v1.0.onnx not downloaded" && exit 1) && \
-    test -f voices-v1.0.bin  || (echo "ERROR: voices-v1.0.bin not downloaded"  && exit 1)
+# ── Download Piper voice models from HuggingFace ─────────────────────────────
+# Each voice needs the .onnx model + .onnx.json config file
+ARG HF_BASE="https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0"
+RUN mkdir -p /app/models
+
+# French female — fr_FR-siwis-medium (~63 MB)
+RUN wget -q --timeout=120 \
+      "${HF_BASE}/fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx" \
+      -O /app/models/fr_FR-siwis-medium.onnx && \
+    wget -q --timeout=30 \
+      "${HF_BASE}/fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx.json" \
+      -O /app/models/fr_FR-siwis-medium.onnx.json && \
+    echo "✓ fr_FR-siwis-medium"
+
+# English female — en_US-jenny-medium (~62 MB)
+RUN wget -q --timeout=120 \
+      "${HF_BASE}/en/en_US/jenny/medium/en_US-jenny-medium.onnx" \
+      -O /app/models/en_US-jenny-medium.onnx && \
+    wget -q --timeout=30 \
+      "${HF_BASE}/en/en_US/jenny/medium/en_US-jenny-medium.onnx.json" \
+      -O /app/models/en_US-jenny-medium.onnx.json && \
+    echo "✓ en_US-jenny-medium"
+
+# Arabic — ar_JO-kareem-medium (~60 MB)
+RUN wget -q --timeout=120 \
+      "${HF_BASE}/ar/ar_JO/kareem/medium/ar_JO-kareem-medium.onnx" \
+      -O /app/models/ar_JO-kareem-medium.onnx && \
+    wget -q --timeout=30 \
+      "${HF_BASE}/ar/ar_JO/kareem/medium/ar_JO-kareem-medium.onnx.json" \
+      -O /app/models/ar_JO-kareem-medium.onnx.json && \
+    echo "✓ ar_JO-kareem-medium"
 
 COPY main.py .
 

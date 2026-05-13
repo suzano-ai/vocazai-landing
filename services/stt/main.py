@@ -1,6 +1,6 @@
 """
 VocazAI — Faster-Whisper STT microservice
-Model  : whisper-base (int8, CPU) — multilingual, French-optimised
+Model  : whisper-small (int8, CPU) — multilingual, 3× more accurate than base
 Accepts: audio/webm, audio/mp4, audio/wav, audio/ogg (via ffmpeg)
 Returns: { "text": "...", "language": "fr", "confidence": 0.98 }
 """
@@ -14,7 +14,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("stt")
 
-app = FastAPI(title="VocazAI STT", version="1.0.0")
+app = FastAPI(title="VocazAI STT", version="2.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,34 +29,33 @@ _model = None
 @app.on_event("startup")
 def load_model():
     global _model
-    log.info("Loading Faster-Whisper base model…")
+    log.info("Loading Faster-Whisper small model…")
     try:
         from faster_whisper import WhisperModel
         _model = WhisperModel(
-            "base",
+            "small",
             device="cpu",
             compute_type="int8",
             download_root="/app/models",
         )
-        log.info("✓ Faster-Whisper ready")
+        log.info("✓ Faster-Whisper small ready")
     except Exception as e:
         log.error(f"Failed to load model: {e}")
 
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "model_loaded": _model is not None}
+    return {"status": "ok", "model": "small", "model_loaded": _model is not None}
 
 
 @app.post("/stt")
 async def transcribe(
     audio: UploadFile = File(...),
-    language: str = Form(default="fr"),   # fr pour France + Maroc
+    language: str = Form(default="fr"),
 ):
     if _model is None:
         raise HTTPException(status_code=503, detail="Model not loaded yet")
 
-    # Save uploaded audio to temp file
     suffix = os.path.splitext(audio.filename or "audio.webm")[1] or ".webm"
     with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
         content = await audio.read()
@@ -69,9 +68,15 @@ async def transcribe(
         segments, info = _model.transcribe(
             tmp_path,
             language=language if language != "auto" else None,
-            beam_size=3,
-            vad_filter=True,          # ignore silence
-            vad_parameters=dict(min_silence_duration_ms=300),
+            beam_size=5,                          # higher = more accurate
+            best_of=5,                            # pick best of 5 candidates
+            condition_on_previous_text=False,     # better for short phrases
+            vad_filter=True,
+            vad_parameters=dict(
+                min_silence_duration_ms=500,      # wait longer before cutting
+                speech_pad_ms=400,                # pad start/end — don't cut words
+            ),
+            temperature=0.0,                      # deterministic, no hallucinations
         )
 
         text = " ".join(seg.text.strip() for seg in segments).strip()

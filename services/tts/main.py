@@ -1,22 +1,29 @@
 """
-VocazAI — Kokoro TTS microservice
-Model : kokoro-v1.0.onnx + voices-v1.0.bin
-Voice : ff_siwis  — native French female voice (Kokoro v1.0)
-Lang  : fr-fr     — French phonemes
+VocazAI — Piper TTS microservice
+Model  : rhasspy/piper — ONNX neural TTS, real-time on CPU
+Voices :
+  fr_FR-siwis-medium  — French female  (Metropolitan French)
+  en_US-jenny-medium  — English female (natural American English)
+  ar_JO-kareem-medium — Arabic  male   (best available open-source Arabic voice)
+
+All voices downloaded from HuggingFace at Docker build time.
+Returns: audio/wav — no external API calls, 100% self-hosted.
 """
 
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import Response
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-import soundfile as sf
 import io
 import logging
+import wave
+from pathlib import Path
+
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import Response
+from pydantic import BaseModel
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("tts")
 
-app = FastAPI(title="VocazAI TTS", version="2.1.0")
+app = FastAPI(title="VocazAI TTS (Piper)", version="4.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -25,93 +32,113 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Voice config ──────────────────────────────────────────────────────────────
-# ff_siwis = native French female voice in Kokoro v1.0 (Swiss French phonemes,
-#            cleanest French pronunciation available in the model)
-VOICE_PRIMARY = "ff_siwis"
+MODELS_DIR = Path("/app/models")
 
-_kokoro = None
+# voice-id → (onnx path, length_scale)
+# length_scale > 1 = slower/clearer, < 1 = faster
+VOICE_MAP: dict[str, tuple[str, float]] = {
+    # Primary names used by demo-call-card
+    "fr_FR-siwis-medium":  ("fr_FR-siwis-medium.onnx",  1.0),
+    "en_US-jenny-medium":  ("en_US-jenny-medium.onnx",   1.0),
+    "ar_JO-kareem-medium": ("ar_JO-kareem-medium.onnx",  1.05),
+    # Legacy Kokoro IDs → mapped to best Piper equivalent
+    "ff_siwis":  ("fr_FR-siwis-medium.onnx",  1.0),
+    "af_heart":  ("en_US-jenny-medium.onnx",   1.0),
+    # edge-tts names → also supported
+    "fr-FR-DeniseNeural": ("fr_FR-siwis-medium.onnx",  1.0),
+    "en-US-JennyNeural":  ("en_US-jenny-medium.onnx",   1.0),
+    "ar-MA-MounaNeural":  ("ar_JO-kareem-medium.onnx",  1.05),
+}
+
+DEFAULT_VOICE = "fr_FR-siwis-medium"
+
+# Pre-loaded voice instances
+_voices: dict[str, object] = {}
 
 
 @app.on_event("startup")
-def load_model():
-    global _kokoro
-    log.info("Loading Kokoro v1.0 ONNX model…")
+def load_voices():
     try:
-        from kokoro_onnx import Kokoro
-        _kokoro = Kokoro("kokoro-v1.0.onnx", "voices-v1.0.bin")
-        log.info(f"✓ Kokoro ready — primary voice: {VOICE_PRIMARY}")
-    except Exception as e:
-        log.error(f"Failed to load Kokoro: {e}")
+        from piper.voice import PiperVoice
+    except ImportError:
+        log.error("piper-tts not installed — run pip install piper-tts")
+        return
 
+    loaded_files: set[str] = set()
+    for voice_id, (filename, _) in VOICE_MAP.items():
+        if filename in loaded_files:
+            continue
+        onnx_path = MODELS_DIR / filename
+        if not onnx_path.exists():
+            log.warning(f"Model not found: {onnx_path}")
+            continue
+        try:
+            log.info(f"Loading {filename}…")
+            _voices[filename] = PiperVoice.load(str(onnx_path), use_cuda=False)
+            loaded_files.add(filename)
+            log.info(f"✓ {filename} ready")
+        except Exception as e:
+            log.error(f"Failed to load {filename}: {e}")
 
-class TTSRequest(BaseModel):
-    text:  str
-    voice: str   = VOICE_PRIMARY
-    speed: float = 0.92          # légèrement ralenti = meilleure diction
-    lang:  str   = "fr-fr"
+    log.info(f"Piper ready — {len(loaded_files)} voice(s) loaded")
 
 
 @app.get("/health")
 def health():
     return {
         "status": "ok",
-        "model_loaded": _kokoro is not None,
-        "voice": VOICE_PRIMARY,
+        "engine": "piper",
+        "voices_loaded": list(_voices.keys()),
     }
 
 
 @app.get("/voices")
 def list_voices():
-    if _kokoro is None:
-        raise HTTPException(status_code=503, detail="Model not loaded")
-    try:
-        voices = sorted(_kokoro.get_voices())
-    except Exception:
-        try:
-            voices = sorted(_kokoro.voices.keys())
-        except Exception:
-            voices = [VOICE_PRIMARY]
-    return {"voices": voices, "primary": VOICE_PRIMARY}
+    return {"voices": list(VOICE_MAP.keys()), "engine": "piper"}
+
+
+class TTSRequest(BaseModel):
+    text:  str
+    voice: str   = DEFAULT_VOICE
+    speed: float = 0.92   # 0.92 → length_scale ~1.08 (slightly slower = clearer)
+    lang:  str   = "fr-fr"  # kept for API compatibility
 
 
 @app.post("/tts")
 async def synthesize(req: TTSRequest):
-    if _kokoro is None:
-        raise HTTPException(status_code=503, detail="Model not loaded yet")
-
     text = req.text.strip()
     if not text:
         raise HTTPException(status_code=400, detail="text is required")
-    if len(text) > 500:
-        raise HTTPException(status_code=400, detail="text too long (max 500 chars)")
+    if len(text) > 800:
+        raise HTTPException(status_code=400, detail="text too long (max 800 chars)")
 
-    # Allowlist — French voice first, others kept for flexibility
-    allowed_voices = {
-        "ff_siwis",                                          # French female (primary)
-        "af_heart", "af_bella", "af_nova", "af_sarah",      # English fallbacks
-        "af_sky", "af_jessica", "af_nicole", "af_alloy",
-        "af_aoede", "af_kore", "af_river",
-        "bf_emma", "bf_isabella", "bf_alice", "bf_lily",
-    }
-    voice = req.voice if req.voice in allowed_voices else VOICE_PRIMARY
+    voice_key = VOICE_MAP.get(req.voice)
+    if voice_key is None:
+        voice_key = VOICE_MAP[DEFAULT_VOICE]
+    filename, base_length_scale = voice_key
+
+    voice = _voices.get(filename)
+    if voice is None:
+        raise HTTPException(status_code=503, detail=f"Voice model not loaded: {filename}")
+
+    # speed 0.92 → length_scale ≈ 1.09 (invert: slower = clearer pronunciation)
+    length_scale = round(base_length_scale / max(req.speed, 0.5), 3)
 
     try:
-        log.info(f"Synthesising [{voice}] lang={req.lang} speed={req.speed} ({len(text)} chars)")
-        samples, sample_rate = _kokoro.create(
-            text,
-            voice=voice,
-            speed=req.speed,
-            lang=req.lang,
-        )
+        log.info(f"Synthesising [{filename}] length_scale={length_scale} ({len(text)} chars)")
+
         buf = io.BytesIO()
-        sf.write(buf, samples, sample_rate, format="WAV")
+        with wave.open(buf, "wb") as wav_file:
+            voice.synthesize(text, wav_file, length_scale=length_scale)
         buf.seek(0)
+        audio_bytes = buf.read()
+
+        log.info(f"✓ {len(audio_bytes) / 1024:.1f} KB WAV generated")
         return Response(
-            content=buf.read(),
+            content=audio_bytes,
             media_type="audio/wav",
             headers={"Cache-Control": "no-store"},
         )
     except Exception as e:
-        log.error(f"TTS error: {e}")
+        log.error(f"TTS synthesis error: {e}")
         raise HTTPException(status_code=500, detail=str(e))

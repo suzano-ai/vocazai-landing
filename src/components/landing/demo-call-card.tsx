@@ -27,11 +27,12 @@ const LANG_CFG: Record<Lang, {
   retry:      string;
   retryEmail: string;
   retrySlot:  string;
+  bailout:    string;
   closing:    (name: string, slot: string, email: string) => string;
 }> = {
   fr: {
     bcp47:  "fr-FR",
-    voice:  "ff_siwis",
+    voice:  "fr_FR-siwis-medium",
     stt:    "fr",
     dir:    "ltr",
     label:  "FR",
@@ -67,15 +68,16 @@ const LANG_CFG: Record<Lang, {
       },
     ],
     retry:      "Je n'ai pas entendu. Pouvez-vous répéter ?",
-    retryEmail: "Je n'ai pas pu noter votre email. Pouvez-vous le répéter ?",
+    retryEmail: "Je n'ai pas pu noter votre email. Pouvez-vous le répéter lentement ?",
     retrySlot:  "Je n'ai pas bien compris. Dites 9h30 ou 11h15.",
+    bailout:    "Je n'arrive pas à vous entendre correctement. N'hésitez pas à relancer la démo dans un instant.",
     closing: (name, slot, email) =>
       `Parfait${name ? `, ${name}` : ""}. Votre rendez-vous${slot ? ` à ${slot}` : ""} ce mercredi est confirmé. Un email de confirmation${email ? ` a été envoyé à ${email}` : " vous sera envoyé"}. À très bientôt.`,
   },
 
   en: {
     bcp47:  "en-US",
-    voice:  "af_heart",
+    voice:  "en_US-jenny-medium",
     stt:    "en",
     dir:    "ltr",
     label:  "EN",
@@ -113,13 +115,14 @@ const LANG_CFG: Record<Lang, {
     retry:      "I didn't catch that. Could you repeat?",
     retryEmail: "I couldn't catch your email. Could you repeat it clearly?",
     retrySlot:  "I didn't understand. Please say 9:30 or 11:15.",
+    bailout:    "I'm having trouble hearing you. Feel free to restart the demo in a moment.",
     closing: (name, slot, email) =>
       `Perfect${name ? `, ${name}` : ""}. Your appointment${slot ? ` at ${slot}` : ""} this Wednesday is confirmed. A confirmation email${email ? ` has been sent to ${email}` : " will be sent to you"}. Talk soon.`,
   },
 
   ar: {
     bcp47:  "ar-MA",
-    voice:  "ff_siwis",   // No Arabic Kokoro voice — Web Speech API is primary
+    voice:  "ar_JO-kareem-medium",
     stt:    "ar",
     dir:    "rtl",
     label:  "AR",
@@ -155,8 +158,9 @@ const LANG_CFG: Record<Lang, {
       },
     ],
     retry:      "لم أسمع ذلك. هل يمكنك التكرار؟",
-    retryEmail: "لم أتمكن من فهم بريدك الإلكتروني. هل يمكنك تكراره؟",
+    retryEmail: "لم أتمكن من فهم بريدك الإلكتروني. هل يمكنك تكراره ببطء؟",
     retrySlot:  "لم أفهم جيداً. قل 9:30 أو 11:15.",
+    bailout:    "أجد صعوبة في سماعك. يمكنك إعادة تشغيل العرض التجريبي في أي وقت.",
     closing: (name, slot, email) =>
       `ممتاز${name ? `، ${name}` : ""}. تم تأكيد موعدك${slot ? ` الساعة ${slot}` : ""} هذا الأربعاء. ${email ? `تم إرسال بريد التأكيد إلى ${email}` : "سيصلك بريد التأكيد قريباً"}. إلى اللقاء.`,
   },
@@ -475,6 +479,15 @@ export function DemoCallCard({ locale }: { locale?: string }) {
     } catch { /* silent */ }
   }, []);
 
+  // ── Graceful bailout — Yasmine speaks and ends the demo (no error button) ──
+  const gracefulBailout = useCallback(async () => {
+    const cfg = LANG_CFG[langRef.current];
+    await speak(cfg.bailout);
+    setMessages((m) => [...m, { role: "agent", text: cfg.bailout }]);
+    setDemoState("done");
+    stopTimer();
+  }, [speak, stopTimer]);
+
   // ── Main conversation loop ─────────────────────────────────────────────────
   const runTurn = useCallback(async (idx: number) => {
     const cfg    = LANG_CFG[langRef.current];
@@ -482,55 +495,70 @@ export function DemoCallCard({ locale }: { locale?: string }) {
     if (idx >= script.length) return;
 
     const step = script[idx];
-    // Resolve personalized text using what's been collected so far
     const speakText = typeof step.speak === "function"
       ? step.speak(collected.current)
       : step.speak;
 
     setHint(step.hint ?? "");
-    // Speak FIRST — then show the transcript
     await speak(speakText);
     setMessages((m) => [...m, { role: "agent", text: speakText }]);
 
-    let transcript = await listen();
-    if (!transcript) {
-      await speak(cfg.retry);
-      transcript = await listen();
-      if (!transcript) { setDemoState("error"); return; }
-    }
+    // ── Retry loop: up to 3 attempts; Yasmine speaks every retry ────────────
+    const getTranscript = async (): Promise<string> => {
+      for (let attempt = 0; attempt < 3; attempt++) {
+        if (attempt > 0) await speak(cfg.retry);
+        const t = await listen();
+        if (t) return t;
+      }
+      return "";
+    };
 
-    let userMsg = transcript;
+    // ── Intent step — any non-empty response advances the conversation ───────
+    if (step.mode === "intent") {
+      const transcript = await getTranscript();
+      if (!transcript) { await gracefulBailout(); return; }
+      setMessages((m) => [...m, { role: "user", text: transcript }]);
 
-    if (step.mode === "free") {
+    // ── Free-form step (name, etc.) ──────────────────────────────────────────
+    } else if (step.mode === "free") {
+      const transcript = await getTranscript();
+      if (!transcript) { await gracefulBailout(); return; }
       collected.current[step.id as "name"] = transcript;
+      setMessages((m) => [...m, { role: "user", text: transcript }]);
 
+    // ── Choice step (time slot) ──────────────────────────────────────────────
     } else if (step.mode === "choice") {
-      let matched = matchSlot(transcript, langRef.current);
-      if (!matched) {
-        setMessages((m) => [...m, { role: "user", text: transcript }]);
-        await speak(cfg.retrySlot);
-        const retry = await listen();
-        matched = matchSlot(retry, langRef.current);
-        if (!matched) { setDemoState("error"); return; }
-        userMsg = matched;
+      let matched: string | null = null;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        if (attempt > 0) await speak(cfg.retrySlot);
+        const t = await listen();
+        if (t) {
+          setMessages((m) => [...m, { role: "user", text: t }]);
+          matched = matchSlot(t, langRef.current);
+          if (matched) break;
+        }
       }
+      if (!matched) { await gracefulBailout(); return; }
       collected.current.slot = matched;
-      userMsg = matched;
+      setMessages((m) => [...m, { role: "user", text: matched! }]);
 
+    // ── Email step ───────────────────────────────────────────────────────────
     } else if (step.mode === "email") {
-      let email = extractEmail(transcript);
-      if (!email) {
-        setMessages((m) => [...m, { role: "user", text: transcript }]);
-        await speak(cfg.retryEmail);
-        const retry = await listen();
-        email = extractEmail(retry) ?? retry;
-        userMsg = email;
+      let email: string | null = null;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        if (attempt > 0) await speak(cfg.retryEmail);
+        const t = await listen();
+        if (t) {
+          setMessages((m) => [...m, { role: "user", text: t }]);
+          email = extractEmail(t) ?? t;
+          if (email) break;
+        }
       }
+      if (!email) { await gracefulBailout(); return; }
       collected.current.email = email;
-      userMsg = email;
+      setMessages((m) => [...m, { role: "user", text: email }]);
     }
 
-    setMessages((m) => [...m, { role: "user", text: userMsg }]);
     const nextIdx = idx + 1;
     setTurn(nextIdx);
 
@@ -545,7 +573,7 @@ export function DemoCallCard({ locale }: { locale?: string }) {
     } else {
       await runTurn(nextIdx);
     }
-  }, [speak, listen, listenViaServer, sendEmail, stopTimer]);
+  }, [speak, listen, gracefulBailout, sendEmail, stopTimer]);
 
   // ── Start demo ─────────────────────────────────────────────────────────────
   const startDemo = useCallback(async () => {
@@ -658,9 +686,7 @@ export function DemoCallCard({ locale }: { locale?: string }) {
           </div>
         )}
 
-        {demoState === "error" && (
-          <p className="text-xs text-red-500 italic">{UI.error}</p>
-        )}
+        {/* No error state — Yasmine always speaks a graceful goodbye instead */}
       </div>
 
       {/* Listening hint */}
