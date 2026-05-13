@@ -289,94 +289,9 @@ cmd_update() {
   _upsert_key "RESEND_API_KEY"  "Resend API key"   "https://resend.com/api-keys"
   echo ""
 
-  # ── 4. Voxtral voice setup (if no voice ID yet) ───────────────────────────
-  MISTRAL_KEY=$(_env "MISTRAL_API_KEY")
-  VOICE_ID=$(_env "MISTRAL_VOICE_ID")
-
-  if [[ -n "$MISTRAL_KEY" && -z "$VOICE_ID" ]]; then
-    step "④ Registering Yasmine voice with Mistral Voxtral"
-
-    # Generate audio sample via Kokoro container
-    info "Generating reference audio via Kokoro…"
-    docker exec vocazai-tts \
-      python3 -c "
-import requests, sys
-r = requests.post('http://localhost:8000/tts', json={
-    'text': 'Bonjour, je suis Yasmine, votre assistante vocale VocazAI.',
-    'voice': 'af_heart', 'speed': 0.92, 'lang': 'fr-fr'
-})
-sys.stdout.buffer.write(r.content)
-" > /tmp/yasmine_sample.wav 2>/dev/null || true
-
-    # Fallback: app proxy
-    if [[ ! -s /tmp/yasmine_sample.wav ]]; then
-      APP_PORT=$(_env APP_PORT); APP_PORT="${APP_PORT:-3000}"
-      curl -sf -X POST "http://localhost:${APP_PORT}/api/tts" \
-        -H "Content-Type: application/json" \
-        -d '{"text":"Bonjour, je suis Yasmine, votre assistante vocale VocazAI.","voice":"af_heart","speed":0.92,"lang":"fr-fr"}' \
-        -o /tmp/yasmine_sample.wav 2>/dev/null || true
-    fi
-
-    if [[ ! -s /tmp/yasmine_sample.wav ]]; then
-      warn "Could not generate voice sample — run 'vocazai update' again after 'vocazai start'"
-    else
-      # Convert to MP3 if ffmpeg available
-      SAMPLE_FILE="/tmp/yasmine_sample.wav"
-      if command -v ffmpeg &>/dev/null; then
-        ffmpeg -y -i /tmp/yasmine_sample.wav -codec:a libmp3lame -q:a 4 \
-          /tmp/yasmine_sample.mp3 -loglevel quiet 2>/dev/null && SAMPLE_FILE="/tmp/yasmine_sample.mp3"
-      fi
-
-      SAMPLE_FNAME=$(basename "$SAMPLE_FILE")
-      PAYLOAD_FILE="/tmp/yasmine_voice_payload.json"
-      # Pipe base64 through stdin — never touches shell argument list
-      base64 -w 0 "$SAMPLE_FILE" | python3 -c "
-import json, sys
-payload = {
-  'name': 'yasmine-vocazai',
-  'sample_audio': sys.stdin.read().strip(),
-  'sample_filename': '$SAMPLE_FNAME',
-  'languages': ['fr', 'en', 'ar'],
-  'gender': 'female',
-  'tags': ['french', 'vocazai', 'yasmine']
-}
-print(json.dumps(payload))
-" > "$PAYLOAD_FILE"
-
-      RESPONSE=$(curl -s -X POST https://api.mistral.ai/v1/audio/voices \
-        -H "Authorization: Bearer $MISTRAL_KEY" \
-        -H "Content-Type: application/json" \
-        -d "@$PAYLOAD_FILE")
-
-      NEW_VOICE_ID=$(echo "$RESPONSE" | python3 -c \
-        "import sys,json; print(json.load(sys.stdin).get('id',''))" 2>/dev/null || echo "")
-
-      if [[ -n "$NEW_VOICE_ID" ]]; then
-        if grep -q "^MISTRAL_VOICE_ID=" "$ENV_FILE" 2>/dev/null; then
-          sed -i "s|^MISTRAL_VOICE_ID=.*|MISTRAL_VOICE_ID=$NEW_VOICE_ID|" "$ENV_FILE"
-        else
-          echo "MISTRAL_VOICE_ID=$NEW_VOICE_ID" >> "$ENV_FILE"
-        fi
-        ok "Yasmine voice registered → ${BOLD}$NEW_VOICE_ID${NC}${G}"
-      elif echo "$RESPONSE" | grep -qi "paid plan\|subscription\|upgrade"; then
-        info "Voxtral custom voice requires a paid Mistral plan — skipping"
-        info "Demo will use Kokoro ff_siwis (native French) instead  ${DIM}✓${NC}"
-      fi
-    fi
-    echo ""
-  elif [[ -n "$VOICE_ID" ]]; then
-    step "④ Voxtral voice"
-    ok "Voice ID already set → ${DIM}${VOICE_ID:0:12}…${NC}${G}  (skip)"
-    echo ""
-  else
-    step "④ Voxtral voice"
-    warn "MISTRAL_API_KEY not set — voice setup skipped"
-    echo ""
-  fi
-
-  # ── 5. Rebuild services ───────────────────────────────────────────────────
+  # ── 4. Rebuild services ───────────────────────────────────────────────────
   if [[ "$FLAG" == "--all" ]]; then
-    step "⑤ Rebuilding ALL services (tts + stt + app)"
+    step "④ Rebuilding ALL services (tts + stt + app)"
     DOCKER_BUILDKIT=1 $COMPOSE up -d --build tts stt app
   else
     REBUILD_SVCS="app"
@@ -390,8 +305,28 @@ print(json.dumps(payload))
       REBUILD_SVCS="stt $REBUILD_SVCS"
       info "STT source changed — will rebuild stt"
     fi
-    step "⑤ Rebuilding: $REBUILD_SVCS"
+    step "④ Rebuilding: $REBUILD_SVCS"
     DOCKER_BUILDKIT=1 $COMPOSE up -d --build $REBUILD_SVCS
+  fi
+
+  # ── 5. Voxtral voice setup (after rebuild so TTS container is up) ─────────
+  MISTRAL_KEY=$(_env "MISTRAL_API_KEY")
+  VOICE_ID=$(_env "MISTRAL_VOICE_ID")
+
+  if [[ -n "$MISTRAL_KEY" && -z "$VOICE_ID" ]]; then
+    step "⑤ Registering Yasmine voice with Mistral Voxtral"
+    info "Waiting for TTS container to be ready…"
+    sleep 5
+    python3 "$APP_DIR/deploy/register_voice.py" 2>&1 | sed 's/^/  /'
+    echo ""
+  elif [[ -n "$VOICE_ID" ]]; then
+    step "⑤ Voxtral voice"
+    ok "Voice ID already set → ${DIM}${VOICE_ID:0:12}…${NC}${G}  (skip)"
+    echo ""
+  else
+    step "⑤ Voxtral voice"
+    info "Kokoro ff_siwis active (add MISTRAL_API_KEY for Voxtral)"
+    echo ""
   fi
 
   echo ""
