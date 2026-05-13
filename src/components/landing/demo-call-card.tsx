@@ -1,53 +1,68 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Phone, Play, RotateCcw, Loader2, Mic, Square } from "lucide-react";
+import { Phone, Play, RotateCcw, Loader2, Mic, CheckCircle } from "lucide-react";
 import { Waveform } from "@/components/zellige";
 
-// ─── Scripted conversation ────────────────────────────────────────────────────
-const TURNS = [
+// ─── Conversation script ──────────────────────────────────────────────────────
+// Each turn: Yasmine speaks, then listens for a free-form or structured answer
+const SCRIPT = [
   {
-    agent: "Bonjour ! Je suis Yasmine, votre assistante vocale VocazAI. Comment puis-je vous aider aujourd'hui ?",
-    options: ["Je voudrais prendre un rendez-vous", "Quelles sont vos disponibilités ?"],
+    id:     "greeting",
+    speak:  "Bonjour ! Je suis Yasmine, l'assistante vocale VocazAI. Comment puis-je vous aider aujourd'hui ?",
+    hint:   "Dites par exemple : « Je voudrais prendre un rendez-vous »",
+    mode:   "intent",   // any speech → proceed
   },
   {
-    agent: "Bien sûr. J'ai deux créneaux disponibles mercredi matin : 9h30 ou 11h15. Lequel vous convient ?",
-    options: ["9h30, c'est parfait !", "Je préfère 11h15"],
+    id:     "name",
+    speak:  "Parfait ! Pour commencer, pouvez-vous me donner votre nom complet ?",
+    hint:   "Dites votre prénom et nom",
+    mode:   "free",     // capture verbatim
   },
   {
-    agent: "Parfait ! Je note votre rendez-vous pour mercredi à 9h30. Votre nom complet, s'il vous plaît ?",
-    options: ["Mohammed Benali", "Aymane Tazi"],
+    id:     "slot",
+    speak:  "Merci. J'ai deux créneaux disponibles ce mercredi : 9h30 ou 11h15. Lequel vous convient ?",
+    hint:   "Dites « 9h30 » ou « 11h15 »",
+    mode:   "choice",
+    choices: ["9h30", "11h15"],
   },
   {
-    agent: "Très bien, c'est enregistré. Rendez-vous mercredi à 9h30. À très bientôt !",
-    options: [],
+    id:     "email",
+    speak:  "Très bien. Quelle est votre adresse email pour recevoir la confirmation ?",
+    hint:   "Épelez votre email ou dites-le clairement",
+    mode:   "email",    // try to extract a valid email
   },
+  // Turn 4 text is generated dynamically from collected data
 ];
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-type DemoState = "idle" | "loading" | "speaking" | "waiting" | "done";
+type DemoState = "idle" | "loading" | "speaking" | "listening" | "processing" | "done" | "error";
 type Message   = { role: "agent" | "user"; text: string };
-type SttStatus = "idle" | "recording" | "processing" | "nomatch";
 
-// ─── Fuzzy match transcription → closest option ───────────────────────────────
-function matchOption(transcript: string, options: string[]): string | null {
-  const norm = (s: string) =>
-    s.toLowerCase()
-      .normalize("NFD")
-      .replace(/[̀-ͯ]/g, "")
-      .replace(/[^a-z0-9 ]/g, " ");
+// ─── Extract email from spoken text ──────────────────────────────────────────
+function extractEmail(raw: string): string | null {
+  // Direct match
+  const direct = raw.match(/[\w.+-]+@[\w.-]+\.[a-z]{2,}/i);
+  if (direct) return direct[0].toLowerCase();
 
-  const t = norm(transcript);
-  let bestOption: string | null = null;
-  let bestScore = 0;
+  // Normalize French spoken form: "arobase" → @, "point" → .
+  const normalized = raw
+    .toLowerCase()
+    .replace(/\s+arobase\s+|\s*@\s*/g, "@")
+    .replace(/\s+point\s+/g, ".")
+    .replace(/\s+tiret\s+/g, "-")
+    .replace(/\s+underscore\s+|\s+tiret bas\s+/g, "_")
+    .replace(/\s/g, "");
 
-  for (const opt of options) {
-    const words = norm(opt).split(/\s+/).filter((w) => w.length >= 3);
-    const matched = words.filter((w) => t.includes(w)).length;
-    const score = words.length > 0 ? matched / words.length : 0;
-    if (score > bestScore) { bestScore = score; bestOption = opt; }
-  }
-  return bestScore >= 0.4 ? bestOption : null;
+  const fallback = normalized.match(/[\w.+-]+@[\w.-]+\.[a-z]{2,}/i);
+  return fallback ? fallback[0].toLowerCase() : null;
+}
+
+// ─── Match spoken answer to a slot choice ────────────────────────────────────
+function matchSlot(text: string): string | null {
+  const t = text.toLowerCase();
+  if (/9|neuf|neuf\s*h|9\s*h|trente/.test(t))  return "9h30";
+  if (/11|onze|onze\s*h|11\s*h|quinze/.test(t)) return "11h15";
+  return null;
 }
 
 // ─── Bubble ───────────────────────────────────────────────────────────────────
@@ -57,7 +72,7 @@ function Bubble({ role, children }: { role: "agent" | "user"; children: React.Re
       <span className={`mt-0.5 inline-flex h-5 shrink-0 items-center rounded-sm px-1.5 font-mono text-[9px] uppercase tracking-wider ${
         role === "user" ? "bg-surface text-muted-foreground" : "bg-saffron-500 text-ink-900"
       }`}>
-        {role === "user" ? "Vous" : "Agent"}
+        {role === "user" ? "Vous" : "Yasmine"}
       </span>
       <p className={`flex-1 text-sm leading-relaxed ${role === "user" ? "text-muted-foreground" : ""}`}>
         {children}
@@ -66,26 +81,30 @@ function Bubble({ role, children }: { role: "agent" | "user"; children: React.Re
   );
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
+// ─── Main component ───────────────────────────────────────────────────────────
 export function DemoCallCard() {
-  const [demoState,   setDemoState]   = useState<DemoState>("idle");
-  const [turn,        setTurn]        = useState(0);
-  const [messages,    setMessages]    = useState<Message[]>([]);
-  const [elapsed,     setElapsed]     = useState(0);
-  const [isRecording, setIsRecording] = useState(false);
-  const [sttStatus,   setSttStatus]   = useState<SttStatus>("idle");
+  const [demoState, setDemoState] = useState<DemoState>("idle");
+  const [turn,      setTurn]      = useState(0);
+  const [messages,  setMessages]  = useState<Message[]>([]);
+  const [elapsed,   setElapsed]   = useState(0);
+  const [hint,      setHint]      = useState("");
+  const [emailSent, setEmailSent] = useState(false);
 
-  const audioRef     = useRef<HTMLAudioElement | null>(null);
-  const timerRef     = useRef<ReturnType<typeof setInterval> | null>(null);
-  const scrollRef    = useRef<HTMLDivElement>(null);
-  const mediaRecRef  = useRef<MediaRecorder | null>(null);
-  const chunksRef    = useRef<Blob[]>([]);
-  const noMatchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Collected data
+  const collected = useRef<{ name?: string; slot?: string; email?: string }>({});
 
+  const audioRef    = useRef<HTMLAudioElement | null>(null);
+  const timerRef    = useRef<ReturnType<typeof setInterval> | null>(null);
+  const scrollRef   = useRef<HTMLDivElement>(null);
+  const mediaRecRef = useRef<MediaRecorder | null>(null);
+  const chunksRef   = useRef<Blob[]>([]);
+
+  // Auto-scroll
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages]);
 
+  // Timer
   const startTimer = useCallback(() => {
     setElapsed(0);
     timerRef.current = setInterval(() => setElapsed((s) => s + 1), 1000);
@@ -96,139 +115,203 @@ export function DemoCallCard() {
   const fmt = (s: number) =>
     `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 
-  // ── TTS ────────────────────────────────────────────────────────────────────
-  const speak = useCallback(async (text: string, onDone: () => void) => {
+  // ── TTS via Voxtral/Kokoro ─────────────────────────────────────────────────
+  const speak = useCallback(async (text: string): Promise<void> => {
     setDemoState("loading");
-    try {
-      const res = await fetch("/api/tts", {
-        method: "POST",
+    return new Promise((resolve) => {
+      fetch("/api/tts", {
+        method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, voice: "af_heart", speed: 0.92, lang: "fr-fr" }),
-      });
-      if (!res.ok) throw new Error("TTS error");
-      const blob  = await res.blob();
-      const url   = URL.createObjectURL(blob);
-      const audio = new Audio(url);
-      audioRef.current = audio;
-      audio.onended = () => { URL.revokeObjectURL(url); onDone(); };
-      setDemoState("speaking");
-      await audio.play();
-    } catch {
-      const delay = Math.min(2000 + text.split(" ").length * 120, 6000);
-      setDemoState("speaking");
-      setTimeout(onDone, delay);
-    }
+        body:    JSON.stringify({ text, voice: "af_heart", speed: 0.92, lang: "fr-fr" }),
+      })
+        .then(async (res) => {
+          if (!res.ok) throw new Error();
+          const blob  = await res.blob();
+          const url   = URL.createObjectURL(blob);
+          const audio = new Audio(url);
+          audioRef.current = audio;
+          audio.onended = () => { URL.revokeObjectURL(url); resolve(); };
+          setDemoState("speaking");
+          audio.play().catch(() => { setDemoState("speaking"); setTimeout(resolve, 3000); });
+        })
+        .catch(() => {
+          const delay = Math.min(2000 + text.split(" ").length * 130, 7000);
+          setDemoState("speaking");
+          setTimeout(resolve, delay);
+        });
+    });
   }, []);
+
+  // ── STT: record → transcribe ────────────────────────────────────────────────
+  const listen = useCallback((): Promise<string> => {
+    return new Promise((resolve) => {
+      setDemoState("listening");
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then((stream) => {
+          const mimeType = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
+            ? "audio/webm;codecs=opus"
+            : MediaRecorder.isTypeSupported("audio/webm") ? "audio/webm" : "audio/mp4";
+
+          const rec = new MediaRecorder(stream, { mimeType });
+          mediaRecRef.current = rec;
+          chunksRef.current   = [];
+
+          rec.ondataavailable = (e) => { if (e.data.size > 0) chunksRef.current.push(e.data); };
+          rec.onstop = () => {
+            stream.getTracks().forEach((t) => t.stop());
+            setDemoState("processing");
+
+            const blob = new Blob(chunksRef.current, { type: mimeType });
+            const fd   = new FormData();
+            fd.append("audio", blob, "recording.webm");
+            fd.append("language", "fr");
+
+            fetch("/api/stt", { method: "POST", body: fd })
+              .then((r) => r.json())
+              .then((d) => resolve((d.text ?? "").trim()))
+              .catch(() => resolve(""));
+          };
+
+          rec.start();
+          // Auto-stop after 8 s
+          setTimeout(() => { if (rec.state === "recording") rec.stop(); }, 8000);
+        })
+        .catch(() => resolve(""));
+    });
+  }, []);
+
+  // ── Send confirmation email ────────────────────────────────────────────────
+  const sendEmail = useCallback(async () => {
+    const { name, slot, email } = collected.current;
+    if (!email) return;
+    try {
+      await fetch("/api/email", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({
+          name:  name ?? "Client",
+          email,
+          slot:  slot ?? "9h30",
+          date:  "Mercredi prochain",
+        }),
+      });
+      setEmailSent(true);
+    } catch { /* silent — demo still works */ }
+  }, []);
+
+  // ── Main conversation loop ─────────────────────────────────────────────────
+  const runTurn = useCallback(async (idx: number) => {
+    if (idx >= SCRIPT.length) return;
+    const step = SCRIPT[idx];
+    setHint(step.hint ?? "");
+
+    // Yasmine speaks
+    setMessages((m) => [...m, { role: "agent", text: step.speak }]);
+    await speak(step.speak);
+
+    // Listen for response
+    const transcript = await listen();
+    if (!transcript) {
+      // Retry once silently
+      setDemoState("speaking");
+      await speak("Je n'ai pas entendu. Pouvez-vous répéter ?");
+      const retry = await listen();
+      if (!retry) { setDemoState("error"); return; }
+    }
+
+    const text = transcript || "";
+    let userMsg = text;
+    let advance = true;
+
+    if (step.mode === "intent") {
+      // Any response proceeds
+    } else if (step.mode === "free") {
+      collected.current[step.id as "name" | "email"] = text;
+    } else if (step.mode === "choice") {
+      const matched = matchSlot(text);
+      if (!matched) {
+        setMessages((m) => [...m, { role: "user", text }]);
+        setDemoState("speaking");
+        await speak("Je n'ai pas bien compris. Dites 9h30 ou 11h15.");
+        const retry = await listen();
+        const m2 = matchSlot(retry);
+        if (!m2) { setDemoState("error"); return; }
+        collected.current.slot = m2;
+        userMsg = m2;
+      } else {
+        collected.current.slot = matched;
+        userMsg = matched;
+      }
+    } else if (step.mode === "email") {
+      const email = extractEmail(text);
+      if (!email) {
+        setMessages((m) => [...m, { role: "user", text }]);
+        setDemoState("speaking");
+        await speak("Je n'ai pas pu noter votre email. Pouvez-vous le répéter clairement ?");
+        const retry = await listen();
+        const e2 = extractEmail(retry);
+        if (!e2) {
+          // Accept anyway for demo
+          collected.current.email = retry;
+          userMsg = retry;
+        } else {
+          collected.current.email = e2;
+          userMsg = e2;
+        }
+      } else {
+        collected.current.email = email;
+        userMsg = email;
+      }
+    }
+
+    if (advance) {
+      setMessages((m) => [...m, { role: "user", text: userMsg }]);
+    }
+
+    const nextIdx = idx + 1;
+    setTurn(nextIdx);
+
+    if (nextIdx >= SCRIPT.length) {
+      // Final confirmation turn
+      const { name, slot, email } = collected.current;
+      const closingText = `Parfait${name ? `, ${name}` : ""} ! J'ai bien noté votre rendez-vous ${slot ? `à ${slot}` : ""} ce mercredi. Un email de confirmation vous a été envoyé${email ? ` à ${email}` : ""}. À très bientôt !`;
+
+      setMessages((m) => [...m, { role: "agent", text: closingText }]);
+      await speak(closingText);
+      await sendEmail();
+      setDemoState("done");
+      stopTimer();
+    } else {
+      await runTurn(nextIdx);
+    }
+  }, [speak, listen, sendEmail, stopTimer]);
 
   // ── Start demo ─────────────────────────────────────────────────────────────
   const startDemo = useCallback(async () => {
-    setMessages([]); setTurn(0); setSttStatus("idle");
+    collected.current = {};
+    setMessages([]);
+    setTurn(0);
+    setEmailSent(false);
+    setHint("");
     startTimer();
-    const text = TURNS[0].agent;
-    setMessages([{ role: "agent", text }]);
-    await speak(text, () => setDemoState("waiting"));
-  }, [speak, startTimer]);
-
-  // ── Handle choice (button click OR STT match) ──────────────────────────────
-  const handleChoice = useCallback(async (choice: string, currentTurn: number) => {
-    if (demoState !== "waiting") return;
-    const nextTurn = currentTurn + 1;
-    setMessages((m) => [...m, { role: "user", text: choice }]);
-    setTurn(nextTurn);
-    setSttStatus("idle");
-
-    if (nextTurn >= TURNS.length) { setDemoState("done"); stopTimer(); return; }
-
-    const text   = TURNS[nextTurn].agent;
-    const isLast = nextTurn === TURNS.length - 1;
-    setMessages((m) => [...m, { role: "agent", text }]);
-    await speak(text, () => {
-      if (isLast) { setDemoState("done"); stopTimer(); }
-      else          setDemoState("waiting");
-    });
-  }, [demoState, speak, stopTimer]);
-
-  // ── Stop recording ─────────────────────────────────────────────────────────
-  const stopRecording = useCallback(() => {
-    if (mediaRecRef.current?.state === "recording") mediaRecRef.current.stop();
-  }, []);
-
-  // ── Start recording + STT ──────────────────────────────────────────────────
-  const startRecording = useCallback(async () => {
-    if (isRecording || demoState !== "waiting") return;
-    try {
-      const stream   = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mimeType = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
-        ? "audio/webm;codecs=opus"
-        : MediaRecorder.isTypeSupported("audio/webm") ? "audio/webm" : "audio/mp4";
-
-      const rec = new MediaRecorder(stream, { mimeType });
-      mediaRecRef.current = rec;
-      chunksRef.current   = [];
-
-      rec.ondataavailable = (e) => { if (e.data.size > 0) chunksRef.current.push(e.data); };
-
-      rec.onstop = async () => {
-        stream.getTracks().forEach((t) => t.stop());
-        setIsRecording(false);
-        setSttStatus("processing");
-
-        const blob     = new Blob(chunksRef.current, { type: mimeType });
-        const formData = new FormData();
-        formData.append("audio", blob, "recording.webm");
-        formData.append("language", "fr");
-
-        try {
-          const res  = await fetch("/api/stt", { method: "POST", body: formData });
-          const data = await res.json();
-          const text = (data.text ?? "").trim();
-
-          if (text) {
-            const options = TURNS[turn]?.options ?? [];
-            const matched = matchOption(text, options);
-            if (matched) {
-              await handleChoice(matched, turn);
-            } else {
-              setMessages((m) => [...m, { role: "user", text: `"${text}" — essayez encore` }]);
-              setSttStatus("nomatch");
-              noMatchTimer.current = setTimeout(() => setSttStatus("idle"), 3000);
-            }
-          } else {
-            setSttStatus("nomatch");
-            noMatchTimer.current = setTimeout(() => setSttStatus("idle"), 2500);
-          }
-        } catch {
-          setSttStatus("nomatch");
-          noMatchTimer.current = setTimeout(() => setSttStatus("idle"), 2500);
-        }
-      };
-
-      rec.start();
-      setIsRecording(true);
-      setSttStatus("recording");
-      // Auto-stop after 7 s
-      setTimeout(() => { if (mediaRecRef.current?.state === "recording") stopRecording(); }, 7000);
-    } catch {
-      setSttStatus("nomatch");
-      setTimeout(() => setSttStatus("idle"), 2000);
-    }
-  }, [isRecording, demoState, turn, handleChoice, stopRecording]);
+    await runTurn(0);
+  }, [runTurn, startTimer]);
 
   // ── Reset ──────────────────────────────────────────────────────────────────
   const reset = useCallback(() => {
     audioRef.current?.pause(); audioRef.current = null;
     if (mediaRecRef.current?.state === "recording") mediaRecRef.current.stop();
-    if (noMatchTimer.current) clearTimeout(noMatchTimer.current);
     stopTimer();
+    collected.current = {};
     setDemoState("idle"); setMessages([]); setTurn(0);
-    setElapsed(0); setIsRecording(false); setSttStatus("idle");
+    setElapsed(0); setEmailSent(false); setHint("");
   }, [stopTimer]);
 
-  const isActive = demoState !== "idle";
-  const isBusy   = demoState === "loading" || demoState === "speaking";
-  const canReply = demoState === "waiting" && (TURNS[turn]?.options?.length ?? 0) > 0;
+  const isActive   = demoState !== "idle";
+  const isBusy     = demoState === "loading" || demoState === "speaking" || demoState === "processing";
+  const isListening = demoState === "listening";
 
-  // ── Render ─────────────────────────────────────────────────────────────────
+  // ─── Render ────────────────────────────────────────────────────────────────
   return (
     <div className="rounded-2xl border border-border bg-elevated p-6 shadow-xl shadow-ink-900/5">
 
@@ -257,95 +340,67 @@ export function DemoCallCard() {
       {/* Waveform */}
       <div className="mt-6 border-t border-border pt-5">
         <Waveform className={`text-saffron-500 transition-opacity duration-500 ${
-          demoState === "speaking" || isRecording ? "opacity-100" : "opacity-25"
+          demoState === "speaking" || isListening ? "opacity-100" : "opacity-25"
         }`} />
       </div>
 
       {/* Messages */}
-      <div ref={scrollRef} className="mt-5 max-h-48 space-y-3 overflow-y-auto pr-1 text-sm">
+      <div ref={scrollRef} className="mt-5 max-h-52 space-y-3 overflow-y-auto pr-1 text-sm">
+
         {demoState === "idle" && (
           <p className="italic text-muted-foreground">
-            Cliquez sur <strong className="font-semibold not-italic text-foreground">Démarrer</strong> — répondez par{" "}
-            <strong className="font-semibold not-italic text-foreground">bouton</strong> ou par{" "}
-            <strong className="font-semibold not-italic text-foreground">voix</strong>.
+            Appuyez sur <strong className="font-semibold not-italic text-foreground">Démarrer</strong> — Yasmine vous guidera entièrement par la voix.
           </p>
         )}
+
         {messages.map((m, i) => <Bubble key={i} role={m.role}>{m.text}</Bubble>)}
+
         {demoState === "loading" && (
           <div className="flex items-center gap-2 text-muted-foreground">
             <Loader2 className="h-3.5 w-3.5 animate-spin" />
             <span className="text-xs">Yasmine prépare sa réponse…</span>
           </div>
         )}
-        {sttStatus === "processing" && (
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <Loader2 className="h-3.5 w-3.5 animate-spin" />
-            <span className="text-xs">Transcription…</span>
+
+        {isListening && (
+          <div className="flex items-center gap-2 text-saffron-500">
+            <Mic className="h-3.5 w-3.5 animate-pulse" />
+            <span className="text-xs font-medium animate-pulse">Yasmine vous écoute…</span>
           </div>
         )}
-        {sttStatus === "nomatch" && (
-          <p className="text-xs italic text-muted-foreground">
-            Je n'ai pas compris — réessayez ou choisissez une option.
+
+        {demoState === "processing" && (
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+            <span className="text-xs">Traitement…</span>
+          </div>
+        )}
+
+        {emailSent && (
+          <div className="flex items-center gap-2 text-emerald-600">
+            <CheckCircle className="h-3.5 w-3.5" />
+            <span className="text-xs font-medium">Email de confirmation envoyé ✓</span>
+          </div>
+        )}
+
+        {demoState === "error" && (
+          <p className="text-xs text-red-500 italic">
+            Je n'ai pas pu comprendre. Veuillez recommencer.
           </p>
         )}
       </div>
 
-      {/* Reply area */}
-      {canReply && (
-        <div className="mt-4 space-y-3">
-          {/* Text buttons */}
-          <div className="flex flex-wrap gap-2">
-            {TURNS[turn].options.map((opt) => (
-              <button
-                key={opt}
-                onClick={() => handleChoice(opt, turn)}
-                disabled={isRecording || sttStatus === "processing"}
-                className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium transition-all duration-180 hover:border-saffron-500 hover:text-saffron-600 active:scale-95 disabled:opacity-40"
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
-
-          {/* Divider */}
-          <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-border" />
-            <span className="text-[10px] uppercase tracking-wider text-muted-foreground">ou parlez</span>
-            <div className="h-px flex-1 bg-border" />
-          </div>
-
-          {/* Mic button */}
-          <div className="flex flex-col items-center gap-1.5">
-            {!isRecording ? (
-              <button
-                onClick={startRecording}
-                disabled={sttStatus === "processing"}
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-6 py-2 text-xs font-medium transition-all duration-180 hover:border-saffron-500 hover:text-saffron-600 active:scale-95 disabled:opacity-40"
-              >
-                <Mic className="h-3.5 w-3.5" />
-                Parler
-              </button>
-            ) : (
-              <button
-                onClick={stopRecording}
-                className="inline-flex items-center gap-2 rounded-full bg-red-500 px-6 py-2 text-xs font-semibold text-white transition-all duration-180 hover:bg-red-400 active:scale-95"
-              >
-                <Square className="h-3 w-3 fill-current" />
-                Arrêter
-              </button>
-            )}
-            {isRecording && (
-              <span className="animate-pulse text-[11px] text-muted-foreground">
-                🔴 Enregistrement… (max 7 s)
-              </span>
-            )}
-          </div>
-        </div>
+      {/* Listening hint */}
+      {isListening && hint && (
+        <p className="mt-3 text-center text-[11px] text-muted-foreground italic">{hint}</p>
       )}
 
       {/* Footer */}
       <div className="mt-6 flex items-center justify-between border-t border-border pt-4 text-xs text-muted-foreground">
-        <span>FR · af_heart · Whisper base</span>
+        <span className="text-[10px] text-muted-foreground/50">
+          {isListening ? "🔴 Enregistrement en cours" : isActive ? "Appel IA en cours" : "Démo interactive"}
+        </span>
+
         {demoState === "idle" && (
           <button
             onClick={startDemo}
@@ -355,8 +410,12 @@ export function DemoCallCard() {
             Démarrer la démo
           </button>
         )}
-        {isBusy && <span className="font-mono tabular-nums">{fmt(elapsed)}</span>}
-        {demoState === "done" && (
+
+        {isBusy && (
+          <span className="font-mono tabular-nums">{fmt(elapsed)}</span>
+        )}
+
+        {(demoState === "done" || demoState === "error") && (
           <button
             onClick={reset}
             className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-1.5 text-xs font-medium transition-all duration-180 hover:border-foreground active:scale-95"

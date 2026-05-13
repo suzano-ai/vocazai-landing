@@ -187,6 +187,17 @@ ask "Retell webhook secret:"
 echo -ne "  ${B}›${NC} "
 read -r RETELL_SECRET
 
+echo ""
+echo -e "  ${BOLD}${C}▸ Voice AI keys${NC}  ${DIM}(for the live Yasmine demo)${NC}"
+echo ""
+ask "Mistral API key  (api.mistral.ai → API Keys):"
+echo -ne "  ${B}›${NC} "
+read -r MISTRAL_KEY
+
+ask "Resend API key   (resend.com → API Keys — for confirmation emails):"
+echo -ne "  ${B}›${NC} "
+read -r RESEND_KEY
+
 # ══════════════════════════════════════════════════════════════════════════════
 #  STEP 4 — Confirm
 # ══════════════════════════════════════════════════════════════════════════════
@@ -270,8 +281,16 @@ VAPI_WEBHOOK_SECRET=${VAPI_SECRET}
 RETELL_API_KEY=${RETELL_KEY}
 RETELL_WEBHOOK_SECRET=${RETELL_SECRET}
 
-# Internal TTS service
+# Mistral Voxtral TTS
+MISTRAL_API_KEY=${MISTRAL_KEY}
+MISTRAL_VOICE_ID=
+
+# Resend — confirmation emails
+RESEND_API_KEY=${RESEND_KEY}
+
+# Internal TTS service (Kokoro fallback)
 TTS_SERVICE_URL=http://tts:8000
+STT_SERVICE_URL=http://stt:9000
 EOF
 info ".env.local written"
 

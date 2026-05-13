@@ -244,6 +244,25 @@ cmd_update() {
   git -C "$APP_DIR" pull --ff-only
   echo ""
 
+  # ── 1b. Check for new required API keys added since last install ──────────
+  _check_key() {
+    local KEY="$1" LABEL="$2" URL="$3"
+    local VAL=$(_env "$KEY")
+    if [[ -z "$VAL" ]]; then
+      echo ""
+      warn "New key required: ${BOLD}$KEY${NC}"
+      echo -e "  ${DIM}Get it at: $URL${NC}"
+      echo -ne "  ${B}›${NC}  Enter $LABEL (or press Enter to skip): "
+      read -r NEW_VAL
+      if [[ -n "$NEW_VAL" ]]; then
+        echo "${KEY}=${NEW_VAL}" >> "$ENV_FILE"
+        ok "$KEY saved to .env.local"
+      fi
+    fi
+  }
+  _check_key "MISTRAL_API_KEY"  "Mistral API key"  "https://console.mistral.ai/api-keys"
+  _check_key "RESEND_API_KEY"   "Resend API key"   "https://resend.com/api-keys"
+
   # ── 2. Always reinstall the CLI itself so new commands are available ──────
   step "Updating CLI"
   cp "$APP_DIR/deploy/vocazai-cli.sh" /usr/local/bin/vocazai
