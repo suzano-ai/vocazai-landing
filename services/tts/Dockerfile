@@ -18,11 +18,16 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Download Kokoro ONNX model files at build time (~320 MB total)
-RUN wget -q -O kokoro-v0_19.onnx \
-    https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files/kokoro-v0_19.onnx && \
-    wget -q -O voices.bin \
-    https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files/voices.bin && \
-    echo "Models downloaded."
+# Retry up to 3 times in case of network blip
+RUN for i in 1 2 3; do \
+      wget -q --timeout=120 --tries=3 -O kokoro-v0_19.onnx \
+        https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files/kokoro-v0_19.onnx && \
+      wget -q --timeout=120 --tries=3 -O voices.bin \
+        https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files/voices.bin && \
+      echo "Models downloaded OK." && break || \
+      (echo "Attempt $i failed, retrying…" && sleep 5); \
+    done && \
+    test -f kokoro-v0_19.onnx && test -f voices.bin || (echo "ERROR: model download failed" && exit 1)
 
 COPY main.py .
 
