@@ -28,6 +28,32 @@ const TURNS = [
 type DemoState = "idle" | "loading" | "speaking" | "waiting" | "done";
 type Message   = { role: "agent" | "user"; text: string };
 
+// ─── Bubble sub-component (must be defined before DemoCallCard) ───────────────
+function Bubble({
+  role,
+  children,
+}: {
+  role: "agent" | "user";
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-start gap-2.5">
+      <span
+        className={`mt-0.5 inline-flex h-5 shrink-0 items-center rounded-sm px-1.5 font-mono text-[9px] uppercase tracking-wider ${
+          role === "user"
+            ? "bg-surface text-muted-foreground"
+            : "bg-saffron-500 text-ink-900"
+        }`}
+      >
+        {role === "user" ? "Vous" : "Agent"}
+      </span>
+      <p className={`flex-1 text-sm leading-relaxed ${role === "user" ? "text-muted-foreground" : ""}`}>
+        {children}
+      </p>
+    </div>
+  );
+}
+
 // ─── Component ────────────────────────────────────────────────────────────────
 export function DemoCallCard() {
   const [demoState, setDemoState] = useState<DemoState>("idle");
