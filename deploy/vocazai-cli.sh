@@ -354,9 +354,9 @@ print(json.dumps(payload))
           echo "MISTRAL_VOICE_ID=$NEW_VOICE_ID" >> "$ENV_FILE"
         fi
         ok "Yasmine voice registered → ${BOLD}$NEW_VOICE_ID${NC}${G}"
-      else
-        warn "Mistral voice registration failed. Response: $RESPONSE"
-        warn "Run 'vocazai update' again once the stack is up."
+      elif echo "$RESPONSE" | grep -qi "paid plan\|subscription\|upgrade"; then
+        info "Voxtral custom voice requires a paid Mistral plan — skipping"
+        info "Demo will use Kokoro ff_siwis (native French) instead  ${DIM}✓${NC}"
       fi
     fi
     echo ""
@@ -643,7 +643,8 @@ cmd_tts() {
   if [[ -z "$MISTRAL_KEY" ]]; then
     warn "MISTRAL_API_KEY not set — run 'vocazai update' to add it"
   elif [[ -z "$VOICE_ID" ]]; then
-    warn "MISTRAL_VOICE_ID not set — run 'vocazai update' to register Yasmine"
+    info "No custom MISTRAL_VOICE_ID — Voxtral test skipped (requires paid plan)"
+    info "TTS engine: Kokoro ff_siwis (native French female)"
   else
     echo -e "  ${DIM}Voice ID  : ${VOICE_ID:0:16}…${NC}"
     echo -e "  ${DIM}Model     : voxtral-mini-tts-2603${NC}"
