@@ -325,11 +325,25 @@ sys.stdout.buffer.write(r.content)
 
       SAMPLE_B64=$(base64 -w 0 "$SAMPLE_FILE")
       SAMPLE_FNAME=$(basename "$SAMPLE_FILE")
-      VOICE_PAYLOAD="{\"name\":\"yasmine-vocazai\",\"sample_audio\":\"$SAMPLE_B64\",\"sample_filename\":\"$SAMPLE_FNAME\",\"languages\":[\"fr\",\"en\",\"ar\"],\"gender\":\"female\",\"tags\":[\"french\",\"vocazai\",\"yasmine\"]}"
+      # Write payload to temp file — avoids "Argument list too long" with large base64
+      PAYLOAD_FILE="/tmp/yasmine_voice_payload.json"
+      python3 -c "
+import json, sys
+payload = {
+  'name': 'yasmine-vocazai',
+  'sample_audio': sys.argv[1],
+  'sample_filename': sys.argv[2],
+  'languages': ['fr', 'en', 'ar'],
+  'gender': 'female',
+  'tags': ['french', 'vocazai', 'yasmine']
+}
+print(json.dumps(payload))
+" "$SAMPLE_B64" "$SAMPLE_FNAME" > "$PAYLOAD_FILE"
+
       RESPONSE=$(curl -s -X POST https://api.mistral.ai/v1/audio/voices \
         -H "Authorization: Bearer $MISTRAL_KEY" \
         -H "Content-Type: application/json" \
-        -d "$VOICE_PAYLOAD")
+        -d "@$PAYLOAD_FILE")
 
       NEW_VOICE_ID=$(echo "$RESPONSE" | python3 -c \
         "import sys,json; print(json.load(sys.stdin).get('id',''))" 2>/dev/null || echo "")
