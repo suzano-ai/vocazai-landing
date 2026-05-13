@@ -1,8 +1,17 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import Link from "next/link";
-import { ArrowRight, Phone, Calendar, Languages, ShieldCheck, Check, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Phone,
+  Calendar,
+  Languages,
+  ShieldCheck,
+  Plus,
+  Check,
+} from "lucide-react";
 import { Header } from "@/components/landing/header";
-import { ZelligeStar, ZelligeBand } from "@/components/zellige";
+import { Khatam, Waveform } from "@/components/zellige";
 
 export default async function LandingPage({
   params,
@@ -14,113 +23,132 @@ export default async function LandingPage({
   const t = await getTranslations();
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background text-foreground">
       <Header locale={locale} />
 
-      {/* ================= HERO ================= */}
+      {/* ============ HERO ============ */}
       <section className="relative overflow-hidden">
-        {/* Decorative zellige stars */}
-        <ZelligeStar
+        {/* Decorative khatam, top-right */}
+        <Khatam
           size={520}
-          className="pointer-events-none absolute -right-32 -top-24 text-emerald-600/15 animate-spin-slow"
+          className="pointer-events-none absolute -right-32 -top-16 text-saffron-500/12"
         />
-        <ZelligeStar
-          size={280}
-          className="pointer-events-none absolute -left-20 top-72 text-saffron-500/20"
-        />
-        <div className="pointer-events-none absolute inset-0 bg-zellige opacity-40" />
-        <div className="pointer-events-none absolute inset-0 grain opacity-50" />
+        <div className="pointer-events-none absolute inset-0 paper" />
 
-        <div className="container relative pb-28 pt-20 lg:pt-28">
-          {/* Kicker */}
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-emerald-600/30 bg-emerald-50 px-3.5 py-1.5 text-xs font-medium text-emerald-700 backdrop-blur">
-            <Sparkles className="h-3.5 w-3.5" />
-            <span>{t("landing.kicker")}</span>
-          </div>
+        <div className="container relative grid gap-16 pb-24 pt-16 lg:grid-cols-[1.2fr_1fr] lg:gap-12 lg:pb-32 lg:pt-24">
+          {/* LEFT — copy */}
+          <div className="max-w-xl">
+            <div className="mb-8 inline-flex items-center gap-2.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-saffron-500" />
+              <span className="font-mono text-kicker uppercase text-muted-foreground">
+                {t("landing.kicker")}
+              </span>
+            </div>
 
-          {/* Headline */}
-          <h1 className="font-display text-display-xl">
-            <span className="block text-foreground">{t("landing.heroTitle1")}</span>
-            <span className="block">
-              <span className="bg-gradient-to-r from-emerald-600 via-emerald-500 to-saffron-500 bg-clip-text text-transparent">
+            <h1 className="font-display text-display-2xl font-medium">
+              <span className="block">{t("landing.heroTitle1")}</span>
+              <span className="block italic text-saffron-500">
                 {t("landing.heroTitle2")}
               </span>
-            </span>
-          </h1>
+            </h1>
 
-          <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-            {t("landing.heroSubtitle")}
-          </p>
+            <p className="mt-8 max-w-lg text-lg leading-relaxed text-muted-foreground">
+              {t("landing.heroSubtitle")}
+            </p>
 
-          {/* CTAs */}
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <Link
-              href={`/${locale}/login`}
-              className="group inline-flex items-center gap-2 rounded-full bg-emerald-600 px-6 py-3.5 text-base font-medium text-sand-50 transition hover:bg-emerald-700"
-            >
-              {t("landing.ctaPrimary")}
-              <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5" />
-            </Link>
-            <a
-              href="#how"
-              className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3.5 text-base font-medium transition hover:bg-surface"
-            >
-              {t("landing.ctaSecondary")}
-            </a>
+            <div className="mt-10 flex flex-wrap items-center gap-3">
+              <Link
+                href={`/${locale}/login`}
+                className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-ink-900 px-6 py-3.5 text-sm font-medium text-saffron-50 transition-all duration-220 ease-soft hover:bg-saffron-500 hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron-500/50 dark:bg-saffron-500 dark:text-ink-900 dark:hover:bg-saffron-400"
+              >
+                {t("landing.ctaPrimary")}
+                <ArrowUpRight className="h-4 w-4 transition-transform duration-220 group-hover:rotate-45 rtl:scale-x-[-1]" />
+              </Link>
+              <a
+                href="#how"
+                className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-border bg-elevated px-6 py-3.5 text-sm font-medium transition-colors duration-220 ease-soft hover:border-foreground"
+              >
+                {t("landing.ctaSecondary")}
+                <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
+              </a>
+            </div>
+
+            {/* Tiny stats row */}
+            <dl className="mt-16 grid max-w-md grid-cols-3 gap-6">
+              <Stat value="24/7" label={t("landing.stats.available")} />
+              <Stat value="< 800ms" label={t("landing.stats.latency")} />
+              <Stat value="FR · AR · EN" label={t("landing.stats.languages")} />
+            </dl>
           </div>
 
-          {/* Live indicator + stats */}
-          <div className="mt-16 grid grid-cols-2 gap-4 sm:max-w-3xl sm:grid-cols-4">
-            <Stat label={t("landing.stats.available")} value="24/7" />
-            <Stat label={t("landing.stats.languages")} value="3+" />
-            <Stat label={t("landing.stats.latency")} value="< 800ms" />
-            <Stat label="—" value={t("landing.stats.missed")} accent />
+          {/* RIGHT — Live call card */}
+          <div className="relative">
+            <Khatam
+              size={300}
+              className="pointer-events-none absolute -right-8 -top-10 text-teal-500/10"
+            />
+            <DemoCallCard t={t} />
           </div>
+        </div>
 
-          {/* Live agent demo card */}
-          <div className="mt-16 max-w-md rounded-2xl border border-border bg-elevated p-5 shadow-2xl shadow-emerald-900/5">
-            <div className="flex items-center gap-3">
-              <div className="relative grid h-12 w-12 place-items-center rounded-xl bg-emerald-600">
-                <Phone className="h-5 w-5 text-sand-50" />
-                <span className="pulse-dot absolute -right-1 -top-1 ring-2 ring-elevated" />
-              </div>
-              <div className="flex-1">
-                <div className="font-medium">Yasmine, l&apos;agent VocazAI</div>
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  {t("common.live")} · 14:32
-                </div>
-              </div>
-            </div>
-            <div className="mt-4 space-y-2.5 text-sm">
-              <div className="flex items-start gap-2">
-                <span className="mt-0.5 inline-flex h-5 items-center rounded-full bg-saffron-50 px-2 text-[10px] font-medium uppercase tracking-wide text-saffron-600">Client</span>
-                <p className="text-muted-foreground">Bonjour, je voudrais un rendez-vous mercredi matin si possible.</p>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="mt-0.5 inline-flex h-5 items-center rounded-full bg-emerald-50 px-2 text-[10px] font-medium uppercase tracking-wide text-emerald-700">Agent</span>
-                <p>Bien sûr. J&apos;ai 9h30 ou 11h15 mercredi. Lequel vous arrange ?</p>
-              </div>
-            </div>
+        <div className="hr-thin" />
+      </section>
+
+      {/* ============ TRUST / MARQUEE ============ */}
+      <section className="border-b border-border bg-surface/50 py-10">
+        <div className="container mb-5 text-center">
+          <span className="font-mono text-kicker uppercase text-muted-foreground">
+            {t("landing.trustBar")}
+          </span>
+        </div>
+        <div className="marquee">
+          <div className="marquee__track text-muted-foreground/60">
+            {[
+              "Cabinet médical Atlas",
+              "Agence Immo Casa-Plage",
+              "Restaurant Dar Zen",
+              "Pharmacie Bouregreg",
+              "Hôtel Riad Marrakech",
+              "Studio Yoga Rabat",
+              "Garage Bouznika Auto",
+            ]
+              .concat([
+                "Cabinet médical Atlas",
+                "Agence Immo Casa-Plage",
+                "Restaurant Dar Zen",
+                "Pharmacie Bouregreg",
+                "Hôtel Riad Marrakech",
+                "Studio Yoga Rabat",
+                "Garage Bouznika Auto",
+              ])
+              .map((name, i) => (
+                <span
+                  key={i}
+                  className="whitespace-nowrap font-display text-2xl font-medium italic"
+                >
+                  {name}
+                </span>
+              ))}
           </div>
         </div>
       </section>
 
-      {/* ================= ZELLIGE BAND ================= */}
-      <div className="relative border-y border-border/60 bg-surface py-3">
-        <ZelligeBand className="h-6 w-full text-emerald-600/70" />
-      </div>
-
-      {/* ================= HOW IT WORKS ================= */}
-      <section id="how" className="relative py-24 sm:py-32">
+      {/* ============ HOW IT WORKS ============ */}
+      <section id="how" className="py-28 sm:py-36">
         <div className="container">
-          <div className="mb-16 max-w-2xl">
-            <div className="mb-4 text-xs font-medium uppercase tracking-widest text-emerald-600">01 · Process</div>
-            <h2 className="font-display text-display-lg">{t("landing.howItWorks.title")}</h2>
-            <p className="mt-4 text-lg text-muted-foreground">{t("landing.howItWorks.subtitle")}</p>
+          <div className="mb-20 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl">
+              <SectionKicker number="01" label="Process" color="saffron" />
+              <h2 className="mt-4 font-display text-display-lg font-medium">
+                {t("landing.howItWorks.title")}
+              </h2>
+            </div>
+            <p className="max-w-sm text-muted-foreground">
+              {t("landing.howItWorks.subtitle")}
+            </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-px overflow-hidden rounded-lg bg-border md:grid-cols-3">
             <Step
               num="01"
               title={t("landing.howItWorks.step1Title")}
@@ -131,7 +159,7 @@ export default async function LandingPage({
               num="02"
               title={t("landing.howItWorks.step2Title")}
               body={t("landing.howItWorks.step2Body")}
-              icon={<Sparkles className="h-5 w-5" />}
+              icon={<ShieldCheck className="h-5 w-5" />}
             />
             <Step
               num="03"
@@ -143,39 +171,62 @@ export default async function LandingPage({
         </div>
       </section>
 
-      {/* ================= USE CASES ================= */}
-      <section id="uses" className="relative border-y border-border/60 bg-surface py-24 sm:py-32">
+      {/* ============ USE CASES ============ */}
+      <section id="uses" className="border-y border-border bg-surface/40 py-28 sm:py-36">
         <div className="container">
-          <div className="mb-16 max-w-2xl">
-            <div className="mb-4 text-xs font-medium uppercase tracking-widest text-saffron-600">02 · Industries</div>
-            <h2 className="font-display text-display-lg">{t("landing.useCases.title")}</h2>
+          <div className="mb-20 max-w-2xl">
+            <SectionKicker number="02" label="Industries" color="teal" />
+            <h2 className="mt-4 font-display text-display-lg font-medium">
+              {t("landing.useCases.title")}
+            </h2>
           </div>
 
-          <div className="grid gap-px overflow-hidden rounded-3xl border border-border bg-border md:grid-cols-2 lg:grid-cols-4">
-            <UseCase title={t("landing.useCases.clinic")} body={t("landing.useCases.clinicBody")} accent="emerald" icon={<Calendar className="h-5 w-5" />} />
-            <UseCase title={t("landing.useCases.realty")} body={t("landing.useCases.realtyBody")} accent="saffron" icon={<Phone className="h-5 w-5" />} />
-            <UseCase title={t("landing.useCases.ecom")} body={t("landing.useCases.ecomBody")} accent="terracotta" icon={<ShieldCheck className="h-5 w-5" />} />
-            <UseCase title={t("landing.useCases.restau")} body={t("landing.useCases.restauBody")} accent="emerald" icon={<Languages className="h-5 w-5" />} />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <UseCase
+              title={t("landing.useCases.clinic")}
+              body={t("landing.useCases.clinicBody")}
+              icon={<Calendar className="h-5 w-5" />}
+            />
+            <UseCase
+              title={t("landing.useCases.realty")}
+              body={t("landing.useCases.realtyBody")}
+              icon={<Phone className="h-5 w-5" />}
+            />
+            <UseCase
+              title={t("landing.useCases.ecom")}
+              body={t("landing.useCases.ecomBody")}
+              icon={<ShieldCheck className="h-5 w-5" />}
+            />
+            <UseCase
+              title={t("landing.useCases.restau")}
+              body={t("landing.useCases.restauBody")}
+              icon={<Languages className="h-5 w-5" />}
+            />
           </div>
         </div>
       </section>
 
-      {/* ================= PRICING ================= */}
-      <section id="pricing" className="relative py-24 sm:py-32">
+      {/* ============ PRICING ============ */}
+      <section id="pricing" className="py-28 sm:py-36">
         <div className="container">
-          <div className="mb-16 max-w-2xl">
-            <div className="mb-4 text-xs font-medium uppercase tracking-widest text-emerald-600">03 · Pricing</div>
-            <h2 className="font-display text-display-lg">{t("landing.pricing.title")}</h2>
-            <p className="mt-4 text-lg text-muted-foreground">{t("landing.pricing.subtitle")}</p>
+          <div className="mb-20 max-w-2xl">
+            <SectionKicker number="03" label="Pricing" color="saffron" />
+            <h2 className="mt-4 font-display text-display-lg font-medium">
+              {t("landing.pricing.title")}
+            </h2>
+            <p className="mt-3 text-lg text-muted-foreground">
+              {t("landing.pricing.subtitle")}
+            </p>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-4 lg:grid-cols-3">
             <PriceCard
               name={t("landing.pricing.starter")}
               price={t("landing.pricing.starterPrice")}
               body={t("landing.pricing.starterBody")}
               cta={t("landing.pricing.cta")}
               href={`/${locale}/login`}
+              features={["100 min/mois", "1 agent", "1 langue", "Email support"]}
             />
             <PriceCard
               featured
@@ -184,6 +235,13 @@ export default async function LandingPage({
               body={t("landing.pricing.growthBody")}
               cta={t("landing.pricing.cta")}
               href={`/${locale}/login`}
+              features={[
+                "500 min/mois",
+                "3 agents",
+                "Multilingue (FR/AR/EN)",
+                "Intégration CRM",
+                "Support prioritaire",
+              ]}
             />
             <PriceCard
               name={t("landing.pricing.enterprise")}
@@ -191,17 +249,25 @@ export default async function LandingPage({
               body={t("landing.pricing.enterpriseBody")}
               cta={t("landing.pricing.ctaContact")}
               href="https://wa.me/33777345056"
+              features={[
+                "Volume illimité",
+                "SLA dédié",
+                "Intégrations custom",
+                "Manager dédié",
+              ]}
             />
           </div>
         </div>
       </section>
 
-      {/* ================= FAQ ================= */}
-      <section id="faq" className="relative border-t border-border/60 bg-surface py-24 sm:py-32">
+      {/* ============ FAQ ============ */}
+      <section id="faq" className="border-t border-border bg-surface/40 py-28 sm:py-36">
         <div className="container max-w-4xl">
           <div className="mb-16">
-            <div className="mb-4 text-xs font-medium uppercase tracking-widest text-saffron-600">04 · FAQ</div>
-            <h2 className="font-display text-display-lg">{t("landing.faq.title")}</h2>
+            <SectionKicker number="04" label="FAQ" color="teal" />
+            <h2 className="mt-4 font-display text-display-lg font-medium">
+              {t("landing.faq.title")}
+            </h2>
           </div>
           <div className="divide-y divide-border">
             <Faq q={t("landing.faq.q1")} a={t("landing.faq.a1")} />
@@ -212,43 +278,56 @@ export default async function LandingPage({
         </div>
       </section>
 
-      {/* ================= FINAL CTA ================= */}
-      <section className="relative overflow-hidden bg-emerald-900 py-24 text-sand-50 sm:py-32">
-        <ZelligeStar
-          size={600}
-          className="pointer-events-none absolute -right-32 -top-32 text-saffron-500/20 animate-spin-slow"
+      {/* ============ FINAL CTA ============ */}
+      <section className="relative overflow-hidden bg-ink-900 py-28 text-saffron-50 sm:py-36">
+        <Khatam
+          size={620}
+          className="pointer-events-none absolute -right-32 -top-32 text-saffron-500/12"
         />
-        <ZelligeStar
+        <Khatam
           size={400}
-          className="pointer-events-none absolute -bottom-24 -left-20 text-emerald-500/30"
+          className="pointer-events-none absolute -bottom-20 -left-24 text-teal-500/12"
         />
         <div className="container relative">
           <div className="max-w-3xl">
-            <h2 className="font-display text-display-lg">{t("landing.finalCta.title")}</h2>
-            <p className="mt-4 text-lg text-sand-50/80">{t("landing.finalCta.body")}</p>
+            <span className="inline-flex items-center gap-2 font-mono text-kicker uppercase text-saffron-400">
+              <span className="h-1.5 w-1.5 rounded-full bg-saffron-500" />
+              Conclure
+            </span>
+            <h2 className="mt-6 font-display text-display-xl font-medium">
+              {t("landing.finalCta.title")}
+            </h2>
+            <p className="mt-6 max-w-xl text-lg text-saffron-50/70">
+              {t("landing.finalCta.body")}
+            </p>
             <Link
               href={`/${locale}/login`}
-              className="mt-10 inline-flex items-center gap-2 rounded-full bg-saffron-500 px-7 py-4 text-base font-medium text-emerald-900 transition hover:bg-saffron-400"
+              className="group mt-12 inline-flex cursor-pointer items-center gap-2 rounded-full bg-saffron-500 px-7 py-4 text-base font-medium text-ink-900 transition-all duration-220 ease-soft hover:bg-saffron-400 hover:gap-3"
             >
               {t("landing.finalCta.cta")}
-              <ArrowRight className="h-4 w-4 rtl:rotate-180" />
+              <ArrowUpRight className="h-4 w-4 transition-transform duration-220 group-hover:rotate-45 rtl:scale-x-[-1]" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ================= FOOTER ================= */}
+      {/* ============ FOOTER ============ */}
       <footer className="border-t border-border bg-background py-12">
-        <div className="container flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+        <div className="container flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-center">
           <div className="flex items-center gap-3">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-emerald-600 font-display font-bold text-sand-50">V</span>
+            <span className="grid h-9 w-9 place-items-center rounded-md bg-ink-900 font-display font-extrabold italic text-saffron-500 dark:bg-saffron-500 dark:text-ink-900">
+              V
+            </span>
             <div>
               <div className="font-display font-semibold">VocazAI</div>
-              <div className="text-xs text-muted-foreground">{t("landing.footer.tagline")}</div>
+              <div className="text-xs text-muted-foreground">
+                {t("landing.footer.tagline")}
+              </div>
             </div>
           </div>
-          <div className="text-sm text-muted-foreground">
-            {t("landing.footer.made")} · © {new Date().getFullYear()} · {t("landing.footer.rights")}
+          <div className="text-xs text-muted-foreground">
+            {t("landing.footer.made")} · © {new Date().getFullYear()} ·{" "}
+            {t("landing.footer.rights")}
           </div>
         </div>
       </footer>
@@ -256,13 +335,37 @@ export default async function LandingPage({
   );
 }
 
-/* ---------- Small composable atoms (kept colocated for readability) ---------- */
+/* ===================== Sub-components ===================== */
 
-function Stat({ label, value, accent = false }: { label: string; value: string; accent?: boolean }) {
+function Stat({ value, label }: { value: string; label: string }) {
   return (
-    <div className="rounded-xl border border-border bg-elevated/50 p-4 backdrop-blur">
-      <div className={`font-display text-2xl font-bold ${accent ? "text-saffron-500" : "text-emerald-600"}`}>{value}</div>
-      <div className="mt-1 text-xs text-muted-foreground">{label}</div>
+    <div>
+      <dt className="font-display text-2xl font-semibold tabular-nums">
+        {value}
+      </dt>
+      <dd className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </dd>
+    </div>
+  );
+}
+
+function SectionKicker({
+  number,
+  label,
+  color,
+}: {
+  number: string;
+  label: string;
+  color: "saffron" | "teal";
+}) {
+  const dotColor = color === "saffron" ? "bg-saffron-500" : "bg-teal-500";
+  return (
+    <div className="inline-flex items-center gap-2.5">
+      <span className={`h-1.5 w-1.5 rounded-full ${dotColor}`} />
+      <span className="font-mono text-kicker uppercase text-muted-foreground">
+        {number} — {label}
+      </span>
     </div>
   );
 }
@@ -279,15 +382,17 @@ function Step({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="group relative overflow-hidden rounded-3xl border border-border bg-elevated p-7 transition hover:border-emerald-600/40">
-      <div className="mb-6 flex items-center justify-between">
+    <div className="group relative bg-elevated p-8 transition-colors duration-220 hover:bg-surface lg:p-10">
+      <div className="flex items-start justify-between">
         <span className="font-mono text-xs text-muted-foreground">{num}</span>
-        <span className="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+        <span className="grid h-9 w-9 place-items-center rounded-full border border-border text-muted-foreground transition-colors duration-220 group-hover:border-saffron-500 group-hover:text-saffron-500">
           {icon}
         </span>
       </div>
-      <h3 className="font-display text-xl font-semibold">{title}</h3>
-      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{body}</p>
+      <h3 className="mt-10 font-display text-2xl font-medium">{title}</h3>
+      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+        {body}
+      </p>
     </div>
   );
 }
@@ -295,24 +400,18 @@ function Step({
 function UseCase({
   title,
   body,
-  accent,
   icon,
 }: {
   title: string;
   body: string;
-  accent: "emerald" | "saffron" | "terracotta";
   icon: React.ReactNode;
 }) {
-  const accentClass =
-    accent === "emerald"
-      ? "text-emerald-600 bg-emerald-50"
-      : accent === "saffron"
-      ? "text-saffron-600 bg-saffron-50"
-      : "text-terracotta-700 bg-saffron-50";
   return (
-    <div className="group bg-elevated p-7 transition hover:bg-surface">
-      <div className={`mb-5 inline-grid h-10 w-10 place-items-center rounded-xl ${accentClass}`}>{icon}</div>
-      <h3 className="font-display text-lg font-semibold">{title}</h3>
+    <div className="group relative cursor-default rounded-lg border border-border bg-elevated p-6 transition-all duration-220 ease-soft hover:-translate-y-0.5 hover:border-saffron-500">
+      <span className="mb-6 inline-grid h-10 w-10 place-items-center rounded-full bg-saffron-50 text-saffron-600 dark:bg-saffron-50 dark:text-saffron-500">
+        {icon}
+      </span>
+      <h3 className="font-display text-lg font-medium">{title}</h3>
       <p className="mt-2 text-sm text-muted-foreground">{body}</p>
     </div>
   );
@@ -324,6 +423,7 @@ function PriceCard({
   body,
   cta,
   href,
+  features,
   featured = false,
 }: {
   name: string;
@@ -331,36 +431,50 @@ function PriceCard({
   body: string;
   cta: string;
   href: string;
+  features: string[];
   featured?: boolean;
 }) {
   return (
     <div
-      className={`relative flex flex-col rounded-3xl border p-7 ${
-        featured
-          ? "border-emerald-600 bg-elevated shadow-xl shadow-emerald-900/10"
-          : "border-border bg-elevated"
+      className={`relative flex flex-col rounded-lg border bg-elevated p-8 transition-colors duration-220 ${
+        featured ? "border-saffron-500" : "border-border"
       }`}
     >
       {featured && (
-        <div className="absolute -top-3 left-7 inline-flex items-center gap-1 rounded-full bg-saffron-500 px-3 py-1 text-xs font-semibold text-emerald-900">
-          <Check className="h-3 w-3" /> Recommandé
+        <div className="absolute -top-3 left-8 inline-flex items-center gap-1 rounded-full bg-saffron-500 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-ink-900">
+          Recommandé
         </div>
       )}
-      <div className="text-sm font-medium uppercase tracking-wider text-muted-foreground">{name}</div>
-      <div className="mt-3 font-display text-4xl font-bold">
-        {price} <span className="text-sm font-normal text-muted-foreground">/ mois</span>
+      <div className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {name}
+      </div>
+      <div className="mt-4 font-display text-4xl font-medium tabular-nums">
+        {price}
+        {price !== "—" && (
+          <span className="ml-2 font-sans text-sm font-normal text-muted-foreground">
+            / mois
+          </span>
+        )}
       </div>
       <p className="mt-3 text-sm text-muted-foreground">{body}</p>
+      <ul className="my-8 space-y-2.5 text-sm">
+        {features.map((f) => (
+          <li key={f} className="flex items-start gap-2.5">
+            <Check className="mt-0.5 h-4 w-4 shrink-0 text-saffron-500" />
+            <span>{f}</span>
+          </li>
+        ))}
+      </ul>
       <Link
         href={href}
-        className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition ${
+        className={`mt-auto inline-flex cursor-pointer items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition-colors duration-220 ease-soft ${
           featured
-            ? "bg-emerald-600 text-sand-50 hover:bg-emerald-700"
-            : "border border-border hover:bg-surface"
+            ? "bg-ink-900 text-saffron-50 hover:bg-saffron-500 hover:text-ink-900 dark:bg-saffron-500 dark:text-ink-900 dark:hover:bg-saffron-400"
+            : "border border-border hover:border-foreground"
         }`}
       >
         {cta}
-        <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
+        <ArrowUpRight className="h-3.5 w-3.5 rtl:scale-x-[-1]" />
       </Link>
     </div>
   );
@@ -368,14 +482,96 @@ function PriceCard({
 
 function Faq({ q, a }: { q: string; a: string }) {
   return (
-    <details className="group py-6">
-      <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
-        <span className="font-display text-lg font-semibold">{q}</span>
-        <span className="mt-1 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-border text-emerald-600 transition group-open:rotate-45">
-          +
+    <details className="group cursor-pointer py-6">
+      <summary className="flex list-none items-start justify-between gap-6">
+        <span className="font-display text-xl font-medium transition-colors duration-220 group-hover:text-saffron-600">
+          {q}
+        </span>
+        <span className="mt-1 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-border text-muted-foreground transition-all duration-220 group-open:rotate-45 group-open:border-saffron-500 group-open:text-saffron-500">
+          <Plus className="h-3.5 w-3.5" />
         </span>
       </summary>
-      <p className="mt-3 max-w-3xl text-muted-foreground">{a}</p>
+      <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground">
+        {a}
+      </p>
     </details>
+  );
+}
+
+function DemoCallCard({ t }: { t: any }) {
+  return (
+    <div className="rounded-2xl border border-border bg-elevated p-6 shadow-xl shadow-ink-900/5">
+      {/* Header */}
+      <div className="flex items-start justify-between">
+        <div className="flex items-center gap-3">
+          <div className="relative grid h-11 w-11 place-items-center rounded-full bg-ink-900 text-saffron-500 dark:bg-saffron-500 dark:text-ink-900">
+            <Phone className="h-5 w-5" />
+            <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-saffron-500 ring-2 ring-elevated" />
+          </div>
+          <div>
+            <div className="font-display text-base font-medium">Yasmine</div>
+            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-saffron-500" />
+              {t("common.live")} · 14:32
+            </div>
+          </div>
+        </div>
+        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+          Demo
+        </span>
+      </div>
+
+      <div className="mt-6 border-t border-border pt-5">
+        <Waveform className="text-saffron-500" />
+      </div>
+
+      <div className="mt-5 space-y-3 text-sm">
+        <Bubble role="caller">
+          Bonjour, je voudrais un rendez-vous mercredi matin.
+        </Bubble>
+        <Bubble role="agent">
+          Bien sûr. J&apos;ai 9h30 ou 11h15 mercredi. Lequel vous arrange ?
+        </Bubble>
+        <Bubble role="caller">9h30, ça marche.</Bubble>
+        <Bubble role="agent">
+          Parfait. Je note pour Mercredi 9h30. Votre nom complet, s&apos;il vous
+          plaît ?
+        </Bubble>
+      </div>
+
+      <div className="mt-6 flex items-center justify-between border-t border-border pt-4 text-xs text-muted-foreground">
+        <span>FR · transcription temps réel</span>
+        <span className="font-mono">00:42</span>
+      </div>
+    </div>
+  );
+}
+
+function Bubble({
+  role,
+  children,
+}: {
+  role: "caller" | "agent";
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-start gap-2.5">
+      <span
+        className={`mt-0.5 inline-flex h-5 shrink-0 items-center rounded-sm px-1.5 font-mono text-[9px] uppercase tracking-wider ${
+          role === "caller"
+            ? "bg-surface text-muted-foreground"
+            : "bg-saffron-500 text-ink-900"
+        }`}
+      >
+        {role === "caller" ? "Client" : "Agent"}
+      </span>
+      <p
+        className={`flex-1 leading-relaxed ${
+          role === "caller" ? "text-muted-foreground" : ""
+        }`}
+      >
+        {children}
+      </p>
+    </div>
   );
 }

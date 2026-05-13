@@ -3,108 +3,136 @@
 @tailwind utilities;
 
 /* ============================================
-   VocazAI design tokens — Maroc-tech
-   emerald (drapeau MA) + saffron + terracotta + sand
+   VocazAI design tokens — Editorial × Voice-AI
+   Saffron + Deep Teal + Bone/Ink
    ============================================ */
 @layer base {
   :root {
-    /* --- Light mode (cream/sand sur terre chaude) --- */
-    --bg:           42 38% 97%;
-    --surface:      40 35% 94%;
-    --elevated:     0 0% 100%;
-    --fg:           150 25% 12%;
-    --muted:        38 18% 78%;
-    --muted-fg:     30 10% 38%;
-    --border:       38 24% 84%;
+    /* Light — warm bone paper */
+    --bg:           36 38% 93%;      /* #F5EFE6 */
+    --surface:      36 32% 88%;      /* #EDE3D2 */
+    --elevated:     0  0%  100%;
+    --fg:           28 14% 9%;       /* #1A1714 */
+    --muted:        36 14% 86%;
+    --muted-fg:     34 14% 36%;      /* #6B6049 */
+    --border:       34 24% 80%;      /* #DDD0B7 */
 
-    --emerald-50:   158 64% 95%;
-    --emerald-100:  158 55% 88%;
-    --emerald-500:  158 84% 28%;
-    --emerald-600:  158 91% 23%;
-    --emerald-700:  159 89% 18%;
-    --emerald-900:  162 75% 8%;
+    --saffron-50:   38 80% 95%;
+    --saffron-200:  38 86% 80%;
+    --saffron-400:  38 84% 64%;
+    --saffron-500:  36 82% 54%;      /* #E8A12C */
+    --saffron-600:  34 76% 44%;
+    --saffron-700:  32 76% 34%;
 
-    --saffron-50:   42 92% 95%;
-    --saffron-400:  38 92% 60%;
-    --saffron-500:  35 92% 50%;
-    --saffron-600:  33 92% 44%;
+    --teal-500:     181 79% 26%;     /* #0E7475 */
+    --teal-600:     181 81% 20%;
+    --teal-700:     181 81% 16%;     /* #0A5455 */
 
-    --terracotta-500: 19 78% 41%;
-    --terracotta-700: 17 80% 30%;
+    --terracotta-500: 14 60% 47%;
+    --ink-900:        28 14% 9%;
 
-    --sand-50:      42 38% 97%;
-    --sand-100:     40 35% 94%;
-    --sand-200:     38 30% 87%;
-
-    --radius:       1rem;
+    --radius:         0.5rem;
   }
 
   .dark {
-    /* --- Dark mode (forêt nuit) --- */
-    --bg:           150 22% 7%;
-    --surface:      152 18% 11%;
-    --elevated:     150 16% 14%;
-    --fg:           42 38% 95%;
-    --muted:        145 8% 18%;
-    --muted-fg:     38 12% 65%;
-    --border:       148 12% 22%;
+    /* Dark — warm ink */
+    --bg:           28 12% 6%;       /* #0E0D0B */
+    --surface:      35 13% 8%;       /* #15140F */
+    --elevated:     34 14% 10%;      /* #1D1B16 */
+    --fg:           36 38% 93%;      /* #F5EFE6 */
+    --muted:        30 10% 14%;
+    --muted-fg:     38 14% 60%;
+    --border:       30 12% 16%;
 
-    --emerald-50:   162 75% 14%;
-    --emerald-100:  158 75% 18%;
-    --emerald-500:  158 80% 42%;
-    --emerald-600:  158 75% 50%;
-    --emerald-700:  158 70% 60%;
-    --emerald-900:  158 60% 85%;
+    --saffron-50:   38 30% 18%;
+    --saffron-200:  38 70% 35%;
+    --saffron-400:  38 82% 60%;
+    --saffron-500:  36 86% 58%;      /* slightly punchier on dark */
+    --saffron-600:  34 78% 48%;
+    --saffron-700:  32 70% 38%;
 
-    --saffron-50:   38 60% 16%;
-    --saffron-400:  38 92% 65%;
-    --saffron-500:  38 92% 58%;
-    --saffron-600:  35 92% 50%;
+    --teal-500:     180 60% 48%;
+    --teal-600:     181 70% 38%;
+    --teal-700:     181 75% 28%;
 
-    --terracotta-500: 19 78% 55%;
-    --terracotta-700: 17 80% 45%;
-
-    --sand-50:      42 38% 95%;
-    --sand-100:     40 35% 88%;
-    --sand-200:     38 28% 78%;
+    --terracotta-500: 14 70% 60%;
   }
 
-  * { @apply border-border; }
-  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  * {
+    @apply border-border;
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
   body {
     @apply bg-background text-foreground font-sans;
-    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+    font-feature-settings: "ss01" 1, "cv11" 1, "calt" 1;
   }
 
+  /* RTL Arabic — Tajawal as primary */
   [dir="rtl"] body { @apply font-arabic; }
   [dir="rtl"] .font-display { @apply font-arabic; }
 
-  ::selection { background: hsl(var(--emerald-500) / 0.25); color: hsl(var(--fg)); }
+  ::selection {
+    background: hsl(var(--saffron-500) / 0.32);
+    color: hsl(var(--fg));
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
 @layer components {
-  .bg-zellige {
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M50 0L62 38L100 50L62 62L50 100L38 62L0 50L38 38Z' fill='none' stroke='%23047857' stroke-width='0.6' opacity='0.18'/%3E%3Ccircle cx='50' cy='50' r='3' fill='%23d97706' opacity='0.2'/%3E%3C/svg%3E");
-    background-size: 100px 100px;
+  /* Marquee for trust bar */
+  .marquee {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    gap: 4rem;
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
   }
-  .dark .bg-zellige {
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M50 0L62 38L100 50L62 62L50 100L38 62L0 50L38 38Z' fill='none' stroke='%2310b981' stroke-width='0.6' opacity='0.12'/%3E%3Ccircle cx='50' cy='50' r='3' fill='%23f59e0b' opacity='0.18'/%3E%3C/svg%3E");
+  .marquee__track {
+    display: flex;
+    gap: 4rem;
+    flex-shrink: 0;
+    animation: marquee 36s linear infinite;
   }
-
-  .pulse-dot {
-    @apply relative inline-block h-2.5 w-2.5 rounded-full bg-emerald-500;
-  }
-  .pulse-dot::before {
-    content: "";
-    position: absolute; inset: 0;
-    border-radius: 9999px;
-    background: hsl(var(--emerald-500));
-    @apply animate-pulse-ring;
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-100%); }
   }
 
-  .grain {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Audio waveform shimmer */
+  .wave-bar {
+    @apply inline-block w-[3px] rounded-full bg-saffron-500;
+    animation: wave 1.4s ease-in-out infinite;
+  }
+  @keyframes wave {
+    0%, 100% { transform: scaleY(0.35); }
+    50%      { transform: scaleY(1); }
+  }
+
+  /* Subtle paper texture (light only) */
+  .paper {
+    background-image:
+      radial-gradient(circle at 1px 1px, hsl(var(--fg) / 0.04) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+  .dark .paper {
+    background-image:
+      radial-gradient(circle at 1px 1px, hsl(var(--fg) / 0.03) 1px, transparent 0);
+  }
+
+  /* Hairline rule */
+  .hr-thin {
+    @apply h-px w-full bg-border;
   }
 }

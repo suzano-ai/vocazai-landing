@@ -26,7 +26,7 @@ export default async function AgentsPage({
         </div>
         <Link
           href={`/${locale}/dashboard/agents/new`}
-          className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-medium text-sand-50 transition hover:bg-emerald-700"
+          className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-ink-900 px-5 py-2.5 text-sm font-medium text-saffron-50 transition-colors duration-220 ease-soft hover:bg-saffron-500 hover:text-ink-900 dark:bg-saffron-500 dark:text-ink-900 dark:hover:bg-saffron-400"
         >
           <Plus className="h-4 w-4" /> {t("createNew")}
         </Link>
@@ -35,7 +35,7 @@ export default async function AgentsPage({
       <div className="mt-8 overflow-hidden rounded-3xl border border-border bg-elevated">
         {!agents || agents.length === 0 ? (
           <div className="grid place-items-center gap-3 p-16 text-center">
-            <div className="grid h-12 w-12 place-items-center rounded-2xl bg-emerald-50 text-emerald-600">
+            <div className="grid h-12 w-12 place-items-center rounded-2xl bg-saffron-50 text-saffron-600">
               <Bot className="h-6 w-6" />
             </div>
             <p className="max-w-md text-muted-foreground">{t("empty")}</p>
@@ -55,7 +55,7 @@ export default async function AgentsPage({
               {agents.map((a) => (
                 <tr key={a.id} className="border-b border-border last:border-0 hover:bg-surface/40">
                   <td className="px-5 py-4">
-                    <Link href={`/${locale}/dashboard/agents/${a.id}`} className="font-medium hover:text-emerald-600">
+                    <Link href={`/${locale}/dashboard/agents/${a.id}`} className="font-medium transition-colors duration-180 hover:text-saffron-600">
                       {a.name}
                     </Link>
                   </td>
@@ -63,8 +63,8 @@ export default async function AgentsPage({
                   <td className="px-5 py-4 uppercase">{a.locale}</td>
                   <td className="px-5 py-4">{a.direction}</td>
                   <td className="px-5 py-4">
-                    <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs ${a.is_active ? "bg-emerald-50 text-emerald-700" : "bg-muted text-muted-foreground"}`}>
-                      <span className={`h-1.5 w-1.5 rounded-full ${a.is_active ? "bg-emerald-600" : "bg-muted-foreground"}`} />
+                    <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs ${a.is_active ? "bg-saffron-50 text-saffron-700" : "bg-muted text-muted-foreground"}`}>
+                      <span className={`h-1.5 w-1.5 rounded-full ${a.is_active ? "bg-saffron-500" : "bg-muted-foreground"}`} />
                       {a.is_active ? "Actif" : "Inactif"}
                     </span>
                   </td>

@@ -1,10 +1,11 @@
 /**
- * Zellige-inspired SVG decoratives.
- * Used as background ornaments to evoke Moroccan geometric art without
- * being kitsch — kept very subtle via low opacity + monochrome strokes.
+ * Subtle geometric ornaments — Moroccan-rooted but refined.
+ * No heavy zellige; just an 8-pointed khatam and a sound waveform
+ * used sparingly as editorial accents.
  */
-export function ZelligeStar({
-  size = 320,
+
+export function Khatam({
+  size = 240,
   className = "",
 }: {
   size?: number;
@@ -18,42 +19,50 @@ export function ZelligeStar({
       className={className}
       aria-hidden
     >
-      {/* 8-pointed star (khatam) */}
       <g
         transform="translate(100 100)"
         stroke="currentColor"
-        strokeWidth="0.7"
+        strokeWidth="0.6"
         fill="none"
-        opacity="0.9"
       >
-        <polygon points="0,-90 25,-25 90,0 25,25 0,90 -25,25 -90,0 -25,-25" />
+        <polygon points="0,-92 26,-26 92,0 26,26 0,92 -26,26 -92,0 -26,-26" />
         <polygon
-          points="0,-90 25,-25 90,0 25,25 0,90 -25,25 -90,0 -25,-25"
+          points="0,-92 26,-26 92,0 26,26 0,92 -26,26 -92,0 -26,-26"
           transform="rotate(22.5)"
         />
-        <circle r="36" />
-        <circle r="60" strokeDasharray="2 4" opacity="0.6" />
-        <circle r="84" />
+        <circle r="48" strokeDasharray="2 4" />
       </g>
     </svg>
   );
 }
 
-export function ZelligeBand({ className = "" }: { className?: string }) {
+/**
+ * Animated audio waveform — visualizes the voice-AI essence.
+ * Pure CSS animation; respects prefers-reduced-motion via globals.
+ */
+export function Waveform({
+  bars = 28,
+  className = "",
+}: {
+  bars?: number;
+  className?: string;
+}) {
   return (
-    <svg
-      viewBox="0 0 600 24"
-      className={className}
-      preserveAspectRatio="none"
-      aria-hidden
-    >
-      <g stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5">
-        {Array.from({ length: 25 }).map((_, i) => (
-          <g key={i} transform={`translate(${i * 24} 12)`}>
-            <polygon points="0,-10 3,-3 10,0 3,3 0,10 -3,3 -10,0 -3,-3" />
-          </g>
-        ))}
-      </g>
-    </svg>
+    <div className={`flex h-12 items-center gap-[3px] ${className}`} aria-hidden>
+      {Array.from({ length: bars }).map((_, i) => {
+        const heights = [0.4, 0.7, 0.5, 0.9, 0.6, 1, 0.55, 0.3, 0.8, 0.45];
+        const h = heights[i % heights.length];
+        return (
+          <span
+            key={i}
+            className="wave-bar"
+            style={{
+              height: `${h * 100}%`,
+              animationDelay: `${(i % 7) * 0.08}s`,
+            }}
+          />
+        );
+      })}
+    </div>
   );
 }

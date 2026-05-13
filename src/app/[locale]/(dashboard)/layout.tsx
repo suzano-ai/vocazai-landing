@@ -40,9 +40,8 @@ export default async function DashboardLayout({
     <div className="grid min-h-screen grid-cols-[260px_1fr] bg-background">
       <aside className="flex flex-col border-r border-border bg-surface">
         <div className="flex h-16 items-center gap-2.5 border-b border-border px-6">
-          <span className="relative grid h-9 w-9 place-items-center rounded-xl bg-emerald-600 font-display font-bold text-sand-50">
+          <span className="relative grid h-9 w-9 place-items-center rounded-md bg-ink-900 font-display text-base font-extrabold italic text-saffron-500 dark:bg-saffron-500 dark:text-ink-900">
             V
-            <span className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full bg-saffron-500 ring-2 ring-surface" />
           </span>
           <span className="font-display text-lg font-semibold">VocazAI</span>
         </div>

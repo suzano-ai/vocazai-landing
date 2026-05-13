@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { ArrowLeft, Mail } from "lucide-react";
-import { ZelligeStar } from "@/components/zellige";
+import { Khatam } from "@/components/zellige";
 
 export default function LoginPage() {
   const t = useTranslations("common");
@@ -35,76 +35,87 @@ export default function LoginPage() {
 
   return (
     <main className="relative grid min-h-screen place-items-center overflow-hidden bg-background p-6">
-      <ZelligeStar
+      <Khatam
         size={520}
-        className="pointer-events-none absolute -right-32 -top-20 text-emerald-600/15 animate-spin-slow"
+        className="pointer-events-none absolute -right-32 -top-20 text-saffron-500/12"
       />
-      <ZelligeStar
+      <Khatam
         size={320}
-        className="pointer-events-none absolute -bottom-20 -left-20 text-saffron-500/15"
+        className="pointer-events-none absolute -bottom-20 -left-20 text-teal-500/10"
       />
+      <div className="pointer-events-none absolute inset-0 paper" />
 
       <div className="relative w-full max-w-md">
         <Link
           href="/"
-          className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition hover:text-foreground"
+          className="mb-6 inline-flex cursor-pointer items-center gap-1.5 text-sm text-muted-foreground transition-colors duration-180 hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4 rtl:rotate-180" />
           Retour
         </Link>
 
-        <div className="rounded-3xl border border-border bg-elevated p-8 shadow-2xl">
-          <div className="mb-6 flex items-center gap-2.5">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-emerald-600 font-display font-bold text-sand-50">V</span>
+        <div className="rounded-2xl border border-border bg-elevated p-8 shadow-xl shadow-ink-900/5">
+          <div className="mb-8 flex items-center gap-2.5">
+            <span className="grid h-9 w-9 place-items-center rounded-md bg-ink-900 font-display text-base font-extrabold italic text-saffron-500 dark:bg-saffron-500 dark:text-ink-900">
+              V
+            </span>
             <span className="font-display text-lg font-semibold">VocazAI</span>
           </div>
 
-          <h1 className="font-display text-2xl font-bold">{t("signIn")}</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <h1 className="font-display text-3xl font-medium">{t("signIn")}</h1>
+          <p className="mt-3 text-sm text-muted-foreground">
             Un lien magique par email — pas de mot de passe à retenir.
           </p>
 
           {sent ? (
-            <div className="mt-6 rounded-2xl border border-emerald-600/30 bg-emerald-50 p-4">
+            <div className="mt-6 rounded-lg border border-saffron-500/30 bg-saffron-50 p-4">
               <div className="flex items-start gap-3">
-                <Mail className="mt-0.5 h-5 w-5 text-emerald-600" />
+                <Mail className="mt-0.5 h-5 w-5 text-saffron-600" />
                 <div>
-                  <div className="font-medium text-emerald-700">Vérifiez votre boîte mail</div>
-                  <p className="mt-1 text-sm text-emerald-700/80">
-                    Un lien a été envoyé à <b>{email}</b>. Cliquez dessus pour vous connecter.
+                  <div className="font-medium text-saffron-700">
+                    Vérifiez votre boîte mail
+                  </div>
+                  <p className="mt-1 text-sm text-saffron-700/80">
+                    Un lien a été envoyé à <b>{email}</b>. Cliquez dessus pour
+                    vous connecter.
                   </p>
                 </div>
               </div>
             </div>
           ) : (
-            <form onSubmit={onSubmit} className="mt-6 space-y-4">
+            <form onSubmit={onSubmit} className="mt-8 space-y-4">
               <div>
-                <label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Email</label>
+                <label className="font-mono text-kicker uppercase text-muted-foreground">
+                  Email
+                </label>
                 <input
                   type="email"
                   required
                   autoFocus
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1.5 block w-full rounded-xl border border-input bg-background px-4 py-2.5 text-foreground outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20"
+                  className="mt-2 block w-full rounded-md border border-input bg-background px-4 py-2.5 text-foreground outline-none transition-colors duration-180 focus:border-saffron-500 focus:ring-2 focus:ring-saffron-500/30"
                   placeholder="you@company.com"
                 />
               </div>
               {error && (
-                <p className="rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">{error}</p>
+                <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                  {error}
+                </p>
               )}
               <button
                 type="submit"
                 disabled={loading || !email}
-                className="w-full rounded-xl bg-emerald-600 px-4 py-2.5 font-medium text-sand-50 transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="w-full cursor-pointer rounded-full bg-ink-900 px-4 py-3 text-sm font-medium text-saffron-50 transition-colors duration-220 ease-soft hover:bg-saffron-500 hover:text-ink-900 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-saffron-500 dark:text-ink-900 dark:hover:bg-saffron-400"
               >
                 {loading ? t("loading") : "Envoyer le lien"}
               </button>
             </form>
           )}
 
-          <p className="mt-6 text-center text-xs text-muted-foreground">
-            En continuant, vous acceptez nos conditions et politique de confidentialité.
+          <p className="mt-8 text-center text-xs text-muted-foreground">
+            En continuant, vous acceptez nos conditions et politique de
+            confidentialité.
           </p>
         </div>
       </div>

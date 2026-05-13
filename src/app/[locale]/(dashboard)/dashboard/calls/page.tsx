@@ -21,7 +21,7 @@ export default async function CallsPage() {
       <div className="mt-8 overflow-hidden rounded-3xl border border-border bg-elevated">
         {!calls || calls.length === 0 ? (
           <div className="grid place-items-center gap-3 p-16 text-center">
-            <div className="grid h-12 w-12 place-items-center rounded-2xl bg-emerald-50 text-emerald-600">
+            <div className="grid h-12 w-12 place-items-center rounded-2xl bg-saffron-50 text-saffron-600">
               <Phone className="h-6 w-6" />
             </div>
             <p className="text-muted-foreground">{t("empty")}</p>
