@@ -40,7 +40,7 @@ def load_model():
     try:
         from kokoro_onnx import Kokoro
         _kokoro = Kokoro("kokoro-v1.0.onnx", "voices-v1.0.bin")
-            log.info(f"✓ Kokoro ready — primary voice: {VOICE_PRIMARY}")
+        log.info(f"✓ Kokoro ready — primary voice: {VOICE_PRIMARY}")
     except Exception as e:
         log.error(f"Failed to load Kokoro: {e}")
 
