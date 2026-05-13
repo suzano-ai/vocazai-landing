@@ -5,7 +5,9 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  // We allow CDN assets for fonts (Google Fonts handled by next/font)
+  // Standalone output bundles only the files needed to run in production.
+  // Used by the Docker image — copies .next/standalone + .next/static to the container.
+  output: "standalone",
 };
 
 export default withNextIntl(nextConfig);

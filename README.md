@@ -14,7 +14,7 @@
 | Auth | Supabase Auth (magic link) |
 | DB | Supabase Postgres + Row Level Security (multi-tenant) |
 | Voice providers | Vapi + Retell via `IVoiceProvider` |
-| Déploiement | Render (Web Service Node) — `render.yaml` à la racine |
+| Déploiement | Hostinger KVM VPS — Docker + Traefik (`docker-compose.yml`) |
 
 ## Démarrage
 
@@ -31,7 +31,11 @@ npm run dev
 
 ```
 .
-├── render.yaml                 # Blueprint Render (build + start + env)
+├── Dockerfile                  # Multi-stage Next.js image (standalone)
+├── docker-compose.yml          # Traefik (SSL) + app
+├── deploy/
+│   ├── traefik.yml             # Traefik static config (Let's Encrypt)
+│   └── hostinger-setup.sh      # One-command VPS setup script
 ├── middleware.ts               # Auth Supabase + locale routing
 ├── i18n/                       # next-intl config
 ├── messages/                   # fr.json · en.json · ar.json
@@ -100,14 +104,34 @@ const { providerCallId } = await provider.startOutboundCall({ ... }, agent);
 
 Chacun vérifie la signature HMAC, normalise l'event via l'adapter, persiste le payload brut dans `webhook_events` (audit), et upsert dans `calls` + `call_transcripts`.
 
-## Déploiement Render
+## Déploiement Hostinger (Docker + Traefik)
 
-Le fichier `render.yaml` configure le service automatiquement. À la première création :
+Le stack tourne dans Docker. Traefik gère le reverse proxy et le certificat SSL Let's Encrypt automatiquement.
 
-1. Render Dashboard → New → Blueprint → Connect this repo
-2. Render lit `render.yaml`, crée le service `vocazai`
-3. **Ajouter les env vars** manuellement dans Settings → Environment (Supabase, Vapi, Retell)
-4. Trigger un manual deploy
+**Prérequis :** un VPS Hostinger KVM sous Ubuntu 22.04, avec les DNS `vocazai.com` et `www.vocazai.com` pointant vers l'IP du serveur.
+
+```bash
+# 1. Cloner le repo sur le VPS
+git clone https://github.com/ton-compte/vocazai-landing /var/www/vocazai-landing
+cd /var/www/vocazai-landing
+
+# 2. Remplir les variables d'environnement
+cp .env.example .env.local
+nano .env.local
+
+# 3. Lancer le script de setup (installe Docker, Traefik, SSL, démarre l'app)
+sudo bash deploy/hostinger-setup.sh
+```
+
+L'app sera accessible sur **https://vocazai.com** avec HTTPS actif automatiquement.
+
+**Commandes utiles :**
+
+```bash
+docker compose logs -f app          # voir les logs
+docker compose up -d --build app    # redéployer après un git pull
+docker compose down                 # arrêter tout
+```
 
 ## Documentation
 

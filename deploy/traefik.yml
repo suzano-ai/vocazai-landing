@@ -1,0 +1,36 @@
+# =============================================================================
+# Traefik v3 — Static configuration
+# Mounted into the Traefik container as /traefik.yml (read-only)
+# =============================================================================
+
+# Entry points — ports Traefik listens on
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+
+# Let's Encrypt SSL — certificates stored in a Docker volume
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: admin@vocazai.com          # change to your real email
+      storage: /letsencrypt/acme.json
+      httpChallenge:
+        entryPoint: web                 # uses port 80 for the ACME challenge
+
+# Docker provider — Traefik reads labels from containers automatically
+providers:
+  docker:
+    exposedByDefault: false             # only route containers with traefik.enable=true
+    network: vocazai_net
+
+# Disable the Traefik dashboard in production (set to true for debugging)
+api:
+  dashboard: false
+
+# Logs
+log:
+  level: WARN
+
+accessLog: {}
