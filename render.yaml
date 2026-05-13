@@ -1,0 +1,34 @@
+# Render blueprint for VocazAI Next.js Web Service.
+# Render reads this when deploying — it overrides UI settings.
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: vocazai
+    runtime: node
+    region: frankfurt        # closest to Maghreb / EU users
+    plan: starter            # adjust as needed
+    branch: main
+    autoDeploy: true
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: NEXT_PUBLIC_APP_URL
+        value: https://vocazai.com
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false          # set manually in Render dashboard
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: VAPI_API_KEY
+        sync: false
+      - key: VAPI_WEBHOOK_SECRET
+        sync: false
+      - key: RETELL_API_KEY
+        sync: false
+      - key: RETELL_WEBHOOK_SECRET
+        sync: false

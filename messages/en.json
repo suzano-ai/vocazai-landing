@@ -1,0 +1,108 @@
+{
+  "common": {
+    "appName": "VocazAI",
+    "tagline": "AI Voice Agents for Your Business 24/7",
+    "signIn": "Sign in",
+    "signUp": "Get started",
+    "signOut": "Sign out",
+    "dashboard": "Dashboard",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "loading": "Loading…",
+    "live": "Online",
+    "switchTheme": "Switch theme",
+    "language": "Language"
+  },
+  "landing": {
+    "kicker": "Built in Morocco · For Africa",
+    "heroTitle1": "The voice agent",
+    "heroTitle2": "that answers for you.",
+    "heroSubtitle": "VocazAI deploys bilingual AI receptionists (French · Arabic · English) for SMBs across Morocco and Africa. Front-desk, appointment booking, support — 24/7, no coffee breaks.",
+    "ctaPrimary": "Book a demo",
+    "ctaSecondary": "How it works",
+    "trustBar": "Trusted with their inbound calls",
+    "stats": {
+      "available": "Availability",
+      "languages": "Languages supported",
+      "latency": "Average latency",
+      "missed": "0 calls missed"
+    },
+    "howItWorks": {
+      "title": "Three steps to never miss a call again.",
+      "subtitle": "Tell us about your business. We configure your agent. It picks up tomorrow.",
+      "step1Title": "Tell us about your business",
+      "step1Body": "Hours, services, brand tone, FAQs — we capture everything for your agent.",
+      "step2Title": "We configure your agent",
+      "step2Body": "Voice choice (male/female, FR/MA/EN accent), calendar integration, qualification scripts.",
+      "step3Title": "It picks up — tomorrow",
+      "step3Body": "Connected to your landline or mobile. Transcripts, summaries and CRM tasks in your dashboard."
+    },
+    "useCases": {
+      "title": "Built for industries where every call matters.",
+      "clinic": "Clinics & practices",
+      "clinicBody": "Appointment booking, reminders, urgency triage.",
+      "realty": "Real estate",
+      "realtyBody": "Pre-qualify buyers and renter leads.",
+      "ecom": "E-commerce & delivery",
+      "ecomBody": "Order tracking, cash-on-delivery confirmations.",
+      "restau": "Restaurants & hospitality",
+      "restauBody": "Reservations, special requests, in 3 languages."
+    },
+    "pricing": {
+      "title": "Simple pricing. Pay for usage, not waiting.",
+      "subtitle": "No commitment. First week free.",
+      "starter": "Starter",
+      "starterPrice": "$49",
+      "starterBody": "100 included minutes · 1 agent · 1 language",
+      "growth": "Growth",
+      "growthPrice": "$149",
+      "growthBody": "500 minutes · 3 agents · multilingual · CRM",
+      "enterprise": "Custom",
+      "enterpriseBody": "Unlimited volume · dedicated SLA · custom integrations",
+      "cta": "Start now",
+      "ctaContact": "Contact us"
+    },
+    "faq": {
+      "title": "Frequently asked.",
+      "q1": "Can my agent speak darija?",
+      "a1": "Yes — VocazAI handles modern standard Arabic, Moroccan darija, French and English. The agent switches between languages mid-call based on the caller.",
+      "q2": "How long to set up?",
+      "a2": "Plan on 24 to 48 hours between your brief and the first call answered by your agent. No technical setup on your side.",
+      "q3": "What if the agent doesn't know the answer?",
+      "a3": "You define the transfer rules. The agent can take a message, schedule a callback, or transfer live to your team.",
+      "q4": "Is my data confidential?",
+      "a4": "Yes. Recordings and transcripts are encrypted at rest, isolated per client (Postgres RLS), and exportable or deletable on demand."
+    },
+    "finalCta": {
+      "title": "Your customers are calling. Right now.",
+      "body": "Set up your first voice agent in under 48 hours. No commitment.",
+      "cta": "Book a demo"
+    },
+    "footer": {
+      "tagline": "The AI voice agent for French-speaking Africa.",
+      "made": "Built in Casablanca",
+      "rights": "All rights reserved"
+    }
+  },
+  "dashboard": {
+    "nav": {
+      "overview": "Overview",
+      "agents": "Agents",
+      "calls": "Calls",
+      "campaigns": "Campaigns",
+      "contacts": "Contacts",
+      "phoneNumbers": "Numbers",
+      "settings": "Settings"
+    },
+    "agents": {
+      "title": "Agents",
+      "createNew": "New agent",
+      "empty": "No agents yet. Create your first voice agent."
+    },
+    "calls": {
+      "title": "Call history",
+      "empty": "No calls yet."
+    }
+  }
+}
