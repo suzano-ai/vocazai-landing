@@ -78,7 +78,7 @@ const LANG_CFG: Record<Lang, {
       {
         id:    "greeting",
         speak: "Hello! I'm Yasmine, VocazAI's voice assistant. How can I help you today?",
-        hint:  "Say for example: "I'd like to book an appointment"",
+        hint:  "Say for example: \"I'd like to book an appointment\"",
         mode:  "intent",
       },
       {

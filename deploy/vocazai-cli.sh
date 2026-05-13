@@ -324,13 +324,12 @@ sys.stdout.buffer.write(r.content)
       fi
 
       SAMPLE_B64=$(base64 -w 0 "$SAMPLE_FILE")
+      SAMPLE_FNAME=$(basename "$SAMPLE_FILE")
+      VOICE_PAYLOAD="{\"name\":\"yasmine-vocazai\",\"sample_audio\":\"$SAMPLE_B64\",\"sample_filename\":\"$SAMPLE_FNAME\",\"languages\":[\"fr\",\"en\",\"ar\"],\"gender\":\"female\",\"tags\":[\"french\",\"vocazai\",\"yasmine\"]}"
       RESPONSE=$(curl -s -X POST https://api.mistral.ai/v1/audio/voices \
         -H "Authorization: Bearer $MISTRAL_KEY" \
         -H "Content-Type: application/json" \
-        -d "{\"name\":\"yasmine-vocazai\",\"sample_audio\":\"$SAMPLE_B64\",
-             \"sample_filename\":\"$(basename $SAMPLE_FILE)\",
-             \"languages\":[\"fr\",\"en\",\"ar\"],\"gender\":\"female\",
-             \"tags\":[\"french\",\"vocazai\",\"yasmine\"]}")
+        -d "$VOICE_PAYLOAD")
 
       NEW_VOICE_ID=$(echo "$RESPONSE" | python3 -c \
         "import sys,json; print(json.load(sys.stdin).get('id',''))" 2>/dev/null || echo "")
@@ -639,16 +638,12 @@ cmd_tts() {
     echo ""
 
     TTS_OUT="/tmp/yasmine_tts_test.mp3"
+    TTS_PAYLOAD="{\"model\":\"voxtral-mini-tts-2603\",\"input\":\"Bonjour, je suis Yasmine, votre assistante VocazAI. Le système fonctionne parfaitement.\",\"voice\":\"$VOICE_ID\",\"response_format\":\"mp3\"}"
     HTTP_CODE=$(curl -s -o "$TTS_OUT" -w "%{http_code}" \
       -X POST "https://api.mistral.ai/v1/audio/speech" \
       -H "Authorization: Bearer $MISTRAL_KEY" \
       -H "Content-Type: application/json" \
-      -d "{
-        \"model\": \"voxtral-mini-tts-2603\",
-        \"input\": \"Bonjour, je suis Yasmine, votre assistante VocazAI. Le système fonctionne parfaitement.\",
-        \"voice\": \"$VOICE_ID\",
-        \"response_format\": \"mp3\"
-      }" 2>/dev/null)
+      -d "$TTS_PAYLOAD" 2>/dev/null)
 
     if [[ "$HTTP_CODE" == "200" ]] && [[ -s "$TTS_OUT" ]]; then
       SIZE=$(du -h "$TTS_OUT" | cut -f1)
