@@ -23,7 +23,7 @@ certificatesResolvers:
 providers:
   docker:
     exposedByDefault: false             # only route containers with traefik.enable=true
-    network: vocazai_net
+    network: traefik_net                # shared network across all projects
 
 # Disable the Traefik dashboard in production (set to true for debugging)
 api:
