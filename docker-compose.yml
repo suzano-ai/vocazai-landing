@@ -31,6 +31,19 @@ services:
     networks:
       - vocazai_net
 
+  # ---------- Kokoro TTS microservice (internal — no public exposure) ---------
+  tts:
+    build:
+      context: ./services/tts
+      dockerfile: Dockerfile
+    container_name: vocazai-tts
+    restart: unless-stopped
+    expose:
+      - "8000"
+    networks:
+      - vocazai_net
+    # No Traefik labels — only the app container talks to this service
+
   # ---------- Next.js app ----------------------------------------------------
   app:
     build:
@@ -46,6 +59,8 @@ services:
       - .env.local
     expose:
       - "3000"
+    depends_on:
+      - tts
     networks:
       - vocazai_net
     labels:

@@ -4,7 +4,6 @@ import Link from "next/link";
 import {
   ArrowRight,
   ArrowUpRight,
-  Phone,
   Calendar,
   Languages,
   ShieldCheck,
@@ -14,9 +13,9 @@ import {
 } from "lucide-react";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
+import { DemoCallCard } from "@/components/landing/demo-call-card";
 import {
   Khatam,
-  Waveform,
   Arch,
   Quatrefoil,
   HexLattice,
@@ -123,14 +122,14 @@ export default async function LandingPage({
             </Reveal>
           </div>
 
-          {/* RIGHT — Live call card */}
+          {/* RIGHT — Live call card (interactive Kokoro TTS demo) */}
           <Reveal delay={200}>
             <div className="relative">
               <Quatrefoil
                 size={280}
                 className="pointer-events-none absolute -right-8 -top-10 text-teal-500/12"
               />
-              <DemoCallCard t={t} />
+              <DemoCallCard />
             </div>
           </Reveal>
         </div>
@@ -587,79 +586,3 @@ function Faq({ q, a }: { q: string; a: string }) {
   );
 }
 
-function DemoCallCard({ t }: { t: any }) {
-  return (
-    <div className="rounded-2xl border border-border bg-elevated p-6 shadow-xl shadow-ink-900/5">
-      <div className="flex items-start justify-between">
-        <div className="flex items-center gap-3">
-          <div className="relative grid h-11 w-11 place-items-center rounded-full bg-ink-900 text-saffron-500 dark:bg-saffron-500 dark:text-ink-900">
-            <Phone className="h-5 w-5" />
-            <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-saffron-500 ring-2 ring-elevated" />
-          </div>
-          <div>
-            <div className="font-display text-base font-medium">Yasmine</div>
-            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-saffron-500" />
-              {t("common.live")} · 14:32
-            </div>
-          </div>
-        </div>
-        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-          Demo
-        </span>
-      </div>
-
-      <div className="mt-6 border-t border-border pt-5">
-        <Waveform className="text-saffron-500" />
-      </div>
-
-      <div className="mt-5 space-y-3 text-sm">
-        <Bubble role="caller">
-          Bonjour, je voudrais un rendez-vous mercredi matin.
-        </Bubble>
-        <Bubble role="agent">
-          Bien sûr. J&apos;ai 9h30 ou 11h15 mercredi. Lequel vous arrange ?
-        </Bubble>
-        <Bubble role="caller">9h30, ça marche.</Bubble>
-        <Bubble role="agent">
-          Parfait. Je note pour Mercredi 9h30. Votre nom complet, s&apos;il vous
-          plaît ?
-        </Bubble>
-      </div>
-
-      <div className="mt-6 flex items-center justify-between border-t border-border pt-4 text-xs text-muted-foreground">
-        <span>FR · transcription temps réel</span>
-        <span className="font-mono">00:42</span>
-      </div>
-    </div>
-  );
-}
-
-function Bubble({
-  role,
-  children,
-}: {
-  role: "caller" | "agent";
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex items-start gap-2.5">
-      <span
-        className={`mt-0.5 inline-flex h-5 shrink-0 items-center rounded-sm px-1.5 font-mono text-[9px] uppercase tracking-wider ${
-          role === "caller"
-            ? "bg-surface text-muted-foreground"
-            : "bg-saffron-500 text-ink-900"
-        }`}
-      >
-        {role === "caller" ? "Client" : "Agent"}
-      </span>
-      <p
-        className={`flex-1 leading-relaxed ${
-          role === "caller" ? "text-muted-foreground" : ""
-        }`}
-      >
-        {children}
-      </p>
-    </div>
-  );
-}
