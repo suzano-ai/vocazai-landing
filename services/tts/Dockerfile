@@ -1,6 +1,9 @@
 # =============================================================================
 # VocazAI — Kokoro TTS microservice
-# Lightweight Python container. Internal only — not exposed to the internet.
+# Model: kokoro-v1.0 (310 MB) + voices-v1.0.bin (26 voix)
+# Voix utilisées:
+#   ff_siwis  — Français femme (France + Maroc)
+#   af_heart  — Anglais femme (fallback)
 # =============================================================================
 
 FROM python:3.11-slim
@@ -17,17 +20,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Download Kokoro ONNX model files at build time (~320 MB total)
-# Retry up to 3 times in case of network blip
+# ── Download Kokoro v1.0 model files (~310 MB) ───────────────────────────────
+# Source: https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.0
 RUN for i in 1 2 3; do \
-      wget -q --timeout=120 --tries=3 -O kokoro-v0_19.onnx \
-        https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files/kokoro-v0_19.onnx && \
-      wget -q --timeout=120 --tries=3 -O voices.bin \
-        https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files/voices.bin && \
-      echo "Models downloaded OK." && break || \
-      (echo "Attempt $i failed, retrying…" && sleep 5); \
+      wget -q --timeout=180 --tries=3 \
+        -O kokoro-v1.0.onnx \
+        "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx" && \
+      wget -q --timeout=120 --tries=3 \
+        -O voices-v1.0.bin \
+        "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin" && \
+      echo "✓ Models downloaded (kokoro-v1.0 + voices-v1.0)" && break || \
+      (echo "Attempt $i failed, retrying in 5s…" && sleep 5); \
     done && \
-    test -f kokoro-v0_19.onnx && test -f voices.bin || (echo "ERROR: model download failed" && exit 1)
+    test -f kokoro-v1.0.onnx || (echo "ERROR: kokoro-v1.0.onnx not downloaded" && exit 1) && \
+    test -f voices-v1.0.bin  || (echo "ERROR: voices-v1.0.bin not downloaded"  && exit 1)
 
 COPY main.py .
 
