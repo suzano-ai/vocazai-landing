@@ -120,6 +120,13 @@
     50%      { transform: scaleY(1); }
   }
 
+  /* Slow spin used on splash khatam — Tailwind default `spin` is 1s,
+     we want a meditative 60s rotation. */
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
   /* Subtle paper texture (light only) */
   .paper {
     background-image:

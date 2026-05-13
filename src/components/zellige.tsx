@@ -11,12 +11,14 @@
 export function Khatam({
   size = 240,
   className = "",
+  style,
 }: {
   size?: number;
   className?: string;
+  style?: React.CSSProperties;
 }) {
   return (
-    <svg viewBox="0 0 200 200" width={size} height={size} className={className} aria-hidden>
+    <svg viewBox="0 0 200 200" width={size} height={size} className={className} style={style} aria-hidden>
       <g transform="translate(100 100)" stroke="currentColor" strokeWidth="0.6" fill="none">
         <polygon points="0,-92 26,-26 92,0 26,26 0,92 -26,26 -92,0 -26,-26" />
         <polygon
