@@ -115,19 +115,78 @@ export function DemoCallCard() {
   const fmt = (s: number) =>
     `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 
-  // ── TTS via Voxtral/Kokoro ─────────────────────────────────────────────────
+  // ── Pick best French Canadian voice ───────────────────────────────────────
+  const pickVoice = useCallback((): SpeechSynthesisVoice | null => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return null;
+    const voices = window.speechSynthesis.getVoices();
+    return (
+      voices.find((v) => v.lang === "fr-CA") ??
+      voices.find((v) => v.lang.startsWith("fr-CA")) ??
+      voices.find((v) => v.lang === "fr-FR" && v.localService) ??
+      voices.find((v) => v.lang.startsWith("fr")) ??
+      null
+    );
+  }, []);
+
+  // ── TTS — Web Speech API (native fr-CA), fallback to API ──────────────────
   const speak = useCallback(async (text: string): Promise<void> => {
+    // ── Primary: native browser voice (French Canadian) ─────────────────────
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      return new Promise((resolve) => {
+        setDemoState("speaking");
+        window.speechSynthesis.cancel();
+
+        const doSpeak = () => {
+          const voice = pickVoice();
+          const utter = new SpeechSynthesisUtterance(text);
+          utter.lang   = "fr-CA";
+          utter.rate   = 0.93;
+          utter.pitch  = 1.08;
+          utter.volume = 1;
+          if (voice) utter.voice = voice;
+
+          utter.onend   = () => resolve();
+          utter.onerror = () => {
+            // Fallback: server TTS
+            fetch("/api/tts", {
+              method: "POST", headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ text, voice: "af_heart", speed: 0.92, lang: "fr-fr" }),
+            })
+              .then(async (res) => {
+                if (!res.ok) throw new Error();
+                const url = URL.createObjectURL(await res.blob());
+                const audio = new Audio(url);
+                audioRef.current = audio;
+                audio.onended = () => { URL.revokeObjectURL(url); resolve(); };
+                audio.play().catch(() => setTimeout(resolve, Math.min(2000 + text.split(" ").length * 130, 7000)));
+              })
+              .catch(() => setTimeout(resolve, Math.min(2000 + text.split(" ").length * 130, 7000)));
+          };
+
+          window.speechSynthesis.speak(utter);
+        };
+
+        // Voices may need a tick to load on first call
+        const voices = window.speechSynthesis.getVoices();
+        if (voices.length > 0) {
+          doSpeak();
+        } else {
+          window.speechSynthesis.onvoiceschanged = () => doSpeak();
+          setTimeout(doSpeak, 400); // safety
+        }
+      });
+    }
+
+    // ── Fallback: server TTS ─────────────────────────────────────────────────
     setDemoState("loading");
     return new Promise((resolve) => {
       fetch("/api/tts", {
-        method:  "POST",
-        headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify({ text, voice: "af_heart", speed: 0.92, lang: "fr-fr" }),
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, voice: "af_heart", speed: 0.92, lang: "fr-fr" }),
       })
         .then(async (res) => {
           if (!res.ok) throw new Error();
-          const blob  = await res.blob();
-          const url   = URL.createObjectURL(blob);
+          const url = URL.createObjectURL(await res.blob());
           const audio = new Audio(url);
           audioRef.current = audio;
           audio.onended = () => { URL.revokeObjectURL(url); resolve(); };
@@ -135,12 +194,11 @@ export function DemoCallCard() {
           audio.play().catch(() => { setDemoState("speaking"); setTimeout(resolve, 3000); });
         })
         .catch(() => {
-          const delay = Math.min(2000 + text.split(" ").length * 130, 7000);
           setDemoState("speaking");
-          setTimeout(resolve, delay);
+          setTimeout(resolve, Math.min(2000 + text.split(" ").length * 130, 7000));
         });
     });
-  }, []);
+  }, [pickVoice]);
 
   // ── STT: record → transcribe ────────────────────────────────────────────────
   const listen = useCallback((): Promise<string> => {
