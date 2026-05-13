@@ -43,6 +43,7 @@
       "missed": "0 calls missed"
     },
     "howItWorks": {
+      "kicker": "Process",
       "title": "Three steps to never miss a call again.",
       "subtitle": "Tell us about your business. We configure your agent. It picks up tomorrow.",
       "step1Title": "Tell us about your business",
@@ -53,6 +54,8 @@
       "step3Body": "Connected to your landline or mobile. Transcripts, summaries and CRM tasks in your dashboard."
     },
     "useCases": {
+      "kicker": "Industries",
+      "seeAll": "See all use cases",
       "title": "Built for industries where every call matters.",
       "clinic": "Clinics & practices",
       "clinicBody": "Appointment booking, reminders, urgency triage.",
@@ -64,6 +67,23 @@
       "restauBody": "Reservations, special requests, in 3 languages."
     },
     "pricing": {
+      "kicker": "Pricing",
+      "recommended": "Recommended",
+      "perMonth": "/ month",
+      "compareAll": "Compare plans in detail",
+      "starterFeature1": "100 min / month",
+      "starterFeature2": "1 agent",
+      "starterFeature3": "1 language",
+      "starterFeature4": "Email support",
+      "growthFeature1": "500 min / month",
+      "growthFeature2": "3 agents",
+      "growthFeature3": "Multilingual (FR/AR/EN)",
+      "growthFeature4": "CRM integration",
+      "growthFeature5": "Priority support",
+      "enterpriseFeature1": "Unlimited volume",
+      "enterpriseFeature2": "Dedicated SLA",
+      "enterpriseFeature3": "Custom integrations",
+      "enterpriseFeature4": "Dedicated account manager",
       "title": "Simple pricing. Pay for usage, not waiting.",
       "subtitle": "No commitment. First week free.",
       "starter": "Starter",
@@ -89,6 +109,7 @@
       "a4": "Yes. Recordings and transcripts are encrypted at rest, isolated per client (Postgres RLS), and exportable or deletable on demand."
     },
     "finalCta": {
+      "kicker": "Close",
       "title": "Your customers are calling. Right now.",
       "body": "Set up your first voice agent in under 48 hours. No commitment.",
       "cta": "Book a demo"

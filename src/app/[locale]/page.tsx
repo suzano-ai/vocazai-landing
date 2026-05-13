@@ -130,7 +130,7 @@ export default async function LandingPage({
                 size={280}
                 className="pointer-events-none absolute -right-8 -top-10 text-teal-500/12"
               />
-              <DemoCallCard />
+              <DemoCallCard locale={locale} />
             </div>
           </Reveal>
         </div>
@@ -187,7 +187,7 @@ export default async function LandingPage({
           <Reveal>
             <div className="mb-20 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
               <div className="max-w-2xl">
-                <SectionKicker number="01" label="Process" color="saffron" />
+                <SectionKicker number="01" label={t("landing.howItWorks.kicker")} color="saffron" />
                 <h2 className="mt-4 font-display text-display-lg font-medium">
                   {t("landing.howItWorks.title")}
                 </h2>
@@ -236,7 +236,7 @@ export default async function LandingPage({
         <div className="container">
           <Reveal>
             <div className="mb-20 max-w-2xl">
-              <SectionKicker number="02" label="Industries" color="teal" />
+              <SectionKicker number="02" label={t("landing.useCases.kicker")} color="teal" />
               <h2 className="mt-4 font-display text-display-lg font-medium">
                 {t("landing.useCases.title")}
               </h2>
@@ -278,7 +278,7 @@ export default async function LandingPage({
                 href={`/${locale}/use-cases`}
                 className="inline-flex cursor-pointer items-center gap-2 text-sm font-medium text-saffron-600 transition-colors duration-180 hover:text-saffron-700"
               >
-                Voir tous les cas d&apos;usage
+                {t("landing.useCases.seeAll")}
                 <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
               </Link>
             </div>
@@ -295,7 +295,7 @@ export default async function LandingPage({
         <div className="container">
           <Reveal>
             <div className="mb-20 max-w-2xl">
-              <SectionKicker number="03" label="Pricing" color="saffron" />
+              <SectionKicker number="03" label={t("landing.pricing.kicker")} color="saffron" />
               <h2 className="mt-4 font-display text-display-lg font-medium">
                 {t("landing.pricing.title")}
               </h2>
@@ -313,7 +313,12 @@ export default async function LandingPage({
                 body: t("landing.pricing.starterBody"),
                 cta: t("landing.pricing.cta"),
                 href: `/${locale}/login`,
-                features: ["100 min/mois", "1 agent", "1 langue", "Email support"],
+                features: [
+                  t("landing.pricing.starterFeature1"),
+                  t("landing.pricing.starterFeature2"),
+                  t("landing.pricing.starterFeature3"),
+                  t("landing.pricing.starterFeature4"),
+                ],
               },
               {
                 name: t("landing.pricing.growth"),
@@ -322,11 +327,11 @@ export default async function LandingPage({
                 cta: t("landing.pricing.cta"),
                 href: `/${locale}/login`,
                 features: [
-                  "500 min/mois",
-                  "3 agents",
-                  "Multilingue (FR/AR/EN)",
-                  "Intégration CRM",
-                  "Support prioritaire",
+                  t("landing.pricing.growthFeature1"),
+                  t("landing.pricing.growthFeature2"),
+                  t("landing.pricing.growthFeature3"),
+                  t("landing.pricing.growthFeature4"),
+                  t("landing.pricing.growthFeature5"),
                 ],
                 featured: true,
               },
@@ -337,15 +342,19 @@ export default async function LandingPage({
                 cta: t("landing.pricing.ctaContact"),
                 href: "https://wa.me/33777345056",
                 features: [
-                  "Volume illimité",
-                  "SLA dédié",
-                  "Intégrations custom",
-                  "Manager dédié",
+                  t("landing.pricing.enterpriseFeature1"),
+                  t("landing.pricing.enterpriseFeature2"),
+                  t("landing.pricing.enterpriseFeature3"),
+                  t("landing.pricing.enterpriseFeature4"),
                 ],
               },
             ].map((p, i) => (
               <Reveal key={p.name} delay={i * 80}>
-                <PriceCard {...p} />
+                <PriceCard
+                  {...p}
+                  recommendedLabel={t("landing.pricing.recommended")}
+                  perMonthLabel={t("landing.pricing.perMonth")}
+                />
               </Reveal>
             ))}
           </div>
@@ -356,7 +365,7 @@ export default async function LandingPage({
                 href={`/${locale}/pricing`}
                 className="inline-flex cursor-pointer items-center gap-2 text-sm font-medium text-saffron-600 transition-colors duration-180 hover:text-saffron-700"
               >
-                Comparer les formules en détail
+                {t("landing.pricing.compareAll")}
                 <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
               </Link>
             </div>
@@ -403,7 +412,7 @@ export default async function LandingPage({
             <div className="max-w-3xl">
               <span className="inline-flex items-center gap-2 font-mono text-kicker uppercase text-saffron-400">
                 <Sparkles className="h-3 w-3" />
-                Conclure
+                {t("landing.finalCta.kicker")}
               </span>
               <h2 className="mt-6 font-display text-display-xl font-medium">
                 {t("landing.finalCta.title")}
@@ -514,6 +523,8 @@ function PriceCard({
   href,
   features,
   featured = false,
+  recommendedLabel,
+  perMonthLabel,
 }: {
   name: string;
   price: string;
@@ -522,6 +533,8 @@ function PriceCard({
   href: string;
   features: string[];
   featured?: boolean;
+  recommendedLabel: string;
+  perMonthLabel: string;
 }) {
   return (
     <div
@@ -531,7 +544,7 @@ function PriceCard({
     >
       {featured && (
         <div className="absolute -top-3 left-7 inline-flex items-center gap-1 rounded-full bg-saffron-500 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-ink-900">
-          Recommandé
+          {recommendedLabel}
         </div>
       )}
       <div className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
@@ -541,7 +554,7 @@ function PriceCard({
         {price}
         {price !== "—" && (
           <span className="ml-2 font-sans text-sm font-normal text-muted-foreground">
-            / mois
+            {perMonthLabel}
           </span>
         )}
       </div>

@@ -261,27 +261,29 @@ cmd_update() {
   _upsert_key() {
     local KEY="$1" LABEL="$2" URL="$3" SECRET="${4:-yes}"
     local CURRENT=$(_env "$KEY")
-    if [[ -z "$CURRENT" ]]; then
-      warn "${BOLD}$KEY${NC} is missing"
-      echo -e "  ${DIM}Get it at: $URL${NC}"
-    else
-      echo -ne "  ${DIM}$KEY already set — press Enter to keep, or paste new value: ${NC}"
+    # Key already set — no prompt, just confirm and skip
+    if [[ -n "$CURRENT" ]]; then
+      ok "$KEY  ${DIM}already set ✓${NC}${G}"
+      return
     fi
+    # Key missing — ask for it
+    warn "${BOLD}$KEY${NC} is missing"
+    echo -e "  ${DIM}Get it at: $URL${NC}"
+    local NEW_VAL=""
     if [[ "$SECRET" == "yes" ]]; then
       read -rsp "  › $LABEL: " NEW_VAL; echo
     else
       read -rp  "  › $LABEL: " NEW_VAL
     fi
     if [[ -n "$NEW_VAL" ]]; then
-      # Replace existing line or append
       if grep -q "^${KEY}=" "$ENV_FILE" 2>/dev/null; then
         sed -i "s|^${KEY}=.*|${KEY}=${NEW_VAL}|" "$ENV_FILE"
       else
         echo "${KEY}=${NEW_VAL}" >> "$ENV_FILE"
       fi
-      ok "$KEY updated"
+      ok "$KEY saved"
     else
-      [[ -n "$CURRENT" ]] && ok "$KEY kept" || warn "$KEY skipped — some features may not work"
+      warn "$KEY skipped — some features may not work"
     fi
   }
 

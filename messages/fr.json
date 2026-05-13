@@ -43,6 +43,7 @@
       "missed": "0 appel manqué"
     },
     "howItWorks": {
+      "kicker": "Processus",
       "title": "Trois étapes pour ne plus jamais manquer un appel.",
       "subtitle": "Vous nous parlez de votre activité. On configure votre agent. Il décroche dès demain.",
       "step1Title": "Vous nous décrivez votre métier",
@@ -53,6 +54,8 @@
       "step3Body": "Branchement sur votre numéro fixe ou GSM. Transcripts, résumés et tâches CRM dans votre dashboard."
     },
     "useCases": {
+      "kicker": "Secteurs",
+      "seeAll": "Voir tous les cas d'usage",
       "title": "Conçu pour les métiers où chaque appel compte.",
       "clinic": "Cliniques & cabinets",
       "clinicBody": "Prise de RDV, rappels, qualification des urgences.",
@@ -64,6 +67,23 @@
       "restauBody": "Réservations, demandes spéciales, dans 3 langues."
     },
     "pricing": {
+      "kicker": "Tarifs",
+      "recommended": "Recommandé",
+      "perMonth": "/ mois",
+      "compareAll": "Comparer les formules en détail",
+      "starterFeature1": "100 min / mois",
+      "starterFeature2": "1 agent",
+      "starterFeature3": "1 langue",
+      "starterFeature4": "Support email",
+      "growthFeature1": "500 min / mois",
+      "growthFeature2": "3 agents",
+      "growthFeature3": "Multilingue (FR/AR/EN)",
+      "growthFeature4": "Intégration CRM",
+      "growthFeature5": "Support prioritaire",
+      "enterpriseFeature1": "Volume illimité",
+      "enterpriseFeature2": "SLA dédié",
+      "enterpriseFeature3": "Intégrations custom",
+      "enterpriseFeature4": "Manager dédié",
       "title": "Tarifs simples. Payez l'usage, pas l'attente.",
       "subtitle": "Sans engagement. Première semaine d'essai gratuite.",
       "starter": "Starter",
@@ -89,6 +109,7 @@
       "a4": "Oui. Les enregistrements et transcripts sont chiffrés au repos, isolés par client (RLS Postgres), et exportables ou supprimables à votre demande."
     },
     "finalCta": {
+      "kicker": "Conclure",
       "title": "Vos clients vous appellent. Pendant que vous lisez ceci.",
       "body": "Configurez votre premier agent vocal en moins de 48h. Sans engagement.",
       "cta": "Réserver une démo"

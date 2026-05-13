@@ -150,7 +150,9 @@ const LANG_CFG: Record<Lang, {
 };
 
 // ─── Detect visitor language ──────────────────────────────────────────────────
-function detectLang(): Lang {
+// locale from the URL takes priority; browser language is only a fallback.
+function detectLang(locale?: string): Lang {
+  if (locale === "fr" || locale === "en" || locale === "ar") return locale as Lang;
   if (typeof navigator === "undefined") return "fr";
   const raw = (navigator.language ?? "fr").toLowerCase();
   if (raw.startsWith("ar")) return "ar";
@@ -213,8 +215,8 @@ function Bubble({ role, children, dir }: {
 }
 
 // ─── Main component ───────────────────────────────────────────────────────────
-export function DemoCallCard() {
-  const [lang,      setLang]      = useState<Lang>("fr");
+export function DemoCallCard({ locale }: { locale?: string }) {
+  const [lang,      setLang]      = useState<Lang>(() => detectLang(locale));
   const [demoState, setDemoState] = useState<DemoState>("idle");
   const [turn,      setTurn]      = useState(0);
   const [messages,  setMessages]  = useState<Message[]>([]);
@@ -230,12 +232,12 @@ export function DemoCallCard() {
   const chunksRef   = useRef<Blob[]>([]);
   const langRef     = useRef<Lang>("fr");
 
-  // Detect language once on mount
+  // Sync langRef on mount (state initialiser already set the value)
   useEffect(() => {
-    const detected = detectLang();
+    const detected = detectLang(locale);
     setLang(detected);
     langRef.current = detected;
-  }, []);
+  }, [locale]);
 
   // Auto-scroll
   useEffect(() => {
