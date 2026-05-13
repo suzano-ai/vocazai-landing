@@ -20,9 +20,9 @@ import {
   Arch,
   Quatrefoil,
   HexLattice,
-  NeuralNetwork,
   GlowOrb,
 } from "@/components/zellige";
+import { AICanvas } from "@/components/ai-canvas";
 import { Reveal } from "@/components/reveal";
 
 export async function generateMetadata({
@@ -55,8 +55,8 @@ export default async function LandingPage({
       {/* ============ HERO ============ */}
       <section className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden">
 
-        {/* Neural network — full-bleed AI background */}
-        <NeuralNetwork className="pointer-events-none absolute inset-0 h-full w-full text-saffron-500/[0.07]" />
+        {/* Interactive particle canvas — responds to mouse */}
+        <AICanvas className="pointer-events-none absolute inset-0 h-full w-full" />
 
         {/* Glow orbs — ambient depth */}
         <GlowOrb

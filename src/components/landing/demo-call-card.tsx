@@ -282,15 +282,30 @@ export function DemoCallCard({ locale }: { locale?: string }) {
     );
   }, []);
 
-  // ── TTS — Web Speech (primary) → server TTS (fallback) ────────────────────
+  // ── TTS ───────────────────────────────────────────────────────────────────
+  // French  → Kokoro ff_siwis directly (better quality than browser voices)
+  // EN / AR → Web Speech API with strict double-fire guard, then Kokoro fallback
   const speak = useCallback(async (text: string): Promise<void> => {
     const cfg = LANG_CFG[langRef.current];
 
-    // Primary: browser native voice
+    // French: always Kokoro server (ff_siwis native French > any browser voice)
+    if (langRef.current === "fr") {
+      return speakViaApi(text, "ff_siwis");
+    }
+
+    // English / Arabic: browser Web Speech first
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       return new Promise((resolve) => {
         setDemoState("speaking");
         window.speechSynthesis.cancel();
+
+        // `settled` prevents both onend AND onerror from resolving twice
+        let settled = false;
+        const settle = (fn: () => void) => {
+          if (settled) return;
+          settled = true;
+          fn();
+        };
 
         const doSpeak = () => {
           const voice = pickVoice(cfg.bcp47);
@@ -301,23 +316,34 @@ export function DemoCallCard({ locale }: { locale?: string }) {
           utter.volume = 1;
           if (voice) utter.voice = voice;
 
-          utter.onend   = () => resolve();
-          utter.onerror = () => speakViaApi(text, cfg.voice).then(resolve);
+          utter.onend = () => settle(resolve);
+          utter.onerror = (e) => {
+            // "interrupted" / "canceled" can fire after a successful onend — ignore
+            if (e.error === "interrupted" || e.error === "canceled") {
+              settle(resolve);
+            } else {
+              settle(() => speakViaApi(text, cfg.voice).then(resolve));
+            }
+          };
 
           window.speechSynthesis.speak(utter);
         };
 
         const voices = window.speechSynthesis.getVoices();
-        if (voices.length > 0) { doSpeak(); }
-        else {
-          window.speechSynthesis.onvoiceschanged = () => doSpeak();
-          setTimeout(doSpeak, 400);
+        if (voices.length > 0) {
+          doSpeak();
+        } else {
+          // Guard: only fire once between onvoiceschanged and the timeout
+          let fired = false;
+          const onceFire = () => { if (!fired) { fired = true; doSpeak(); } };
+          window.speechSynthesis.onvoiceschanged = onceFire;
+          setTimeout(onceFire, 700);
         }
       });
     }
 
     return speakViaApi(text, cfg.voice);
-  }, [pickVoice]);
+  }, [pickVoice, speakViaApi]);
 
   // Server TTS fallback (Voxtral → Kokoro)
   const speakViaApi = useCallback(async (text: string, voice: string): Promise<void> => {
