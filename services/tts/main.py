@@ -39,18 +39,21 @@ MODELS_DIR = Path("/app/models")
 VOICE_MAP: dict[str, tuple[str, float]] = {
     # Primary names used by demo-call-card
     "fr_FR-siwis-medium":  ("fr_FR-siwis-medium.onnx",  1.0),
-    "en_US-jenny-medium":  ("en_US-jenny-medium.onnx",   1.0),
+    "en_US-hfc_female-medium": ("en_US-hfc_female-medium.onnx", 1.0),
     "ar_JO-kareem-medium": ("ar_JO-kareem-medium.onnx",  1.05),
     # Legacy Kokoro IDs → mapped to best Piper equivalent
     "ff_siwis":  ("fr_FR-siwis-medium.onnx",  1.0),
-    "af_heart":  ("en_US-jenny-medium.onnx",   1.0),
+    "af_heart":  ("en_US-hfc_female-medium.onnx", 1.0),
     # edge-tts names → also supported
-    "fr-FR-DeniseNeural": ("fr_FR-siwis-medium.onnx",  1.0),
-    "en-US-JennyNeural":  ("en_US-jenny-medium.onnx",   1.0),
+    "fr-FR-DeniseNeural": ("fr_FR-siwis-medium.onnx",      1.0),
+    "en-US-JennyNeural":  ("en_US-hfc_female-medium.onnx",  1.0),
     "ar-MA-MounaNeural":  ("ar_JO-kareem-medium.onnx",  1.05),
 }
 
 DEFAULT_VOICE = "fr_FR-siwis-medium"
+
+# Alias so old "jenny" references still resolve
+VOICE_MAP["en_US-jenny-medium"] = ("en_US-hfc_female-medium.onnx", 1.0)
 
 # Pre-loaded voice instances
 _voices: dict[str, object] = {}

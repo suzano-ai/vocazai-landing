@@ -2,10 +2,10 @@
 # VocazAI — Piper TTS microservice
 # rhasspy/piper — ONNX neural TTS, real-time on CPU, 100% self-hosted
 #
-# Voice models downloaded from HuggingFace at build time (~60 MB each):
-#   fr_FR-siwis-medium  — French female
-#   en_US-jenny-medium  — English female
-#   ar_JO-kareem-medium — Arabic  male
+# Voices (verified URLs from rhasspy/piper-voices):
+#   fr_FR-siwis-medium  — French female        (v1.0.0)
+#   en_US-hfc_female-medium — English female   (v1.0.0)
+#   ar_JO-kareem-medium — Arabic male          (main branch)
 # =============================================================================
 
 FROM python:3.11-slim
@@ -23,34 +23,34 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # ── Download Piper voice models from HuggingFace ─────────────────────────────
-# Each voice needs the .onnx model + .onnx.json config file
-ARG HF_BASE="https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0"
+ARG HF_V1="https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0"
+ARG HF_MAIN="https://huggingface.co/rhasspy/piper-voices/resolve/main"
 RUN mkdir -p /app/models
 
-# French female — fr_FR-siwis-medium (~63 MB)
-RUN wget -q --timeout=120 \
-      "${HF_BASE}/fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx" \
+# French female — fr_FR-siwis-medium (~63 MB, v1.0.0)
+RUN wget -q --timeout=180 \
+      "${HF_V1}/fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx?download=true" \
       -O /app/models/fr_FR-siwis-medium.onnx && \
     wget -q --timeout=30 \
-      "${HF_BASE}/fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx.json" \
+      "${HF_V1}/fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx.json?download=true" \
       -O /app/models/fr_FR-siwis-medium.onnx.json && \
     echo "✓ fr_FR-siwis-medium"
 
-# English female — en_US-jenny-medium (~62 MB)
-RUN wget -q --timeout=120 \
-      "${HF_BASE}/en/en_US/jenny/medium/en_US-jenny-medium.onnx" \
-      -O /app/models/en_US-jenny-medium.onnx && \
+# English female — en_US-hfc_female-medium (~62 MB, v1.0.0)
+RUN wget -q --timeout=180 \
+      "${HF_V1}/en/en_US/hfc_female/medium/en_US-hfc_female-medium.onnx?download=true" \
+      -O /app/models/en_US-hfc_female-medium.onnx && \
     wget -q --timeout=30 \
-      "${HF_BASE}/en/en_US/jenny/medium/en_US-jenny-medium.onnx.json" \
-      -O /app/models/en_US-jenny-medium.onnx.json && \
-    echo "✓ en_US-jenny-medium"
+      "${HF_V1}/en/en_US/hfc_female/medium/en_US-hfc_female-medium.onnx.json?download=true" \
+      -O /app/models/en_US-hfc_female-medium.onnx.json && \
+    echo "✓ en_US-hfc_female-medium"
 
-# Arabic — ar_JO-kareem-medium (~60 MB)
-RUN wget -q --timeout=120 \
-      "${HF_BASE}/ar/ar_JO/kareem/medium/ar_JO-kareem-medium.onnx" \
+# Arabic — ar_JO-kareem-medium (main branch — not in v1.0.0)
+RUN wget -q --timeout=180 \
+      "${HF_MAIN}/ar/ar_JO/kareem/medium/ar_JO-kareem-medium.onnx?download=true" \
       -O /app/models/ar_JO-kareem-medium.onnx && \
     wget -q --timeout=30 \
-      "${HF_BASE}/ar/ar_JO/kareem/medium/ar_JO-kareem-medium.onnx.json" \
+      "${HF_MAIN}/ar/ar_JO/kareem/medium/ar_JO-kareem-medium.onnx.json?download=true" \
       -O /app/models/ar_JO-kareem-medium.onnx.json && \
     echo "✓ ar_JO-kareem-medium"
 

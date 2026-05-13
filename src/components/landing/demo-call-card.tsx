@@ -77,7 +77,7 @@ const LANG_CFG: Record<Lang, {
 
   en: {
     bcp47:  "en-US",
-    voice:  "en_US-jenny-medium",
+    voice:  "en_US-hfc_female-medium",
     stt:    "en",
     dir:    "ltr",
     label:  "EN",
