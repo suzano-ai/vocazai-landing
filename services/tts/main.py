@@ -1,8 +1,8 @@
 """
 VocazAI — Kokoro TTS microservice
 Model : kokoro-v1.0.onnx + voices-v1.0.bin
-Voice : af_heart  — #1 ranked on TTS Arena (warm, natural, female)
-Lang  : fr-fr     — French phonemes for Moroccan/French market
+Voice : ff_siwis  — native French female voice (Kokoro v1.0)
+Lang  : fr-fr     — French phonemes
 """
 
 from fastapi import FastAPI, HTTPException
@@ -26,10 +26,9 @@ app.add_middleware(
 )
 
 # ── Voice config ──────────────────────────────────────────────────────────────
-# af_heart = #1 ranked Kokoro voice (TTS Arena leaderboard)
-# Warm, breathy, natural female — rated best for clarity and naturalness
-VOICE_PRIMARY = "af_heart"
-VOICE_FR_ALT  = "ff_siwis"   # French-specific fallback
+# ff_siwis = native French female voice in Kokoro v1.0 (Swiss French phonemes,
+#            cleanest French pronunciation available in the model)
+VOICE_PRIMARY = "ff_siwis"
 
 _kokoro = None
 
@@ -41,7 +40,7 @@ def load_model():
     try:
         from kokoro_onnx import Kokoro
         _kokoro = Kokoro("kokoro-v1.0.onnx", "voices-v1.0.bin")
-        log.info(f"✓ Kokoro ready — primary voice: {VOICE_PRIMARY}")
+            log.info(f"✓ Kokoro ready — primary voice: {VOICE_PRIMARY}")
     except Exception as e:
         log.error(f"Failed to load Kokoro: {e}")
 
@@ -87,14 +86,15 @@ async def synthesize(req: TTSRequest):
     if len(text) > 500:
         raise HTTPException(status_code=400, detail="text too long (max 500 chars)")
 
-    # Sécurité : voix féminines uniquement
-    female_voices = {
-        "af_heart", "af_bella", "af_nova", "af_sarah", "af_sky",
-        "af_jessica", "af_nicole", "af_alloy", "af_aoede", "af_kore",
-        "af_river", "bf_emma", "bf_isabella", "bf_alice", "bf_lily",
-        "ff_siwis",
+    # Allowlist — French voice first, others kept for flexibility
+    allowed_voices = {
+        "ff_siwis",                                          # French female (primary)
+        "af_heart", "af_bella", "af_nova", "af_sarah",      # English fallbacks
+        "af_sky", "af_jessica", "af_nicole", "af_alloy",
+        "af_aoede", "af_kore", "af_river",
+        "bf_emma", "bf_isabella", "bf_alice", "bf_lily",
     }
-    voice = req.voice if req.voice in female_voices else VOICE_PRIMARY
+    voice = req.voice if req.voice in allowed_voices else VOICE_PRIMARY
 
     try:
         log.info(f"Synthesising [{voice}] lang={req.lang} speed={req.speed} ({len(text)} chars)")
