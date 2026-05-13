@@ -206,7 +206,7 @@ cmd_doctor() {
   step "Configuration"
   if [[ -f "$ENV_FILE" ]]; then
     MISSING_KEYS=()
-    for key in MISTRAL_API_KEY RESEND_API_KEY; do
+    for key in RESEND_API_KEY; do
       VAL=$(grep "^${key}=" "$ENV_FILE" 2>/dev/null | cut -d= -f2-)
       [[ -z "$VAL" ]] && MISSING_KEYS+=("$key")
     done
@@ -287,8 +287,7 @@ cmd_update() {
     fi
   }
 
-  _upsert_key "MISTRAL_API_KEY" "Mistral API key"  "https://console.mistral.ai/api-keys"
-  _upsert_key "RESEND_API_KEY"  "Resend API key"   "https://resend.com/api-keys"
+  _upsert_key "RESEND_API_KEY" "Resend API key" "https://resend.com/api-keys"
   echo ""
 
   # ── 4. Rebuild services ───────────────────────────────────────────────────
@@ -309,26 +308,6 @@ cmd_update() {
     fi
     step "④ Rebuilding: $REBUILD_SVCS"
     DOCKER_BUILDKIT=1 $COMPOSE up -d --build $REBUILD_SVCS
-  fi
-
-  # ── 5. Voxtral voice setup (after rebuild so TTS container is up) ─────────
-  MISTRAL_KEY=$(_env "MISTRAL_API_KEY")
-  VOICE_ID=$(_env "MISTRAL_VOICE_ID")
-
-  if [[ -n "$MISTRAL_KEY" && -z "$VOICE_ID" ]]; then
-    step "⑤ Registering Yasmine voice with Mistral Voxtral"
-    info "Waiting for TTS container to be ready…"
-    sleep 5
-    python3 "$APP_DIR/deploy/register_voice.py" 2>&1 | sed 's/^/  /'
-    echo ""
-  elif [[ -n "$VOICE_ID" ]]; then
-    step "⑤ Voxtral voice"
-    ok "Voice ID already set → ${DIM}${VOICE_ID:0:12}…${NC}${G}  (skip)"
-    echo ""
-  else
-    step "⑤ Voxtral voice"
-    info "Kokoro ff_siwis active (add MISTRAL_API_KEY for Voxtral)"
-    echo ""
   fi
 
   echo ""
@@ -574,60 +553,39 @@ cmd_ssl() {
 cmd_tts() {
   header
   echo ""
-
-  MISTRAL_KEY=$(_env "MISTRAL_API_KEY")
-  VOICE_ID=$(_env "MISTRAL_VOICE_ID")
   APP_PORT=$(_env APP_PORT); APP_PORT="${APP_PORT:-3000}"
 
-  # ── Voxtral live test ─────────────────────────────────────────────────────
-  step "Mistral Voxtral TTS — live test"
-  if [[ -z "$MISTRAL_KEY" ]]; then
-    warn "MISTRAL_API_KEY not set — run 'vocazai update' to add it"
-  elif [[ -z "$VOICE_ID" ]]; then
-    info "No custom MISTRAL_VOICE_ID — Voxtral test skipped (requires paid plan)"
-    info "TTS engine: Kokoro ff_siwis (native French female)"
-  else
-    echo -e "  ${DIM}Voice ID  : ${VOICE_ID:0:16}…${NC}"
-    echo -e "  ${DIM}Model     : voxtral-mini-tts-2603${NC}"
-    echo -e "  ${DIM}Testing synthesis…${NC}"
-    echo ""
-
-    TTS_OUT="/tmp/yasmine_tts_test.mp3"
-    TTS_PAYLOAD="{\"model\":\"voxtral-mini-tts-2603\",\"input\":\"Bonjour, je suis Yasmine, votre assistante VocazAI. Le système fonctionne parfaitement.\",\"voice\":\"$VOICE_ID\",\"response_format\":\"mp3\"}"
-    HTTP_CODE=$(curl -s -o "$TTS_OUT" -w "%{http_code}" \
-      -X POST "https://api.mistral.ai/v1/audio/speech" \
-      -H "Authorization: Bearer $MISTRAL_KEY" \
-      -H "Content-Type: application/json" \
-      -d "$TTS_PAYLOAD" 2>/dev/null)
-
-    if [[ "$HTTP_CODE" == "200" ]] && [[ -s "$TTS_OUT" ]]; then
-      SIZE=$(du -h "$TTS_OUT" | cut -f1)
-      ok "${G}Voxtral synthesis OK${NC}  ${DIM}→ ${SIZE} audio generated${NC}"
-      ok "Saved to ${BOLD}$TTS_OUT${NC}"
-      echo ""
-      echo -e "  ${DIM}Play with:  ${BOLD}aplay $TTS_OUT${NC}${DIM}  or  ${BOLD}mpg123 $TTS_OUT${NC}"
-    else
-      # Show error response
-      ERR=$(cat "$TTS_OUT" 2>/dev/null || echo "no response")
-      fail "Voxtral API returned HTTP $HTTP_CODE"
-      echo -e "  ${DIM}Response: $ERR${NC}"
-      echo ""
-      warn "Check MISTRAL_API_KEY and MISTRAL_VOICE_ID — run 'vocazai update' to fix"
-    fi
-  fi
-
-  echo ""
-  divider
-
-  # ── Kokoro container status ───────────────────────────────────────────────
-  step "Kokoro TTS container (fallback)"
+  step "Kokoro TTS — status"
   CONTAINER=$(docker inspect --format='{{.State.Status}}' vocazai-tts 2>/dev/null || echo "missing")
   [[ "$CONTAINER" == "running" ]] && ok "vocazai-tts  ${DIM}running${NC}${G}" \
                                    || fail "vocazai-tts  ${DIM}$CONTAINER${NC}"
 
   APP_RESP=$(curl -sf --max-time 8 "http://127.0.0.1:${APP_PORT}/api/tts" 2>/dev/null || echo "{}")
-  ENGINE=$(echo "$APP_RESP" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('engine','?'))" 2>/dev/null || echo "?")
-  echo -e "  Active engine : ${BOLD}$ENGINE${NC}"
+  if echo "$APP_RESP" | grep -q '"model_loaded":true'; then
+    VOICE=$(echo "$APP_RESP" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('voice','?'))" 2>/dev/null || echo "?")
+    ok "Model loaded  ${DIM}voice: $VOICE${NC}${G}"
+  elif echo "$APP_RESP" | grep -q '"model_loaded":false'; then
+    warn "Model still loading — wait a moment and retry"
+  else
+    fail "TTS service not responding via app proxy"
+  fi
+
+  echo ""
+  step "Quick synthesis test"
+  TTS_OUT="/tmp/yasmine_tts_test.wav"
+  HTTP_CODE=$(curl -s -o "$TTS_OUT" -w "%{http_code}" \
+    -X POST "http://127.0.0.1:${APP_PORT}/api/tts" \
+    -H "Content-Type: application/json" \
+    -d '{"text":"Bonjour, je suis Yasmine, votre assistante VocazAI.","voice":"ff_siwis","speed":0.92,"lang":"fr-fr"}' 2>/dev/null)
+
+  if [[ "$HTTP_CODE" == "200" ]] && [[ -s "$TTS_OUT" ]]; then
+    SIZE=$(du -h "$TTS_OUT" | cut -f1)
+    ok "Synthesis OK  ${DIM}→ ${SIZE} WAV${NC}${G}  saved to $TTS_OUT"
+    echo -e "  ${DIM}Play with:  ${BOLD}aplay $TTS_OUT${NC}${DIM}  or  ${BOLD}ffplay -nodisp $TTS_OUT${NC}"
+  else
+    fail "Synthesis failed (HTTP $HTTP_CODE)"
+  fi
+
   echo ""
   echo -e "  ${DIM}Kokoro logs (last 10):${NC}"
   docker logs vocazai-tts --tail=10 2>&1 || true

@@ -110,7 +110,7 @@ const LANG_CFG: Record<Lang, {
 
   ar: {
     bcp47:  "ar-MA",
-    voice:  "ff_siwis",   // Kokoro has no Arabic — Web Speech is primary
+    voice:  "ff_siwis",   // No Arabic Kokoro voice — Web Speech API is primary
     stt:    "ar",
     dir:    "rtl",
     label:  "AR",
