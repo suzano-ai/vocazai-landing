@@ -18,7 +18,7 @@ export default async function CallsPage() {
       <h1 className="font-display text-3xl font-bold">{t("title")}</h1>
       <p className="mt-1.5 text-muted-foreground">Tous les appels reçus et émis par vos agents.</p>
 
-      <div className="mt-8 overflow-hidden rounded-3xl border border-border bg-elevated">
+      <div className="mt-8 overflow-x-auto rounded-3xl border border-border bg-elevated">
         {!calls || calls.length === 0 ? (
           <div className="grid place-items-center gap-3 p-16 text-center">
             <div className="grid h-12 w-12 place-items-center rounded-2xl bg-saffron-50 text-saffron-600">

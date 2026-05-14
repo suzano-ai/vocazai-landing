@@ -138,7 +138,7 @@ export function CampaignDetailClient({
 
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
         {/* Targets */}
-        <div className="overflow-hidden rounded-3xl border border-border bg-elevated">
+        <div className="overflow-x-auto rounded-3xl border border-border bg-elevated">
           <div className="border-b border-border bg-surface px-5 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             Cibles ({targets.length})
           </div>

@@ -32,7 +32,7 @@ export default async function AgentsPage({
         </Link>
       </div>
 
-      <div className="mt-8 overflow-hidden rounded-3xl border border-border bg-elevated">
+      <div className="mt-8 overflow-x-auto rounded-3xl border border-border bg-elevated">
         {!agents || agents.length === 0 ? (
           <div className="grid place-items-center gap-3 p-16 text-center">
             <div className="grid h-12 w-12 place-items-center rounded-2xl bg-saffron-50 text-saffron-600">

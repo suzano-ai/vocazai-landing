@@ -199,15 +199,15 @@ const LANG_CFG: Record<Lang, {
     yesWords: ["نعم", "أجل", "اجل", "صحيح", "صح", "تمام", "بالضبط", "مضبوط", "إيه", "ايه"],
     noWords:  ["لا", "خطأ", "غلط", "غير صحيح", "ليس صحيحا", "مش صحيح"],
     systemPrompt:
-      "أنت ياسمين، موظفة الاستقبال الافتراضية لـ VocazAI (وكلاء صوتيون بالذكاء الاصطناعي للشركات " +
-      "الصغيرة المغربية). أنت تردّين على مكالمة تجريبية. هدفك: جمع الاسم الكامل للمتصل، موعد مفضّل، " +
-      "وعنوان بريده الإلكتروني. كوني ودودة وطبيعية وموجزة — سؤال واحد قصير في كل مرة. اقترحي موعدين " +
-      "هذا الأربعاء: التاسعة والنصف أو الحادية عشرة والربع. بعد الحصول على البريد، كرّريه للتأكيد. " +
-      'ردّي فقط بكائن JSON دون أي نص حوله: {"reply": "ما تقولينه، بالعربية", "collected": ' +
-      '{"name": "...", "slot": "...", "email": "..."}, "done": false}. ضعي في "collected" المعلومات ' +
-      'التي تم الحصول عليها فقط. اجعلي "done" بقيمة true فقط بعد تأكيد المعلومات الثلاث؛ يجب أن يكون ' +
-      'آخر "reply" خاتمة ودودة تؤكد الموعد. تحدثي بالعربية حصراً.',
-    talkHint: "تحدّث بشكل طبيعي — ياسمين تفهمك.",
+      "أنت ياسمين، موظفة الاستقبال الافتراضية ديال VocazAI (وكلاء صوتيين بالذكاء الاصطناعي للشركات " +
+      "الصغيرة المغربية). كتجاوبي على مكالمة تجريبية. الهدف ديالك: تجمعي الاسم الكامل ديال المتصل، " +
+      "وقت مناسب للموعد، والإيميل ديالو. كوني دافئة وطبيعية وقصيرة — سؤال واحد قصير فكل مرة. عرضي " +
+      "جوج مواعيد هاد الأربعاء: 9 و نص ولا 11 و ربع. من بعد ما تاخدي الإيميل، عاوديه باش تتأكدي. " +
+      'جاوبي غير بكائن JSON بلا أي نص حداه: {"reply": "ما كتقوليه، بالدارجة المغربية", "collected": ' +
+      '{"name": "...", "slot": "...", "email": "..."}, "done": false}. حطي ف "collected" غير ' +
+      'المعلومات اللي تجمعات. خلي "done" بقيمة true غير من بعد ما تأكدي الثلاثة معلومات؛ آخر "reply" ' +
+      "خاصو يكون خاتمة دافئة كتأكد الموعد. تكلمي غير بالدارجة المغربية.",
+    talkHint: "هضر بشكل طبيعي — ياسمين كتفهمك.",
     closing: (name, slot, email) =>
       `ممتاز${name ? `، ${name}` : ""}. تم تأكيد موعدك${slot ? ` الساعة ${slot}` : ""} هذا الأربعاء. ${email ? `تم إرسال بريد التأكيد إلى ${email}` : "سيصلك بريد التأكيد قريباً"}. إلى اللقاء.`,
   },
@@ -308,11 +308,23 @@ export function DemoCallCard({ locale }: { locale?: string }) {
   const chunksRef   = useRef<Blob[]>([]);
   const langRef     = useRef<Lang>("fr");
 
-  // Sync langRef on mount (state initialiser already set the value)
+  // Sync langRef on mount. The cleanup runs on unmount — including the locale
+  // switch, since <DemoCallCard> is keyed by locale in the page — so any
+  // in-flight audio / speech / recording / timer is stopped and never bleeds
+  // into the next page (e.g. the Arabic demo continuing on /fr).
   useEffect(() => {
     const detected = detectLang(locale);
     setLang(detected);
     langRef.current = detected;
+    return () => {
+      audioRef.current?.pause();
+      audioRef.current = null;
+      if (typeof window !== "undefined") window.speechSynthesis?.cancel();
+      if (mediaRecRef.current?.state === "recording") {
+        try { mediaRecRef.current.stop(); } catch { /* already stopped */ }
+      }
+      if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
+    };
   }, [locale]);
 
   // Auto-scroll

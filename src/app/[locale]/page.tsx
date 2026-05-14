@@ -118,7 +118,7 @@ export default async function LandingPage({
           {/* RIGHT — Live call card */}
           <Reveal delay={200}>
             <div className="relative">
-              <DemoCallCard locale={locale} />
+              <DemoCallCard key={locale} locale={locale} />
             </div>
           </Reveal>
         </div>

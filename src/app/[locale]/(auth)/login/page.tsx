@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -9,6 +10,8 @@ import { Khatam } from "@/components/zellige";
 
 export default function LoginPage() {
   const t = useTranslations("common");
+  const params = useParams();
+  const locale = (params?.locale as string) ?? "fr";
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,9 +23,13 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const supabase = createClient();
+      // Carry the locale through the email round-trip so the callback lands
+      // on the right locale-prefixed dashboard.
       const { error } = await supabase.auth.signInWithOtp({
         email,
-        options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=/${locale}/dashboard`,
+        },
       });
       if (error) throw error;
       setSent(true);
