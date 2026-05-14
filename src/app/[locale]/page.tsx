@@ -64,7 +64,7 @@ export default async function LandingPage({
           {/* LEFT — copy */}
           <div className="max-w-xl">
             <Reveal>
-              <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-saffron-500/30 bg-saffron-500/8 px-3.5 py-1.5">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-saffron-500/30 bg-saffron-500/8 px-3.5 py-1.5">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-saffron-500" />
                 <span className="font-mono text-kicker uppercase text-saffron-700 dark:text-saffron-400">
                   {t("landing.kicker")}
@@ -73,7 +73,7 @@ export default async function LandingPage({
             </Reveal>
 
             <Reveal delay={80}>
-              <h1 className="font-display text-display-xl font-medium lg:text-display-2xl">
+              <h1 className="font-display text-display-lg font-medium leading-[1.02] lg:text-display-xl">
                 <span className="block">{t("landing.heroTitle1")}</span>
                 <span className="block italic text-saffron-500">
                   {t("landing.heroTitle2")}
@@ -82,13 +82,13 @@ export default async function LandingPage({
             </Reveal>
 
             <Reveal delay={160}>
-              <p className="mt-8 max-w-lg text-lg leading-relaxed text-muted-foreground">
+              <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground sm:text-lg">
                 {t("landing.heroSubtitle")}
               </p>
             </Reveal>
 
             <Reveal delay={240}>
-              <div className="mt-10 flex flex-wrap items-center gap-3">
+              <div className="mt-7 flex flex-wrap items-center gap-3">
                 <Link
                   href={`/${locale}/login`}
                   className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-ink-900 px-6 py-3.5 text-sm font-medium text-saffron-50 transition-all duration-220 ease-soft hover:bg-saffron-500 hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron-500/50 dark:bg-saffron-500 dark:text-ink-900 dark:hover:bg-saffron-400"
@@ -107,7 +107,7 @@ export default async function LandingPage({
             </Reveal>
 
             <Reveal delay={320}>
-              <dl className="mt-10 grid max-w-md grid-cols-3 gap-3 divide-x divide-border border-t border-border pt-6 sm:gap-6">
+              <dl className="mt-7 grid max-w-md grid-cols-3 gap-3 divide-x divide-border border-t border-border pt-5 sm:gap-6">
                 <Stat value="24/7" label={t("landing.stats.available")} />
                 <Stat value="< 800ms" label={t("landing.stats.latency")} />
                 <Stat value="FR · AR · EN" label={t("landing.stats.languages")} />
