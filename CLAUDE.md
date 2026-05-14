@@ -96,6 +96,13 @@ MISTRAL_API_KEY=                         # powers /api/demo-chat + Voxtral
                                          # in /api/tts and /api/stt.
                                          # Missing → demo falls back to the
                                          # scripted flow + Piper/whisper.
+VOXTRAL_AR_REF_B64=                      # optional. base64 of a short (~5-10s)
+                                         # Arabic voice clip. Voxtral has no
+                                         # preset Arabic voice, so Arabic TTS is
+                                         # voice-CLONED from a reference. Unset →
+                                         # falls back to public/voices/ar-ref.wav
+                                         # (a placeholder MSA clip); swap that
+                                         # file or set this for a Darija voice.
 
 # ── App ───────────────────────────────────────────────────────────────
 NEXT_PUBLIC_APP_URL=https://vocazai.com

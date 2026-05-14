@@ -42,4 +42,4 @@ coverage/
 graphify-out/
 
 # Voxtral local test output
-voxtral-test.mp3
+voxtral-test*.mp3

@@ -85,6 +85,39 @@ async function testTTS() {
   return out;
 }
 
+async function testArabicTTS() {
+  console.log("\n— TTS (Arabic, voice-cloned via ref_audio) —");
+  const refPath = path.join(process.cwd(), "public", "voices", "ar-ref.wav");
+  if (!fs.existsSync(refPath)) {
+    console.log("· skipped (no public/voices/ar-ref.wav reference clip)");
+    return null;
+  }
+  const t = Date.now();
+  const res = await fetch(`${BASE}/audio/speech`, {
+    method: "POST",
+    headers: { ...auth, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "voxtral-mini-tts-2603",
+      input: "مرحبا، أنا ياسمين، المساعدة الصوتية. كيف يمكنني مساعدتك اليوم؟",
+      ref_audio: fs.readFileSync(refPath).toString("base64"),
+      response_format: "mp3",
+    }),
+  });
+  if (!res.ok) {
+    console.error(`✗ ar tts ${res.status}: ${await res.text()}`);
+    return null;
+  }
+  const data = await res.json();
+  if (!data.audio_data) {
+    console.error("✗ ar tts — no audio_data");
+    return null;
+  }
+  const out = path.join(process.cwd(), "voxtral-test-ar.mp3");
+  fs.writeFileSync(out, Buffer.from(data.audio_data, "base64"));
+  console.log(`✓ ${Date.now() - t}ms → ${out}`);
+  return out;
+}
+
 async function testSTT(audioPath) {
   console.log("\n— STT · voxtral-mini-latest —");
   if (!audioPath || !fs.existsSync(audioPath)) {
@@ -109,6 +142,7 @@ async function testSTT(audioPath) {
   console.log("Voxtral smoke test → api.mistral.ai");
   const chatOk = await testChat();
   const audio = await testTTS();
+  const arAudio = await testArabicTTS();
   await testSTT(audio);
-  console.log(`\n${chatOk && audio ? "✓ All three endpoints responded." : "✗ Something failed — see above."}`);
+  console.log(`\n${chatOk && audio && arAudio ? "✓ Chat + TTS (fr/en/ar) + STT all responded." : "✗ Something failed — see above."}`);
 })();
