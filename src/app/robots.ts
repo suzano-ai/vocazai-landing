@@ -8,7 +8,9 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/dashboard", "/api/", "/auth/"],
+        // App surfaces, not indexable content. Dashboard + login are
+        // locale-prefixed (/fr/dashboard…), so the patterns need the wildcard.
+        disallow: ["/*/dashboard", "/*/login", "/api/", "/auth/"],
       },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,
