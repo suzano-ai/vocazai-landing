@@ -91,6 +91,12 @@ RETELL_WEBHOOK_SECRET=
 # ── Email ─────────────────────────────────────────────────────────────
 RESEND_API_KEY=re_...                    # already set on VPS ✓
 
+# ── Mistral — demo LLM + Voxtral voice (TTS/STT) ──────────────────────
+MISTRAL_API_KEY=                         # powers /api/demo-chat + Voxtral
+                                         # in /api/tts and /api/stt.
+                                         # Missing → demo falls back to the
+                                         # scripted flow + Piper/whisper.
+
 # ── App ───────────────────────────────────────────────────────────────
 NEXT_PUBLIC_APP_URL=https://vocazai.com
 
