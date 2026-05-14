@@ -143,6 +143,16 @@
     @apply h-px w-full bg-border;
   }
 
+  /* Hero depth vignette — softens the particle field at the edges so it
+     reads as background texture and keeps focus on the hero content. */
+  .hero-vignette {
+    background: radial-gradient(
+      ellipse 75% 60% at 50% 42%,
+      transparent 0%,
+      hsl(var(--bg) / 0.65) 100%
+    );
+  }
+
   /* ── Global polish ──────────────────────────────────────────────────── */
 
   /* Smooth scroll — respect reduced-motion */

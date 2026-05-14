@@ -58,7 +58,7 @@ export function AICanvas({ className = "" }: { className?: string }) {
       vx: (Math.random() - 0.5) * 0.38,
       vy: (Math.random() - 0.5) * 0.38,
       r: 1.4 + Math.random() * 1.8,
-      alpha: 0.22 + Math.random() * 0.32,
+      alpha: 0.14 + Math.random() * 0.20,
       pulse: Math.floor(Math.random() * 500),
       pulseOffset: Math.random() * 400,
     }));
@@ -72,14 +72,12 @@ export function AICanvas({ className = "" }: { className?: string }) {
     if (!canvas) return;
     const ctx = canvas.getContext("2d")!;
 
-    const tick = () => {
+    // Advance particle positions one frame.
+    const step = () => {
       const { w, h } = dimsRef.current;
-      const parts  = partsRef.current;
-      const mouse  = mouseRef.current;
+      const parts = partsRef.current;
+      const mouse = mouseRef.current;
 
-      ctx.clearRect(0, 0, w, h);
-
-      // ── 1. Update velocities ──────────────────────────────────────────────
       for (const p of parts) {
         if (mouse) {
           const dx = p.x - mouse.x;
@@ -116,8 +114,16 @@ export function AICanvas({ className = "" }: { className?: string }) {
         // Pulse cycle
         p.pulse = (p.pulse + 1) % 500;
       }
+    };
 
-      // ── 2. Draw edges ─────────────────────────────────────────────────────
+    // Draw edges + nodes for the current positions.
+    const render = () => {
+      const { w, h } = dimsRef.current;
+      const parts = partsRef.current;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // ── Edges ────────────────────────────────────────────────────────────
       ctx.lineWidth = 0.55;
       for (let i = 0; i < parts.length; i++) {
         const a = parts[i];
@@ -131,13 +137,13 @@ export function AICanvas({ className = "" }: { className?: string }) {
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = `rgba(${CR},${CG},${CB},${(t * t * 0.28).toFixed(3)})`;
+            ctx.strokeStyle = `rgba(${CR},${CG},${CB},${(t * t * 0.20).toFixed(3)})`;
             ctx.stroke();
           }
         }
       }
 
-      // ── 3. Draw nodes ─────────────────────────────────────────────────────
+      // ── Nodes ────────────────────────────────────────────────────────────
       for (const p of parts) {
         // Pulse envelope: smooth sine over 50 frames
         const phase = p.pulse < 50
@@ -145,7 +151,7 @@ export function AICanvas({ className = "" }: { className?: string }) {
           : 0;
 
         const r  = p.r + phase * 3.2;
-        const al = p.alpha + phase * 0.45;
+        const al = p.alpha + phase * 0.32;
 
         // Core dot
         ctx.beginPath();
@@ -157,16 +163,31 @@ export function AICanvas({ className = "" }: { className?: string }) {
         if (phase > 0.05) {
           ctx.beginPath();
           ctx.arc(p.x, p.y, r + 5, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(${CR},${CG},${CB},${(phase * 0.12).toFixed(3)})`;
+          ctx.strokeStyle = `rgba(${CR},${CG},${CB},${(phase * 0.10).toFixed(3)})`;
           ctx.lineWidth = 1;
           ctx.stroke();
           ctx.lineWidth = 0.55; // restore
         }
       }
-
-      rafRef.current = requestAnimationFrame(tick);
     };
 
+    // Respect reduced-motion: paint a single static frame, no rAF, no mouse tracking.
+    const reduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduced) {
+      render();
+      const onResizeStatic = () => { setup(); render(); };
+      window.addEventListener("resize", onResizeStatic);
+      return () => window.removeEventListener("resize", onResizeStatic);
+    }
+
+    const tick = () => {
+      step();
+      render();
+      rafRef.current = requestAnimationFrame(tick);
+    };
     rafRef.current = requestAnimationFrame(tick);
 
     // ── Events ────────────────────────────────────────────────────────────────

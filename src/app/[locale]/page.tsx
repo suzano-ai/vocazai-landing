@@ -20,7 +20,6 @@ import {
   Arch,
   Quatrefoil,
   HexLattice,
-  GlowOrb,
 } from "@/components/zellige";
 import { AICanvas } from "@/components/ai-canvas";
 import { Reveal } from "@/components/reveal";
@@ -55,33 +54,11 @@ export default async function LandingPage({
       {/* ============ HERO ============ */}
       <section className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden">
 
-        {/* Interactive particle canvas — responds to mouse */}
+        {/* Single background layer — interactive neural-particle field */}
         <AICanvas className="pointer-events-none absolute inset-0 h-full w-full" />
 
-        {/* Glow orbs — ambient depth */}
-        <GlowOrb
-          size={640}
-          color="saffron"
-          className="pointer-events-none absolute -right-32 -top-32"
-        />
-        <GlowOrb
-          size={480}
-          color="teal"
-          className="pointer-events-none absolute -bottom-24 -left-24"
-        />
-
-        {/* Moroccan geometry — editorial anchors */}
-        <Khatam
-          size={420}
-          className="pointer-events-none absolute -right-20 top-8 text-saffron-500/[0.06]"
-        />
-        <Arch
-          size={260}
-          className="pointer-events-none absolute -left-12 bottom-12 text-teal-500/[0.07]"
-        />
-
-        {/* Dot paper texture */}
-        <div className="pointer-events-none absolute inset-0 paper" />
+        {/* Soft vignette — pulls focus to the content, adds depth */}
+        <div className="hero-vignette pointer-events-none absolute inset-0" />
 
         <div className="container relative grid items-center gap-10 py-16 sm:py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16 lg:py-0">
           {/* LEFT — copy */}
@@ -413,10 +390,6 @@ export default async function LandingPage({
         <Arch
           size={400}
           className="pointer-events-none absolute -bottom-20 -left-20 text-teal-500/12"
-        />
-        <HexLattice
-          size={260}
-          className="pointer-events-none absolute right-1/4 top-1/3 text-saffron-500/8"
         />
         <div className="container relative">
           <Reveal>
