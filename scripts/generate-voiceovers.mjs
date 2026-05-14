@@ -43,22 +43,22 @@ const SCRIPTS = {
   landing: {
     fr: "Bienvenue chez VocazAI. Moi c'est Yasmine, votre agent vocal. Je réponds aux appels de votre entreprise vingt-quatre heures sur vingt-quatre — je prends les rendez-vous, je réponds aux questions, je ne rate jamais un client. Essayez la démo, et parlez-moi directement.",
     en: "Welcome to VocazAI. I'm Yasmine, your AI voice agent. I answer your business calls around the clock — booking appointments, handling questions, never missing a customer. Try the live demo and talk to me yourself.",
-    ar: "مرحبا بيك فـVocazAI. أنا ياسمين، الوكيل الصوتي ديالك. كنجاوب على المكالمات ديال الشركة ديالك أربعة وعشرين ساعة على أربعة وعشرين — كنحجز المواعيد، كنجاوب على الأسئلة، وعمري ما كنضيع عميل. جرب الديمو وهضر معايا.",
+    ar: "مرحبا بكم في فوكاز آي. أنا ياسمين، وكيلك الصوتي. أنا جاوب على مكالمات شركتك 24 ساعة على 24 — حجز المواعيد، جاوب على الأسئلة، ما ضيعش أي عميل. جرب العرض التوضيحي، وحدرني مباشرة.",
   },
   about: {
     fr: "VocazAI est née à Casablanca. Notre mission : rendre l'agent vocal intelligent accessible à toutes les petites entreprises d'Afrique. Une technologie qui parle votre langue, votre darija, et qui ne dort jamais.",
     en: "VocazAI was born in Casablanca. Our mission: make intelligent voice agents accessible to every small business in Africa. Technology that speaks your language — and never sleeps.",
-    ar: "VocazAI تخلقات فالدار البيضاء. الهدف ديالنا هو نوصلو الوكيل الصوتي الذكي لكل الشركات الصغيرة فإفريقيا. تكنولوجيا كتهضر باللغة ديالك، بالدارجة ديالك، وعمرها ما كتنعس.",
+    ar: "فوكاز آي ولدت في الدار البيضاء. مهمتنا : نجعل الوكيل الصوتي الذكي في متناول كل المقاولات الصغيرة في أفريقيا. تكنولوجيا تحكي لغتك، Darija ديالك، وما تنامش.",
   },
   pricing: {
     fr: "Nos offres sont simples et transparentes. Vous payez à l'usage, pas à l'attente. Démarrez petit, grandissez quand vous voulez. La première semaine est gratuite, sans aucun engagement.",
     en: "Our pricing is simple and transparent. You pay for usage, not for waiting. Start small, scale when you're ready. The first week is free — no commitment.",
-    ar: "العروض ديالنا ساهلة وواضحة. كتخلص على لي كتستعمل، ماشي على لي كتسنى. بدا بصغير، وكبر فاش بغيتي. الأسبوع الأول مجاني، بلا أي التزام.",
+    ar: "عروضنا بسيطة وشفافة. تدفع على الاستعمال، مش على الانتظار. بدا صغير، كبر متى بدك. الأسبوع الأول مجاني، من غير أي التزام.",
   },
   "use-cases": {
     fr: "Cliniques, agences immobilières, restaurants, e-commerce — partout où chaque appel compte, VocazAI répond. Découvrez comment des entreprises comme la vôtre ne ratent plus jamais un client.",
     en: "Clinics, real-estate agencies, restaurants, e-commerce — wherever every call counts, VocazAI picks up. See how businesses like yours never miss a customer again.",
-    ar: "العيادات، الوكالات العقارية، المطاعم، التجارة الإلكترونية — فين ما كانت كل مكالمة مهمة، VocazAI كتجاوب. شوف كيفاش شركات بحال ديالك عمرها ما كتضيع عميل.",
+    ar: "عيادات، وكالات عقارات، مطاعم، التجارة الإلكترونية — في كل مكان لي كل مكالمة مهمة، فوكاز آي جاوب. شوف كيف الشركات زين شركتك ما تخسرش أي عميل.",
   },
 };
 
