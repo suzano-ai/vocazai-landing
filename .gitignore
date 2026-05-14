@@ -40,3 +40,6 @@ coverage/
 # Editor backups & tool output
 *.bak
 graphify-out/
+
+# Voxtral local test output
+voxtral-test.mp3
