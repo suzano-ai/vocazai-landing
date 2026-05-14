@@ -6,6 +6,12 @@ export const dynamic = "force-dynamic";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// Pro sender address. Set RESEND_FROM_EMAIL once a domain is verified in
+// Resend (e.g. "Yasmine · VocazAI <noreply@vocazai.com>"); falls back to
+// Resend's shared test domain until then.
+const FROM_EMAIL =
+  process.env.RESEND_FROM_EMAIL ?? "Yasmine · VocazAI <onboarding@resend.dev>";
+
 // ── Booking confirmation email ────────────────────────────────────────────────
 function buildEmailHtml(name: string, slot: string, date: string, email: string) {
   const year = new Date().getFullYear();
@@ -170,7 +176,7 @@ export async function POST(request: NextRequest) {
     const apptDate = date ?? "Mercredi prochain";
 
     const { data, error } = await resend.emails.send({
-      from:    "Yasmine · VocazAI <onboarding@resend.dev>",
+      from:    FROM_EMAIL,
       to:      [email],
       subject: `✓ Réservation confirmée — ${apptDate} à ${slot} | VocazAI`,
       html:    buildEmailHtml(name, slot, apptDate, email),

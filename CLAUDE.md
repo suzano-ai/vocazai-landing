@@ -89,7 +89,17 @@ RETELL_API_KEY=
 RETELL_WEBHOOK_SECRET=
 
 # ── Email ─────────────────────────────────────────────────────────────
-RESEND_API_KEY=re_...                    # already set on VPS ✓
+RESEND_API_KEY=re_...                    # real key needed (booking email +
+                                         # Supabase SMTP). The repo default is
+                                         # a placeholder.
+RESEND_FROM_EMAIL=                       # pro sender once a domain is verified
+                                         # in Resend, e.g.
+                                         # "Yasmine · VocazAI <noreply@vocazai.com>".
+                                         # Unset → Resend's onboarding@resend.dev.
+
+# Supabase auth emails (magic link) — for a pro From address, configure
+# custom SMTP in Supabase (Management API → config/auth): smtp.resend.com:465,
+# user "resend", pass = RESEND_API_KEY, sender = verified vocazai.com address.
 
 # ── Mistral — demo LLM + Voxtral voice (TTS/STT) ──────────────────────
 MISTRAL_API_KEY=                         # powers /api/demo-chat + Voxtral
