@@ -1,9 +1,30 @@
 import { createClient } from "@/lib/supabase/server";
 import { Phone, TrendingUp, Clock, DollarSign } from "lucide-react";
+import { formatDuration, formatCurrency } from "@/lib/utils";
 
 export default async function OverviewPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+
+  // Real stats — RLS scopes every query to the signed-in owner.
+  const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+  const [agentsRes, callsRes] = await Promise.all([
+    supabase
+      .from("agents")
+      .select("id", { count: "exact", head: true })
+      .eq("is_active", true),
+    supabase
+      .from("calls")
+      .select("duration_sec, cost_usd")
+      .gte("started_at", since),
+  ]);
+
+  const activeAgents = agentsRes.count ?? 0;
+  const calls = callsRes.data ?? [];
+  const callCount = calls.length;
+  const totalDuration = calls.reduce((s, c) => s + (c.duration_sec ?? 0), 0);
+  const avgDuration = callCount > 0 ? Math.round(totalDuration / callCount) : 0;
+  const totalCost = calls.reduce((s, c) => s + (Number(c.cost_usd) || 0), 0);
 
   return (
     <div className="p-8 lg:p-12">
@@ -13,10 +34,10 @@ export default async function OverviewPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Agents actifs" value="—" icon={<Phone className="h-4 w-4" />} />
-        <StatCard label="Appels (7j)" value="—" icon={<TrendingUp className="h-4 w-4" />} />
-        <StatCard label="Durée moyenne" value="—" icon={<Clock className="h-4 w-4" />} />
-        <StatCard label="Coût (7j)" value="—" icon={<DollarSign className="h-4 w-4" />} />
+        <StatCard label="Agents actifs" value={String(activeAgents)} icon={<Phone className="h-4 w-4" />} />
+        <StatCard label="Appels (7j)" value={String(callCount)} icon={<TrendingUp className="h-4 w-4" />} />
+        <StatCard label="Durée moyenne" value={callCount > 0 ? formatDuration(avgDuration) : "—"} icon={<Clock className="h-4 w-4" />} />
+        <StatCard label="Coût (7j)" value={callCount > 0 ? formatCurrency(totalCost) : "—"} icon={<DollarSign className="h-4 w-4" />} />
       </div>
 
       <div className="mt-12 rounded-3xl border border-border bg-elevated p-8">
