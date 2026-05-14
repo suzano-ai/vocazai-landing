@@ -262,6 +262,49 @@
     "calls": {
       "title": "Historique des appels",
       "empty": "Aucun appel pour le moment."
+    },
+    "settings": {
+      "title": "Paramètres",
+      "subtitle": "Gérez votre compte et votre abonnement.",
+      "profile": {
+        "title": "Profil",
+        "emailLabel": "Adresse email",
+        "emailHint": "Non modifiable — liée à votre connexion magic-link.",
+        "nameLabel": "Nom complet",
+        "namePlaceholder": "Ex: Aymane Benali",
+        "save": "Enregistrer",
+        "saving": "Enregistrement…",
+        "saved": "Sauvegardé"
+      },
+      "billing": {
+        "title": "Abonnement",
+        "upgrade": "Passer au plan supérieur",
+        "manage": "Gérer l'abonnement",
+        "error": "Le service de facturation est momentanément indisponible."
+      },
+      "plans": {
+        "free": { "label": "Gratuit", "price": "0 MAD", "features": ["Démo uniquement", "Pas d'appels réels"] },
+        "starter": { "label": "Starter", "price": "499 MAD/mois", "features": ["100 min / mois", "1 agent", "1 langue", "Support email"] },
+        "growth": { "label": "Croissance", "price": "1 490 MAD/mois", "features": ["500 min / mois", "3 agents", "Multilingue FR/AR/EN", "Intégration CRM"] },
+        "enterprise": { "label": "Entreprise", "price": "Sur mesure", "features": ["Volume illimité", "SLA dédié", "Intégrations custom", "Manager dédié"] }
+      },
+      "apiKeys": {
+        "title": "Clés API",
+        "description": "Ces clés vous permettent d'intégrer VocazAI à vos systèmes (CRM, webhooks, appels sortants).",
+        "projectId": "Project ID",
+        "projectIdHint": "Identifiant de votre espace VocazAI.",
+        "publicKey": "Clé publique",
+        "publicKeyHint": "Peut être exposée côté client (lecture seule).",
+        "secretNote": "Les clés secrètes sont disponibles sur demande à"
+      },
+      "danger": {
+        "title": "Zone dangereuse",
+        "signOut": "Se déconnecter",
+        "delete": "Supprimer mon compte",
+        "deleteConfirm": "Confirmer la suppression du compte",
+        "cancel": "Annuler",
+        "deleteAlert": "Pour supprimer définitivement votre compte, contactez support@vocazai.com. Votre session a été fermée."
+      }
     }
   }
 }

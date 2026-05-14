@@ -262,6 +262,49 @@
     "calls": {
       "title": "Call history",
       "empty": "No calls yet."
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Manage your account and subscription.",
+      "profile": {
+        "title": "Profile",
+        "emailLabel": "Email address",
+        "emailHint": "Not editable — tied to your magic-link sign-in.",
+        "nameLabel": "Full name",
+        "namePlaceholder": "e.g. Aymane Benali",
+        "save": "Save",
+        "saving": "Saving…",
+        "saved": "Saved"
+      },
+      "billing": {
+        "title": "Subscription",
+        "upgrade": "Upgrade plan",
+        "manage": "Manage subscription",
+        "error": "The billing service is temporarily unavailable."
+      },
+      "plans": {
+        "free": { "label": "Free", "price": "0 MAD", "features": ["Demo only", "No real calls"] },
+        "starter": { "label": "Starter", "price": "499 MAD/mo", "features": ["100 min / month", "1 agent", "1 language", "Email support"] },
+        "growth": { "label": "Growth", "price": "1,490 MAD/mo", "features": ["500 min / month", "3 agents", "Multilingual FR/AR/EN", "CRM integration"] },
+        "enterprise": { "label": "Enterprise", "price": "Custom", "features": ["Unlimited volume", "Dedicated SLA", "Custom integrations", "Dedicated manager"] }
+      },
+      "apiKeys": {
+        "title": "API keys",
+        "description": "These keys let you integrate VocazAI with your systems (CRM, webhooks, outbound calls).",
+        "projectId": "Project ID",
+        "projectIdHint": "Your VocazAI workspace identifier.",
+        "publicKey": "Public key",
+        "publicKeyHint": "Safe to expose client-side (read-only).",
+        "secretNote": "Secret keys are available on request at"
+      },
+      "danger": {
+        "title": "Danger zone",
+        "signOut": "Sign out",
+        "delete": "Delete my account",
+        "deleteConfirm": "Confirm account deletion",
+        "cancel": "Cancel",
+        "deleteAlert": "To permanently delete your account, contact support@vocazai.com. Your session has been closed."
+      }
     }
   }
 }
