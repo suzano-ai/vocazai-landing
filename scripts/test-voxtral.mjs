@@ -119,7 +119,7 @@ async function testArabicTTS() {
 }
 
 async function testSTT(audioPath) {
-  console.log("\n— STT · voxtral-mini-2602 —");
+  console.log("\n— STT · voxtral-mini-transcribe-2507 (fr) —");
   if (!audioPath || !fs.existsSync(audioPath)) {
     console.log("· skipped (no audio from the TTS step)");
     return;
@@ -127,7 +127,7 @@ async function testSTT(audioPath) {
   const t = Date.now();
   const fd = new FormData();
   fd.append("file", new Blob([fs.readFileSync(audioPath)]), "audio.mp3");
-  fd.append("model", "voxtral-mini-2602");
+  fd.append("model", "voxtral-mini-transcribe-2507");
   fd.append("language", "fr");
   const res = await fetch(`${BASE}/audio/transcriptions`, { method: "POST", headers: auth, body: fd });
   if (!res.ok) {
