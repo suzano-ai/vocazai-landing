@@ -51,9 +51,9 @@ const SCRIPTS = {
     ar: "فوكاز آي ولدت في الدار البيضاء. مهمتنا : نجعل الوكيل الصوتي الذكي في متناول كل المقاولات الصغيرة في أفريقيا. تكنولوجيا تحكي لغتك، Darija ديالك، وما تنامش.",
   },
   pricing: {
-    fr: "Nos offres sont simples et transparentes. Vous payez à l'usage, pas à l'attente. Démarrez petit, grandissez quand vous voulez. La première semaine est gratuite, sans aucun engagement.",
-    en: "Our pricing is simple and transparent. You pay for usage, not for waiting. Start small, scale when you're ready. The first week is free — no commitment.",
-    ar: "عروضنا بسيطة وشفافة. تدفع على الاستعمال، مش على الانتظار. بدا صغير، كبر متى بدك. الأسبوع الأول مجاني، من غير أي التزام.",
+    fr: "Nos offres sont simples et transparentes. Vous payez à l'usage, pas à l'attente. Démarrez petit, grandissez quand vous voulez. Le premier mois est gratuit, sans aucun engagement.",
+    en: "Our pricing is simple and transparent. You pay for usage, not for waiting. Start small, scale when you're ready. The first month is free — no commitment.",
+    ar: "عروضنا بسيطة وشفافة. تدفع على الاستعمال، مش على الانتظار. بدا صغير، كبر متى بدك. الشهر الأول مجاني، من غير أي التزام.",
   },
   "use-cases": {
     fr: "Cliniques, agences immobilières, restaurants, e-commerce — partout où chaque appel compte, VocazAI répond. Découvrez comment des entreprises comme la vôtre ne ratent plus jamais un client.",

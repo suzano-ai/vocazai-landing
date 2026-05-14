@@ -12,7 +12,8 @@
     "loading": "Loading…",
     "live": "Online",
     "switchTheme": "Switch theme",
-    "language": "Language"
+    "language": "Language",
+    "whatsapp": "Hi 👋 I'm interested in VocazAI and I'd like a demo."
   },
   "nav": {
     "how": "How it works",
@@ -85,7 +86,7 @@
       "enterpriseFeature3": "Custom integrations",
       "enterpriseFeature4": "Dedicated account manager",
       "title": "Simple pricing. Pay for usage, not waiting.",
-      "subtitle": "No commitment. First week free.",
+      "subtitle": "No commitment. First month free.",
       "starter": "Starter",
       "starterPrice": "$49",
       "starterBody": "100 included minutes · 1 agent · 1 language",
@@ -167,7 +168,7 @@
     "title1": "Three plans.",
     "title2": "All transparent.",
     "subtitle": "Pick what fits. Switch plans anytime, prorated. No surprises.",
-    "trial": "First week free — no credit card",
+    "trial": "First month free — no credit card",
     "compare": {
       "kicker": "Compare",
       "title": "Everything that's included.",
@@ -197,7 +198,7 @@
     },
     "cta": {
       "title": "Ready to stop missing calls?",
-      "body": "We configure your first agent within 24 hours, no commitment. The first week is on us.",
+      "body": "We configure your first agent within 24 hours, no commitment. The first month is on us.",
       "button": "Start the trial"
     }
   },

@@ -46,6 +46,8 @@ export default async function LandingPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations();
+  // All demo / convert CTAs open WhatsApp with a pre-filled message.
+  const wa = `https://wa.me/33777345056?text=${encodeURIComponent(t("common.whatsapp"))}`;
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -90,7 +92,7 @@ export default async function LandingPage({
             <Reveal delay={240}>
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <Link
-                  href={`/${locale}/login`}
+                  href={wa}
                   className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-ink-900 px-6 py-3.5 text-sm font-medium text-saffron-50 transition-all duration-220 ease-soft hover:bg-saffron-500 hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron-500/50 dark:bg-saffron-500 dark:text-ink-900 dark:hover:bg-saffron-400"
                 >
                   {t("landing.ctaPrimary")}
@@ -300,7 +302,7 @@ export default async function LandingPage({
                 price: t("landing.pricing.starterPrice"),
                 body: t("landing.pricing.starterBody"),
                 cta: t("landing.pricing.cta"),
-                href: `/${locale}/login`,
+                href: wa,
                 features: [
                   t("landing.pricing.starterFeature1"),
                   t("landing.pricing.starterFeature2"),
@@ -313,7 +315,7 @@ export default async function LandingPage({
                 price: t("landing.pricing.growthPrice"),
                 body: t("landing.pricing.growthBody"),
                 cta: t("landing.pricing.cta"),
-                href: `/${locale}/login`,
+                href: wa,
                 features: [
                   t("landing.pricing.growthFeature1"),
                   t("landing.pricing.growthFeature2"),
@@ -328,7 +330,7 @@ export default async function LandingPage({
                 price: "—",
                 body: t("landing.pricing.enterpriseBody"),
                 cta: t("landing.pricing.ctaContact"),
-                href: "https://wa.me/33777345056",
+                href: wa,
                 features: [
                   t("landing.pricing.enterpriseFeature1"),
                   t("landing.pricing.enterpriseFeature2"),
@@ -405,7 +407,7 @@ export default async function LandingPage({
                 {t("landing.finalCta.body")}
               </p>
               <Link
-                href={`/${locale}/login`}
+                href={wa}
                 className="group mt-12 inline-flex cursor-pointer items-center gap-2 rounded-full bg-saffron-500 px-7 py-4 text-base font-medium text-ink-900 transition-all duration-220 ease-soft hover:bg-saffron-400 hover:gap-3"
               >
                 {t("landing.finalCta.cta")}

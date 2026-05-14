@@ -41,6 +41,8 @@ export default async function AboutPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("about");
+  const tc = await getTranslations("common");
+  const wa = `https://wa.me/33777345056?text=${encodeURIComponent(tc("whatsapp"))}`;
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -200,7 +202,7 @@ export default async function AboutPage({
               <ContactRow icon={<Mail className="h-5 w-5" />} label="hello@vocazai.com" />
               <ContactRow icon={<Phone className="h-5 w-5" />} label="+33 7 77 34 50 56" />
               <Link
-                href={`/${locale}/login`}
+                href={wa}
                 className="group mt-10 inline-flex cursor-pointer items-center gap-2 rounded-full bg-saffron-500 px-7 py-4 text-sm font-medium text-ink-900 transition-all duration-220 ease-soft hover:bg-saffron-400 hover:gap-3"
               >
                 {t("contact.cta")}

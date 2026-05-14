@@ -38,6 +38,8 @@ export default async function PricingPage({
   setRequestLocale(locale);
   const t = await getTranslations("pricing");
   const tCommon = await getTranslations("landing.pricing");
+  const tc = await getTranslations("common");
+  const wa = `https://wa.me/33777345056?text=${encodeURIComponent(tc("whatsapp"))}`;
 
   const plans = [
     {
@@ -122,7 +124,7 @@ export default async function PricingPage({
                   price={p.key === "enterprise" ? "—" : tCommon(`${p.key}Price`)}
                   body={tCommon(`${p.key}Body`)}
                   cta={p.key === "enterprise" ? tCommon("ctaContact") : tCommon("cta")}
-                  href={p.key === "enterprise" ? "https://wa.me/33777345056" : `/${locale}/login`}
+                  href={wa}
                   features={p.features}
                   featured={p.featured}
                 />
@@ -222,7 +224,7 @@ export default async function PricingPage({
           </h2>
           <p className="mt-6 max-w-xl text-lg text-saffron-50/70">{t("cta.body")}</p>
           <Link
-            href={`/${locale}/login`}
+            href={wa}
             className="group mt-10 inline-flex cursor-pointer items-center gap-2 rounded-full bg-saffron-500 px-7 py-4 text-sm font-medium text-ink-900 transition-all duration-220 ease-soft hover:bg-saffron-400 hover:gap-3"
           >
             {t("cta.button")}

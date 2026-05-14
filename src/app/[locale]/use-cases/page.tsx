@@ -43,6 +43,8 @@ export default async function UseCasesPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("useCases");
+  const tc = await getTranslations("common");
+  const wa = `https://wa.me/33777345056?text=${encodeURIComponent(tc("whatsapp"))}`;
 
   const cases = [
     { key: "clinic", icon: <Stethoscope className="h-5 w-5" />, shape: "khatam" as const },
@@ -114,7 +116,7 @@ export default async function UseCasesPage({
           <h2 className="font-display text-display-lg font-medium">{t("cta.title")}</h2>
           <p className="mt-6 max-w-xl text-lg text-saffron-50/70">{t("cta.body")}</p>
           <Link
-            href={`/${locale}/login`}
+            href={wa}
             className="group mt-10 inline-flex cursor-pointer items-center gap-2 rounded-full bg-saffron-500 px-7 py-4 text-sm font-medium text-ink-900 transition-all duration-220 ease-soft hover:bg-saffron-400 hover:gap-3"
           >
             {t("cta.button")}

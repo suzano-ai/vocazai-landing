@@ -12,7 +12,8 @@
     "loading": "Chargement…",
     "live": "En ligne",
     "switchTheme": "Changer de thème",
-    "language": "Langue"
+    "language": "Langue",
+    "whatsapp": "Bonjour 👋 je suis intéressé(e) par VocazAI et je voudrais une démo."
   },
   "nav": {
     "how": "Comment ça marche",
@@ -85,7 +86,7 @@
       "enterpriseFeature3": "Intégrations custom",
       "enterpriseFeature4": "Manager dédié",
       "title": "Tarifs simples. Payez l'usage, pas l'attente.",
-      "subtitle": "Sans engagement. Première semaine d'essai gratuite.",
+      "subtitle": "Sans engagement. Premier mois d'essai gratuit.",
       "starter": "Starter",
       "starterPrice": "499 MAD",
       "starterBody": "100 minutes incluses · 1 agent · 1 langue",
@@ -167,7 +168,7 @@
     "title1": "Trois formules.",
     "title2": "Toutes transparentes.",
     "subtitle": "Choisissez ce qui vous convient. Vous pouvez passer d'une formule à l'autre n'importe quand, au prorata.",
-    "trial": "Première semaine gratuite — sans carte bancaire",
+    "trial": "Premier mois gratuit — sans carte bancaire",
     "compare": {
       "kicker": "Comparer",
       "title": "Tout ce qui est inclus.",
@@ -197,7 +198,7 @@
     },
     "cta": {
       "title": "Prêt à ne plus rater un appel ?",
-      "body": "On configure votre premier agent en 24h, sans engagement. La première semaine est offerte.",
+      "body": "On configure votre premier agent en 24h, sans engagement. Le premier mois est offert.",
       "button": "Commencer l'essai"
     }
   },
