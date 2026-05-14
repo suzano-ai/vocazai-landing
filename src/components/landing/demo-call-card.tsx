@@ -32,6 +32,9 @@ const LANG_CFG: Record<Lang, {
   yesWords:     string[];
   noWords:      string[];
   closing:      (name: string, slot: string, email: string) => string;
+  // ── LLM-driven conversation (primary path) ──
+  systemPrompt: string;   // instructs Mistral to reply with structured JSON
+  talkHint:     string;   // shown while listening in LLM mode
 }> = {
   fr: {
     bcp47:  "fr-FR",
@@ -77,6 +80,17 @@ const LANG_CFG: Record<Lang, {
     confirmEmail: (email) => `J'ai noté ${email}. C'est bien correct ?`,
     yesWords: ["oui", "ouais", "exact", "correct", "c'est ça", "c'est bon", "parfait", "tout à fait", "voilà"],
     noWords:  ["non", "faux", "incorrect", "pas ça", "erreur", "pas correct", "se trompe"],
+    systemPrompt:
+      "Tu es Yasmine, la réceptionniste virtuelle de VocazAI (agents vocaux IA pour PME marocaines). " +
+      "Tu réponds à un appel de démonstration. Objectif : recueillir le nom complet de l'appelant, " +
+      "un créneau de rendez-vous, et son adresse email. Sois chaleureuse, naturelle et concise — UNE " +
+      "seule question courte à la fois. Propose deux créneaux ce mercredi : 9h30 ou 11h15. Une fois " +
+      "l'email obtenu, répète-le pour confirmation. Réponds UNIQUEMENT avec un objet JSON, sans texte " +
+      'autour : {"reply": "ce que tu dis, en français", "collected": {"name": "...", "slot": "...", ' +
+      '"email": "..."}, "done": false}. Ne mets dans "collected" que les informations déjà obtenues. ' +
+      'Mets "done" à true seulement après avoir confirmé les trois informations ; ton dernier "reply" ' +
+      "doit être une conclusion chaleureuse confirmant le rendez-vous. Parle exclusivement en français.",
+    talkHint: "Parlez naturellement — Yasmine vous comprend.",
     closing: (name, slot, email) =>
       `Parfait${name ? `, ${name}` : ""}. Votre rendez-vous${slot ? ` à ${slot}` : ""} ce mercredi est confirmé. Un email de confirmation${email ? ` a été envoyé à ${email}` : " vous sera envoyé"}. À très bientôt.`,
   },
@@ -125,6 +139,17 @@ const LANG_CFG: Record<Lang, {
     confirmEmail: (email) => `I've got ${email}. Is that correct?`,
     yesWords: ["yes", "yeah", "yep", "yup", "correct", "right", "exactly", "that's right", "sure", "perfect", "spot on"],
     noWords:  ["no", "nope", "nah", "wrong", "incorrect", "not right", "that's wrong", "not correct"],
+    systemPrompt:
+      "You are Yasmine, the virtual receptionist for VocazAI (AI voice agents for Moroccan SMBs). " +
+      "You're answering a demo call. Your goal: collect the caller's full name, a preferred appointment " +
+      "slot, and their email address. Be warm, natural and concise — ONE short question at a time. " +
+      "Offer two slots this Wednesday: 9:30 AM or 11:15 AM. Once you have the email, repeat it back " +
+      "for confirmation. Respond ONLY with a JSON object, no surrounding text: " +
+      '{"reply": "what you say next, in English", "collected": {"name": "...", "slot": "...", ' +
+      '"email": "..."}, "done": false}. Put in "collected" only information already obtained. Set ' +
+      '"done" to true only after all three are confirmed; your final "reply" must be a warm closing ' +
+      "confirming the appointment. Speak only in English.",
+    talkHint: "Speak naturally — Yasmine understands you.",
     closing: (name, slot, email) =>
       `Perfect${name ? `, ${name}` : ""}. Your appointment${slot ? ` at ${slot}` : ""} this Wednesday is confirmed. A confirmation email${email ? ` has been sent to ${email}` : " will be sent to you"}. Talk soon.`,
   },
@@ -173,6 +198,16 @@ const LANG_CFG: Record<Lang, {
     confirmEmail: (email) => `سجّلت ${email}. هل هذا صحيح؟`,
     yesWords: ["نعم", "أجل", "اجل", "صحيح", "صح", "تمام", "بالضبط", "مضبوط", "إيه", "ايه"],
     noWords:  ["لا", "خطأ", "غلط", "غير صحيح", "ليس صحيحا", "مش صحيح"],
+    systemPrompt:
+      "أنت ياسمين، موظفة الاستقبال الافتراضية لـ VocazAI (وكلاء صوتيون بالذكاء الاصطناعي للشركات " +
+      "الصغيرة المغربية). أنت تردّين على مكالمة تجريبية. هدفك: جمع الاسم الكامل للمتصل، موعد مفضّل، " +
+      "وعنوان بريده الإلكتروني. كوني ودودة وطبيعية وموجزة — سؤال واحد قصير في كل مرة. اقترحي موعدين " +
+      "هذا الأربعاء: التاسعة والنصف أو الحادية عشرة والربع. بعد الحصول على البريد، كرّريه للتأكيد. " +
+      'ردّي فقط بكائن JSON دون أي نص حوله: {"reply": "ما تقولينه، بالعربية", "collected": ' +
+      '{"name": "...", "slot": "...", "email": "..."}, "done": false}. ضعي في "collected" المعلومات ' +
+      'التي تم الحصول عليها فقط. اجعلي "done" بقيمة true فقط بعد تأكيد المعلومات الثلاث؛ يجب أن يكون ' +
+      'آخر "reply" خاتمة ودودة تؤكد الموعد. تحدثي بالعربية حصراً.',
+    talkHint: "تحدّث بشكل طبيعي — ياسمين تفهمك.",
     closing: (name, slot, email) =>
       `ممتاز${name ? `، ${name}` : ""}. تم تأكيد موعدك${slot ? ` الساعة ${slot}` : ""} هذا الأربعاء. ${email ? `تم إرسال بريد التأكيد إلى ${email}` : "سيصلك بريد التأكيد قريباً"}. إلى اللقاء.`,
   },
@@ -318,17 +353,18 @@ export function DemoCallCard({ locale }: { locale?: string }) {
     );
   }, []);
 
-  // ── Piper TTS (self-hosted) — resolves true only if audio actually played ──
-  const speakViaApi = useCallback((text: string, voice: string): Promise<boolean> => {
+  // ── Server TTS (/api/tts) — Voxtral primary, Piper fallback. Resolves true
+  //    only if audio actually played. `lang` lets the route pick the voice. ──
+  const speakViaApi = useCallback((text: string, voice: string, lang: Lang): Promise<boolean> => {
     return new Promise((resolve) => {
       setDemoState("loading");
       const ctrl = new AbortController();
-      const netTimeout = setTimeout(() => ctrl.abort(), 8000);
+      const netTimeout = setTimeout(() => ctrl.abort(), 12000);
 
       fetch("/api/tts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, voice, speed: 0.92 }),
+        body: JSON.stringify({ text, voice, speed: 0.92, lang }),
         signal: ctrl.signal,
       })
         .then(async (res) => {
@@ -407,11 +443,11 @@ export function DemoCallCard({ locale }: { locale?: string }) {
     });
   }, [pickVoice]);
 
-  // ── TTS dispatcher — Piper first (correct voice), browser fallback, silence ─
+  // ── TTS dispatcher — server (Voxtral/Piper) first, browser fallback, silence
   const speak = useCallback(async (text: string): Promise<void> => {
     const cfg = LANG_CFG[langRef.current];
 
-    if (await speakViaApi(text, cfg.voice)) return;
+    if (await speakViaApi(text, cfg.voice, langRef.current)) return;
     if (await speakViaBrowser(text)) return;
 
     // Last resort: pace the conversation without audio.
@@ -711,13 +747,89 @@ export function DemoCallCard({ locale }: { locale?: string }) {
     }
   }, [speak, listen, gracefulBailout, sendEmail, stopTimer]);
 
-  // ── Start demo ─────────────────────────────────────────────────────────────
+  // ── LLM-driven conversation (primary) — Mistral decides what Yasmine says ──
+  // Returns false only if the LLM path can't even start (no key / API down),
+  // so the caller falls back to the scripted flow.
+  const runLlmConversation = useCallback(async (): Promise<boolean> => {
+    const cfg = LANG_CFG[langRef.current];
+    const history: { role: string; content: string }[] = [
+      { role: "system", content: cfg.systemPrompt },
+    ];
+
+    type Turn = { reply: string; collected?: Collected; done: boolean };
+    const askLlm = async (): Promise<Turn | null> => {
+      try {
+        const res = await fetch("/api/demo-chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages: history }),
+        });
+        if (!res.ok) return null;
+        const { content } = await res.json();
+        const parsed = JSON.parse(content);
+        const reply = String(parsed.reply ?? "").trim();
+        if (!reply) return null;
+        return { reply, collected: parsed.collected ?? undefined, done: parsed.done === true };
+      } catch {
+        return null;
+      }
+    };
+
+    setHint(cfg.talkHint);
+    setDemoState("loading");
+
+    let turn = await askLlm();
+    if (!turn) return false; // LLM unavailable → caller uses the scripted flow
+
+    for (let i = 0; i < 14; i++) {
+      if (!turn) break;
+      const step: Turn = turn;
+
+      if (step.collected) {
+        collected.current = { ...collected.current, ...step.collected };
+      }
+      history.push({ role: "assistant", content: JSON.stringify(step) });
+
+      await speak(step.reply);
+      setMessages((m) => [...m, { role: "agent", text: step.reply }]);
+
+      if (step.done) {
+        await sendEmail();
+        setDemoState("done");
+        stopTimer();
+        return true;
+      }
+
+      // Listen for the caller — up to 3 tries, then bail gracefully.
+      let transcript = "";
+      for (let attempt = 0; attempt < 3; attempt++) {
+        if (attempt > 0) await speak(cfg.retry);
+        transcript = await listen();
+        if (transcript) break;
+      }
+      if (!transcript) { await gracefulBailout(); return true; }
+
+      setMessages((m) => [...m, { role: "user", text: transcript }]);
+      history.push({ role: "user", content: transcript });
+
+      setDemoState("loading");
+      turn = await askLlm();
+      if (!turn) { await gracefulBailout(); return true; }
+    }
+
+    // Safety cap — close gracefully if the model never sets done.
+    await gracefulBailout();
+    return true;
+  }, [speak, listen, sendEmail, gracefulBailout, stopTimer]);
+
+  // ── Start demo — Mistral-LLM conversation, scripted flow as the fallback ──
   const startDemo = useCallback(async () => {
     collected.current = {};
     setMessages([]); setTurn(0); setEmailSent(false); setHint("");
     startTimer();
-    await runTurn(0);
-  }, [runTurn, startTimer]);
+    const llmStarted = await runLlmConversation();
+    if (!llmStarted) await runTurn(0);
+  }, [runLlmConversation, runTurn, startTimer]);
 
   // ── Reset ──────────────────────────────────────────────────────────────────
   const reset = useCallback(() => {
