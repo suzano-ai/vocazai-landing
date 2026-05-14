@@ -36,7 +36,16 @@ RUN wget -q --timeout=180 \
       -O /app/models/fr_FR-siwis-medium.onnx.json && \
     echo "✓ fr_FR-siwis-medium"
 
-# English female — en_US-hfc_female-medium (~62 MB, v1.0.0)
+# English female — en_US-lessac-high (~110 MB, v1.0.0) — primary English voice
+RUN wget -q --timeout=180 \
+      "${HF_V1}/en/en_US/lessac/high/en_US-lessac-high.onnx?download=true" \
+      -O /app/models/en_US-lessac-high.onnx && \
+    wget -q --timeout=30 \
+      "${HF_V1}/en/en_US/lessac/high/en_US-lessac-high.onnx.json?download=true" \
+      -O /app/models/en_US-lessac-high.onnx.json && \
+    echo "✓ en_US-lessac-high"
+
+# English female — en_US-hfc_female-medium (~62 MB, v1.0.0) — legacy alias target
 RUN wget -q --timeout=180 \
       "${HF_V1}/en/en_US/hfc_female/medium/en_US-hfc_female-medium.onnx?download=true" \
       -O /app/models/en_US-hfc_female-medium.onnx && \

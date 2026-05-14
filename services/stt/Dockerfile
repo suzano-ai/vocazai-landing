@@ -1,6 +1,6 @@
 # =============================================================================
 # VocazAI — Faster-Whisper STT microservice
-# Model : whisper-small (multilingual, ~244 MB) — 3× more accurate than base
+# Model : whisper-medium (multilingual, ~1.5 GB) — markedly better than small
 # Internal only — never exposed to the internet
 # =============================================================================
 
@@ -15,13 +15,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Pre-download Whisper small model at build time (~244 MB)
+# Pre-download Whisper medium model at build time (~1.5 GB)
 # Avoids cold-start delay on first request
 RUN python3 -c "\
 from faster_whisper import WhisperModel; \
-print('Downloading whisper-small model (~244 MB)…'); \
-m = WhisperModel('small', device='cpu', compute_type='int8', download_root='/app/models'); \
-print('✓ whisper-small ready'); \
+print('Downloading whisper-medium model (~1.5 GB)…'); \
+m = WhisperModel('medium', device='cpu', compute_type='int8', download_root='/app/models'); \
+print('✓ whisper-medium ready'); \
 "
 
 COPY main.py .

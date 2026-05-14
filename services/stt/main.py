@@ -1,6 +1,9 @@
 """
 VocazAI — Faster-Whisper STT microservice
-Model  : whisper-small (int8, CPU) — multilingual, 3× more accurate than base
+Model  : whisper-medium (int8, CPU) — multilingual, markedly better than small
+         on names, emails and French/Arabic. Sized for the Hostinger KVM 2
+         (2 vCPU / 8 GB): int8 keeps RAM ~1.5 GB and a short demo utterance
+         transcribes in a few seconds.
 Accepts: audio/webm, audio/mp4, audio/wav, audio/ogg (via ffmpeg)
 Returns: { "text": "...", "language": "fr", "confidence": 0.98 }
 """
@@ -29,23 +32,23 @@ _model = None
 @app.on_event("startup")
 def load_model():
     global _model
-    log.info("Loading Faster-Whisper small model…")
+    log.info("Loading Faster-Whisper medium model…")
     try:
         from faster_whisper import WhisperModel
         _model = WhisperModel(
-            "small",
+            "medium",
             device="cpu",
             compute_type="int8",
             download_root="/app/models",
         )
-        log.info("✓ Faster-Whisper small ready")
+        log.info("✓ Faster-Whisper medium ready")
     except Exception as e:
         log.error(f"Failed to load model: {e}")
 
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "model": "small", "model_loaded": _model is not None}
+    return {"status": "ok", "model": "medium", "model_loaded": _model is not None}
 
 
 @app.post("/stt")

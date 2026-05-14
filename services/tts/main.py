@@ -3,7 +3,7 @@ VocazAI — Piper TTS microservice
 Model  : rhasspy/piper — ONNX neural TTS, real-time on CPU
 Voices :
   fr_FR-siwis-medium  — French female  (Metropolitan French)
-  en_US-jenny-medium  — English female (natural American English)
+  en_US-lessac-high   — English female (high-quality American English)
   ar_JO-kareem-medium — Arabic  male   (best available open-source Arabic voice)
 
 All voices downloaded from HuggingFace at Docker build time.
@@ -39,6 +39,7 @@ MODELS_DIR = Path("/app/models")
 VOICE_MAP: dict[str, tuple[str, float]] = {
     # Primary names used by demo-call-card
     "fr_FR-siwis-medium":  ("fr_FR-siwis-medium.onnx",  1.0),
+    "en_US-lessac-high":   ("en_US-lessac-high.onnx",   1.0),   # high-quality English
     "en_US-hfc_female-medium": ("en_US-hfc_female-medium.onnx", 1.0),
     "ar_JO-kareem-medium": ("ar_JO-kareem-medium.onnx",  1.05),
     # Legacy Kokoro IDs → mapped to best Piper equivalent

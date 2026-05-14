@@ -24,11 +24,14 @@ const LANG_CFG: Record<Lang, {
     mode:     "intent" | "free" | "choice" | "email";
     choices?: string[];
   }[];
-  retry:      string;
-  retryEmail: string;
-  retrySlot:  string;
-  bailout:    string;
-  closing:    (name: string, slot: string, email: string) => string;
+  retry:        string;
+  retryEmail:   string;
+  retrySlot:    string;
+  bailout:      string;
+  confirmEmail: (email: string) => string;
+  yesWords:     string[];
+  noWords:      string[];
+  closing:      (name: string, slot: string, email: string) => string;
 }> = {
   fr: {
     bcp47:  "fr-FR",
@@ -71,13 +74,16 @@ const LANG_CFG: Record<Lang, {
     retryEmail: "Je n'ai pas pu noter votre email. Pouvez-vous le répéter lentement ?",
     retrySlot:  "Je n'ai pas bien compris. Dites 9h30 ou 11h15.",
     bailout:    "Je n'arrive pas à vous entendre correctement. N'hésitez pas à relancer la démo dans un instant.",
+    confirmEmail: (email) => `J'ai noté ${email}. C'est bien correct ?`,
+    yesWords: ["oui", "ouais", "exact", "correct", "c'est ça", "c'est bon", "parfait", "tout à fait", "voilà"],
+    noWords:  ["non", "faux", "incorrect", "pas ça", "erreur", "pas correct", "se trompe"],
     closing: (name, slot, email) =>
       `Parfait${name ? `, ${name}` : ""}. Votre rendez-vous${slot ? ` à ${slot}` : ""} ce mercredi est confirmé. Un email de confirmation${email ? ` a été envoyé à ${email}` : " vous sera envoyé"}. À très bientôt.`,
   },
 
   en: {
     bcp47:  "en-US",
-    voice:  "en_US-hfc_female-medium",
+    voice:  "en_US-lessac-high",
     stt:    "en",
     dir:    "ltr",
     label:  "EN",
@@ -116,6 +122,9 @@ const LANG_CFG: Record<Lang, {
     retryEmail: "I couldn't catch your email. Could you repeat it clearly?",
     retrySlot:  "I didn't understand. Please say 9:30 or 11:15.",
     bailout:    "I'm having trouble hearing you. Feel free to restart the demo in a moment.",
+    confirmEmail: (email) => `I've got ${email}. Is that correct?`,
+    yesWords: ["yes", "yeah", "yep", "yup", "correct", "right", "exactly", "that's right", "sure", "perfect", "spot on"],
+    noWords:  ["no", "nope", "nah", "wrong", "incorrect", "not right", "that's wrong", "not correct"],
     closing: (name, slot, email) =>
       `Perfect${name ? `, ${name}` : ""}. Your appointment${slot ? ` at ${slot}` : ""} this Wednesday is confirmed. A confirmation email${email ? ` has been sent to ${email}` : " will be sent to you"}. Talk soon.`,
   },
@@ -161,6 +170,9 @@ const LANG_CFG: Record<Lang, {
     retryEmail: "لم أتمكن من فهم بريدك الإلكتروني. هل يمكنك تكراره ببطء؟",
     retrySlot:  "لم أفهم جيداً. قل 9:30 أو 11:15.",
     bailout:    "أجد صعوبة في سماعك. يمكنك إعادة تشغيل العرض التجريبي في أي وقت.",
+    confirmEmail: (email) => `سجّلت ${email}. هل هذا صحيح؟`,
+    yesWords: ["نعم", "أجل", "اجل", "صحيح", "صح", "تمام", "بالضبط", "مضبوط", "إيه", "ايه"],
+    noWords:  ["لا", "خطأ", "غلط", "غير صحيح", "ليس صحيحا", "مش صحيح"],
     closing: (name, slot, email) =>
       `ممتاز${name ? `، ${name}` : ""}. تم تأكيد موعدك${slot ? ` الساعة ${slot}` : ""} هذا الأربعاء. ${email ? `تم إرسال بريد التأكيد إلى ${email}` : "سيصلك بريد التأكيد قريباً"}. إلى اللقاء.`,
   },
@@ -210,6 +222,18 @@ function matchSlot(text: string, lang: Lang): string | null {
   const is1115 = /11|eleven|onze|11\s*h|11\s*:\s*15|quinze|fifteen/.test(t);
   if (is930)  return lang === "en" ? "9:30 AM"  : "9h30";
   if (is1115) return lang === "en" ? "11:15 AM" : "11h15";
+  return null;
+}
+
+// ─── Detect a yes / no answer (for the email confirmation step) ──────────────
+function matchYesNo(text: string, lang: Lang): "yes" | "no" | null {
+  const padded = " " + text.toLowerCase().replace(/[.,!?;،؟]/g, " ").trim() + " ";
+  if (!padded.trim()) return null;
+  const cfg = LANG_CFG[lang];
+  const hit = (words: string[]) => words.some((w) => padded.includes(" " + w + " "));
+  // Check "no" first so a stray "yes" word can't shadow a clear refusal.
+  if (hit(cfg.noWords))  return "no";
+  if (hit(cfg.yesWords)) return "yes";
   return null;
 }
 
@@ -398,6 +422,8 @@ export function DemoCallCard({ locale }: { locale?: string }) {
   }, [speakViaApi, speakViaBrowser]);
 
   // ── STT: record → faster-whisper (server fallback) ───────────────────────
+  // Records until the user goes quiet (~1.8s after they stop), with a 15s
+  // ceiling — so people get room to think and finish their sentence.
   const listenViaServer = useCallback((): Promise<string> => {
     return new Promise((resolve) => {
       setDemoState("listening");
@@ -411,8 +437,45 @@ export function DemoCallCard({ locale }: { locale?: string }) {
           mediaRecRef.current = rec;
           chunksRef.current   = [];
 
+          const stopRec = () => { if (rec.state === "recording") rec.stop(); };
+
+          // ── Silence detection — finish ~1.8s after the user stops talking ──
+          let audioCtx: AudioContext | null = null;
+          let silenceRAF = 0;
+          let stopTimer: ReturnType<typeof setTimeout> | null = null;
+          let hardCap:   ReturnType<typeof setTimeout> | null = null;
+          try {
+            audioCtx = new AudioContext();
+            const analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 512;
+            audioCtx.createMediaStreamSource(stream).connect(analyser);
+            const buf = new Uint8Array(analyser.fftSize);
+            let spoke = false;
+            const monitor = () => {
+              analyser.getByteTimeDomainData(buf);
+              let sum = 0;
+              for (let i = 0; i < buf.length; i++) {
+                const v = (buf[i] - 128) / 128;
+                sum += v * v;
+              }
+              const rms = Math.sqrt(sum / buf.length);
+              if (rms > 0.025) {
+                spoke = true;
+                if (stopTimer) { clearTimeout(stopTimer); stopTimer = null; }
+              } else if (spoke && !stopTimer) {
+                stopTimer = setTimeout(stopRec, 1800);
+              }
+              silenceRAF = requestAnimationFrame(monitor);
+            };
+            silenceRAF = requestAnimationFrame(monitor);
+          } catch { /* AnalyserNode unavailable — the hard cap still applies */ }
+
           rec.ondataavailable = (e: any) => { if (e.data.size > 0) chunksRef.current.push(e.data); };
           rec.onstop = () => {
+            cancelAnimationFrame(silenceRAF);
+            if (stopTimer) clearTimeout(stopTimer);
+            if (hardCap)   clearTimeout(hardCap);
+            audioCtx?.close().catch(() => {});
             stream.getTracks().forEach((t) => t.stop());
             setDemoState("processing");
 
@@ -428,15 +491,15 @@ export function DemoCallCard({ locale }: { locale?: string }) {
           };
 
           rec.start();
-          setTimeout(() => { if (rec.state === "recording") rec.stop(); }, 8000);
+          hardCap = setTimeout(stopRec, 15000);   // absolute ceiling
         })
         .catch(() => resolve(""));
     });
   }, []);
 
   // ── STT: Web Speech API (primary) → server fallback ──────────────────────
-  // Web Speech API uses Google/Apple cloud models — instant, accurate, no server
-  // round-trip. Falls back to faster-whisper when unavailable (Firefox, etc.).
+  // Continuous + interim results: the user can pause mid-sentence without being
+  // cut off. We finish 2.6s after they stop talking (7s grace before they start).
   const listen = useCallback((): Promise<string> => {
     return new Promise((resolve) => {
       setDemoState("listening");
@@ -450,42 +513,66 @@ export function DemoCallCard({ locale }: { locale?: string }) {
 
       if (SpeechRecog) {
         const recog = new SpeechRecog();
-        recog.lang              = LANG_CFG[langRef.current].bcp47;
-        recog.continuous        = false;
-        recog.interimResults    = false;
-        recog.maxAlternatives   = 3;
+        recog.lang             = LANG_CFG[langRef.current].bcp47;
+        recog.continuous       = true;   // don't finalise on the first pause
+        recog.interimResults   = true;   // stream partials → know when they're still talking
+        recog.maxAlternatives  = 1;
 
-        let settled = false;
-        const settle = (text: string) => {
+        let settled    = false;
+        let finalText  = "";
+        let hasSpoken  = false;
+        let silenceTimer: ReturnType<typeof setTimeout> | null = null;
+        let hardCap:      ReturnType<typeof setTimeout> | null = null;
+
+        const clearTimers = () => {
+          if (silenceTimer) { clearTimeout(silenceTimer); silenceTimer = null; }
+          if (hardCap)      { clearTimeout(hardCap);      hardCap = null; }
+        };
+        const finish = () => {
           if (settled) return;
           settled = true;
-          resolve(text);
+          clearTimers();
+          try { recog.stop(); } catch { /* already stopped */ }
+          resolve(finalText.trim());
+        };
+        // Generous window to *start* talking; shorter pause tolerated once they have.
+        const armSilence = () => {
+          if (silenceTimer) clearTimeout(silenceTimer);
+          silenceTimer = setTimeout(finish, hasSpoken ? 2600 : 7000);
         };
 
         recog.onresult = (e: any) => {
-          const transcript = Array.from(e.results)
-            .map((r: any) => r[0]?.transcript ?? "")
-            .join(" ")
-            .trim();
-          settle(transcript);
+          if (settled) return;
+          for (let i = e.resultIndex; i < e.results.length; i++) {
+            const res = e.results[i];
+            if (res.isFinal) finalText += res[0].transcript + " ";
+          }
+          hasSpoken = true;
+          armSilence();   // any speech activity resets the silence countdown
         };
 
         recog.onerror = (e: any) => {
           if (settled) return;
-          // no-speech: user was silent — return empty so retry logic kicks in
-          if (e.error === "no-speech" || e.error === "audio-capture") {
-            settle("");
+          if (e.error === "no-speech" || e.error === "audio-capture" || e.error === "aborted") {
+            finish();   // resolve with whatever we have — retry logic handles empties
           } else {
-            // network / service-not-allowed / etc. → try server
+            // network / service-not-allowed / etc. → try the server path
             settled = true;
+            clearTimers();
             listenViaServer().then(resolve);
           }
         };
 
-        recog.onend = () => { if (!settled) settle(""); };
+        recog.onend = () => { if (!settled) finish(); };
 
-        try { recog.start(); }
-        catch { listenViaServer().then(resolve); }
+        try {
+          recog.start();
+          armSilence();                          // start the "begin talking" clock
+          hardCap = setTimeout(finish, 22000);   // absolute ceiling
+        } catch {
+          clearTimers();
+          listenViaServer().then(resolve);
+        }
         return;
       }
 
@@ -569,7 +656,7 @@ export function DemoCallCard({ locale }: { locale?: string }) {
       if (!matched) { await gracefulBailout(); return; }
       collected.current.slot = matched;
 
-    // ── Email step ───────────────────────────────────────────────────────────
+    // ── Email step — capture, then read back and confirm ────────────────────
     } else if (step.mode === "email") {
       let email: string | null = null;
       for (let attempt = 0; attempt < 3; attempt++) {
@@ -582,8 +669,30 @@ export function DemoCallCard({ locale }: { locale?: string }) {
         }
       }
       if (!email) { await gracefulBailout(); return; }
+
+      // Read the email back and let the caller confirm or correct it once.
+      for (let round = 0; round < 2; round++) {
+        const confirmText = cfg.confirmEmail(email);
+        await speak(confirmText);
+        setMessages((m) => [...m, { role: "agent", text: confirmText }]);
+
+        const reply = await listen();
+        if (reply) setMessages((m) => [...m, { role: "user", text: reply }]);
+
+        if (matchYesNo(reply, langRef.current) === "no" && round === 0) {
+          await speak(cfg.retryEmail);
+          setMessages((m) => [...m, { role: "agent", text: cfg.retryEmail }]);
+          const t = await listen();
+          if (t) {
+            setMessages((m) => [...m, { role: "user", text: t }]);
+            email = extractEmail(t) ?? t;
+          }
+          continue; // confirm the corrected value
+        }
+        break; // "yes", unclear, or already retried — proceed
+      }
+
       collected.current.email = email;
-      setMessages((m) => [...m, { role: "user", text: email }]);
     }
 
     const nextIdx = idx + 1;

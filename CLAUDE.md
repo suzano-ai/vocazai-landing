@@ -19,8 +19,8 @@ AI voice receptionist SaaS for Moroccan SMBs. A business subscribes, configures 
 | Auth | Supabase (magic-link OTP email) |
 | DB | Supabase Postgres |
 | Voice | Vapi **or** Retell (provider abstraction in `src/lib/providers/`) |
-| TTS | Piper ONNX (self-hosted Docker) — fr_FR-siwis / en_US-hfc_female / ar_JO-kareem |
-| STT | faster-whisper small (self-hosted Docker) + Web Speech API (browser primary) |
+| TTS | Piper ONNX (self-hosted Docker) — fr_FR-siwis / en_US-lessac-high / ar_JO-kareem |
+| STT | faster-whisper medium (self-hosted Docker) + Web Speech API (browser primary) |
 | Email | Resend (`RESEND_API_KEY`) |
 | Deploy | Hostinger KVM VPS · Docker Compose · Traefik v2 · HTTPS auto-cert |
 | CI/CD | GitHub Actions → SSH → `vocazai update` on every push to `main` |
