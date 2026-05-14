@@ -1,24 +1,34 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces, Tajawal } from "next/font/google";
+import localFont from "next/font/local";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
+// Self-hosted fonts (src/fonts/) — no build-time fetch to fonts.gstatic.com,
+// so Docker builds on the VPS are fast and never fail on a flaky Google reach.
+const inter = localFont({
+  src: "../fonts/inter-latin.woff2",
+  weight: "100 900",
   variable: "--font-inter",
   display: "swap",
 });
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
+const fraunces = localFont({
+  src: [
+    { path: "../fonts/fraunces-latin.woff2", weight: "100 900", style: "normal" },
+    { path: "../fonts/fraunces-latin-italic.woff2", weight: "100 900", style: "italic" },
+  ],
   variable: "--font-fraunces",
   display: "swap",
-  style: ["normal", "italic"],
 });
 
-const tajawal = Tajawal({
-  subsets: ["arabic"],
-  weight: ["300", "400", "500", "700", "800"],
+const tajawal = localFont({
+  src: [
+    { path: "../fonts/tajawal-arabic-300.woff2", weight: "300", style: "normal" },
+    { path: "../fonts/tajawal-arabic-400.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/tajawal-arabic-500.woff2", weight: "500", style: "normal" },
+    { path: "../fonts/tajawal-arabic-700.woff2", weight: "700", style: "normal" },
+    { path: "../fonts/tajawal-arabic-800.woff2", weight: "800", style: "normal" },
+  ],
   variable: "--font-tajawal",
   display: "swap",
 });
