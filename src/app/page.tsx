@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
-import { Khatam, Arch, Waveform } from "@/components/zellige";
+import { Khatam, Arch, Waveform, NeuralNetwork } from "@/components/zellige";
 import { VoiceOver } from "@/components/voice-over";
 
 export const metadata: Metadata = {
@@ -44,19 +44,25 @@ export default function SplashPage() {
     <main className="relative flex min-h-[100dvh] flex-col overflow-hidden bg-ink-900 text-saffron-50">
       {/* Voice greeting — the splash language picker */}
       <VoiceOver locale="fr" />
-      {/* Decorative geometry — varied shapes, low opacity, soft motion */}
+      {/* AI topology — animated neural network, the "voice-AI" signature */}
+      <div
+        className="pointer-events-none absolute inset-0 flex items-center justify-center"
+        aria-hidden
+      >
+        <div className="h-[78%] w-[94%] max-w-6xl text-saffron-500/[0.13]">
+          <NeuralNetwork />
+        </div>
+      </div>
+
+      {/* Moroccan geometry — heritage anchors over the AI mesh */}
       <Khatam
-        size={780}
-        className="pointer-events-none absolute -right-40 -top-40 text-saffron-500/12"
+        size={680}
+        className="pointer-events-none absolute -right-40 -top-40 text-saffron-500/[0.07]"
         style={{ animation: "spin 60s linear infinite" }}
       />
       <Arch
-        size={520}
-        className="pointer-events-none absolute -left-20 -bottom-32 text-teal-500/12"
-      />
-      <Khatam
-        size={260}
-        className="pointer-events-none absolute right-1/4 top-1/3 text-saffron-500/8"
+        size={460}
+        className="pointer-events-none absolute -left-24 -bottom-32 text-teal-500/[0.08]"
       />
 
       {/* Hairline grid effect — vertical lines */}
