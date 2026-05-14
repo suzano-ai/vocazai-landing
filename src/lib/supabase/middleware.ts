@@ -37,14 +37,20 @@ export async function updateSession(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Protect /dashboard/* routes
+  // Protect /{locale}/dashboard/* routes
   const pathname = request.nextUrl.pathname;
-  const isDashboard = /^\/(fr|en|ar)?\/?dashboard/.test(pathname);
-  if (isDashboard && !user) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    url.searchParams.set("redirectTo", pathname);
-    return NextResponse.redirect(url);
+  const dash = pathname.match(/^\/(fr|en|ar)\/dashboard/);
+  if (dash && !user) {
+    const locale = dash[1];
+    // Public origin — behind Traefik the internal request is 0.0.0.0:PORT,
+    // so a redirect built from nextUrl would point at a dead address.
+    const fwdHost = request.headers.get("x-forwarded-host");
+    const origin = fwdHost
+      ? `${request.headers.get("x-forwarded-proto") ?? "https"}://${fwdHost}`
+      : request.nextUrl.origin;
+    const redirectUrl = new URL(`/${locale}/login`, origin);
+    redirectUrl.searchParams.set("redirectTo", pathname);
+    return NextResponse.redirect(redirectUrl);
   }
 
   return response;

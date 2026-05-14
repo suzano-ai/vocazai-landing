@@ -6,17 +6,38 @@ const DEFAULT_LOCALE = "fr";
 const VALID_LOCALES = ["fr", "en", "ar"];
 
 /**
+ * Public-facing origin. Behind Traefik, `request.url` is the *internal*
+ * container address (http://0.0.0.0:PORT) — redirecting to that gives a dead
+ * link. Traefik sets X-Forwarded-Host / X-Forwarded-Proto, so prefer those;
+ * fall back to the Host header, then to request.url for local dev.
+ */
+function publicOrigin(request: NextRequest): string {
+  const fwdHost = request.headers.get("x-forwarded-host");
+  if (fwdHost) {
+    const proto = request.headers.get("x-forwarded-proto") ?? "https";
+    return `${proto}://${fwdHost}`;
+  }
+  const host = request.headers.get("host");
+  if (host && !host.includes("0.0.0.0") && !host.includes("127.0.0.1")) {
+    const proto = request.url.startsWith("https") ? "https" : "http";
+    return `${proto}://${host}`;
+  }
+  return new URL(request.url).origin;
+}
+
+/**
  * Supabase magic-link / OTP callback. Handles both link flows:
  *   - PKCE          → ?code=...                  (exchangeCodeForSession)
  *   - token hash    → ?token_hash=...&type=...    (verifyOtp)
- * then redirects to a locale-prefixed dashboard.
+ * then redirects to a locale-prefixed dashboard on the public origin.
  *
  * `next` carries the locale-prefixed path through the email round-trip and is
  * validated here (open-redirect guard). Failures are logged with the real
  * Supabase error so a "?error=callback" landing is diagnosable.
  */
 export async function GET(request: NextRequest) {
-  const { searchParams, origin } = new URL(request.url);
+  const { searchParams } = new URL(request.url);
+  const origin = publicOrigin(request);
   const code = searchParams.get("code");
   const tokenHash = searchParams.get("token_hash");
   const type = searchParams.get("type") as EmailOtpType | null;
