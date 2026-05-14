@@ -43,3 +43,6 @@ graphify-out/
 
 # Voxtral local test output
 voxtral-test*.mp3
+
+# Arabic translation worksheet (working file)
+messages/translate-ar.txt
