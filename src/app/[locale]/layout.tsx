@@ -3,6 +3,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "../../../i18n/routing";
 import { LangSetter } from "@/components/lang-setter";
+import { VoiceOver } from "@/components/voice-over";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -30,6 +31,8 @@ export default async function LocaleLayout({
     <NextIntlClientProvider messages={messages}>
       <LangSetter locale={locale} />
       {children}
+      {/* Marketing voice-over — greets the visitor on marketing pages */}
+      <VoiceOver locale={locale} />
     </NextIntlClientProvider>
   );
 }
