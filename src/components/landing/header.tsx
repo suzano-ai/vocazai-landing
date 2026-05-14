@@ -48,6 +48,7 @@ export function Header({ locale }: { locale: string }) {
   const navLinks = [
     { href: `/${locale}/use-cases`, label: tNav("useCases") },
     { href: `/${locale}/pricing`,   label: tNav("pricing")  },
+    { href: `/${locale}/blog`,      label: tNav("blog")     },
     { href: `/${locale}/about`,     label: tNav("about")    },
     { href: `/${locale}#faq`,       label: tNav("faq")      },
   ];

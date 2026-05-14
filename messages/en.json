@@ -21,6 +21,7 @@
     "pricing": "Pricing",
     "faq": "FAQ",
     "about": "About",
+    "blog": "Blog",
     "contact": "Contact",
     "signIn": "Sign in",
     "product": "Product",
@@ -28,6 +29,18 @@
     "legal": "Legal",
     "terms": "Terms",
     "privacy": "Privacy"
+  },
+  "blog": {
+    "kicker": "The blog",
+    "title": "Resources for Moroccan SMBs",
+    "subtitle": "Practical advice on phone reception, voice AI and customer relationships in Morocco.",
+    "metaTitle": "Blog — VocazAI",
+    "metaDescription": "Practical advice on phone reception, AI voice agents and customer relationships for SMBs in Morocco.",
+    "readingTime": "{minutes} min read",
+    "backToBlog": "All articles",
+    "readMore": "Read article",
+    "publishedOn": "Published on",
+    "cta": "Try VocazAI for free"
   },
   "landing": {
     "kicker": "Built in Morocco · For Africa",

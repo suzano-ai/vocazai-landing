@@ -39,6 +39,7 @@ export async function Footer({ locale }: { locale: string }) {
             <FooterLink href={`/${locale}#how`}>{tNav("how")}</FooterLink>
             <FooterLink href={`/${locale}/use-cases`}>{tNav("useCases")}</FooterLink>
             <FooterLink href={`/${locale}/pricing`}>{tNav("pricing")}</FooterLink>
+            <FooterLink href={`/${locale}/blog`}>{tNav("blog")}</FooterLink>
             <FooterLink href={`/${locale}#faq`}>{tNav("faq")}</FooterLink>
           </FooterCol>
 

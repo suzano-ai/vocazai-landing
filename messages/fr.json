@@ -21,6 +21,7 @@
     "pricing": "Tarifs",
     "faq": "FAQ",
     "about": "À propos",
+    "blog": "Blog",
     "contact": "Contact",
     "signIn": "Se connecter",
     "product": "Produit",
@@ -28,6 +29,18 @@
     "legal": "Légal",
     "terms": "Conditions",
     "privacy": "Confidentialité"
+  },
+  "blog": {
+    "kicker": "Le blog",
+    "title": "Ressources pour les PME marocaines",
+    "subtitle": "Conseils concrets sur l'accueil téléphonique, l'IA vocale et la relation client au Maroc.",
+    "metaTitle": "Blog — VocazAI",
+    "metaDescription": "Conseils concrets sur l'accueil téléphonique, l'agent vocal IA et la relation client pour les PME au Maroc.",
+    "readingTime": "{minutes} min de lecture",
+    "backToBlog": "Tous les articles",
+    "readMore": "Lire l'article",
+    "publishedOn": "Publié le",
+    "cta": "Essayer VocazAI gratuitement"
   },
   "landing": {
     "kicker": "Conçu au Maroc · Pour l'Afrique",
