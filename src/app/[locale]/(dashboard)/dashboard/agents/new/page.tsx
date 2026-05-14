@@ -3,7 +3,7 @@
 import { useState, type ReactNode, type ChangeEvent, type FormEvent, type InputHTMLAttributes, type TextareaHTMLAttributes, type SelectHTMLAttributes } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/client";
+import { createAgentAction } from "../actions";
 import { ArrowLeft, Bot, Loader2, Check, ChevronDown } from "lucide-react";
 
 // ─── Form field helpers ────────────────────────────────────────────────────────
@@ -95,6 +95,7 @@ export default function NewAgentPage() {
   const [saving, setSaving] = useState(false);
   const [saved,  setSaved]  = useState(false);
   const [error,  setError]  = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
 
   const [form, setForm] = useState({
     name:            "",
@@ -135,43 +136,33 @@ export default function NewAgentPage() {
     e.preventDefault();
     setSaving(true);
     setError(null);
+    setWarning(null);
 
-    try {
-      const supabase = createClient();
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) { router.push(`/${locale}/login`); return; }
+    const result = await createAgentAction({
+      name:             form.name,
+      provider:         form.provider,
+      locale:           form.locale,
+      direction:        form.direction,
+      llm_model:        form.llm_model,
+      voice_vendor:     form.voice_vendor,
+      voice_id:         form.voice_id,
+      max_duration_sec: form.max_duration_sec,
+      first_message:    form.first_message,
+      system_prompt:    form.system_prompt,
+      is_active:        true,
+    });
 
-      const { data: agent, error: insertErr } = await supabase
-        .from("agents")
-        .insert({
-          owner_id:         user.id,
-          name:             form.name.trim() || "Agent sans nom",
-          provider:         form.provider,
-          locale:           form.locale,
-          direction:        form.direction,
-          llm_model:        form.llm_model,
-          voice_vendor:     form.voice_vendor,
-          voice_id:         form.voice_id,
-          max_duration_sec: form.max_duration_sec,
-          first_message:    form.first_message.trim() || null,
-          system_prompt:    form.system_prompt.trim() || null,
-          is_active:        true,
-        })
-        .select("id")
-        .single();
-
-      if (insertErr) throw insertErr;
-
-      setSaved(true);
-      setTimeout(() => {
-        router.push(`/${locale}/dashboard/agents/${agent!.id}`);
-      }, 800);
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Erreur lors de la création";
-      setError(msg);
-    } finally {
+    if (!result.ok) {
+      setError(result.error ?? "Erreur lors de la création");
       setSaving(false);
+      return;
     }
+
+    setSaved(true);
+    if (result.warning) setWarning(result.warning);
+    setTimeout(() => {
+      router.push(`/${locale}/dashboard/agents/${result.id}`);
+    }, result.warning ? 2600 : 800);
   }
 
   const voiceOptions = VOICE_IDS[form.locale] ?? VOICE_IDS.fr;
@@ -269,6 +260,13 @@ export default function NewAgentPage() {
           {error && (
             <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900/40 dark:bg-red-950/30 dark:text-red-400">
               {error}
+            </div>
+          )}
+
+          {/* Warning — saved, but provider deployment didn't complete */}
+          {warning && (
+            <div className="rounded-xl border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-900/40 dark:bg-amber-950/20 dark:text-amber-300">
+              {warning}
             </div>
           )}
         </div>

@@ -4,6 +4,7 @@ import { useEffect, useState, type ReactNode, type ChangeEvent, type FormEvent, 
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { updateAgentAction, deleteAgentAction } from "../actions";
 import { ArrowLeft, Loader2, Check, Trash2, ChevronDown, AlertTriangle } from "lucide-react";
 
 // ─── Shared field components ──────────────────────────────────────────────────
@@ -81,6 +82,7 @@ export default function AgentDetailPage() {
   const [deleting, setDeleting] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [error,   setError]   = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
 
   // Load agent
   useEffect(() => {
@@ -118,30 +120,27 @@ export default function AgentDetailPage() {
     if (!agent) return;
     setSaving(true);
     setError(null);
+    setWarning(null);
 
-    const supabase = createClient();
-    const { error: updateErr } = await supabase
-      .from("agents")
-      .update({
-        name:             agent.name,
-        provider:         agent.provider,
-        locale:           agent.locale,
-        direction:        agent.direction,
-        is_active:        agent.is_active,
-        llm_model:        agent.llm_model,
-        voice_vendor:     agent.voice_vendor,
-        voice_id:         agent.voice_id,
-        max_duration_sec: agent.max_duration_sec,
-        first_message:    agent.first_message ?? null,
-        system_prompt:    agent.system_prompt ?? null,
-        updated_at:       new Date().toISOString(),
-      })
-      .eq("id", id);
+    const result = await updateAgentAction(id, {
+      name:             agent.name,
+      provider:         agent.provider,
+      locale:           agent.locale,
+      direction:        agent.direction,
+      is_active:        agent.is_active,
+      llm_model:        agent.llm_model ?? "gpt-4o-mini",
+      voice_vendor:     agent.voice_vendor ?? "piper",
+      voice_id:         agent.voice_id ?? "",
+      max_duration_sec: agent.max_duration_sec ?? 300,
+      first_message:    agent.first_message ?? "",
+      system_prompt:    agent.system_prompt ?? "",
+    });
 
-    if (updateErr) {
-      setError(updateErr.message);
+    if (!result.ok) {
+      setError(result.error ?? "Erreur lors de la sauvegarde");
     } else {
       setSaved(true);
+      if (result.warning) setWarning(result.warning);
       setTimeout(() => setSaved(false), 3000);
     }
     setSaving(false);
@@ -150,8 +149,14 @@ export default function AgentDetailPage() {
   async function handleDelete() {
     if (!confirmDelete) { setConfirmDelete(true); return; }
     setDeleting(true);
-    const supabase = createClient();
-    await supabase.from("agents").delete().eq("id", id);
+    setError(null);
+    const result = await deleteAgentAction(id);
+    if (!result.ok) {
+      setError(result.error ?? "Erreur lors de la suppression");
+      setDeleting(false);
+      setConfirmDelete(false);
+      return;
+    }
     router.push(`/${locale}/dashboard/agents`);
   }
 
@@ -260,6 +265,12 @@ export default function AgentDetailPage() {
           {error && (
             <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900/40 dark:bg-red-950/30 dark:text-red-400">
               {error}
+            </div>
+          )}
+
+          {warning && (
+            <div className="rounded-xl border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-900/40 dark:bg-amber-950/20 dark:text-amber-300">
+              {warning}
             </div>
           )}
         </div>
