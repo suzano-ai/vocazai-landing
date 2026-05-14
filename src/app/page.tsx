@@ -40,7 +40,7 @@ const LOCALES = [
 
 export default function SplashPage() {
   return (
-    <main className="relative grid min-h-screen overflow-hidden bg-ink-900 text-saffron-50">
+    <main className="relative flex min-h-[100dvh] flex-col overflow-hidden bg-ink-900 text-saffron-50">
       {/* Decorative geometry — varied shapes, low opacity, soft motion */}
       <Khatam
         size={780}
@@ -69,7 +69,7 @@ export default function SplashPage() {
       </div>
 
       {/* Top bar */}
-      <header className="container relative z-10 flex h-20 items-center justify-between pt-2">
+      <header className="container relative z-10 flex h-16 shrink-0 items-center justify-between">
         <div className="flex items-center gap-2.5">
           <span className="grid h-9 w-9 place-items-center rounded-md bg-saffron-500 font-display text-base font-extrabold italic text-ink-900">
             V
@@ -84,10 +84,10 @@ export default function SplashPage() {
         </div>
       </header>
 
-      {/* Center — headline + tiles */}
-      <div className="container relative z-10 flex flex-1 flex-col items-start justify-center py-12 lg:justify-center">
+      {/* Center — headline + tiles. Sized to fit one viewport. */}
+      <div className="container relative z-10 flex min-h-0 flex-1 flex-col items-start justify-center py-6">
         {/* Kicker */}
-        <div className="mb-10 inline-flex items-center gap-2.5">
+        <div className="mb-5 inline-flex items-center gap-2.5">
           <span className="h-1.5 w-1.5 rounded-full bg-saffron-500" />
           <span className="font-mono text-kicker uppercase text-saffron-50/60">
             01 — Voice AI · MENA Native
@@ -95,20 +95,20 @@ export default function SplashPage() {
         </div>
 
         {/* Headline — staged in three languages */}
-        <h1 className="font-display text-display-2xl font-medium leading-[0.92]">
+        <h1 className="font-display text-display-lg font-medium leading-[0.95] lg:text-display-xl">
           <span className="block text-saffron-50">L&apos;agent qui décroche</span>
           <span className="block italic text-saffron-500">
             même quand vous dormez.
           </span>
         </h1>
 
-        <div className="mt-8 max-w-2xl space-y-2 text-saffron-50/55">
-          <p className="font-display text-xl italic">
+        <div className="mt-5 max-w-2xl space-y-1.5 text-saffron-50/55">
+          <p className="font-display text-base italic sm:text-lg">
             The voice agent that picks up — even when you sleep.
           </p>
           <p
             dir="rtl"
-            className="font-display text-xl italic"
+            className="font-display text-base italic sm:text-lg"
             lang="ar"
           >
             الوكيل الذي يرد — حتى عندما تنام.
@@ -116,13 +116,13 @@ export default function SplashPage() {
         </div>
 
         {/* Language tiles */}
-        <div className="mt-16 grid w-full gap-3 sm:grid-cols-3">
+        <div className="mt-8 grid w-full gap-3 sm:grid-cols-3">
           {LOCALES.map((l, idx) => (
             <Link
               key={l.code}
               href={`/${l.code}`}
               dir={"rtl" in l && l.rtl ? "rtl" : "ltr"}
-              className="group relative flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-lg border border-saffron-50/10 bg-saffron-50/[0.025] p-7 backdrop-blur-sm transition-all duration-260 ease-soft hover:-translate-y-1 hover:border-saffron-500 hover:bg-saffron-50/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron-500/50"
+              className="group relative flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-lg border border-saffron-50/10 bg-saffron-50/[0.025] p-5 backdrop-blur-sm transition-all duration-260 ease-soft hover:-translate-y-1 hover:border-saffron-500 hover:bg-saffron-50/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron-500/50 sm:p-6"
             >
               <div>
                 <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-saffron-50/50">
@@ -131,24 +131,24 @@ export default function SplashPage() {
                   <span>{l.code.toUpperCase()}</span>
                 </div>
                 <div
-                  className={`mt-8 font-display text-5xl font-medium ${
+                  className={`mt-5 font-display text-3xl font-medium sm:text-4xl ${
                     "rtl" in l && l.rtl ? "" : "italic"
                   }`}
                 >
                   {l.label}
                 </div>
-                <div className="mt-2 text-xs uppercase tracking-wider text-saffron-50/40">
+                <div className="mt-1.5 text-xs uppercase tracking-wider text-saffron-50/40">
                   {l.flag}
                 </div>
               </div>
-              <div className="mt-12 flex items-center justify-between">
+              <div className="mt-6 flex items-center justify-between sm:mt-8">
                 <span className="text-sm text-saffron-50/70 transition-colors duration-220 group-hover:text-saffron-500">
                   {l.cta}
                 </span>
                 <ArrowUpRight className="h-5 w-5 text-saffron-50/40 transition-all duration-220 ease-soft group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-saffron-500" />
               </div>
               {/* Bottom hint */}
-              <div className="mt-3 text-[10px] uppercase tracking-widest text-saffron-50/30">
+              <div className="mt-2.5 text-[10px] uppercase tracking-widest text-saffron-50/30">
                 {l.hint}
               </div>
             </Link>
@@ -157,7 +157,7 @@ export default function SplashPage() {
       </div>
 
       {/* Bottom band */}
-      <footer className="container relative z-10 flex flex-col items-start justify-between gap-4 border-t border-saffron-50/10 py-6 text-xs sm:flex-row sm:items-center">
+      <footer className="container relative z-10 flex shrink-0 flex-col items-start justify-between gap-4 border-t border-saffron-50/10 py-5 text-xs sm:flex-row sm:items-center">
         <div className="flex items-center gap-4">
           <Waveform bars={18} className="text-saffron-500/70" />
           <span className="font-mono uppercase tracking-widest text-saffron-50/40">
