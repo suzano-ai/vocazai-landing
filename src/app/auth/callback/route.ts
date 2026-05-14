@@ -1,22 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import type { EmailOtpType } from "@supabase/supabase-js";
 
 const DEFAULT_LOCALE = "fr";
 const VALID_LOCALES = ["fr", "en", "ar"];
 
 /**
- * Supabase magic-link / OTP callback. Exchanges the code for a session, then
- * redirects to a locale-prefixed dashboard.
+ * Supabase magic-link / OTP callback. Handles both link flows:
+ *   - PKCE          → ?code=...                  (exchangeCodeForSession)
+ *   - token hash    → ?token_hash=...&type=...    (verifyOtp)
+ * then redirects to a locale-prefixed dashboard.
  *
- * The login page sends `emailRedirectTo` as
- *   {origin}/auth/callback?next=/{locale}/dashboard
- * so the locale survives the email round-trip. `next` is validated here as a
- * safe, internal, locale-prefixed path (open-redirect guard) — earlier this
- * route fell back to a bare "/dashboard", which is not a real route.
+ * `next` carries the locale-prefixed path through the email round-trip and is
+ * validated here (open-redirect guard). Failures are logged with the real
+ * Supabase error so a "?error=callback" landing is diagnosable.
  */
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
+  const tokenHash = searchParams.get("token_hash");
+  const type = searchParams.get("type") as EmailOtpType | null;
   const next = searchParams.get("next") ?? `/${DEFAULT_LOCALE}/dashboard`;
 
   const parts  = next.split("/").filter(Boolean);
@@ -26,10 +29,18 @@ export async function GET(request: NextRequest) {
       ? next
       : `/${locale}/dashboard`;
 
+  const supabase = await createClient();
+
   if (code) {
-    const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) return NextResponse.redirect(`${origin}${safeNext}`);
+    console.error("[auth/callback] exchangeCodeForSession failed:", error.message);
+  } else if (tokenHash && type) {
+    const { error } = await supabase.auth.verifyOtp({ token_hash: tokenHash, type });
+    if (!error) return NextResponse.redirect(`${origin}${safeNext}`);
+    console.error("[auth/callback] verifyOtp failed:", error.message);
+  } else {
+    console.error("[auth/callback] no `code` or `token_hash` in the callback URL");
   }
 
   return NextResponse.redirect(`${origin}/${locale}/login?error=callback`);

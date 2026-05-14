@@ -8,7 +8,10 @@ const STT_URL = process.env.STT_SERVICE_URL ?? "http://stt:9000";
 const MISTRAL_KEY = process.env.MISTRAL_API_KEY;
 
 /**
- * Voxtral Transcribe (Mistral, hosted) — best-in-class accuracy, FR/EN/AR.
+ * Voxtral STT (Mistral, hosted) — FR/EN/AR. Uses `voxtral-mini-2602`: the
+ * dedicated `voxtral-mini-transcribe-*` models either translate to French
+ * (verified) or reject batch uploads, whereas voxtral-mini-2602 transcribes
+ * faithfully in the source language (incl. Darija in Arabic script).
  * Returns the transcript string, or null so the caller falls back to whisper.
  */
 async function voxtralSTT(file: File, language: string): Promise<string | null> {
@@ -16,7 +19,7 @@ async function voxtralSTT(file: File, language: string): Promise<string | null> 
   try {
     const fd = new FormData();
     fd.append("file", file, file.name || "audio.webm");
-    fd.append("model", "voxtral-mini-latest");
+    fd.append("model", "voxtral-mini-2602");
     if (language && language !== "auto") fd.append("language", language);
 
     const res = await fetch("https://api.mistral.ai/v1/audio/transcriptions", {
