@@ -35,7 +35,11 @@ const VOICES = { fr: "fr_marie_neutral", en: "gb_jane_neutral" };
 const AR_REF_PATH = path.join(process.cwd(), "public", "voices", "ar-ref.wav");
 
 // ── Voice-over scripts — short, warm, ~15-20s spoken, in the page's language ──
+// `splash` is the language picker (pre-selection) — a single French clip.
 const SCRIPTS = {
+  splash: {
+    fr: "Bienvenue chez VocazAI. Je suis Yasmine, votre agent vocal. Choisissez votre langue — français, anglais ou arabe — pour découvrir comment je réponds à vos appels, jour et nuit.",
+  },
   landing: {
     fr: "Bienvenue chez VocazAI. Moi c'est Yasmine, votre agent vocal. Je réponds aux appels de votre entreprise vingt-quatre heures sur vingt-quatre — je prends les rendez-vous, je réponds aux questions, je ne rate jamais un client. Essayez la démo, et parlez-moi directement.",
     en: "Welcome to VocazAI. I'm Yasmine, your AI voice agent. I answer your business calls around the clock — booking appointments, handling questions, never missing a customer. Try the live demo and talk to me yourself.",

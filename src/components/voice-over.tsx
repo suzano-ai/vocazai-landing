@@ -12,7 +12,7 @@ import { Volume2, Pause, RotateCcw } from "lucide-react";
  * pill itself is a play / pause / replay control.
  */
 
-type PageKey = "landing" | "about" | "pricing" | "use-cases";
+type PageKey = "splash" | "landing" | "about" | "pricing" | "use-cases";
 type Lang = "fr" | "en" | "ar";
 
 const LABELS: Record<Lang, { intro: string; playing: string; replay: string; aria: string }> = {
@@ -38,6 +38,7 @@ const LABELS: Record<Lang, { intro: string; playing: string; replay: string; ari
 
 /** Map a pathname to a voice-over page key, or null when there's no clip. */
 function pageKeyFromPath(pathname: string, locale: string): PageKey | null {
+  if (pathname === "/") return "splash"; // the bare language picker
   const p = pathname.replace(new RegExp(`^/${locale}(?=/|$)`), "");
   if (p === "" || p === "/") return "landing";
   const seg = p.split("/").filter(Boolean)[0];
@@ -51,7 +52,12 @@ export function VoiceOver({ locale }: { locale: string }) {
   const pathname = usePathname();
   const lang: Lang = locale === "en" || locale === "ar" ? locale : "fr";
   const pageKey = pageKeyFromPath(pathname ?? "/", locale);
-  const src = pageKey ? `/voiceovers/${pageKey}-${lang}.mp3` : null;
+  // The splash (language picker) is pre-selection → a single French clip.
+  const src = !pageKey
+    ? null
+    : pageKey === "splash"
+    ? "/voiceovers/splash-fr.mp3"
+    : `/voiceovers/${pageKey}-${lang}.mp3`;
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [state, setState] = useState<"idle" | "playing" | "done">("idle");

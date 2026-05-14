@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { Khatam, Arch, Waveform } from "@/components/zellige";
+import { VoiceOver } from "@/components/voice-over";
 
 export const metadata: Metadata = {
   title: "VocazAI — Choose your language · اختر لغتك",
@@ -41,6 +42,8 @@ const LOCALES = [
 export default function SplashPage() {
   return (
     <main className="relative flex min-h-[100dvh] flex-col overflow-hidden bg-ink-900 text-saffron-50">
+      {/* Voice greeting — the splash language picker */}
+      <VoiceOver locale="fr" />
       {/* Decorative geometry — varied shapes, low opacity, soft motion */}
       <Khatam
         size={780}
