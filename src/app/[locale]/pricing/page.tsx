@@ -18,13 +18,27 @@ export async function generateMetadata({
     en: "Pricing — VocazAI",
     ar: "الأسعار — فوكازاي",
   };
+  const desc: Record<string, string> = {
+    fr: "Trois formules transparentes — Starter, Croissance, Sur mesure. Premier mois gratuit, sans engagement.",
+    en: "Three transparent plans — Starter, Growth, Custom. First month free, no commitment.",
+    ar: "ثلاث باقات واضحة — ستارتر، النمو، حسب الطلب. الشهر الأول مجاني، بدون التزام.",
+  };
   return {
     title: titles[locale] ?? titles.fr,
-    description:
-      "Trois formules transparentes — Starter, Croissance, Sur mesure. Première semaine gratuite, sans engagement.",
+    description: desc[locale] ?? desc.fr,
     alternates: {
       canonical: `/${locale}/pricing`,
-      languages: { fr: "/fr/pricing", en: "/en/pricing", ar: "/ar/pricing" },
+      languages: {
+        fr: "/fr/pricing",
+        en: "/en/pricing",
+        ar: "/ar/pricing",
+        "x-default": "/fr/pricing",
+      },
+    },
+    openGraph: {
+      title: titles[locale] ?? titles.fr,
+      description: desc[locale] ?? desc.fr,
+      url: `/${locale}/pricing`,
     },
   };
 }

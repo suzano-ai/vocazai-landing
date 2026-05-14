@@ -3,10 +3,32 @@ import type { Metadata } from "next";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 
-export const metadata: Metadata = {
-  title: "Politique de Confidentialité — VocazAI",
-  description: "Comment VocazAI collecte, utilise et protège vos données personnelles.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const titles: Record<string, string> = {
+    fr: "Politique de Confidentialité — VocazAI",
+    en: "Privacy Policy — VocazAI",
+    ar: "سياسة الخصوصية — فوكازاي",
+  };
+  return {
+    title: titles[locale] ?? titles.fr,
+    description:
+      "Comment VocazAI collecte, utilise et protège vos données personnelles.",
+    alternates: {
+      canonical: `/${locale}/legal/privacy`,
+      languages: {
+        fr: "/fr/legal/privacy",
+        en: "/en/legal/privacy",
+        ar: "/ar/legal/privacy",
+        "x-default": "/fr/legal/privacy",
+      },
+    },
+  };
+}
 
 export default async function PrivacyPage({
   params,

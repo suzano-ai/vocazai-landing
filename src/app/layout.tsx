@@ -169,11 +169,6 @@ const serviceJsonLd = {
       },
     },
   ],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "12",
-  },
 };
 
 export default function RootLayout({

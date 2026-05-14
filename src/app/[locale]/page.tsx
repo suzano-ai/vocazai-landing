@@ -50,7 +50,8 @@ export default async function LandingPage({
   // All demo / convert CTAs open WhatsApp with a pre-filled message.
   const wa = `https://wa.me/33777345056?text=${encodeURIComponent(t("common.whatsapp"))}`;
 
-  // Structured data — FAQ (rich result) + Service.
+  // FAQ structured data (rich result). Organization + SoftwareApplication
+  // are emitted site-wide from the root layout.
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -60,25 +61,11 @@ export default async function LandingPage({
       acceptedAnswer: { "@type": "Answer", text: t(`landing.faq.a${i}`) },
     })),
   };
-  const serviceJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "VocazAI — Agent vocal IA",
-    serviceType: "AI voice receptionist",
-    provider: { "@type": "Organization", name: "VocazAI" },
-    areaServed: ["MA", "Africa"],
-    description: t("landing.heroSubtitle"),
-    offers: [
-      { "@type": "Offer", name: t("landing.pricing.starter"), price: "499", priceCurrency: "MAD" },
-      { "@type": "Offer", name: t("landing.pricing.growth"), price: "1490", priceCurrency: "MAD" },
-    ],
-  };
 
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Header locale={locale} />
       <JsonLd data={faqJsonLd} />
-      <JsonLd data={serviceJsonLd} />
 
       {/* ============ HERO ============ */}
       <section className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden">

@@ -4,10 +4,31 @@ import Link from "next/link";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 
-export const metadata: Metadata = {
-  title: "Conditions Générales d'Utilisation — VocazAI",
-  description: "Conditions générales d'utilisation du service VocazAI.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const titles: Record<string, string> = {
+    fr: "Conditions Générales d'Utilisation — VocazAI",
+    en: "Terms of Service — VocazAI",
+    ar: "شروط الاستخدام — فوكازاي",
+  };
+  return {
+    title: titles[locale] ?? titles.fr,
+    description: "Conditions générales d'utilisation du service VocazAI.",
+    alternates: {
+      canonical: `/${locale}/legal/terms`,
+      languages: {
+        fr: "/fr/legal/terms",
+        en: "/en/legal/terms",
+        ar: "/ar/legal/terms",
+        "x-default": "/fr/legal/terms",
+      },
+    },
+  };
+}
 
 export default async function TermsPage({
   params,

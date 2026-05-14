@@ -24,13 +24,27 @@ export async function generateMetadata({
     en: "Use cases — VocazAI",
     ar: "حالات الاستخدام — فوكازاي",
   };
+  const desc: Record<string, string> = {
+    fr: "Cliniques, agences immobilières, e-commerce, restauration — comment VocazAI répond aux besoins de chaque métier.",
+    en: "Clinics, real-estate agencies, e-commerce, restaurants — how VocazAI fits the needs of every line of business.",
+    ar: "العيادات، الوكالات العقارية، التجارة الإلكترونية، المطاعم — كيف تلبي فوكازاي احتياجات كل قطاع.",
+  };
   return {
     title: titles[locale] ?? titles.fr,
-    description:
-      "Cliniques, agences immobilières, e-commerce, restauration — comment VocazAI répond aux besoins de chaque métier.",
+    description: desc[locale] ?? desc.fr,
     alternates: {
       canonical: `/${locale}/use-cases`,
-      languages: { fr: "/fr/use-cases", en: "/en/use-cases", ar: "/ar/use-cases" },
+      languages: {
+        fr: "/fr/use-cases",
+        en: "/en/use-cases",
+        ar: "/ar/use-cases",
+        "x-default": "/fr/use-cases",
+      },
+    },
+    openGraph: {
+      title: titles[locale] ?? titles.fr,
+      description: desc[locale] ?? desc.fr,
+      url: `/${locale}/use-cases`,
     },
   };
 }
