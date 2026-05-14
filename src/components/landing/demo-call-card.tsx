@@ -235,7 +235,7 @@ function Bubble({ role, children, dir }: {
 export function DemoCallCard({ locale }: { locale?: string }) {
   const [lang,      setLang]      = useState<Lang>(() => detectLang(locale));
   const [demoState, setDemoState] = useState<DemoState>("idle");
-  const [turn,      setTurn]      = useState(0);
+  const [,          setTurn]      = useState(0);
   const [messages,  setMessages]  = useState<Message[]>([]);
   const [elapsed,   setElapsed]   = useState(0);
   const [hint,      setHint]      = useState("");
@@ -272,102 +272,130 @@ export function DemoCallCard({ locale }: { locale?: string }) {
   const fmt = (s: number) =>
     `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 
-  // ── Web Speech API voice picker ────────────────────────────────────────────
+  // ── TTS Architecture ──────────────────────────────────────────────────────
+  //  1. Piper TTS (/api/tts) — the correct, consistent voice model per language
+  //     (fr_FR-siwis / en_US-hfc_female / ar_JO-kareem). Same on every device.
+  //  2. Web Speech API — fallback, only ever with a SAME-LANGUAGE voice.
+  //  3. Silent timeout — last resort, keeps the conversation flowing.
+
+  // ── Web Speech API voice picker — same-language only ──────────────────────
   const pickVoice = useCallback((bcp47: string): SpeechSynthesisVoice | null => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return null;
     const voices = window.speechSynthesis.getVoices();
-    const lang2  = bcp47.split("-")[0].toLowerCase();
+    if (!voices.length) return null;
+    const tag  = bcp47.toLowerCase();
+    const base = tag.split("-")[0]; // "fr-fr" → "fr"
+    // exact locale → same language + local → any same-language. Never cross-language.
     return (
-      voices.find((v) => v.lang === bcp47) ??
-      voices.find((v) => v.lang.startsWith(bcp47)) ??
-      voices.find((v) => v.lang.startsWith(lang2) && v.localService) ??
-      voices.find((v) => v.lang.startsWith(lang2)) ??
+      voices.find((v) => v.lang.toLowerCase() === tag) ??
+      voices.find((v) => v.lang.toLowerCase().split("-")[0] === base && v.localService) ??
+      voices.find((v) => v.lang.toLowerCase().split("-")[0] === base) ??
       null
     );
   }, []);
 
-  // ── Server TTS — Kokoro ───────────────────────────────────────────────────
-  const speakViaApi = useCallback(async (text: string, voice: string): Promise<void> => {
+  // ── Piper TTS (self-hosted) — resolves true only if audio actually played ──
+  const speakViaApi = useCallback((text: string, voice: string): Promise<boolean> => {
     return new Promise((resolve) => {
       setDemoState("loading");
+      const ctrl = new AbortController();
+      const netTimeout = setTimeout(() => ctrl.abort(), 8000);
+
       fetch("/api/tts", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, voice, speed: 0.92, lang: langRef.current === "fr" ? "fr-fr" : "en-us" }),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, voice, speed: 0.92 }),
+        signal: ctrl.signal,
       })
         .then(async (res) => {
-          if (!res.ok) throw new Error();
-          const url = URL.createObjectURL(await res.blob());
+          clearTimeout(netTimeout);
+          if (!res.ok) { resolve(false); return; }
+          const url   = URL.createObjectURL(await res.blob());
           const audio = new Audio(url);
           audioRef.current = audio;
-          audio.onended = () => { URL.revokeObjectURL(url); resolve(); };
+          const done = (ok: boolean) => { URL.revokeObjectURL(url); resolve(ok); };
+          audio.onended = () => done(true);
+          audio.onerror = () => done(false);
           setDemoState("speaking");
-          audio.play().catch(() => { setDemoState("speaking"); setTimeout(resolve, 3000); });
+          audio.play().catch(() => done(false));
         })
-        .catch(() => {
-          setDemoState("speaking");
-          setTimeout(resolve, Math.min(2000 + text.split(" ").length * 130, 7000));
-        });
+        .catch(() => { clearTimeout(netTimeout); resolve(false); });
     });
   }, []);
 
-  // ── TTS dispatcher ────────────────────────────────────────────────────────
-  // All languages: Web Speech API first (instant) → Kokoro fallback if unavailable
+  // ── Web Speech API TTS — fallback. Resolves true if it spoke, false if not. ─
+  const speakViaBrowser = useCallback((text: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+      if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+        resolve(false);
+        return;
+      }
+      const cfg   = LANG_CFG[langRef.current];
+      const synth = window.speechSynthesis;
+      synth.cancel();
+
+      let settled = false;
+      let watchdog: ReturnType<typeof setTimeout> | null = null;
+      const settle = (ok: boolean) => {
+        if (settled) return;
+        settled = true;
+        if (watchdog) clearTimeout(watchdog);
+        resolve(ok);
+      };
+
+      const doSpeak = () => {
+        const voice = pickVoice(cfg.bcp47);
+        // No same-language voice → let the dispatcher fall through to silence.
+        if (!voice) { settle(false); return; }
+
+        const utter  = new SpeechSynthesisUtterance(text);
+        utter.voice  = voice;
+        utter.lang   = voice.lang;
+        utter.rate   = langRef.current === "ar" ? 0.9 : 0.95;
+        utter.pitch  = 1.0;
+        utter.volume = 1;
+
+        utter.onend = () => settle(true);
+        utter.onerror = (e: SpeechSynthesisErrorEvent) => {
+          // "interrupted"/"canceled" fire right after a normal finish in some browsers
+          settle(e.error === "interrupted" || e.error === "canceled");
+        };
+
+        setDemoState("speaking");
+        synth.speak(utter);
+
+        // Watchdog: some browsers never fire onend/onerror — never hang the demo.
+        watchdog = setTimeout(
+          () => settle(true),
+          Math.min(3000 + text.length * 90, 20000),
+        );
+      };
+
+      const voices = synth.getVoices();
+      if (voices.length > 0) {
+        doSpeak();
+      } else {
+        let fired = false;
+        const onceFire = () => { if (fired) return; fired = true; doSpeak(); };
+        synth.onvoiceschanged = onceFire;
+        setTimeout(onceFire, 700);
+      }
+    });
+  }, [pickVoice]);
+
+  // ── TTS dispatcher — Piper first (correct voice), browser fallback, silence ─
   const speak = useCallback(async (text: string): Promise<void> => {
     const cfg = LANG_CFG[langRef.current];
 
-    if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      return new Promise((resolve) => {
-        setDemoState("speaking");
-        window.speechSynthesis.cancel();
+    if (await speakViaApi(text, cfg.voice)) return;
+    if (await speakViaBrowser(text)) return;
 
-        // `settled` prevents onend AND onerror from both resolving
-        let settled = false;
-        const settle = (fn: () => void) => { if (settled) return; settled = true; fn(); };
-
-        const doSpeak = () => {
-          const voice = pickVoice(cfg.bcp47);
-
-          // No voice found for this language → skip to Kokoro immediately
-          if (!voice) {
-            settle(() => speakViaApi(text, cfg.voice).then(resolve));
-            return;
-          }
-
-          const utter = new SpeechSynthesisUtterance(text);
-          utter.lang   = cfg.bcp47;
-          utter.rate   = langRef.current === "ar" ? 0.88 : 0.92;
-          utter.pitch  = 1.05;
-          utter.volume = 1;
-          utter.voice  = voice;
-
-          utter.onend = () => settle(resolve);
-          utter.onerror = (e: any) => {
-            // "interrupted"/"canceled" fire after a successful onend in some browsers
-            if (e.error === "interrupted" || e.error === "canceled") {
-              settle(resolve);
-            } else {
-              settle(() => speakViaApi(text, cfg.voice).then(resolve));
-            }
-          };
-
-          window.speechSynthesis.speak(utter);
-        };
-
-        const voices = window.speechSynthesis.getVoices();
-        if (voices.length > 0) {
-          doSpeak();
-        } else {
-          // Fires exactly once — guards against both onvoiceschanged AND setTimeout
-          let fired = false;
-          const onceFire = () => { if (!fired) { fired = true; doSpeak(); } };
-          window.speechSynthesis.onvoiceschanged = onceFire;
-          setTimeout(onceFire, 700);
-        }
-      });
-    }
-
-    return speakViaApi(text, cfg.voice);
-  }, [pickVoice, speakViaApi]);
+    // Last resort: pace the conversation without audio.
+    setDemoState("speaking");
+    await new Promise((r) =>
+      setTimeout(r, Math.min(1800 + text.split(/\s+/).length * 120, 7000)),
+    );
+  }, [speakViaApi, speakViaBrowser]);
 
   // ── STT: record → faster-whisper (server fallback) ───────────────────────
   const listenViaServer = useCallback((): Promise<string> => {
@@ -540,7 +568,6 @@ export function DemoCallCard({ locale }: { locale?: string }) {
       }
       if (!matched) { await gracefulBailout(); return; }
       collected.current.slot = matched;
-      setMessages((m) => [...m, { role: "user", text: matched! }]);
 
     // ── Email step ───────────────────────────────────────────────────────────
     } else if (step.mode === "email") {

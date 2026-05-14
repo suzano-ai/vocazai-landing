@@ -3,8 +3,6 @@ import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { Khatam, Arch, Waveform } from "@/components/zellige";
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://vocazai.com";
-
 export const metadata: Metadata = {
   title: "VocazAI — Choose your language · اختر لغتك",
   description:

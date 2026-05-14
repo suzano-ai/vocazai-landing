@@ -74,7 +74,7 @@ export default async function OG() {
               fontFamily: "monospace",
             }}
           >
-            • Conçu au Maroc · Pour l'Afrique
+            {"• Conçu au Maroc · Pour l'Afrique"}
           </div>
           <div
             style={{

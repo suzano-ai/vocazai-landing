@@ -1,4 +1,5 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 
 type CookieToSet = { name: string; value: string; options?: CookieOptions };
@@ -36,9 +37,7 @@ export async function createClient() {
  * NEVER expose this to the browser.
  */
 export function createServiceClient() {
-  // Lazy require to avoid bundling for client.
-  const { createClient } = require("@supabase/supabase-js");
-  return createClient(
+  return createSupabaseClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     { auth: { persistSession: false, autoRefreshToken: false } }

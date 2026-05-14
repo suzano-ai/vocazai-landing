@@ -3,10 +3,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowUpRight,
-  Calendar,
-  Phone,
-  ShieldCheck,
-  Languages,
   Stethoscope,
   Home,
   Truck,
