@@ -220,10 +220,14 @@ create index on phone_numbers (owner_id);
 
 ---
 
-## Supabase Auth config (Dashboard → Authentication → Settings)
+## Supabase Auth config (Dashboard → Authentication → URL Configuration)
 
 - **Site URL**: `https://vocazai.com`
-- **Redirect URLs**: `https://vocazai.com/auth/callback`, `https://vocazai.com/fr/auth/callback`
+- **Redirect URLs** (allowlist): `https://vocazai.com/**`, `http://localhost:3000/**`
+  — wildcards so `/auth/callback?next=/{locale}/dashboard` is permitted. Without
+  the right entry Supabase silently falls back to the Site URL and the magic
+  link never reaches the project. Managed via the Management API (`config/auth`,
+  `uri_allow_list`) — needs a `SUPABASE_ACCESS_TOKEN` (sbp_…).
 - **Email OTP**: enabled
 - **Disable email confirmation**: OFF (keep it ON — magic link IS the confirmation)
 
