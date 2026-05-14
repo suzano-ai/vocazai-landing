@@ -57,12 +57,14 @@ async function testChat() {
 async function testTTS() {
   console.log("\n— TTS · voxtral-mini-tts-2603 —");
   const t = Date.now();
+  // The endpoint requires a `voice` and replies with JSON { audio_data: <base64 mp3> }.
   const res = await fetch(`${BASE}/audio/speech`, {
     method: "POST",
     headers: { ...auth, "Content-Type": "application/json" },
     body: JSON.stringify({
       model: "voxtral-mini-tts-2603",
       input: "Bonjour ! Je suis Yasmine, l'assistante vocale de VocazAI. Comment puis-je vous aider ?",
+      voice: "fr_marie_neutral",
       response_format: "mp3",
     }),
   });
@@ -70,7 +72,12 @@ async function testTTS() {
     console.error(`✗ tts ${res.status}: ${await res.text()}`);
     return null;
   }
-  const buf = Buffer.from(await res.arrayBuffer());
+  const data = await res.json();
+  if (!data.audio_data) {
+    console.error("✗ tts — no audio_data in response");
+    return null;
+  }
+  const buf = Buffer.from(data.audio_data, "base64");
   const out = path.join(process.cwd(), "voxtral-test.mp3");
   fs.writeFileSync(out, buf);
   console.log(`✓ ${Date.now() - t}ms — ${(buf.length / 1024).toFixed(1)} KB → ${out}`);

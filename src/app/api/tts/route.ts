@@ -7,12 +7,30 @@ export const dynamic = "force-dynamic";
 const TTS_URL = process.env.TTS_SERVICE_URL ?? "http://tts:8000";
 const MISTRAL_KEY = process.env.MISTRAL_API_KEY;
 
+// Voxtral preset voices (female, "Yasmine"). Verified via /v1/audio/voices.
+// Arabic has no preset voice — and the French voice mis-pronounces Arabic —
+// so Arabic is intentionally absent here and falls through to Piper.
+const VOXTRAL_VOICES: Record<string, string> = {
+  fr: "fr_marie_neutral",
+  en: "gb_jane_neutral",
+};
+
+/** Derive fr/en/ar from an explicit lang or from a Piper voice id like "fr_FR-…". */
+function resolveLang(lang: string | undefined, voice: string): string {
+  if (lang === "fr" || lang === "en" || lang === "ar") return lang;
+  const head = voice.slice(0, 2).toLowerCase();
+  return head === "en" || head === "ar" ? head : "fr";
+}
+
 /**
- * Voxtral TTS (Mistral, hosted) — human-quality, supports FR/EN/AR, no VPS
- * load. Returns mp3 bytes, or null so the caller falls back to Piper.
+ * Voxtral TTS (Mistral, hosted) — human-quality. Returns mp3 bytes, or null so
+ * the caller falls back to Piper (no key, Arabic, or any error).
+ * The endpoint replies with JSON `{ audio_data: "<base64 mp3>" }`.
  */
-async function voxtralTTS(text: string): Promise<ArrayBuffer | null> {
+async function voxtralTTS(text: string, lang: string): Promise<ArrayBuffer | null> {
   if (!MISTRAL_KEY) return null;
+  const voice = VOXTRAL_VOICES[lang];
+  if (!voice) return null; // Arabic / unknown → Piper handles it
   try {
     const res = await fetch("https://api.mistral.ai/v1/audio/speech", {
       method: "POST",
@@ -23,6 +41,7 @@ async function voxtralTTS(text: string): Promise<ArrayBuffer | null> {
       body: JSON.stringify({
         model: "voxtral-mini-tts-2603",
         input: text,
+        voice,
         response_format: "mp3",
       }),
     });
@@ -30,7 +49,10 @@ async function voxtralTTS(text: string): Promise<ArrayBuffer | null> {
       console.warn(`[api/tts] Voxtral ${res.status} — falling back to Piper`);
       return null;
     }
-    return await res.arrayBuffer();
+    const data = await res.json();
+    if (!data.audio_data) return null;
+    const bin = Buffer.from(data.audio_data, "base64");
+    return bin.buffer.slice(bin.byteOffset, bin.byteOffset + bin.byteLength);
   } catch (e) {
     console.warn("[api/tts] Voxtral error — falling back to Piper:", e);
     return null;
@@ -55,11 +77,12 @@ export async function POST(request: NextRequest) {
     const text  = (body.text  ?? "").trim();
     const voice = body.voice  ?? "fr_FR-siwis-medium";
     const speed = body.speed  ?? 0.92;
+    const lang  = resolveLang(body.lang, voice);
 
     if (!text) return NextResponse.json({ error: "text required" }, { status: 400 });
 
-    // 1) Voxtral — hosted, human-quality.
-    const voxtral = await voxtralTTS(text);
+    // 1) Voxtral — hosted, human-quality (FR/EN).
+    const voxtral = await voxtralTTS(text, lang);
     if (voxtral) {
       return new Response(voxtral, {
         headers: {
