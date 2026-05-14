@@ -136,7 +136,7 @@ export function Header({ locale }: { locale: string }) {
             onClick={() => setMobileOpen((v) => !v)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
-            className={`grid h-8 w-8 cursor-pointer place-items-center rounded-full border transition-all duration-180 md:hidden ${
+            className={`grid h-10 w-10 cursor-pointer place-items-center rounded-full border transition-all duration-180 md:hidden ${
               mobileOpen
                 ? "border-saffron-500/60 bg-saffron-500/10 text-saffron-600"
                 : "border-border hover:border-border/80 hover:bg-elevated"
@@ -146,7 +146,7 @@ export function Header({ locale }: { locale: string }) {
               className="transition-transform duration-220"
               style={{ transform: mobileOpen ? "rotate(90deg)" : "rotate(0)" }}
             >
-              {mobileOpen ? <X className="h-3.5 w-3.5" /> : <Menu className="h-3.5 w-3.5" />}
+              {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </span>
           </button>
         </div>

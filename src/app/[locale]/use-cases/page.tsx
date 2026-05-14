@@ -176,7 +176,7 @@ function UseCaseRow({
         </ul>
       </div>
       <div className="relative">
-        <div className="relative overflow-hidden rounded-lg border border-border bg-elevated p-12 lg:aspect-[5/4]">
+        <div className="relative overflow-hidden rounded-lg border border-border bg-elevated p-6 sm:p-12 lg:aspect-[5/4]">
           <Shape size={360} className="absolute right-4 top-4 text-saffron-500/15" />
           <div className="relative z-10 flex h-full flex-col justify-end">
             <div className="font-mono text-kicker uppercase text-muted-foreground">
