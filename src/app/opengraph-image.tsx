@@ -53,14 +53,11 @@ export default async function OG() {
               fontSize: 40,
               fontWeight: 800,
               fontStyle: "italic",
-              fontFamily: "serif",
             }}
           >
             V
           </div>
-          <div style={{ fontSize: 28, fontWeight: 600, fontFamily: "serif" }}>
-            VocazAI
-          </div>
+          <div style={{ fontSize: 28, fontWeight: 600 }}>VocazAI</div>
         </div>
 
         {/* Hero text */}
@@ -71,7 +68,6 @@ export default async function OG() {
               letterSpacing: "0.18em",
               textTransform: "uppercase",
               color: "rgba(245, 239, 230, 0.55)",
-              fontFamily: "monospace",
             }}
           >
             {"• Trilingue · Français · Arabe · Anglais"}
@@ -81,7 +77,6 @@ export default async function OG() {
               fontSize: 84,
               lineHeight: 0.95,
               letterSpacing: "-0.04em",
-              fontFamily: "serif",
               fontWeight: 500,
               maxWidth: 1000,
             }}
@@ -107,7 +102,7 @@ export default async function OG() {
           }}
         >
           <div>vocazai.com</div>
-          <div>FR · العربية · EN</div>
+          <div>FR · AR · EN</div>
         </div>
       </div>
     ),
