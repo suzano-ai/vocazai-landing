@@ -56,14 +56,20 @@ export default function SplashPage() {
 
       {/* Geometric ornament — heritage anchors over the AI mesh */}
       <Khatam
-        size={680}
-        className="pointer-events-none absolute -right-40 -top-40 text-saffron-500/[0.07]"
-        style={{ animation: "spin 60s linear infinite" }}
+        size={780}
+        className="slow-rotate pointer-events-none absolute -right-44 -top-44 text-saffron-500/[0.16]"
       />
       <Arch
-        size={460}
-        className="pointer-events-none absolute -left-24 -bottom-32 text-teal-500/[0.08]"
+        size={520}
+        className="slow-rotate-reverse pointer-events-none absolute -left-28 -bottom-36 text-teal-500/[0.16]"
       />
+      {/* Massive editorial "00" numeral behind the splash — drop-num. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-12 right-8 select-none font-display italic font-medium leading-none text-saffron-500/[0.08] text-[clamp(18rem,38vw,36rem)]"
+      >
+        00
+      </div>
 
       {/* Hairline grid effect — vertical lines */}
       <div className="pointer-events-none absolute inset-0 flex justify-center" aria-hidden>
@@ -103,11 +109,26 @@ export default function SplashPage() {
           </span>
         </div>
 
-        {/* Headline — staged in three languages */}
-        <h1 className="font-display text-display-lg font-medium leading-[0.95] lg:text-display-xl">
+        {/* Headline — staged in three languages, magazine-cover scale. */}
+        <h1 className="font-display text-display-xl font-medium leading-[0.92] tracking-tight lg:text-display-2xl">
           <span className="block text-saffron-50">L&apos;agent qui décroche</span>
-          <span className="block italic text-saffron-500">
+          <span className="relative inline-block italic text-saffron-500">
             même quand vous dormez.
+            {/* Hand-drawn underline — saffron, signing the headline. */}
+            <svg
+              aria-hidden
+              viewBox="0 0 300 8"
+              className="absolute -bottom-1 left-0 h-2 w-full text-saffron-500/70"
+              fill="none"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M 2 5 Q 80 1, 150 4 T 298 3"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
           </span>
         </h1>
 
