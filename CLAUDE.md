@@ -22,7 +22,7 @@ Trilingual (French/Arabic/English) AI voice receptionist SaaS for businesses of 
 | DB | Supabase Postgres |
 | Voice | Vapi **or** Retell (provider abstraction in `src/lib/providers/`) |
 | TTS | Piper ONNX (self-hosted Docker) — fr_FR-siwis / en_US-lessac-high / ar_JO-kareem |
-| STT | faster-whisper medium (self-hosted Docker) + Web Speech API (browser primary) |
+| STT | OpenAI `gpt-4o-transcribe` (primary) → Mistral Voxtral → faster-whisper medium (self-hosted Docker). Browser uses Web Speech API live; server `/api/stt` runs the cascade. |
 | Email | Resend (`RESEND_API_KEY`) |
 | Deploy | Hostinger KVM VPS · Docker Compose · Traefik v2 · HTTPS auto-cert |
 | CI/CD | GitHub Actions → SSH → `vocazai update` on every push to `main` |
@@ -103,6 +103,15 @@ RESEND_FROM_EMAIL=Yasmine · VocazAI <noreply@vocazai.com>
 # smtp.resend.com:465 (user "resend"), sender VocazAI <noreply@vocazai.com>.
 # vocazai.com is verified for sending in Resend (DKIM+SPF green; the inbound
 # MX is "failed" but that's only for receiving mail — irrelevant here).
+
+# ── OpenAI — primary STT (gpt-4o-transcribe) ─────────────────────────
+OPENAI_API_KEY=                          # primary speech-to-text engine in
+                                         # /api/stt. State-of-the-art across
+                                         # fr/en/ar. Unset → falls through to
+                                         # Voxtral, then self-hosted whisper.
+OPENAI_STT_MODEL=gpt-4o-transcribe       # optional override. Cheaper:
+                                         # gpt-4o-mini-transcribe. Legacy:
+                                         # whisper-1.
 
 # ── Mistral — demo LLM + Voxtral voice (TTS/STT) ──────────────────────
 MISTRAL_API_KEY=                         # powers /api/demo-chat + Voxtral
