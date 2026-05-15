@@ -74,6 +74,8 @@ export default async function OG() {
           </div>
           <div
             style={{
+              display: "flex",
+              flexDirection: "column",
               fontSize: 84,
               lineHeight: 0.95,
               letterSpacing: "-0.04em",
@@ -81,11 +83,10 @@ export default async function OG() {
               maxWidth: 1000,
             }}
           >
-            L&apos;agent vocal
-            <br />
-            <span style={{ color: "#E8A12C", fontStyle: "italic" }}>
+            <div style={{ display: "flex" }}>L&apos;agent vocal</div>
+            <div style={{ display: "flex", color: "#E8A12C", fontStyle: "italic" }}>
               qui répond pour vous.
-            </span>
+            </div>
           </div>
         </div>
 
