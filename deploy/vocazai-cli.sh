@@ -118,10 +118,10 @@ cmd_doctor() {
     fi
   done
 
-  # 3. App health endpoint
+  # 3. App health endpoint — the app port is docker-network-only (compose
+  #    uses `expose`, not `ports`), so probe from inside the app container.
   step "App"
-  APP_PORT=$(_env APP_PORT); APP_PORT="${APP_PORT:-3000}"
-  HEALTH_RESP=$(curl -sf --max-time 5 "http://127.0.0.1:${APP_PORT}/api/health" 2>/dev/null || echo "")
+  HEALTH_RESP=$(docker exec vocazai-app sh -c 'wget -q -T 5 -O- "http://127.0.0.1:${PORT}/api/health"' 2>/dev/null || echo "")
   if [[ -n "$HEALTH_RESP" ]]; then
     APP_STATUS=$(echo "$HEALTH_RESP" | grep -o '"status":"[^"]*"' | cut -d'"' -f4)
     _ok "Health endpoint  ${DIM}→ $APP_STATUS${NC}${G}"
@@ -129,26 +129,27 @@ cmd_doctor() {
     _fail "Health endpoint not responding"
   fi
 
-  # 4. TTS service
-  step "Kokoro TTS"
-  TTS_RESP=$(curl -sf --max-time 10 http://127.0.0.1:3000/api/tts 2>/dev/null || echo "")
-  if echo "$TTS_RESP" | grep -q '"model_loaded":true'; then
-    _ok "TTS model loaded and ready  ${DIM}(voice: $(echo "$TTS_RESP" | grep -o '"voice":"[^"]*"' | cut -d'"' -f4))${NC}${G}"
-  elif echo "$TTS_RESP" | grep -q '"model_loaded":false'; then
-    _warn "TTS service up but model still loading"
+  # 4. TTS service — probe the service directly over the docker network.
+  step "Piper TTS"
+  TTS_RESP=$(docker exec vocazai-app wget -q -T 10 -O- http://tts:8000/health 2>/dev/null || echo "")
+  if echo "$TTS_RESP" | grep -q '"status":"ok"'; then
+    VOICES=$(echo "$TTS_RESP" | grep -o '\.onnx' | wc -l | tr -d ' ')
+    _ok "TTS service ready  ${DIM}(${VOICES} voices loaded)${NC}${G}"
+  elif docker inspect --format='{{.State.Status}}' vocazai-tts 2>/dev/null | grep -q running; then
+    _warn "TTS container running but not yet reachable"
   else
     _fail "TTS service not responding"
   fi
 
   # 5. STT service
   step "Faster-Whisper STT"
-  STT_RESP=$(curl -sf --max-time 10 http://127.0.0.1:3000/api/stt 2>/dev/null || echo "")
+  STT_RESP=$(docker exec vocazai-app wget -q -T 10 -O- http://stt:9000/health 2>/dev/null || echo "")
   if echo "$STT_RESP" | grep -q '"model_loaded":true'; then
     _ok "STT model loaded and ready"
-  elif echo "$STT_RESP" | grep -q '"model_loaded":false'; then
+  elif echo "$STT_RESP" | grep -q '"status":"ok"'; then
     _warn "STT service up but model still loading"
   elif docker inspect --format='{{.State.Status}}' vocazai-stt 2>/dev/null | grep -q running; then
-    _warn "STT container running but not reachable via app proxy"
+    _warn "STT container running but not yet reachable"
   else
     _fail "STT service not running"
   fi
@@ -553,41 +554,36 @@ cmd_ssl() {
 cmd_tts() {
   header
   echo ""
-  APP_PORT=$(_env APP_PORT); APP_PORT="${APP_PORT:-3000}"
 
-  step "Kokoro TTS — status"
+  step "Piper TTS — status"
   CONTAINER=$(docker inspect --format='{{.State.Status}}' vocazai-tts 2>/dev/null || echo "missing")
   [[ "$CONTAINER" == "running" ]] && ok "vocazai-tts  ${DIM}running${NC}${G}" \
                                    || fail "vocazai-tts  ${DIM}$CONTAINER${NC}"
 
-  APP_RESP=$(curl -sf --max-time 8 "http://127.0.0.1:${APP_PORT}/api/tts" 2>/dev/null || echo "{}")
-  if echo "$APP_RESP" | grep -q '"model_loaded":true'; then
-    VOICE=$(echo "$APP_RESP" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('voice','?'))" 2>/dev/null || echo "?")
-    ok "Model loaded  ${DIM}voice: $VOICE${NC}${G}"
-  elif echo "$APP_RESP" | grep -q '"model_loaded":false'; then
-    warn "Model still loading — wait a moment and retry"
+  # The app/tts ports are docker-network-only — probe via the app container.
+  TTS_RESP=$(docker exec vocazai-app wget -q -T 8 -O- http://tts:8000/health 2>/dev/null || echo "{}")
+  if echo "$TTS_RESP" | grep -q '"status":"ok"'; then
+    VOICES=$(echo "$TTS_RESP" | grep -o '\.onnx' | wc -l | tr -d ' ')
+    ok "Service ready  ${DIM}${VOICES} voices loaded${NC}${G}"
   else
-    fail "TTS service not responding via app proxy"
+    fail "TTS service not responding"
   fi
 
   echo ""
   step "Quick synthesis test"
   TTS_OUT="/tmp/yasmine_tts_test.wav"
-  HTTP_CODE=$(curl -s -o "$TTS_OUT" -w "%{http_code}" \
-    -X POST "http://127.0.0.1:${APP_PORT}/api/tts" \
-    -H "Content-Type: application/json" \
-    -d '{"text":"Bonjour, je suis Yasmine, votre assistante VocazAI.","voice":"ff_siwis","speed":0.92,"lang":"fr-fr"}' 2>/dev/null)
-
-  if [[ "$HTTP_CODE" == "200" ]] && [[ -s "$TTS_OUT" ]]; then
+  if docker exec vocazai-app sh -c 'wget -q -O /tmp/tts_test.wav --header="Content-Type: application/json" --post-data="{\"text\":\"Bonjour, je suis Yasmine, votre assistante VocazAI.\",\"voice\":\"ff_siwis\",\"speed\":0.92,\"lang\":\"fr-fr\"}" "http://127.0.0.1:${PORT}/api/tts"' 2>/dev/null \
+     && docker cp vocazai-app:/tmp/tts_test.wav "$TTS_OUT" 2>/dev/null \
+     && [[ -s "$TTS_OUT" ]]; then
     SIZE=$(du -h "$TTS_OUT" | cut -f1)
     ok "Synthesis OK  ${DIM}→ ${SIZE} WAV${NC}${G}  saved to $TTS_OUT"
     echo -e "  ${DIM}Play with:  ${BOLD}aplay $TTS_OUT${NC}${DIM}  or  ${BOLD}ffplay -nodisp $TTS_OUT${NC}"
   else
-    fail "Synthesis failed (HTTP $HTTP_CODE)"
+    fail "Synthesis failed"
   fi
 
   echo ""
-  echo -e "  ${DIM}Kokoro logs (last 10):${NC}"
+  echo -e "  ${DIM}Piper logs (last 10):${NC}"
   docker logs vocazai-tts --tail=10 2>&1 || true
   echo ""
 }
@@ -601,7 +597,7 @@ cmd_stt() {
   step "Faster-Whisper STT Service"
   CONTAINER=$(docker inspect --format='{{.State.Status}}' vocazai-stt 2>/dev/null || echo "missing")
   echo -e "  Container : $CONTAINER"
-  HEALTH=$(curl -sf --max-time 10 http://127.0.0.1:3000/api/stt 2>/dev/null || echo "{}")
+  HEALTH=$(docker exec vocazai-app wget -q -T 10 -O- http://stt:9000/health 2>/dev/null || echo "{}")
   echo -e "  Response  : $HEALTH"
   echo ""
   echo -e "  ${DIM}Live logs (last 20 lines):${NC}"
