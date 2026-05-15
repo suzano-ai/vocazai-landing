@@ -54,8 +54,8 @@ export default async function PrivacyPage({
             <h2 className="font-display text-xl font-semibold mb-3">1. Qui est responsable du traitement ?</h2>
             <p className="text-muted-foreground leading-relaxed">
               <strong>Mare Nostrum SARL</strong>, exploitant la marque VocazAI, est le responsable du traitement de vos données
-              personnelles au sens de la loi marocaine 09-08 relative à la protection des personnes physiques à l&apos;égard du
-              traitement des données à caractère personnel. Contact : <a href="mailto:privacy@vocazai.com" className="text-saffron-600 hover:underline">privacy@vocazai.com</a>
+              personnelles au sens de la réglementation applicable en matière de protection des données à caractère personnel.
+              Contact : <a href="mailto:privacy@vocazai.com" className="text-saffron-600 hover:underline">privacy@vocazai.com</a>
             </p>
           </section>
 

@@ -7,7 +7,7 @@ import { VoiceOver } from "@/components/voice-over";
 export const metadata: Metadata = {
   title: "VocazAI — Choose your language · اختر لغتك",
   description:
-    "VocazAI — AI voice agents for the MENA region. Choose your language to enter: French, English, or Arabic.",
+    "VocazAI — trilingual AI voice agents in French, English and Arabic. Choose your language to enter.",
   alternates: {
     canonical: "/",
     languages: { fr: "/fr", en: "/en", ar: "/ar", "x-default": "/fr" },
@@ -18,23 +18,23 @@ const LOCALES = [
   {
     code: "fr",
     label: "Français",
-    flag: "France · Maroc",
+    flag: "Langue par défaut",
     cta: "Entrer en français",
-    hint: "Conçu au Maroc",
+    hint: "Trilingue · 24/7",
   },
   {
     code: "en",
     label: "English",
     flag: "International",
     cta: "Enter in English",
-    hint: "Built in Casablanca",
+    hint: "Trilingual · 24/7",
   },
   {
     code: "ar",
     label: "العربية",
-    flag: "فرنسا · المغرب",
+    flag: "اللغة العربية",
     cta: "دخول بالعربية",
-    hint: "صنعت بالمغرب",
+    hint: "بثلاث لغات · 24/7",
     rtl: true,
   },
 ] as const;
@@ -54,7 +54,7 @@ export default function SplashPage() {
         </div>
       </div>
 
-      {/* Moroccan geometry — heritage anchors over the AI mesh */}
+      {/* Geometric ornament — heritage anchors over the AI mesh */}
       <Khatam
         size={680}
         className="pointer-events-none absolute -right-40 -top-40 text-saffron-500/[0.07]"
@@ -89,7 +89,7 @@ export default function SplashPage() {
         </div>
         <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-saffron-50/50">
           <span className="h-1.5 w-1.5 rounded-full bg-saffron-500" />
-          <span>2025 · Maghreb &amp; West Africa</span>
+          <span>2025 · Trilingual Voice AI</span>
         </div>
       </header>
 
@@ -99,7 +99,7 @@ export default function SplashPage() {
         <div className="mb-5 inline-flex items-center gap-2.5">
           <span className="h-1.5 w-1.5 rounded-full bg-saffron-500" />
           <span className="font-mono text-kicker uppercase text-saffron-50/60">
-            01 — Voice AI · MENA Native
+            01 — Voice AI · Trilingual
           </span>
         </div>
 
@@ -174,7 +174,7 @@ export default function SplashPage() {
           </span>
         </div>
         <div className="font-mono uppercase tracking-widest text-saffron-50/40">
-          Conçu à Casablanca · © 2025 VocazAI
+          © 2025 VocazAI · Trilingue
         </div>
       </footer>
     </main>

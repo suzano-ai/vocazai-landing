@@ -32,10 +32,10 @@
   },
   "blog": {
     "kicker": "Le blog",
-    "title": "Ressources pour les PME marocaines",
-    "subtitle": "Conseils concrets sur l'accueil téléphonique, l'IA vocale et la relation client au Maroc.",
+    "title": "Ressources pour votre accueil téléphonique",
+    "subtitle": "Conseils concrets sur l'accueil téléphonique, l'IA vocale et la relation client.",
     "metaTitle": "Blog — VocazAI",
-    "metaDescription": "Conseils concrets sur l'accueil téléphonique, l'agent vocal IA et la relation client pour les PME au Maroc.",
+    "metaDescription": "Conseils concrets sur l'accueil téléphonique, l'agent vocal IA et la relation client pour les entreprises de toutes tailles.",
     "readingTime": "{minutes} min de lecture",
     "backToBlog": "Tous les articles",
     "readMore": "Lire l'article",
@@ -43,10 +43,10 @@
     "cta": "Essayer VocazAI gratuitement"
   },
   "landing": {
-    "kicker": "Conçu au Maroc · Pour l'Afrique",
+    "kicker": "Trilingue · Français · Arabe · Anglais",
     "heroTitle1": "L'agent vocal",
     "heroTitle2": "qui répond pour vous.",
-    "heroSubtitle": "VocazAI déploie des standardistes IA bilingues (français · arabe · anglais) pour les PME marocaines et africaines. Réception, prise de rendez-vous, support — 24 heures sur 24, sans pause-café.",
+    "heroSubtitle": "VocazAI déploie des standardistes IA trilingues (français · arabe · anglais) pour les entreprises de toutes tailles. Réception, prise de rendez-vous, support — 24 heures sur 24, sans pause-café.",
     "ctaPrimary": "Demander une démo",
     "ctaSecondary": "Comment ça marche",
     "trustBar": "Ils nous confient leurs appels",
@@ -63,7 +63,7 @@
       "step1Title": "Vous nous décrivez votre métier",
       "step1Body": "Horaires, services, ton de votre marque, questions fréquentes — on absorbe tout pour votre agent.",
       "step2Title": "On configure votre agent",
-      "step2Body": "Choix de la voix (homme/femme, accent FR/MA/EN), branchement de votre agenda, scripts de qualification.",
+      "step2Body": "Choix de la voix (homme/femme, français/arabe/anglais), branchement de votre agenda, scripts de qualification.",
       "step3Title": "Il décroche, dès demain",
       "step3Body": "Branchement sur votre numéro fixe ou GSM. Transcripts, résumés et tâches CRM dans votre dashboard."
     },
@@ -101,10 +101,10 @@
       "title": "Tarifs simples. Payez l'usage, pas l'attente.",
       "subtitle": "Sans engagement. Premier mois d'essai gratuit.",
       "starter": "Starter",
-      "starterPrice": "499 MAD",
+      "starterPrice": "499 $",
       "starterBody": "100 minutes incluses · 1 agent · 1 langue",
       "growth": "Croissance",
-      "growthPrice": "1 490 MAD",
+      "growthPrice": "1 490 $",
       "growthBody": "500 minutes · 3 agents · multilingue · CRM",
       "enterprise": "Sur mesure",
       "enterpriseBody": "Volume illimité · SLA dédié · intégrations custom",
@@ -113,8 +113,8 @@
     },
     "faq": {
       "title": "Les questions que vous nous posez.",
-      "q1": "Mon agent peut-il parler darija ?",
-      "a1": "Oui — VocazAI gère l'arabe standard, le darija marocain, le français et l'anglais. L'agent peut basculer entre ces langues en cours d'appel selon ce que dit votre client.",
+      "q1": "Mon agent peut-il parler arabe ?",
+      "a1": "Oui — VocazAI gère l'arabe, le français et l'anglais. L'agent peut basculer entre ces trois langues en cours d'appel selon ce que dit votre client.",
       "q2": "Combien de temps pour installer ?",
       "a2": "Comptez 24 à 48 heures entre votre brief et le premier appel décroché par votre agent. Aucune intervention technique requise de votre côté.",
       "q3": "Que se passe-t-il si l'agent ne sait pas répondre ?",
@@ -129,29 +129,29 @@
       "cta": "Réserver une démo"
     },
     "footer": {
-      "tagline": "L'agent vocal IA pour l'Afrique francophone.",
-      "made": "Conçu à Casablanca",
+      "tagline": "L'agent vocal IA trilingue pour votre entreprise.",
+      "made": "Conçu avec soin",
       "rights": "Tous droits réservés"
     }
   },
   "about": {
     "kicker": "À propos · VocazAI",
     "title1": "Rendre l'agent vocal IA",
-    "title2": "accessible à toute l'Afrique.",
-    "intro": "VocazAI est née à Casablanca en 2025. Nous croyons que les PME qui font tourner l'économie marocaine et africaine méritent les mêmes outils que les grands groupes — sans complexité ni budget de DSI.",
+    "title2": "accessible à toutes les entreprises.",
+    "intro": "VocazAI est née en 2025. Nous croyons que les PME méritent les mêmes outils que les grands groupes — sans complexité ni budget de DSI.",
     "mission": {
       "kicker": "Mission",
       "title": "Un standard pour tous.",
       "p1": "Trop de petites entreprises perdent encore 40% de leurs appels entrants. Cliniques surchargées, restaurants au coup de feu, agences immobilières en RDV — l'humain ne peut pas être partout.",
-      "p2": "Nous bâtissons des agents vocaux IA qui parlent comme votre meilleure standardiste. Ils décrochent en moins d'une seconde, comprennent le darija, le français et l'anglais, et savent quand passer la main à un humain.",
+      "p2": "Nous bâtissons des agents vocaux IA qui parlent comme votre meilleure standardiste. Ils décrochent en moins d'une seconde, comprennent l'arabe, le français et l'anglais, et savent quand passer la main à un humain.",
       "p3": "L'objectif : qu'aucune PME ne perde un client à cause d'un appel raté."
     },
     "values": {
       "kicker": "Valeurs",
       "title": "Ce qui nous tient debout.",
       "v1": {
-        "title": "Local d'abord",
-        "body": "On parle darija, on connaît la prise de RDV à l'orientale, on configure depuis Casablanca. Pas une copie de Vapi US."
+        "title": "Multilingue d'abord",
+        "body": "Français, arabe, anglais — nativement. L'agent bascule de langue en cours d'appel, sans réglage. Pas un outil monolingue adapté à la va-vite."
       },
       "v2": {
         "title": "Transparence radicale",
@@ -166,8 +166,8 @@
       "kicker": "Histoire",
       "title": "L'idée est née d'un appel raté.",
       "p1": "Un soir de 2024, le fondateur de VocazAI essaie d'appeler une clinique pour un proche. Sonnerie 8 fois. Personne. Il essaie une deuxième clinique. Pareil. Une troisième. Enfin quelqu'un — mais le RDV est dans trois semaines.",
-      "p2": "Au même moment, OpenAI sort GPT-4o avec son mode vocal. ElevenLabs publie une voix française MENA qui sonne presque humaine. Deepgram fait du speech-to-text français à 200ms. Toutes les briques sont là.",
-      "p3": "Six mois plus tard, VocazAI lance son MVP avec trois cabinets médicaux pilotes à Casablanca. Aucun ne manque plus un appel."
+      "p2": "Au même moment, OpenAI sort GPT-4o avec son mode vocal. ElevenLabs publie une voix française qui sonne presque humaine. Deepgram fait du speech-to-text français à 200ms. Toutes les briques sont là.",
+      "p3": "Six mois plus tard, VocazAI lance son MVP avec trois cabinets médicaux pilotes. Aucun ne manque plus un appel."
     },
     "contact": {
       "kicker": "Contact",
@@ -203,7 +203,7 @@
       "kicker": "FAQ tarifs",
       "title": "Questions fréquentes.",
       "q1": "Que se passe-t-il si je dépasse mes minutes ?",
-      "a1": "Vous êtes facturé au prorata, à 0,80 MAD par minute supplémentaire. Aucune coupure d'appel.",
+      "a1": "Vous êtes facturé au prorata, à 0,08 $ par minute supplémentaire. Aucune coupure d'appel.",
       "q2": "Puis-je changer de formule en cours de route ?",
       "a2": "Oui, à tout moment. Le changement est facturé au prorata du jour de la bascule.",
       "q3": "Y a-t-il des frais de mise en place ?",
@@ -239,8 +239,8 @@
     "ecom": {
       "title": "E-commerce & livraison",
       "lede": "Confirmation cash-on-delivery en pilote auto.",
-      "body": "Au Maroc, 70% du e-commerce se règle en cash à la livraison. Votre agent rappelle chaque client en moins de 5 minutes après commande, confirme l'adresse et la disponibilité, et réduit drastiquement le taux de retour.",
-      "b1": "Confirmation en darija ou français",
+      "body": "Une large part du e-commerce se règle encore en paiement à la livraison. Votre agent rappelle chaque client en moins de 5 minutes après commande, confirme l'adresse et la disponibilité, et réduit drastiquement le taux de retour.",
+      "b1": "Confirmation en français, arabe ou anglais",
       "b2": "Webhook vers votre back-office (Shopify, WooCommerce, custom)",
       "b3": "Re-prog automatique si client absent"
     },
@@ -297,9 +297,9 @@
         "error": "Le service de facturation est momentanément indisponible."
       },
       "plans": {
-        "free": { "label": "Gratuit", "price": "0 MAD", "features": ["Démo uniquement", "Pas d'appels réels"] },
-        "starter": { "label": "Starter", "price": "499 MAD/mois", "features": ["100 min / mois", "1 agent", "1 langue", "Support email"] },
-        "growth": { "label": "Croissance", "price": "1 490 MAD/mois", "features": ["500 min / mois", "3 agents", "Multilingue FR/AR/EN", "Intégration CRM"] },
+        "free": { "label": "Gratuit", "price": "0 $", "features": ["Démo uniquement", "Pas d'appels réels"] },
+        "starter": { "label": "Starter", "price": "499 $/mois", "features": ["100 min / mois", "1 agent", "1 langue", "Support email"] },
+        "growth": { "label": "Croissance", "price": "1 490 $/mois", "features": ["500 min / mois", "3 agents", "Multilingue FR/AR/EN", "Intégration CRM"] },
         "enterprise": { "label": "Entreprise", "price": "Sur mesure", "features": ["Volume illimité", "SLA dédié", "Intégrations custom", "Manager dédié"] }
       },
       "apiKeys": {

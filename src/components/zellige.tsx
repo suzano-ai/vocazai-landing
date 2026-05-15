@@ -1,5 +1,5 @@
 /**
- * Geometric primitives — Moroccan-rooted, refined.
+ * Geometric primitives — heritage-rooted, refined.
  * Three families:
  *   1. Heritage shapes  — Khatam, Arch, Quatrefoil
  *   2. Grid/Line accents — HexLattice, VerticalLines

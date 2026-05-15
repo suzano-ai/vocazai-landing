@@ -1,7 +1,7 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, MapPin, Mail, Phone } from "lucide-react";
+import { ArrowUpRight, Languages, Mail, Phone } from "lucide-react";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 import { Arch, Khatam, Quatrefoil } from "@/components/zellige";
@@ -19,9 +19,9 @@ export async function generateMetadata({
     ar: "عن فوكازاي",
   };
   const desc: Record<string, string> = {
-    fr: "VocazAI est née à Casablanca pour rendre l'agent vocal IA accessible à toutes les PME francophones et arabophones. Notre mission, notre équipe, nos valeurs.",
-    en: "VocazAI was born in Casablanca to make AI voice agents accessible to every French- and Arabic-speaking SMB. Our mission, team and values.",
-    ar: "وُلدت فوكازاي في الدار البيضاء لجعل الوكيل الصوتي بالذكاء الاصطناعي في متناول كل الشركات الناطقة بالفرنسية والعربية. مهمتنا وفريقنا وقيمنا.",
+    fr: "VocazAI rend l'agent vocal IA trilingue (français, arabe, anglais) accessible à toutes les entreprises. Notre mission, notre équipe, nos valeurs.",
+    en: "VocazAI makes the trilingual AI voice agent (French, Arabic, English) accessible to every business. Our mission, team and values.",
+    ar: "فوكازاي كتجعل الوكيل الصوتي الذكي بثلاث لغات (فرنسي، عربي، إنجليزي) في متناول كل المقاولات. مهمتنا وفريقنا وقيمنا.",
   };
   return {
     title: titles[locale] ?? titles.fr,
@@ -208,7 +208,7 @@ export default async function AboutPage({
           </Reveal>
           <Reveal delay={120}>
             <div className="space-y-6 text-saffron-50/80">
-              <ContactRow icon={<MapPin className="h-5 w-5" />} label="Casablanca, Maroc" />
+              <ContactRow icon={<Languages className="h-5 w-5" />} label="Français · العربية · English" />
               <ContactRow icon={<Mail className="h-5 w-5" />} label="hello@vocazai.com" />
               <ContactRow icon={<Phone className="h-5 w-5" />} label="+33 7 77 34 50 56" />
               <Link

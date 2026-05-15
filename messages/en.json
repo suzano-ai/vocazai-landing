@@ -32,10 +32,10 @@
   },
   "blog": {
     "kicker": "The blog",
-    "title": "Resources for Moroccan SMBs",
-    "subtitle": "Practical advice on phone reception, voice AI and customer relationships in Morocco.",
+    "title": "Resources for your phone reception",
+    "subtitle": "Practical advice on phone reception, voice AI and customer relationships.",
     "metaTitle": "Blog — VocazAI",
-    "metaDescription": "Practical advice on phone reception, AI voice agents and customer relationships for SMBs in Morocco.",
+    "metaDescription": "Practical advice on phone reception, AI voice agents and customer relationships for businesses of every size.",
     "readingTime": "{minutes} min read",
     "backToBlog": "All articles",
     "readMore": "Read article",
@@ -43,10 +43,10 @@
     "cta": "Try VocazAI for free"
   },
   "landing": {
-    "kicker": "Built in Morocco · For Africa",
+    "kicker": "Trilingual · French · Arabic · English",
     "heroTitle1": "The voice agent",
     "heroTitle2": "that answers for you.",
-    "heroSubtitle": "VocazAI deploys bilingual AI receptionists (French · Arabic · English) for SMBs across Morocco and Africa. Front-desk, appointment booking, support — 24/7, no coffee breaks.",
+    "heroSubtitle": "VocazAI deploys trilingual AI receptionists (French · Arabic · English) for businesses of every size. Front-desk, appointment booking, support — 24/7, no coffee breaks.",
     "ctaPrimary": "Book a demo",
     "ctaSecondary": "How it works",
     "trustBar": "Trusted with their inbound calls",
@@ -63,7 +63,7 @@
       "step1Title": "Tell us about your business",
       "step1Body": "Hours, services, brand tone, FAQs — we capture everything for your agent.",
       "step2Title": "We configure your agent",
-      "step2Body": "Voice choice (male/female, FR/MA/EN accent), calendar integration, qualification scripts.",
+      "step2Body": "Voice choice (male/female, French/Arabic/English), calendar integration, qualification scripts.",
       "step3Title": "It picks up — tomorrow",
       "step3Body": "Connected to your landline or mobile. Transcripts, summaries and CRM tasks in your dashboard."
     },
@@ -101,10 +101,10 @@
       "title": "Simple pricing. Pay for usage, not waiting.",
       "subtitle": "No commitment. First month free.",
       "starter": "Starter",
-      "starterPrice": "$49",
+      "starterPrice": "$499",
       "starterBody": "100 included minutes · 1 agent · 1 language",
       "growth": "Growth",
-      "growthPrice": "$149",
+      "growthPrice": "$1,490",
       "growthBody": "500 minutes · 3 agents · multilingual · CRM",
       "enterprise": "Custom",
       "enterpriseBody": "Unlimited volume · dedicated SLA · custom integrations",
@@ -113,8 +113,8 @@
     },
     "faq": {
       "title": "Frequently asked.",
-      "q1": "Can my agent speak darija?",
-      "a1": "Yes — VocazAI handles modern standard Arabic, Moroccan darija, French and English. The agent switches between languages mid-call based on the caller.",
+      "q1": "Can my agent speak Arabic?",
+      "a1": "Yes — VocazAI handles Arabic, French and English. The agent switches between these three languages mid-call based on the caller.",
       "q2": "How long to set up?",
       "a2": "Plan on 24 to 48 hours between your brief and the first call answered by your agent. No technical setup on your side.",
       "q3": "What if the agent doesn't know the answer?",
@@ -129,29 +129,29 @@
       "cta": "Book a demo"
     },
     "footer": {
-      "tagline": "The AI voice agent for French-speaking Africa.",
-      "made": "Built in Casablanca",
+      "tagline": "The trilingual AI voice agent for your business.",
+      "made": "Crafted with care",
       "rights": "All rights reserved"
     }
   },
   "about": {
     "kicker": "About · VocazAI",
     "title1": "Make AI voice agents",
-    "title2": "accessible to all of Africa.",
-    "intro": "VocazAI was born in Casablanca in 2025. We believe SMBs that power Morocco and Africa deserve the same tools as the big groups — without the complexity or the CIO budget.",
+    "title2": "accessible to every business.",
+    "intro": "VocazAI was born in 2025. We believe SMBs deserve the same tools as the big groups — without the complexity or the CIO budget.",
     "mission": {
       "kicker": "Mission",
       "title": "A receptionist for everyone.",
       "p1": "Too many small businesses still lose 40% of their inbound calls. Overflowing clinics, restaurants in rush, real estate agents on viewings — humans can't be everywhere.",
-      "p2": "We build AI voice agents that sound like your best receptionist. They pick up in under a second, understand darija, French and English, and know when to hand off to a human.",
+      "p2": "We build AI voice agents that sound like your best receptionist. They pick up in under a second, understand Arabic, French and English, and know when to hand off to a human.",
       "p3": "Goal: no SMB ever loses a customer to a missed call again."
     },
     "values": {
       "kicker": "Values",
       "title": "What keeps us standing.",
       "v1": {
-        "title": "Local first",
-        "body": "We speak darija, we know how appointment booking works in the region, we configure from Casablanca. Not a US Vapi clone."
+        "title": "Multilingual first",
+        "body": "French, Arabic, English — natively. The agent switches language mid-call, no setting required. Not a monolingual tool retrofitted in a hurry."
       },
       "v2": {
         "title": "Radical transparency",
@@ -166,8 +166,8 @@
       "kicker": "Story",
       "title": "Born from a missed call.",
       "p1": "One evening in 2024, the founder of VocazAI tried to call a clinic for a loved one. Eight rings. Nobody. A second clinic. Same. A third. Finally someone — but the appointment was three weeks out.",
-      "p2": "At the same time, OpenAI released GPT-4o with voice mode. ElevenLabs published a North African French voice that sounded almost human. Deepgram hit 200ms French speech-to-text. All the bricks were there.",
-      "p3": "Six months later, VocazAI launched its MVP with three pilot medical practices in Casablanca. None of them miss a call anymore."
+      "p2": "At the same time, OpenAI released GPT-4o with voice mode. ElevenLabs published a French voice that sounded almost human. Deepgram hit 200ms French speech-to-text. All the bricks were there.",
+      "p3": "Six months later, VocazAI launched its MVP with three pilot medical practices. None of them miss a call anymore."
     },
     "contact": {
       "kicker": "Contact",
@@ -239,8 +239,8 @@
     "ecom": {
       "title": "E-commerce & delivery",
       "lede": "Cash-on-delivery confirmations on autopilot.",
-      "body": "In Morocco, 70% of e-commerce is paid cash-on-delivery. Your agent calls back every customer within 5 minutes of order, confirms address and availability, and drastically cuts return rates.",
-      "b1": "Confirmation in darija or French",
+      "body": "A large share of e-commerce is still paid cash-on-delivery. Your agent calls back every customer within 5 minutes of order, confirms address and availability, and drastically cuts return rates.",
+      "b1": "Confirmation in French, Arabic or English",
       "b2": "Webhook to your back-office (Shopify, WooCommerce, custom)",
       "b3": "Auto-reschedule if customer unavailable"
     },
@@ -297,9 +297,9 @@
         "error": "The billing service is temporarily unavailable."
       },
       "plans": {
-        "free": { "label": "Free", "price": "0 MAD", "features": ["Demo only", "No real calls"] },
-        "starter": { "label": "Starter", "price": "499 MAD/mo", "features": ["100 min / month", "1 agent", "1 language", "Email support"] },
-        "growth": { "label": "Growth", "price": "1,490 MAD/mo", "features": ["500 min / month", "3 agents", "Multilingual FR/AR/EN", "CRM integration"] },
+        "free": { "label": "Free", "price": "$0", "features": ["Demo only", "No real calls"] },
+        "starter": { "label": "Starter", "price": "$499/mo", "features": ["100 min / month", "1 agent", "1 language", "Email support"] },
+        "growth": { "label": "Growth", "price": "$1,490/mo", "features": ["500 min / month", "3 agents", "Multilingual FR/AR/EN", "CRM integration"] },
         "enterprise": { "label": "Enterprise", "price": "Custom", "features": ["Unlimited volume", "Dedicated SLA", "Custom integrations", "Dedicated manager"] }
       },
       "apiKeys": {

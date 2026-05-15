@@ -38,11 +38,11 @@ const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://vocazai.com";
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "VocazAI — L'agent vocal IA pour PME marocaines et africaines",
+    default: "VocazAI — L'agent vocal IA trilingue : français, arabe, anglais",
     template: "%s · VocazAI",
   },
   description:
-    "VocazAI déploie des standardistes IA bilingues (FR · AR · EN) pour les PME marocaines et africaines. Réception 24/7, prise de RDV, qualification de leads, support client.",
+    "VocazAI déploie des standardistes IA trilingues (FR · AR · EN) pour les entreprises de toutes tailles. Réception 24/7, prise de RDV, qualification de leads, support client.",
   applicationName: "VocazAI",
   authors: [{ name: "VocazAI", url: BASE_URL }],
   generator: "Next.js",
@@ -51,15 +51,14 @@ export const metadata: Metadata = {
     "AI voice agent",
     "standardiste IA",
     "réception automatique",
-    "Maroc",
-    "Casablanca",
+    "agent vocal multilingue",
     "PME",
-    "voice AI Morocco",
+    "voice AI",
     "Vapi",
     "Retell",
     "agent téléphonique IA",
-    "darija",
-    "français arabe",
+    "agent vocal trilingue",
+    "français arabe anglais",
     "prise de rendez-vous automatique",
   ],
   alternates: {
@@ -75,8 +74,8 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "VocazAI",
     url: BASE_URL,
-    locale: "fr_MA",
-    alternateLocale: ["en_US", "ar_MA"],
+    locale: "fr_FR",
+    alternateLocale: ["en_US", "ar_001"],
     images: [
       {
         url: "/opengraph-image",
@@ -120,14 +119,9 @@ const organizationJsonLd = {
   url: BASE_URL,
   logo: `${BASE_URL}/opengraph-image`,
   description:
-    "AI voice agents for SMBs across Morocco and Africa. Bilingual (FR/AR/EN) virtual receptionists available 24/7.",
-  founderType: "Organization",
-  foundingLocation: { "@type": "Place", name: "Casablanca, Morocco" },
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Casablanca",
-    addressCountry: "MA",
-  },
+    "Trilingual AI voice agents (French / Arabic / English) for businesses of every size. Virtual receptionists available 24/7 — front-desk, appointment booking, lead qualification.",
+  foundingDate: "2025",
+  knowsLanguage: ["fr", "ar", "en"],
   contactPoint: [
     {
       "@type": "ContactPoint",
@@ -152,7 +146,7 @@ const serviceJsonLd = {
       "@type": "Offer",
       name: "Starter",
       price: "499",
-      priceCurrency: "MAD",
+      priceCurrency: "USD",
       priceSpecification: {
         "@type": "UnitPriceSpecification",
         billingDuration: "P1M",
@@ -162,7 +156,7 @@ const serviceJsonLd = {
       "@type": "Offer",
       name: "Growth",
       price: "1490",
-      priceCurrency: "MAD",
+      priceCurrency: "USD",
       priceSpecification: {
         "@type": "UnitPriceSpecification",
         billingDuration: "P1M",

@@ -54,8 +54,8 @@ export default async function TermsPage({
             <h2 className="font-display text-xl font-semibold mb-3">1. Parties</h2>
             <p className="text-muted-foreground leading-relaxed">
               Les présentes conditions générales d&apos;utilisation (« CGU ») régissent l&apos;accès et l&apos;utilisation de la plateforme VocazAI,
-              exploitée par <strong>Mare Nostrum SARL</strong>, société de droit marocain dont le siège social est établi à Casablanca, Maroc
-              (ci-après « VocazAI », « nous »). En accédant au service, vous acceptez les présentes CGU.
+              exploitée par <strong>Mare Nostrum SARL</strong> (ci-après « VocazAI », « nous »). En accédant au service, vous acceptez
+              les présentes CGU.
             </p>
           </section>
 
@@ -91,9 +91,9 @@ export default async function TermsPage({
           <section>
             <h2 className="font-display text-xl font-semibold mb-3">5. Tarification et paiement</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Les tarifs sont affichés en dirhams marocains (MAD), hors taxes, sur la page <Link href={`/${locale}/pricing`} className="text-saffron-600 hover:underline">Tarifs</Link>.
+              Les tarifs sont affichés en dollars américains (USD), hors taxes, sur la page <Link href={`/${locale}/pricing`} className="text-saffron-600 hover:underline">Tarifs</Link>.
               La facturation est mensuelle. En cas de dépassement du volume de minutes inclus, la minute supplémentaire est facturée
-              à 0,80 MAD. Le défaut de paiement entraîne la suspension du service après 7 jours de grâce.
+              à 0,08 USD. Le défaut de paiement entraîne la suspension du service après 7 jours de grâce.
             </p>
           </section>
 
@@ -136,8 +136,8 @@ export default async function TermsPage({
           <section>
             <h2 className="font-display text-xl font-semibold mb-3">10. Droit applicable</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Les présentes CGU sont régies par le droit marocain. Tout litige sera soumis à la compétence exclusive des
-              tribunaux de commerce de Casablanca.
+              Les présentes CGU sont régies par le droit applicable au siège social de Mare Nostrum SARL. Les parties
+              s&apos;efforceront de résoudre tout litige à l&apos;amiable avant toute action contentieuse.
             </p>
           </section>
 

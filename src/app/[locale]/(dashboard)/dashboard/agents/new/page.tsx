@@ -202,7 +202,7 @@ export default function NewAgentPage() {
                 <Input
                   value={form.name}
                   onChange={set("name")}
-                  placeholder="Ex: Yasmine, Support Client, Résa Casablanca…"
+                  placeholder="Ex: Yasmine, Support Client, Réservations…"
                   required
                 />
                 <Hint>Ce nom apparaît dans vos logs et peut être utilisé dans le prompt.</Hint>

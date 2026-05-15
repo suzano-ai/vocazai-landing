@@ -5,7 +5,9 @@
 
 ## What is VocazAI
 
-AI voice receptionist SaaS for Moroccan SMBs. A business subscribes, configures an AI agent (French/Arabic/English), attaches a phone number — the AI answers calls 24/7, books appointments, handles FAQs. Built by Aymane @ Mare Nostrum.
+Trilingual (French/Arabic/English) AI voice receptionist SaaS for businesses of every size. A business subscribes, configures an AI agent, attaches a phone number — the AI answers calls 24/7, books appointments, handles FAQs. Built by Aymane @ Mare Nostrum.
+
+**Positioning:** geography-neutral — never mention countries/regions in marketing copy. Lead with the three languages (FR/AR/EN) and the pricing. Prices are in USD ($499 / $1,490). The Arabic locale's UI strings happen to be written in a Moroccan dialect, but marketing copy says "Arabic", not "darija".
 
 ---
 

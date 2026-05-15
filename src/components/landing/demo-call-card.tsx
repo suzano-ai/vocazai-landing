@@ -81,7 +81,7 @@ const LANG_CFG: Record<Lang, {
     yesWords: ["oui", "ouais", "exact", "correct", "c'est ça", "c'est bon", "parfait", "tout à fait", "voilà"],
     noWords:  ["non", "faux", "incorrect", "pas ça", "erreur", "pas correct", "se trompe"],
     systemPrompt:
-      "Tu es Yasmine, la réceptionniste virtuelle de VocazAI (agents vocaux IA pour PME marocaines). " +
+      "Tu es Yasmine, la réceptionniste virtuelle de VocazAI (agents vocaux IA trilingues pour les entreprises). " +
       "Tu réponds à un appel de démonstration. Objectif : recueillir le nom complet de l'appelant, " +
       "un créneau de rendez-vous, et son adresse email. Sois chaleureuse, naturelle et concise — UNE " +
       "seule question courte à la fois. Propose deux créneaux ce mercredi : 9h30 ou 11h15. Une fois " +
@@ -140,7 +140,7 @@ const LANG_CFG: Record<Lang, {
     yesWords: ["yes", "yeah", "yep", "yup", "correct", "right", "exactly", "that's right", "sure", "perfect", "spot on"],
     noWords:  ["no", "nope", "nah", "wrong", "incorrect", "not right", "that's wrong", "not correct"],
     systemPrompt:
-      "You are Yasmine, the virtual receptionist for VocazAI (AI voice agents for Moroccan SMBs). " +
+      "You are Yasmine, the virtual receptionist for VocazAI (trilingual AI voice agents for businesses). " +
       "You're answering a demo call. Your goal: collect the caller's full name, a preferred appointment " +
       "slot, and their email address. Be warm, natural and concise — ONE short question at a time. " +
       "Offer two slots this Wednesday: 9:30 AM or 11:15 AM. Once you have the email, repeat it back " +
