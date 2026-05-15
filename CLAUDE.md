@@ -117,6 +117,13 @@ VOXTRAL_AR_REF_B64=                      # optional. base64 of a short (~5-10s)
                                          # (a placeholder MSA clip); swap that
                                          # file or set this for a Darija voice.
 
+# ── Search-engine verification (optional) ────────────────────────────
+GOOGLE_SITE_VERIFICATION=                # Search Console code, no <meta> markup
+BING_SITE_VERIFICATION=                  # Bing Webmaster code (rendered as msvalidate.01)
+YANDEX_SITE_VERIFICATION=                # Yandex Webmaster code
+                                         # All optional — wired in src/app/layout.tsx.
+                                         # Empty → no <meta> emitted.
+
 # ── App ───────────────────────────────────────────────────────────────
 NEXT_PUBLIC_APP_URL=https://vocazai.com
 

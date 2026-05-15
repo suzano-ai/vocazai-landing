@@ -105,10 +105,19 @@ export const metadata: Metadata = {
     icon:
       "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23E8A12C'/><text x='50%25' y='58%25' dominant-baseline='middle' text-anchor='middle' font-family='Fraunces, serif' font-weight='800' font-style='italic' font-size='22' fill='%231A1714'>V</text></svg>",
   },
-  verification: {
-    // Add your Google Search Console verification code here once registered.
-    // google: "your-verification-code",
-  },
+  // Search-engine ownership verification — wired to env so each console's
+  // verification meta tag appears as soon as the value is set in .env.local.
+  // Set GOOGLE_SITE_VERIFICATION (Search Console), BING_SITE_VERIFICATION
+  // (Bing Webmaster Tools), YANDEX_SITE_VERIFICATION (Yandex Webmaster).
+  verification: (() => {
+    const v: NonNullable<Metadata["verification"]> = {};
+    if (process.env.GOOGLE_SITE_VERIFICATION) v.google = process.env.GOOGLE_SITE_VERIFICATION;
+    if (process.env.YANDEX_SITE_VERIFICATION) v.yandex = process.env.YANDEX_SITE_VERIFICATION;
+    const other: Record<string, string> = {};
+    if (process.env.BING_SITE_VERIFICATION) other["msvalidate.01"] = process.env.BING_SITE_VERIFICATION;
+    if (Object.keys(other).length) v.other = other;
+    return v;
+  })(),
   category: "technology",
 };
 
