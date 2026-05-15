@@ -76,34 +76,56 @@ export default async function LandingPage({
         {/* Soft vignette — pulls focus to the content, adds depth. */}
         <div className="hero-vignette pointer-events-none absolute inset-0" />
 
-        {/* Editorial Khatam glyph — slow rotation, off-canvas anchor. Reads
-            as a punctuation mark rather than ornament. */}
+        {/* Editorial Khatam — large, slowly rotating, clearly visible. */}
         <Khatam
-          size={420}
-          className="slow-rotate pointer-events-none absolute -right-24 -top-24 text-saffron-500/10"
+          size={620}
+          className="slow-rotate pointer-events-none absolute -right-32 -top-32 text-saffron-500/22"
         />
         <HexLattice
-          size={260}
-          className="pointer-events-none absolute -left-16 bottom-12 text-teal-500/10"
+          size={360}
+          className="pointer-events-none absolute -left-20 bottom-8 text-teal-500/18"
         />
+        {/* Massive editorial "01" numeral behind the hero — magazine drop-num. */}
+        <div
+          aria-hidden
+          className="numeral-mark pointer-events-none absolute -bottom-4 left-4 select-none text-[clamp(14rem,32vw,28rem)] sm:left-12"
+          style={{ color: "hsl(var(--saffron-500) / 0.10)" }}
+        >
+          01
+        </div>
 
         <div className="container relative grid items-center gap-10 py-16 sm:py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16 lg:py-0">
           {/* LEFT — copy */}
           <div className="max-w-xl">
             <Reveal>
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-saffron-500/30 bg-saffron-500/8 px-3.5 py-1.5">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-saffron-500" />
-                <span className="font-mono text-kicker uppercase text-saffron-700 dark:text-saffron-400">
+              <div className="mb-8 inline-flex items-center gap-2.5 border-y border-saffron-500/40 bg-saffron-500/8 px-4 py-2">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-saffron-500" />
+                <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-saffron-700 dark:text-saffron-400">
                   {t("landing.kicker")}
                 </span>
               </div>
             </Reveal>
 
             <Reveal delay={80}>
-              <h1 className="font-display text-display-lg font-medium leading-[1.02] lg:text-display-xl">
+              <h1 className="font-display text-display-xl font-medium leading-[0.95] tracking-tight lg:text-display-2xl">
                 <span className="block">{t("landing.heroTitle1")}</span>
-                <span className="block italic text-saffron-500">
+                <span className="relative block italic text-saffron-500">
                   {t("landing.heroTitle2")}
+                  {/* Editorial underline — hand-drawn feel. */}
+                  <svg
+                    aria-hidden
+                    viewBox="0 0 200 8"
+                    className="absolute -bottom-1 left-0 h-2 w-[42%] text-saffron-500/60"
+                    fill="none"
+                    preserveAspectRatio="none"
+                  >
+                    <path
+                      d="M 2 5 Q 50 1, 100 4 T 198 3"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
                 </span>
               </h1>
             </Reveal>
