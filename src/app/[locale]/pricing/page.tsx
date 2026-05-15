@@ -6,6 +6,8 @@ import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 import { Khatam, HexLattice, Arch } from "@/components/zellige";
 import { Reveal } from "@/components/reveal";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbJsonLd } from "@/lib/seo/structured-data";
 
 export async function generateMetadata({
   params,
@@ -87,9 +89,16 @@ export default async function PricingPage({
     },
   ];
 
+  const tNav = await getTranslations("nav");
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Header locale={locale} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "VocazAI", url: `/${locale}` },
+          { name: tNav("pricing"), url: `/${locale}/pricing` },
+        ])}
+      />
 
       {/* HERO */}
       <section className="relative overflow-hidden">

@@ -8,10 +8,10 @@ import { Footer } from "@/components/landing/footer";
 import { Khatam } from "@/components/zellige";
 import { Reveal } from "@/components/reveal";
 import { JsonLd } from "@/components/json-ld";
+import { blogPostingJsonLd, breadcrumbJsonLd } from "@/lib/seo/structured-data";
 import { POSTS, getPost, type BlogLocale, type Block } from "@/content/blog/posts";
 import { routing } from "../../../../../i18n/routing";
 
-const SITE = process.env.NEXT_PUBLIC_APP_URL ?? "https://vocazai.com";
 const DATE_LOCALE: Record<string, string> = { fr: "fr-FR", en: "en-US", ar: "ar-MA" };
 
 export function generateStaticParams() {
@@ -70,27 +70,33 @@ export default async function BlogPostPage({
     { year: "numeric", month: "long", day: "numeric" }
   );
 
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title[l],
+  // Word count for the BlogPosting schema (helps Article rich results).
+  const wordCount = post.body[l].reduce((n, block) => {
+    if (block.type === "p" || block.type === "h2") return n + block.text.split(/\s+/).length;
+    if (block.type === "ul") return n + block.items.reduce((m, it) => m + it.split(/\s+/).length, 0);
+    return n;
+  }, 0);
+
+  const articleJsonLd = blogPostingJsonLd({
+    title: post.title[l],
     description: post.description[l],
+    url: `/${locale}/blog/${slug}`,
     datePublished: post.date,
-    dateModified: post.date,
     inLanguage: locale,
-    mainEntityOfPage: `${SITE}/${locale}/blog/${slug}`,
-    author: { "@type": "Organization", name: "VocazAI", url: SITE },
-    publisher: {
-      "@type": "Organization",
-      name: "VocazAI",
-      logo: { "@type": "ImageObject", url: `${SITE}/opengraph-image` },
-    },
-  };
+    wordCount,
+  });
+
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "VocazAI", url: `/${locale}` },
+    { name: t("kicker"), url: `/${locale}/blog` },
+    { name: post.title[l], url: `/${locale}/blog/${slug}` },
+  ]);
 
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Header locale={locale} />
       <JsonLd data={articleJsonLd} />
+      <JsonLd data={breadcrumb} />
 
       <article className="relative overflow-hidden">
         <Khatam

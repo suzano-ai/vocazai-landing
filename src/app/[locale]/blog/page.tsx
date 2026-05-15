@@ -6,6 +6,8 @@ import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 import { Khatam, HexLattice } from "@/components/zellige";
 import { Reveal } from "@/components/reveal";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbJsonLd } from "@/lib/seo/structured-data";
 import { POSTS_BY_DATE, type BlogLocale } from "@/content/blog/posts";
 
 const DATE_LOCALE: Record<string, string> = { fr: "fr-FR", en: "en-US", ar: "ar-MA" };
@@ -54,9 +56,16 @@ export default async function BlogIndexPage({
       day: "numeric",
     });
 
+  const tNav = await getTranslations("nav");
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Header locale={locale} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "VocazAI", url: `/${locale}` },
+          { name: tNav("blog"), url: `/${locale}/blog` },
+        ])}
+      />
 
       {/* HERO */}
       <section className="relative overflow-hidden">

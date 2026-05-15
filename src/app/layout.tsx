@@ -120,8 +120,20 @@ const organizationJsonLd = {
   logo: `${BASE_URL}/opengraph-image`,
   description:
     "Trilingual AI voice agents (French / Arabic / English) for businesses of every size. Virtual receptionists available 24/7 — front-desk, appointment booking, lead qualification.",
+  slogan: "The trilingual AI voice agent that picks up for you.",
   foundingDate: "2025",
   knowsLanguage: ["fr", "ar", "en"],
+  knowsAbout: [
+    "AI voice agent",
+    "Voice receptionist",
+    "Appointment booking",
+    "Phone automation",
+    "Conversational AI",
+    "Speech-to-text",
+    "Text-to-speech",
+    "Lead qualification",
+    "Multilingual customer service",
+  ],
   contactPoint: [
     {
       "@type": "ContactPoint",

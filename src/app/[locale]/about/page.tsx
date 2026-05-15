@@ -6,6 +6,8 @@ import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 import { Arch, Khatam, Quatrefoil } from "@/components/zellige";
 import { Reveal } from "@/components/reveal";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbJsonLd } from "@/lib/seo/structured-data";
 
 export async function generateMetadata({
   params,
@@ -54,9 +56,16 @@ export default async function AboutPage({
   const tc = await getTranslations("common");
   const wa = `https://wa.me/33777345056?text=${encodeURIComponent(tc("whatsapp"))}`;
 
+  const tNav = await getTranslations("nav");
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Header locale={locale} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "VocazAI", url: `/${locale}` },
+          { name: tNav("about"), url: `/${locale}/about` },
+        ])}
+      />
 
       {/* HERO */}
       <section className="relative overflow-hidden">

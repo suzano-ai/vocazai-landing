@@ -1,7 +1,9 @@
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbJsonLd } from "@/lib/seo/structured-data";
 
 export async function generateMetadata({
   params,
@@ -37,10 +39,18 @@ export default async function PrivacyPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const tNav = await getTranslations("nav");
 
   return (
     <>
       <Header locale={locale} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "VocazAI", url: `/${locale}` },
+          { name: tNav("legal"), url: `/${locale}/legal/privacy` },
+          { name: tNav("privacy"), url: `/${locale}/legal/privacy` },
+        ])}
+      />
       <main className="container max-w-3xl py-16 lg:py-24">
         <div className="mb-10">
           <p className="font-mono text-xs uppercase tracking-widest text-saffron-500 mb-3">Légal</p>

@@ -12,6 +12,8 @@ import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 import { Khatam, Quatrefoil, Arch } from "@/components/zellige";
 import { Reveal } from "@/components/reveal";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbJsonLd } from "@/lib/seo/structured-data";
 
 export async function generateMetadata({
   params,
@@ -58,6 +60,7 @@ export default async function UseCasesPage({
   setRequestLocale(locale);
   const t = await getTranslations("useCases");
   const tc = await getTranslations("common");
+  const tNav = await getTranslations("nav");
   const wa = `https://wa.me/33777345056?text=${encodeURIComponent(tc("whatsapp"))}`;
 
   const cases = [
@@ -69,6 +72,12 @@ export default async function UseCasesPage({
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "VocazAI", url: `/${locale}` },
+          { name: tNav("useCases"), url: `/${locale}/use-cases` },
+        ])}
+      />
       <Header locale={locale} />
 
       {/* HERO */}
