@@ -1,0 +1,14 @@
+/* humans.txt — the people behind the site */
+/* https://humanstxt.org */
+
+[Team]
+  Owner: Mare Nostrum SARL
+  Lead: Aymane
+  Contact: hello@vocazai.com
+  Languages: French · Arabic · English
+
+[Site]
+  Last update: 2026-05
+  Standards: HTML5, CSS3, schema.org, llms.txt, IndexNow
+  Components: Next.js 15, React, TypeScript, Tailwind, next-intl
+  Voice: Mistral Voxtral (STT), Piper (TTS), self-hosted faster-whisper fallback

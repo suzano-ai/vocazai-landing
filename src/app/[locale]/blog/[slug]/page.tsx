@@ -9,7 +9,7 @@ import { Khatam } from "@/components/zellige";
 import { Reveal } from "@/components/reveal";
 import { JsonLd } from "@/components/json-ld";
 import { blogPostingJsonLd, breadcrumbJsonLd } from "@/lib/seo/structured-data";
-import { POSTS, getPost, type BlogLocale, type Block } from "@/content/blog/posts";
+import { POSTS, POSTS_BY_DATE, getPost, type BlogLocale, type Block } from "@/content/blog/posts";
 import { routing } from "../../../../../i18n/routing";
 
 const DATE_LOCALE: Record<string, string> = { fr: "fr-FR", en: "en-US", ar: "ar-MA" };
@@ -138,8 +138,43 @@ export default async function BlogPostPage({
             </div>
           </Reveal>
 
+          {/* Related posts — internal linking lifts SEO and dwell time. */}
+          {(() => {
+            const related = POSTS_BY_DATE.filter((p) => p.slug !== slug).slice(0, 2);
+            if (related.length === 0) return null;
+            return (
+              <Reveal delay={120}>
+                <section className="mt-16 border-t border-border pt-10">
+                  <h2 className="mb-6 font-mono text-kicker uppercase tracking-widest text-muted-foreground">
+                    {t("relatedTitle")}
+                  </h2>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {related.map((p) => (
+                      <Link
+                        key={p.slug}
+                        href={`/${locale}/blog/${p.slug}`}
+                        className="group flex h-full flex-col rounded-lg border border-border bg-elevated p-6 transition-colors duration-220 hover:border-foreground"
+                      >
+                        <span className="font-display text-lg font-medium leading-snug transition-colors duration-220 group-hover:text-saffron-600">
+                          {p.title[l]}
+                        </span>
+                        <span className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+                          {p.description[l]}
+                        </span>
+                        <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-saffron-600">
+                          {t("readMore")}
+                          <ArrowUpRight className="h-3 w-3 transition-transform duration-220 group-hover:translate-x-0.5 rtl:scale-x-[-1]" />
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              </Reveal>
+            );
+          })()}
+
           {/* CTA */}
-          <Reveal delay={120}>
+          <Reveal delay={140}>
             <div className="mt-16 rounded-lg border border-saffron-500/30 bg-saffron-500/8 p-8 text-center">
               <Link
                 href={wa}
