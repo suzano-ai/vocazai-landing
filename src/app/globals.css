@@ -17,16 +17,19 @@
     --muted-fg:     34 14% 36%;      /* #6B6049 */
     --border:       34 24% 80%;      /* #DDD0B7 */
 
-    --saffron-50:   38 80% 95%;
-    --saffron-200:  38 86% 80%;
-    --saffron-400:  38 84% 64%;
-    --saffron-500:  36 82% 54%;      /* #E8A12C */
-    --saffron-600:  34 76% 44%;
-    --saffron-700:  32 76% 34%;
+    /* Cobalt — the primary accent. Variable name kept (`saffron`) so all
+       existing Tailwind classes flip color instantly without a refactor. */
+    --saffron-50:   218 80% 95%;
+    --saffron-200:  218 76% 82%;
+    --saffron-400:  220 65% 54%;
+    --saffron-500:  220 70% 40%;     /* #2052BF — deep editorial cobalt */
+    --saffron-600:  220 76% 32%;
+    --saffron-700:  220 78% 24%;
 
-    --teal-500:     181 79% 26%;     /* #0E7475 */
-    --teal-600:     181 81% 20%;
-    --teal-700:     181 81% 16%;     /* #0A5455 */
+    /* Coral — warm punctuation, replaces the old teal slot. */
+    --teal-500:     12 72% 54%;      /* #DC6B47 — coral terracotta */
+    --teal-600:     12 76% 46%;
+    --teal-700:     12 78% 38%;
 
     --terracotta-500: 14 60% 47%;
     --ink-900:        28 14% 9%;
@@ -44,16 +47,18 @@
     --muted-fg:     38 14% 60%;
     --border:       30 12% 16%;
 
-    --saffron-50:   38 30% 18%;
-    --saffron-200:  38 70% 35%;
-    --saffron-400:  38 82% 60%;
-    --saffron-500:  36 86% 58%;      /* slightly punchier on dark */
-    --saffron-600:  34 78% 48%;
-    --saffron-700:  32 70% 38%;
+    /* Cobalt — punchier on dark ground so it reads from across the room. */
+    --saffron-50:   218 30% 18%;
+    --saffron-200:  218 60% 35%;
+    --saffron-400:  220 75% 65%;
+    --saffron-500:  220 80% 62%;     /* brighter cobalt on dark */
+    --saffron-600:  220 76% 52%;
+    --saffron-700:  220 70% 42%;
 
-    --teal-500:     180 60% 48%;
-    --teal-600:     181 70% 38%;
-    --teal-700:     181 75% 28%;
+    /* Coral — warmer-brighter for dark mode. */
+    --teal-500:     12 82% 62%;
+    --teal-600:     12 78% 52%;
+    --teal-700:     12 72% 42%;
 
     --terracotta-500: 14 70% 60%;
   }
