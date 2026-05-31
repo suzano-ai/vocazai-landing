@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
-import { Khatam, Arch, Waveform, NeuralNetwork } from "@/components/zellige";
+import { Waveform, NeuralNetwork } from "@/components/zellige";
 import { VoiceOver } from "@/components/voice-over";
 
 export const metadata: Metadata = {
@@ -54,19 +54,10 @@ export default function SplashPage() {
         </div>
       </div>
 
-      {/* Geometric ornament — heritage anchors over the AI mesh */}
-      <Khatam
-        size={780}
-        className="slow-rotate pointer-events-none absolute -right-44 -top-44 text-saffron-500/[0.16]"
-      />
-      <Arch
-        size={520}
-        className="slow-rotate-reverse pointer-events-none absolute -left-28 -bottom-36 text-teal-500/[0.16]"
-      />
-      {/* Massive editorial "00" numeral behind the splash — drop-num. */}
+      {/* Massive cover-numeral "00" — the front cover of the magazine. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-12 right-8 select-none font-display italic font-medium leading-none text-saffron-500/[0.08] text-[clamp(18rem,38vw,36rem)]"
+        className="cover-numeral pointer-events-none absolute -bottom-16 right-8 select-none text-saffron-500/15 text-[clamp(18rem,38vw,36rem)]"
       >
         00
       </div>

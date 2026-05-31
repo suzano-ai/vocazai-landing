@@ -15,15 +15,10 @@ import {
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 import { DemoCallCard } from "@/components/landing/demo-call-card";
-import {
-  Khatam,
-  Arch,
-  Quatrefoil,
-  HexLattice,
-} from "@/components/zellige";
 import { AICanvas } from "@/components/ai-canvas";
 import { Reveal } from "@/components/reveal";
 import { JsonLd } from "@/components/json-ld";
+import { WaveformRule } from "@/components/waveform-rule";
 
 export async function generateMetadata({
   params,
@@ -76,22 +71,17 @@ export default async function LandingPage({
         {/* Soft vignette — pulls focus to the content, adds depth. */}
         <div className="hero-vignette pointer-events-none absolute inset-0" />
 
-        {/* Editorial Khatam — large, slowly rotating, clearly visible. */}
-        <Khatam
-          size={620}
-          className="slow-rotate pointer-events-none absolute -right-32 -top-32 text-saffron-500/22"
-        />
-        <HexLattice
-          size={360}
-          className="pointer-events-none absolute -left-20 bottom-8 text-teal-500/18"
-        />
-        {/* Massive editorial "01" numeral behind the hero — magazine drop-num. */}
+        {/* Editorial cover-numeral — replaces every zellige ornament. The
+            massive italic "01" anchors the hero like a magazine cover number. */}
         <div
           aria-hidden
-          className="numeral-mark pointer-events-none absolute -bottom-4 left-4 select-none text-[clamp(14rem,32vw,28rem)] sm:left-12"
-          style={{ color: "hsl(var(--saffron-500) / 0.10)" }}
+          className="cover-numeral pointer-events-none absolute -bottom-8 right-4 select-none sm:right-12"
         >
           01
+        </div>
+        {/* Waveform-rule — the only structural ornament of the new system. */}
+        <div className="pointer-events-none absolute inset-x-0 top-16 text-foreground/20">
+          <WaveformRule variant="active" />
         </div>
 
         <div className="container relative grid items-center gap-10 py-16 sm:py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16 lg:py-0">
@@ -176,9 +166,8 @@ export default async function LandingPage({
       </section>
 
       {/* ============ TRUST MARQUEE ============ */}
-      {/* Composite social-proof band — fictional but believable brand names
-          (geography-neutral) flanked by Khatam glyphs as section punctuation. */}
-      <section className="relative border-b border-border bg-surface/50 py-12">
+      {/* Names separated by a mono asterisk — magazine-style folio rule. */}
+      <section className="relative border-y border-border bg-surface/50 py-12">
         <div className="container mb-6 flex items-center justify-center gap-3">
           <span className="h-px w-12 bg-border" />
           <span className="font-mono text-kicker uppercase text-muted-foreground">
@@ -213,8 +202,9 @@ export default async function LandingPage({
                   <span className="whitespace-nowrap font-display text-xl font-medium italic sm:text-2xl">
                     {name}
                   </span>
-                  {/* small Khatam glyph as delimiter */}
-                  <Khatam size={14} className="shrink-0 text-saffron-500/40" />
+                  <span className="font-mono text-sm text-saffron-500" aria-hidden>
+                    ✱
+                  </span>
                 </span>
               ))}
           </div>
@@ -223,15 +213,18 @@ export default async function LandingPage({
 
       {/* ============ HOW IT WORKS ============ */}
       <section id="how" className="relative overflow-hidden py-28 sm:py-36">
-        <HexLattice
-          size={320}
-          className="pointer-events-none absolute -left-20 top-40 text-saffron-500/8"
-        />
+        {/* Cover-numeral N°02 outdented into the gutter — magazine convention. */}
+        <div aria-hidden className="cover-numeral pointer-events-none absolute -top-10 -right-4 sm:-right-2">
+          02
+        </div>
         <div className="container">
           <Reveal>
+            <div className="mb-12 text-saffron-500">
+              <WaveformRule variant="calm" />
+            </div>
             <div className="mb-20 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
               <div className="max-w-2xl">
-                <SectionKicker number="01" label={t("landing.howItWorks.kicker")} color="saffron" />
+                <SectionKicker number="02" label={t("landing.howItWorks.kicker")} color="saffron" />
                 <h2 className="mt-4 font-display text-display-lg font-medium">
                   {t("landing.howItWorks.title")}
                 </h2>
@@ -281,14 +274,16 @@ export default async function LandingPage({
 
       {/* ============ USE CASES ============ */}
       <section id="uses" className="relative overflow-hidden border-y border-border bg-surface/40 py-28 sm:py-36">
-        <Arch
-          size={460}
-          className="pointer-events-none absolute -right-20 top-20 text-saffron-500/10"
-        />
+        <div aria-hidden className="cover-numeral pointer-events-none absolute -top-10 left-0 sm:left-6">
+          03
+        </div>
         <div className="container">
           <Reveal>
+            <div className="mb-12 text-saffron-500">
+              <WaveformRule variant="calm" />
+            </div>
             <div className="mb-20 max-w-2xl">
-              <SectionKicker number="02" label={t("landing.useCases.kicker")} color="teal" />
+              <SectionKicker number="03" label={t("landing.useCases.kicker")} color="teal" />
               <h2 className="mt-4 font-display text-display-lg font-medium">
                 {t("landing.useCases.title")}
               </h2>
@@ -340,14 +335,16 @@ export default async function LandingPage({
 
       {/* ============ PRICING ============ */}
       <section id="pricing" className="relative overflow-hidden py-28 sm:py-36">
-        <Quatrefoil
-          size={320}
-          className="pointer-events-none absolute -right-16 top-32 text-saffron-500/10"
-        />
+        <div aria-hidden className="cover-numeral pointer-events-none absolute -top-12 right-0 sm:right-6">
+          04
+        </div>
         <div className="container">
           <Reveal>
+            <div className="mb-12 text-saffron-500">
+              <WaveformRule variant="calm" />
+            </div>
             <div className="mb-20 max-w-2xl">
-              <SectionKicker number="03" label={t("landing.pricing.kicker")} color="saffron" />
+              <SectionKicker number="04" label={t("landing.pricing.kicker")} color="saffron" />
               <h2 className="mt-4 font-display text-display-lg font-medium">
                 {t("landing.pricing.title")}
               </h2>
@@ -446,23 +443,18 @@ export default async function LandingPage({
       </section>
 
       {/* ============ FINAL CTA ============ */}
-      {/* Inverted cinematic close — ink ground, slow-rotating Khatam reading
-          as a quiet sundial, faint film grain for atmosphere. */}
+      {/* Editorial close — ink ground, vermillion accent, magazine spread. */}
       <section className="relative overflow-hidden bg-ink-900 py-32 text-saffron-50 sm:py-40">
-        {/* Massive Khatam, slowly rotating. The size + offset make it bleed
-            off two edges, like a magazine binding mark. */}
-        <Khatam
-          size={780}
-          className="slow-rotate pointer-events-none absolute -right-40 -top-40 text-saffron-500/18"
-        />
-        <Arch
-          size={420}
-          className="slow-rotate-reverse pointer-events-none absolute -bottom-24 -left-24 text-teal-500/14"
-        />
-        {/* Film grain — subtle, blended. */}
-        <div className="grain absolute inset-0" aria-hidden />
-        {/* Vertical hairline — magazine column rule. */}
-        <div className="pointer-events-none absolute inset-y-0 right-[14%] hidden w-px bg-saffron-50/8 lg:block" />
+        {/* Massive cover-numeral "06" — the back cover of the magazine. */}
+        <div aria-hidden className="cover-numeral pointer-events-none absolute -bottom-12 right-4 select-none text-saffron-500/30 sm:right-16">
+          06
+        </div>
+        {/* Waveform — single signature ornament, top of the section. */}
+        <div className="pointer-events-none absolute inset-x-0 top-20 text-saffron-50/30">
+          <WaveformRule variant="active" />
+        </div>
+        {/* Vertical hairline — magazine column gutter. */}
+        <div className="pointer-events-none absolute inset-y-0 right-[14%] hidden w-px bg-saffron-50/12 lg:block" />
 
         <div className="container relative">
           <Reveal>
@@ -581,10 +573,10 @@ function UseCase({
 }) {
   return (
     <div className="lift group relative cursor-default overflow-hidden rounded-xl border border-border bg-elevated p-6 hover:border-saffron-500/60 hover:shadow-md hover:shadow-saffron-500/5">
-      {/* Quatrefoil corner glyph — appears on hover, anchors each tile. */}
-      <Quatrefoil
-        size={120}
-        className="pointer-events-none absolute -bottom-8 -right-8 text-saffron-500/0 transition-colors duration-300 group-hover:text-saffron-500/15"
+      {/* Vermillion corner mark — quiet on idle, lit on hover. */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute right-4 top-4 h-1.5 w-1.5 rounded-full bg-saffron-500/0 transition-colors duration-300 group-hover:bg-saffron-500"
       />
       <span className="relative mb-5 inline-grid h-11 w-11 place-items-center rounded-2xl border border-border bg-background text-muted-foreground shadow-sm transition-all duration-220 group-hover:border-saffron-500/50 group-hover:bg-saffron-500/8 group-hover:text-saffron-600">
         {icon}

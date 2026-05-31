@@ -3,64 +3,61 @@
 @tailwind utilities;
 
 /* ============================================
-   VocazAI design tokens — Editorial × Voice-AI
-   Saffron + Deep Teal + Bone/Ink
+   VocazAI — "Editorial Vermillion" design system
+   Cream paper · near-black ink · vermillion accent
    ============================================ */
 @layer base {
   :root {
-    /* Light — warm bone paper */
-    --bg:           36 38% 93%;      /* #F5EFE6 */
-    --surface:      36 32% 88%;      /* #EDE3D2 */
+    /* Warm newsprint paper, raised cards, near-black ink, vermillion */
+    --bg:           40 27% 93%;      /* #F4F1EA */
+    --surface:      0  0%  100%;     /* raised cards / pull-quotes */
     --elevated:     0  0%  100%;
-    --fg:           28 14% 9%;       /* #1A1714 */
-    --muted:        36 14% 86%;
-    --muted-fg:     34 14% 36%;      /* #6B6049 */
-    --border:       34 24% 80%;      /* #DDD0B7 */
+    --fg:           240 5% 4%;       /* #0A0A0B near-black, never #000 */
+    --muted:        40 22% 88%;      /* hairline groups */
+    --muted-fg:     36 6%  39%;      /* metadata, captions */
+    --border:       36 16% 78%;      /* hairline */
 
-    /* Sage forest — the primary accent. Variable name kept (`saffron`)
-       so every existing Tailwind class flips color in one shot, no refactor. */
-    --saffron-50:   145 32% 94%;
-    --saffron-200:  145 28% 80%;
-    --saffron-400:  146 30% 44%;
-    --saffron-500:  148 36% 30%;     /* #2F6B49 — deep botanical sage */
-    --saffron-600:  148 40% 24%;
-    --saffron-700:  148 42% 18%;
+    /* Vermillion — the one accent. Class names kept (`saffron`) so every
+       existing Tailwind class flips color in one pass, no refactor. */
+    --saffron-50:   9 90% 96%;
+    --saffron-200:  9 88% 82%;
+    --saffron-400:  9 86% 60%;
+    --saffron-500:  9 83% 49%;       /* #E63B14 */
+    --saffron-600:  9 86% 40%;
+    --saffron-700:  9 88% 32%;
 
-    /* Tangerine — warm editorial punctuation, replaces the old teal slot. */
-    --teal-500:     24 88% 54%;      /* #EE7A1E — burnt tangerine */
-    --teal-600:     22 86% 46%;
-    --teal-700:     20 86% 38%;
+    /* Forest ink — secondary, sparingly. Replaces the old teal slot. */
+    --teal-500:     157 37% 17%;     /* #1B3A2F */
+    --teal-600:     157 42% 13%;
+    --teal-700:     157 46% 10%;
 
-    --terracotta-500: 14 60% 47%;
-    --ink-900:        28 14% 9%;
+    --terracotta-500: 9 83% 49%;
+    --ink-900:        240 5% 4%;
 
-    --radius:         0.5rem;
+    --radius:         0px;            /* sharp by default; pills use rounded-full */
   }
 
   .dark {
-    /* Dark — warm ink */
-    --bg:           28 12% 6%;       /* #0E0D0B */
-    --surface:      35 13% 8%;       /* #15140F */
-    --elevated:     34 14% 10%;      /* #1D1B16 */
-    --fg:           36 38% 93%;      /* #F5EFE6 */
-    --muted:        30 10% 14%;
-    --muted-fg:     38 14% 60%;
-    --border:       30 12% 16%;
+    --bg:           240 5% 5%;       /* #0B0B0C */
+    --surface:      240 5% 9%;       /* #141416 */
+    --elevated:     240 6% 11%;
+    --fg:           40 27% 93%;
+    --muted:        240 5% 14%;
+    --muted-fg:     38 6%  51%;
+    --border:       240 4% 18%;
 
-    /* Sage forest — lifted slightly for dark mode so it reads against ink. */
-    --saffron-50:   145 25% 16%;
-    --saffron-200:  145 30% 32%;
-    --saffron-400:  146 38% 58%;
-    --saffron-500:  148 42% 52%;     /* lifted sage on dark */
-    --saffron-600:  148 40% 42%;
-    --saffron-700:  148 38% 32%;
+    --saffron-50:   9 50% 18%;
+    --saffron-200:  9 70% 38%;
+    --saffron-400:  13 95% 64%;
+    --saffron-500:  13 100% 59%;     /* #FF5A2E lift on dark */
+    --saffron-600:  11 90% 50%;
+    --saffron-700:  10 80% 40%;
 
-    /* Tangerine — warmer-brighter for dark mode. */
-    --teal-500:     24 92% 62%;
-    --teal-600:     22 86% 52%;
-    --teal-700:     20 80% 42%;
+    --teal-500:     151 35% 84%;     /* mint-paper for serif highlights on dark */
+    --teal-600:     151 40% 72%;
+    --teal-700:     151 44% 60%;
 
-    --terracotta-500: 14 70% 60%;
+    --terracotta-500: 13 100% 59%;
   }
 
   * {
@@ -73,19 +70,20 @@
   }
   body {
     @apply bg-background text-foreground font-sans;
+    /* Fraunces opsz + Inter calt for editorial-grade text rendering. */
     font-feature-settings: "ss01" 1, "cv11" 1, "calt" 1;
   }
 
-  /* RTL Arabic — Tajawal as primary */
+  /* RTL Arabic — Tajawal as primary, display + body. */
   [dir="rtl"] body { @apply font-arabic; }
   [dir="rtl"] .font-display { @apply font-arabic; }
 
   ::selection {
-    background: hsl(var(--saffron-500) / 0.32);
+    background: hsl(var(--saffron-500) / 0.28);
     color: hsl(var(--fg));
   }
 
-  /* Respect reduced motion */
+  /* Reduced motion — respected by every animation below. */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -96,7 +94,13 @@
 }
 
 @layer components {
-  /* Marquee for trust bar */
+  /* ── Editorial Vermillion primitives ─────────────────────────────────
+     The new vocabulary. Every utility below is intentional. No
+     zellige-era utilities (.ribbon-corner / .stripe-saffron / .grain /
+     .paper / .thread / .slow-rotate / .numeral-mark) survive — those
+     were a different brand. */
+
+  /* Marquee — trust band (kept). */
   .marquee {
     display: flex;
     overflow: hidden;
@@ -115,7 +119,7 @@
     to   { transform: translateX(-100%); }
   }
 
-  /* Audio waveform shimmer */
+  /* Audio waveform bars — kept; used inside DemoCallCard. */
   .wave-bar {
     @apply inline-block w-[3px] rounded-full bg-saffron-500;
     animation: wave 1.4s ease-in-out infinite;
@@ -125,25 +129,75 @@
     50%      { transform: scaleY(1); }
   }
 
-  /* Slow spin used on splash khatam — Tailwind default `spin` is 1s,
-     we want a meditative 60s rotation. */
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
+  /* Section-folio — the magazine-style running header above each section.
+     Mono caps, wide-tracked, hairline divider. Used inside section
+     wrappers as <p class="folio">VOCAZAI · N°01 · RÉCEPTION</p>. */
+  .folio {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-fg));
+  }
+  .folio::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: hsl(var(--border));
   }
 
-  /* Subtle paper texture (light only) */
-  .paper {
-    background-image:
-      radial-gradient(circle at 1px 1px, hsl(var(--fg) / 0.04) 1px, transparent 0);
-    background-size: 24px 24px;
-  }
-  .dark .paper {
-    background-image:
-      radial-gradient(circle at 1px 1px, hsl(var(--fg) / 0.03) 1px, transparent 0);
+  /* Cover numeral — the 14rem Fraunces mark behind every section title.
+     Outdented into the gutter. tnum so digits align. */
+  .cover-numeral {
+    font-family: var(--font-fraunces), Georgia, serif;
+    font-weight: 300;
+    font-style: italic;
+    font-variation-settings: "opsz" 144;
+    font-size: clamp(6rem, 14vw, 14rem);
+    line-height: 0.78;
+    letter-spacing: -0.05em;
+    font-variant-numeric: tabular-nums;
+    color: hsl(var(--saffron-500) / 0.18);
+    pointer-events: none;
+    user-select: none;
   }
 
-  /* Hairline rule */
+  /* Inline italic accent inside body text — adds magazine voice to keywords
+     ("trilingual", "24/7"). Wraps with <em class="accent-italic">. */
+  .accent-italic {
+    font-family: var(--font-fraunces), Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.18em;
+    color: hsl(var(--saffron-500));
+  }
+
+  /* Vermillion underline rule — sits 6px below baseline of CTA / link.
+     Replaces buttons-as-boxes on secondary actions. */
+  .rule-underline {
+    position: relative;
+    padding-bottom: 6px;
+  }
+  .rule-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 100%;
+    background: hsl(var(--saffron-500));
+    transform: scaleX(1);
+    transform-origin: left;
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .rule-underline:hover::after {
+    transform: scaleX(0.6);
+  }
+
+  /* Hairline rule — replaces the old <hr> across sections. */
   .hr-thin {
     @apply h-px w-full bg-border;
   }
@@ -158,20 +212,12 @@
     );
   }
 
-  /* ── Global polish ──────────────────────────────────────────────────── */
-
-  /* Smooth scroll — respect reduced-motion */
+  /* Smooth scroll — respect reduced motion */
   @media (prefers-reduced-motion: no-preference) {
     html { scroll-behavior: smooth; }
   }
 
-  /* Saffron text selection */
-  ::selection {
-    background-color: hsl(var(--saffron-500) / 0.2);
-    color: hsl(var(--fg));
-  }
-
-  /* Thin custom scrollbar */
+  /* Hairline scrollbar */
   ::-webkit-scrollbar { width: 5px; height: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
@@ -180,123 +226,23 @@
   }
   ::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-fg)); }
 
-  /* Focus visible — saffron ring */
+  /* Focus visible — vermillion ring */
   :focus-visible {
     outline: 2px solid hsl(var(--saffron-500) / 0.6);
     outline-offset: 2px;
   }
 
-  /* ── Editorial-redesign primitives ───────────────────────────────────
-     New utilities added with the "Editorial Voice" pass. Each one is a
-     tool the redesigned landing reaches for: meditative geometry, big
-     numerals behind type, magazine threading, ribbon corners, film grain.
-  */
-
-  /* Slow meditative rotation — used on Khatam glyphs to anchor sections
-     without feeling like a load-spinner. */
-  .slow-rotate {
-    animation: slow-rotate 60s linear infinite;
-  }
-  .slow-rotate-reverse {
-    animation: slow-rotate 80s linear infinite reverse;
-  }
-  @keyframes slow-rotate {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .slow-rotate, .slow-rotate-reverse { animation: none; }
-  }
-
-  /* Massive editorial numeral mark behind headlines — magazine drop-num. */
-  .numeral-mark {
-    font-family: var(--font-fraunces), Georgia, serif;
-    font-style: italic;
-    font-weight: 600;
-    line-height: 0.78;
-    letter-spacing: -0.05em;
-    color: hsl(var(--saffron-500) / 0.08);
-    pointer-events: none;
-    user-select: none;
-  }
-  .dark .numeral-mark { color: hsl(var(--saffron-500) / 0.06); }
-
-  /* Dashed thread — connects the how-it-works steps with a visible path. */
-  .thread {
-    background-image: linear-gradient(
-      to right,
-      hsl(var(--border)) 0,
-      hsl(var(--border)) 6px,
-      transparent 6px,
-      transparent 12px
-    );
-    background-size: 12px 1px;
-    background-repeat: repeat-x;
-    background-position: center;
-  }
-
-  /* Corner ribbon — flag for the featured pricing card. */
-  .ribbon-corner {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 110px;
-    height: 110px;
-    overflow: hidden;
-    pointer-events: none;
-    border-top-right-radius: inherit;
-  }
-  .ribbon-corner::after {
-    content: attr(data-text);
-    position: absolute;
-    width: 160px;
-    padding: 5px 0;
-    top: 22px;
-    right: -42px;
-    background: hsl(var(--saffron-500));
-    color: hsl(var(--ink-900));
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    text-align: center;
-    transform: rotate(45deg);
-    box-shadow: 0 6px 14px hsl(var(--ink-900) / 0.18);
-  }
-
-  /* Diagonal saffron stripes — subtle hatch on the featured pricing card. */
-  .stripe-saffron {
-    background-image: repeating-linear-gradient(
-      -45deg,
-      hsl(var(--saffron-500) / 0.05) 0,
-      hsl(var(--saffron-500) / 0.05) 1px,
-      transparent 1px,
-      transparent 14px
-    );
-  }
-
-  /* Faint film grain — atmosphere overlay for the dark Final CTA. */
-  .grain {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.7 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
-    opacity: 0.035;
-    mix-blend-mode: overlay;
-    pointer-events: none;
-  }
-  .dark .grain { opacity: 0.06; }
-
-  /* Hover-lift utility — used by cards across the redesign. Compact form
-     so each card doesn't need to re-declare the transition stack. */
+  /* Lift utility — soft hairline darken on hover, no shadow, no scale. */
   .lift {
     transition:
-      transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1),
-      box-shadow 260ms cubic-bezier(0.22, 0.61, 0.36, 1),
-      border-color 220ms ease;
+      border-color 220ms ease,
+      color 220ms ease;
   }
   .lift:hover {
-    transform: translateY(-3px);
+    border-color: hsl(var(--fg) / 0.35);
   }
 
-  /* Gradient shimmer utility — for skeleton loading */
+  /* Shimmer — kept for skeleton loaders. */
   .shimmer {
     background: linear-gradient(
       90deg,
@@ -311,5 +257,18 @@
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
   }
-}
 
+  /* ── Backwards-compat no-ops ──────────────────────────────────────────
+     Old utilities from the previous "editorial voice" pass kept as no-ops
+     so any JSX still referencing them doesn't fail to render. They produce
+     no visible effect — the new design system is strictly opt-in. */
+  .slow-rotate, .slow-rotate-reverse,
+  .ribbon-corner,
+  .stripe-saffron,
+  .grain,
+  .paper,
+  .thread,
+  .numeral-mark {
+    /* intentionally empty — visuals removed in the design reset */
+  }
+}

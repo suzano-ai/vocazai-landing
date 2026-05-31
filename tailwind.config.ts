@@ -61,11 +61,14 @@ const config: Config = {
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       fontSize: {
-        "display-2xl": ["clamp(3.5rem, 9vw, 8rem)", { lineHeight: "0.9", letterSpacing: "-0.045em" }],
-        "display-xl":  ["clamp(3rem, 7vw, 6rem)",   { lineHeight: "0.95", letterSpacing: "-0.04em" }],
-        "display-lg":  ["clamp(2.25rem, 5vw, 4rem)", { lineHeight: "1", letterSpacing: "-0.03em" }],
+        /* "Editorial Vermillion" type scale — Fraunces opsz variable.
+           Display sizes pushed so the magazine-cover feel actually reads
+           as cover, not "big body". */
+        "display-2xl": ["clamp(5rem, 11vw, 11.5rem)",   { lineHeight: "0.86", letterSpacing: "-0.04em" }],
+        "display-xl":  ["clamp(3rem, 7vw, 7rem)",       { lineHeight: "0.92", letterSpacing: "-0.035em" }],
+        "display-lg":  ["clamp(2.25rem, 5.5vw, 5rem)",  { lineHeight: "0.98", letterSpacing: "-0.03em" }],
         "display-md":  ["clamp(1.75rem, 3.5vw, 2.75rem)", { lineHeight: "1.05", letterSpacing: "-0.02em" }],
-        "kicker":      ["0.75rem", { lineHeight: "1", letterSpacing: "0.18em" }],
+        "kicker":      ["0.6875rem", { lineHeight: "1", letterSpacing: "0.22em" }],
       },
       transitionTimingFunction: {
         soft: "cubic-bezier(0.2, 0.6, 0.2, 1)",
