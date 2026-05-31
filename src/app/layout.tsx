@@ -103,7 +103,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon:
-      "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232052BF'/><text x='50%25' y='58%25' dominant-baseline='middle' text-anchor='middle' font-family='Fraunces, serif' font-weight='800' font-style='italic' font-size='22' fill='%231A1714'>V</text></svg>",
+      "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232F6B49'/><text x='50%25' y='58%25' dominant-baseline='middle' text-anchor='middle' font-family='Fraunces, serif' font-weight='800' font-style='italic' font-size='22' fill='%231A1714'>V</text></svg>",
   },
   // Search-engine ownership verification — wired to env so each console's
   // verification meta tag appears as soon as the value is set in .env.local.

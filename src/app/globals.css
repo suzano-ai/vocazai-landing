@@ -17,19 +17,19 @@
     --muted-fg:     34 14% 36%;      /* #6B6049 */
     --border:       34 24% 80%;      /* #DDD0B7 */
 
-    /* Cobalt — the primary accent. Variable name kept (`saffron`) so all
-       existing Tailwind classes flip color instantly without a refactor. */
-    --saffron-50:   218 80% 95%;
-    --saffron-200:  218 76% 82%;
-    --saffron-400:  220 65% 54%;
-    --saffron-500:  220 70% 40%;     /* #2052BF — deep editorial cobalt */
-    --saffron-600:  220 76% 32%;
-    --saffron-700:  220 78% 24%;
+    /* Sage forest — the primary accent. Variable name kept (`saffron`)
+       so every existing Tailwind class flips color in one shot, no refactor. */
+    --saffron-50:   145 32% 94%;
+    --saffron-200:  145 28% 80%;
+    --saffron-400:  146 30% 44%;
+    --saffron-500:  148 36% 30%;     /* #2F6B49 — deep botanical sage */
+    --saffron-600:  148 40% 24%;
+    --saffron-700:  148 42% 18%;
 
-    /* Coral — warm punctuation, replaces the old teal slot. */
-    --teal-500:     12 72% 54%;      /* #DC6B47 — coral terracotta */
-    --teal-600:     12 76% 46%;
-    --teal-700:     12 78% 38%;
+    /* Tangerine — warm editorial punctuation, replaces the old teal slot. */
+    --teal-500:     24 88% 54%;      /* #EE7A1E — burnt tangerine */
+    --teal-600:     22 86% 46%;
+    --teal-700:     20 86% 38%;
 
     --terracotta-500: 14 60% 47%;
     --ink-900:        28 14% 9%;
@@ -47,18 +47,18 @@
     --muted-fg:     38 14% 60%;
     --border:       30 12% 16%;
 
-    /* Cobalt — punchier on dark ground so it reads from across the room. */
-    --saffron-50:   218 30% 18%;
-    --saffron-200:  218 60% 35%;
-    --saffron-400:  220 75% 65%;
-    --saffron-500:  220 80% 62%;     /* brighter cobalt on dark */
-    --saffron-600:  220 76% 52%;
-    --saffron-700:  220 70% 42%;
+    /* Sage forest — lifted slightly for dark mode so it reads against ink. */
+    --saffron-50:   145 25% 16%;
+    --saffron-200:  145 30% 32%;
+    --saffron-400:  146 38% 58%;
+    --saffron-500:  148 42% 52%;     /* lifted sage on dark */
+    --saffron-600:  148 40% 42%;
+    --saffron-700:  148 38% 32%;
 
-    /* Coral — warmer-brighter for dark mode. */
-    --teal-500:     12 82% 62%;
-    --teal-600:     12 78% 52%;
-    --teal-700:     12 72% 42%;
+    /* Tangerine — warmer-brighter for dark mode. */
+    --teal-500:     24 92% 62%;
+    --teal-600:     22 86% 52%;
+    --teal-700:     20 80% 42%;
 
     --terracotta-500: 14 70% 60%;
   }

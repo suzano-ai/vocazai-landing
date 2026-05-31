@@ -982,27 +982,12 @@
       };
 
       try {
-        // Resend API integration ready
-        const response = await fetch('https://api.resend.com/emails', {
+        const response = await fetch('/api/contact', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer re_QZi9pffr_FwKhJdKWfhDfJSMuBMrTtkeP'
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify({
-            from: 'VocazAI <onboarding@resend.dev>',
-            to: ['contact@vocazai.com'],
-            subject: `Nouvelle demande de démo - ${data.first_name} ${data.last_name}`,
-            html: `
-              <h2>Nouvelle demande de démo VocazAI</h2>
-              <p><strong>Nom :</strong> ${data.first_name} ${data.last_name}</p>
-              <p><strong>Email :</strong> ${data.email}</p>
-              <p><strong>Téléphone :</strong> ${data.phone}</p>
-              <p><strong>Secteur :</strong> ${data.industry}</p>
-              <p><strong>Volume d'appels :</strong> ${data.call_volume}</p>
-              <p><strong>Message :</strong> ${data.message || 'Aucun message'}</p>
-            `
-          })
+          body: JSON.stringify(data)
         });
         
         // Show success regardless (email will work once domain is configured)

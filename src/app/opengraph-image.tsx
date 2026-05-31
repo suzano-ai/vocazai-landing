@@ -28,7 +28,7 @@ export default async function OG() {
           viewBox="0 0 200 200"
           style={{ position: "absolute", right: -60, top: -60, opacity: 0.12 }}
         >
-          <g transform="translate(100 100)" stroke="#2052BF" strokeWidth="0.8" fill="none">
+          <g transform="translate(100 100)" stroke="#2F6B49" strokeWidth="0.8" fill="none">
             <polygon points="0,-92 26,-26 92,0 26,26 0,92 -26,26 -92,0 -26,-26" />
             <polygon
               points="0,-92 26,-26 92,0 26,26 0,92 -26,26 -92,0 -26,-26"
@@ -48,7 +48,7 @@ export default async function OG() {
               width: 64,
               height: 64,
               borderRadius: 12,
-              background: "#2052BF",
+              background: "#2F6B49",
               color: "#0E0D0B",
               fontSize: 40,
               fontWeight: 800,
@@ -84,7 +84,7 @@ export default async function OG() {
             }}
           >
             <div style={{ display: "flex" }}>L&apos;agent vocal</div>
-            <div style={{ display: "flex", color: "#2052BF", fontStyle: "italic" }}>
+            <div style={{ display: "flex", color: "#2F6B49", fontStyle: "italic" }}>
               qui répond pour vous.
             </div>
           </div>
