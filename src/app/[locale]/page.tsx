@@ -1,14 +1,12 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowRight, Check } from "lucide-react";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
 import { DemoCallCard } from "@/components/landing/demo-call-card";
-import { AICanvas } from "@/components/ai-canvas";
 import { Reveal } from "@/components/reveal";
 import { JsonLd } from "@/components/json-ld";
-import { WaveformRule } from "@/components/waveform-rule";
 
 export async function generateMetadata({
   params,
@@ -32,11 +30,8 @@ export default async function LandingPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations();
-  // All demo / convert CTAs open WhatsApp with a pre-filled message.
   const wa = `https://wa.me/33777345056?text=${encodeURIComponent(t("common.whatsapp"))}`;
 
-  // FAQ structured data (rich result). Organization + SoftwareApplication
-  // are emitted site-wide from the root layout.
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -48,31 +43,24 @@ export default async function LandingPage({
   };
 
   /* ─────────────────────────────────────────────────────────────────────
-     "VOICE ISSUE · No. 01"
-     A magazine-format landing. Each section is one numbered "page" with
-     its own folio (running header), cover-numeral (italic Fraunces 14rem
-     outdented into the gutter) and waveform-rule (the only structural
-     ornament). Patterns deliberately picked to NOT echo SaaS templates:
-       · hero is a single full-bleed cover, no two-column split
-       · demo lives in its own "page", not stuffed into the hero
-       · how-it-works is a vertical manifesto (one row per step)
-       · use cases are a horizontal scroll-snap portfolio
-       · pricing is one horizontal strip, no three-card grid
-       · FAQ is a 2-column magazine spread with Q.01 / Q.02 markers
-       · final-CTA is a back-cover signoff
+     VocazAI · TERMINAL CONSOLE
+     The landing reads like a CLI session — black ground, monospace,
+     phosphor accent, ASCII rules, bracket CTAs. No serif, no magazine
+     vocabulary, no SVG ornaments. Voice infrastructure rendered as
+     terminal infrastructure.
      ────────────────────────────────────────────────────────────────── */
 
   const steps = [
-    { title: t("landing.howItWorks.step1Title"), body: t("landing.howItWorks.step1Body") },
-    { title: t("landing.howItWorks.step2Title"), body: t("landing.howItWorks.step2Body") },
-    { title: t("landing.howItWorks.step3Title"), body: t("landing.howItWorks.step3Body") },
+    { cmd: "describe", title: t("landing.howItWorks.step1Title"), body: t("landing.howItWorks.step1Body") },
+    { cmd: "configure", title: t("landing.howItWorks.step2Title"), body: t("landing.howItWorks.step2Body") },
+    { cmd: "deploy", title: t("landing.howItWorks.step3Title"), body: t("landing.howItWorks.step3Body") },
   ];
 
   const industries = [
-    { kicker: "01 · CLINIQUES", title: t("landing.useCases.clinic"), body: t("landing.useCases.clinicBody") },
-    { kicker: "02 · IMMOBILIER", title: t("landing.useCases.realty"), body: t("landing.useCases.realtyBody") },
-    { kicker: "03 · E-COMMERCE", title: t("landing.useCases.ecom"), body: t("landing.useCases.ecomBody") },
-    { kicker: "04 · RESTAURATION", title: t("landing.useCases.restau"), body: t("landing.useCases.restauBody") },
+    { id: "clinic", title: t("landing.useCases.clinic"), body: t("landing.useCases.clinicBody") },
+    { id: "realty", title: t("landing.useCases.realty"), body: t("landing.useCases.realtyBody") },
+    { id: "ecom", title: t("landing.useCases.ecom"), body: t("landing.useCases.ecomBody") },
+    { id: "restau", title: t("landing.useCases.restau"), body: t("landing.useCases.restauBody") },
   ];
 
   const plans = [
@@ -124,129 +112,120 @@ export default async function LandingPage({
       <JsonLd data={faqJsonLd} />
 
       {/* ════════════════════════════════════════════════════════════════
-          COVER · PAGE 01 — full viewport, one column, massive serif headline
+          BOOT SCREEN · the hero. CLI-style command + massive mono headline
           ════════════════════════════════════════════════════════════════ */}
       <section className="relative flex min-h-[100dvh] flex-col overflow-hidden">
-        <AICanvas className="pointer-events-none absolute inset-0 h-full w-full" />
-        <div className="hero-vignette pointer-events-none absolute inset-0" />
-
-        {/* Cover-numeral — magazine binding mark */}
-        <div
-          aria-hidden
-          className="cover-numeral pointer-events-none absolute -bottom-12 right-2 select-none text-saffron-500/20 sm:right-10"
-        >
-          01
-        </div>
-
-        <div className="container relative flex flex-1 flex-col justify-end pb-24 pt-32 sm:pb-32 lg:pb-40">
-          {/* Folio running header */}
+        <div className="container relative flex flex-1 flex-col justify-between py-20 sm:py-28">
+          {/* Status line — top of the booth screen */}
           <Reveal>
-            <p className="folio mb-14">
-              <span className="text-foreground">VocazAI</span>
-              <span aria-hidden>·</span>
-              <span>N°01</span>
-              <span aria-hidden>·</span>
-              <span>{t("landing.kicker")}</span>
-            </p>
-          </Reveal>
-
-          {/* The cover headline — display-2xl clamps up to ~11.5rem */}
-          <Reveal delay={60}>
-            <h1 className="font-display text-display-2xl font-medium leading-[0.86] tracking-[-0.04em]">
-              <span className="block">{t("landing.heroTitle1")}</span>
-              <span className="block italic text-saffron-500">
-                {t("landing.heroTitle2")}
-              </span>
-            </h1>
-          </Reveal>
-
-          {/* Subtitle + CTAs sit in a magazine "stand-first" row */}
-          <Reveal delay={140}>
-            <div className="mt-16 flex flex-col gap-12 border-t border-border pt-10 lg:flex-row lg:items-end lg:justify-between">
-              <p className="max-w-xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-                {t("landing.heroSubtitle")}
-              </p>
-              <div className="flex flex-wrap items-center gap-8">
-                <Link
-                  href={wa}
-                  className="group inline-flex cursor-pointer items-center gap-3 bg-foreground px-7 py-4 text-sm font-medium uppercase tracking-[0.18em] text-background transition-colors duration-220 hover:bg-saffron-500 hover:text-foreground"
-                >
-                  {t("landing.ctaPrimary")}
-                  <ArrowUpRight className="h-4 w-4 transition-transform duration-220 group-hover:rotate-45 rtl:scale-x-[-1]" />
-                </Link>
-                <a
-                  href="#demo"
-                  className="group inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.22em] text-foreground transition-colors duration-220 hover:text-saffron-500"
-                >
-                  <span className="grid h-9 w-9 place-items-center rounded-full border border-current">
-                    <ArrowDown className="h-3.5 w-3.5 transition-transform duration-220 group-hover:translate-y-0.5" />
-                  </span>
-                  Écouter la démo
-                </a>
-              </div>
+            <div className="status-line">
+              <span><span className="glow">●</span> SYSTEM ONLINE</span>
+              <span>VOCAZAI v.0.2</span>
+              <span>TRILINGUAL · FR · AR · EN</span>
+              <span>24/7</span>
             </div>
           </Reveal>
 
-          {/* Stats foot strip — replaces the old <Stat /> grid */}
-          <Reveal delay={220}>
-            <ul className="mt-16 grid grid-cols-3 gap-px border border-border bg-border text-center">
-              <Stat value="24/7" label={t("landing.stats.available")} />
-              <Stat value="< 800ms" label={t("landing.stats.latency")} />
-              <Stat value="FR · AR · EN" label={t("landing.stats.languages")} />
-            </ul>
-          </Reveal>
-        </div>
+          {/* The booth */}
+          <div className="my-16 max-w-6xl">
+            <Reveal delay={60}>
+              <p className="cmd-line mb-10 text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                START PROCESS — voice_agent.deploy()
+              </p>
+            </Reveal>
 
-        {/* Waveform-rule — closes the cover */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 text-saffron-500/30">
-          <WaveformRule variant="active" />
+            <Reveal delay={120}>
+              <h1 className="text-display-2xl font-medium leading-[0.96] tracking-[-0.05em] text-foreground">
+                <span className="block">{t("landing.heroTitle1")}</span>
+                <span className="block text-saffron-500 cursor-blink">
+                  {t("landing.heroTitle2")}
+                </span>
+              </h1>
+            </Reveal>
+
+            <Reveal delay={200}>
+              <div className="ascii-rule mt-12" />
+            </Reveal>
+
+            <Reveal delay={260}>
+              <div className="mt-12 grid gap-12 lg:grid-cols-[1.4fr_1fr]">
+                <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+                  {t("landing.heroSubtitle")}
+                </p>
+                <div className="flex flex-col gap-4">
+                  <Link href={wa} className="bracket-cta">
+                    {t("landing.ctaPrimary")}
+                  </Link>
+                  <a
+                    href="#demo"
+                    className="group inline-flex items-center gap-2 self-start font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground transition-colors duration-150 hover:text-saffron-500"
+                  >
+                    <ArrowDown className="h-3.5 w-3.5 transition-transform duration-220 group-hover:translate-y-0.5" />
+                    listen / demo --live
+                  </a>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Foot — stats as terminal-output strip */}
+          <Reveal delay={340}>
+            <div className="border-t border-border pt-8">
+              <dl className="grid grid-cols-3 gap-px overflow-hidden border border-border bg-border text-foreground">
+                <StatCell value="24/7" label={t("landing.stats.available")} />
+                <StatCell value="< 800ms" label={t("landing.stats.latency")} />
+                <StatCell value="FR · AR · EN" label={t("landing.stats.languages")} />
+              </dl>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ════════════════════════════════════════════════════════════════
-          PAGE 02 — DEMO. Promoted to its own spread, no longer a hero side-car
+          $ ./demo — the live call card spread
           ════════════════════════════════════════════════════════════════ */}
-      <section
-        id="demo"
-        className="relative overflow-hidden border-t border-border bg-surface/40 py-24 sm:py-32"
-      >
-        <div
-          aria-hidden
-          className="cover-numeral pointer-events-none absolute -top-12 -left-2 select-none sm:left-6"
-        >
-          02
-        </div>
-        <div className="container relative">
+      <section id="demo" className="relative border-t border-border bg-surface py-24 sm:py-32">
+        <div className="container">
           <Reveal>
-            <p className="folio mb-10">
-              <span>N°02</span>
-              <span aria-hidden>·</span>
-              <span>DEMO LIVE</span>
-              <span aria-hidden>·</span>
-              <span>YASMINE</span>
-            </p>
+            <div className="status-line mb-10">
+              <span>$ ./demo --interactive</span>
+              <span><span className="glow">●</span> RECORDING</span>
+              <span>AGENT YASMINE</span>
+            </div>
           </Reveal>
 
-          <div className="grid items-center gap-16 lg:grid-cols-[1.05fr_1fr] lg:gap-24">
+          <div className="grid items-start gap-16 lg:grid-cols-[1fr_1fr] lg:gap-24">
             <Reveal delay={80}>
               <div>
-                <h2 className="font-display text-display-xl font-medium leading-[0.92] tracking-tight">
-                  Écoutez{" "}
-                  <span className="italic text-saffron-500">Yasmine</span>{" "}
-                  décrocher.
+                <h2 className="text-display-lg font-medium leading-[0.98] tracking-[-0.04em]">
+                  <span className="cmd-line">listen</span>
                 </h2>
-                <p className="mt-10 max-w-md text-lg leading-relaxed text-muted-foreground">
+                <p className="mt-10 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg">
                   Une conversation en direct, sans script. Choisissez la
-                  langue, parlez, et entendez l&apos;agent répondre — comme
-                  le ferait votre meilleure standardiste.
+                  langue, parlez, écoutez l&apos;agent répondre — comme le
+                  ferait votre meilleure standardiste.
                 </p>
-                <div className="mt-10 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground">
-                  <span className="relative grid h-2.5 w-2.5 place-items-center">
-                    <span className="absolute inset-0 animate-ping rounded-full bg-saffron-500/60" />
-                    <span className="relative h-2 w-2 rounded-full bg-saffron-500" />
-                  </span>
-                  En direct · sans configuration
-                </div>
+                <div className="ascii-rule mt-12" />
+                <ul className="mt-8 space-y-3 text-sm">
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 text-saffron-500">{">"}</span>
+                    <span className="text-muted-foreground">
+                      Réponse en moins de <span className="glow">800ms</span>
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 text-saffron-500">{">"}</span>
+                    <span className="text-muted-foreground">
+                      Bascule langue en cours d&apos;appel
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 text-saffron-500">{">"}</span>
+                    <span className="text-muted-foreground">
+                      Prend RDV, envoie email de confirmation
+                    </span>
+                  </li>
+                </ul>
               </div>
             </Reveal>
 
@@ -255,24 +234,20 @@ export default async function LandingPage({
             </Reveal>
           </div>
         </div>
-        <div className="pointer-events-none absolute inset-x-0 -bottom-3 text-saffron-500/20">
-          <WaveformRule variant="calm" />
-        </div>
       </section>
 
       {/* ════════════════════════════════════════════════════════════════
-          TRUST BAND — magazine-style names, mono asterisk delimiters
+          Trust marquee — mono brand names, phosphor asterisk delimiters
           ════════════════════════════════════════════════════════════════ */}
-      <section className="border-y border-border bg-background py-12">
-        <div className="container mb-6 flex items-center justify-center gap-3">
-          <span className="h-px w-12 bg-border" />
-          <span className="font-mono text-kicker uppercase text-muted-foreground">
-            {t("landing.trustBar")}
-          </span>
-          <span className="h-px w-12 bg-border" />
+      <section className="border-y border-border bg-background py-10">
+        <div className="container mb-6">
+          <div className="status-line justify-center">
+            <span>$ uptime — clients</span>
+            <span>{t("landing.trustBar")}</span>
+          </div>
         </div>
         <div className="marquee">
-          <div className="marquee__track text-muted-foreground/60">
+          <div className="marquee__track text-muted-foreground/70">
             {[
               "Clinique Solène",
               "Atelier Vega",
@@ -295,11 +270,11 @@ export default async function LandingPage({
               ])
               .map((name, i) => (
                 <span key={i} className="inline-flex items-center gap-8">
-                  <span className="whitespace-nowrap font-display text-xl font-medium italic sm:text-2xl">
+                  <span className="whitespace-nowrap text-lg uppercase tracking-tight sm:text-xl">
                     {name}
                   </span>
-                  <span className="font-mono text-sm text-saffron-500" aria-hidden>
-                    ✱
+                  <span className="text-saffron-500" aria-hidden>
+                    ✦
                   </span>
                 </span>
               ))}
@@ -308,40 +283,46 @@ export default async function LandingPage({
       </section>
 
       {/* ════════════════════════════════════════════════════════════════
-          PAGE 03 — METHOD. Vertical manifesto, one row per step
+          $ ./how_it_works — 3 commands, ASCII-ruled
           ════════════════════════════════════════════════════════════════ */}
-      <section id="how" className="relative py-32 sm:py-40">
-        <div
-          aria-hidden
-          className="cover-numeral pointer-events-none absolute -top-10 right-0 select-none sm:right-6"
-        >
-          03
-        </div>
-        <div className="container relative">
+      <section id="how" className="relative py-28 sm:py-36">
+        <div className="container">
           <Reveal>
-            <p className="folio mb-10">
-              <span>N°03</span>
-              <span aria-hidden>·</span>
-              <span>METHOD</span>
-            </p>
-            <h2 className="mb-20 max-w-3xl font-display text-display-xl font-medium leading-[0.92] tracking-tight">
-              {t("landing.howItWorks.title")}
+            <div className="status-line mb-10">
+              <span>$ ./method</span>
+              <span>3 STEPS</span>
+            </div>
+            <h2 className="mb-12 max-w-3xl text-display-xl font-medium leading-[1.0] tracking-[-0.045em]">
+              <span className="cmd-line">{t("landing.howItWorks.title")}</span>
             </h2>
+            <p className="mb-20 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              {t("landing.howItWorks.subtitle")}
+            </p>
+            <div className="ascii-rule" />
           </Reveal>
 
-          <div className="border-t border-border">
+          <div>
             {steps.map((step, i) => (
-              <Reveal key={i} delay={i * 80}>
-                <div className="grid grid-cols-1 items-baseline gap-8 border-b border-border py-14 lg:grid-cols-[160px_1fr_1.4fr] lg:gap-16 lg:py-20">
-                  <div className="font-display text-7xl font-medium italic leading-none tracking-tight text-saffron-500 lg:text-8xl">
-                    {String(i + 1).padStart(2, "0")}
+              <Reveal key={step.cmd} delay={i * 80}>
+                <div className="grid grid-cols-1 items-baseline gap-6 border-b border-border py-12 lg:grid-cols-[180px_220px_1fr] lg:gap-12 lg:py-16">
+                  <div className="text-saffron-500">
+                    <span className="text-base">{">"}</span>
+                    <span className="ml-2 text-base uppercase tracking-[0.18em]">
+                      0{i + 1}/03
+                    </span>
                   </div>
-                  <h3 className="font-display text-2xl font-medium leading-tight lg:text-3xl">
-                    {step.title}
-                  </h3>
-                  <p className="text-base leading-relaxed text-muted-foreground lg:text-lg">
-                    {step.body}
-                  </p>
+                  <div className="text-lg uppercase tracking-tight text-foreground">
+                    <span className="text-muted-foreground">{"./"}</span>
+                    {step.cmd}
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-medium leading-tight tracking-tight">
+                      {step.title}
+                    </h3>
+                    <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                      {step.body}
+                    </p>
+                  </div>
                 </div>
               </Reveal>
             ))}
@@ -350,160 +331,128 @@ export default async function LandingPage({
       </section>
 
       {/* ════════════════════════════════════════════════════════════════
-          PAGE 04 — INDUSTRIES. Horizontal scroll-snap portfolio
+          $ ls /industries — terminal directory listing
           ════════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden border-t border-border bg-surface/40 py-32 sm:py-40">
-        <div
-          aria-hidden
-          className="cover-numeral pointer-events-none absolute -top-10 left-0 select-none sm:left-6"
-        >
-          04
-        </div>
-        <div className="container relative">
+      <section className="relative border-t border-border bg-surface py-28 sm:py-36">
+        <div className="container">
           <Reveal>
-            <p className="folio mb-10">
-              <span>N°04</span>
-              <span aria-hidden>·</span>
-              <span>INDUSTRIES</span>
-            </p>
-            <div className="mb-14 grid items-end gap-8 sm:grid-cols-[1fr_auto]">
-              <h2 className="max-w-3xl font-display text-display-xl font-medium leading-[0.92] tracking-tight">
-                {t("landing.useCases.title")}
-              </h2>
-              <Link
-                href={`/${locale}/use-cases`}
-                className="rule-underline inline-flex items-center gap-2 self-end font-mono text-xs uppercase tracking-[0.22em] text-foreground"
-              >
-                {t("landing.useCases.seeAll")}
-                <ArrowRight className="h-3 w-3 rtl:rotate-180" />
-              </Link>
+            <div className="status-line mb-10">
+              <span>$ ls /industries</span>
+              <span>{industries.length} DIRS</span>
             </div>
-            <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/70">
-              ← Glissez pour parcourir →
-            </p>
+            <h2 className="mb-12 max-w-3xl text-display-xl font-medium leading-[1.0] tracking-[-0.045em]">
+              <span className="cmd-line">{t("landing.useCases.title")}</span>
+            </h2>
+            <div className="ascii-rule mb-12" />
           </Reveal>
-        </div>
 
-        {/* Horizontal scroll-snap — full bleed past container */}
-        <div className="snap-x snap-mandatory overflow-x-auto">
-          <div className="flex gap-6 px-6 pb-12 lg:px-12 xl:px-20">
+          {/* Terminal directory listing — each industry a row */}
+          <div className="grid grid-cols-1 gap-px overflow-hidden border border-border bg-border md:grid-cols-2">
             {industries.map((u, i) => (
-              <Reveal key={u.title} delay={i * 60}>
-                <article className="lift relative flex min-w-[86vw] max-w-2xl shrink-0 snap-center flex-col justify-between border border-border bg-elevated p-10 hover:border-foreground/40 sm:min-w-[560px] lg:p-14">
-                  <div>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-saffron-500">
-                      {u.kicker}
-                    </p>
-                    <h3 className="mt-8 font-display text-3xl font-medium italic leading-tight lg:text-4xl">
-                      {u.title}
-                    </h3>
-                    <p className="mt-6 text-base leading-relaxed text-muted-foreground lg:text-lg">
-                      {u.body}
-                    </p>
+              <Reveal key={u.id} delay={i * 60}>
+                <article className="group relative flex h-full flex-col bg-background p-8 transition-colors duration-200 hover:bg-elevated lg:p-10">
+                  <div className="flex items-center justify-between text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                    <span>./{u.id}</span>
+                    <span>{String(i + 1).padStart(2, "0")}/0{industries.length}</span>
                   </div>
-                  <div className="mt-16 flex items-center justify-between border-t border-border pt-6">
-                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                      {String(i + 1).padStart(2, "0")} / 04
-                    </span>
-                    <span className="h-1.5 w-1.5 rounded-full bg-saffron-500" />
+                  <h3 className="mt-8 text-2xl font-medium leading-tight tracking-tight text-foreground lg:text-3xl">
+                    {u.title}
+                  </h3>
+                  <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                    {u.body}
+                  </p>
+                  <div className="mt-8 flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-saffron-500 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                    <span>{">"}</span>
+                    <span>open()</span>
                   </div>
                 </article>
               </Reveal>
             ))}
           </div>
+
+          <Reveal>
+            <div className="mt-10">
+              <Link href={`/${locale}/use-cases`} className="bracket-cta">
+                {t("landing.useCases.seeAll")}
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ════════════════════════════════════════════════════════════════
-          PAGE 05 — PRICING. Horizontal strip, 3 cells with hairline dividers
+          $ ./pricing.json — 3 plans, terminal table
           ════════════════════════════════════════════════════════════════ */}
-      <section id="pricing" className="relative py-32 sm:py-40">
-        <div
-          aria-hidden
-          className="cover-numeral pointer-events-none absolute -top-12 right-0 select-none sm:right-6"
-        >
-          05
-        </div>
-        <div className="container relative">
+      <section id="pricing" className="relative py-28 sm:py-36">
+        <div className="container">
           <Reveal>
-            <p className="folio mb-10">
-              <span>N°05</span>
-              <span aria-hidden>·</span>
-              <span>PRICING</span>
-            </p>
-            <div className="mb-16 grid items-end gap-8 sm:grid-cols-[1fr_auto]">
-              <h2 className="max-w-3xl font-display text-display-xl font-medium leading-[0.92] tracking-tight">
-                {t("landing.pricing.title")}
-              </h2>
-              <p className="self-end text-base text-muted-foreground sm:max-w-xs sm:text-right">
-                {t("landing.pricing.subtitle")}
-              </p>
+            <div className="status-line mb-10">
+              <span>$ cat pricing.json</span>
+              <span>USD</span>
+              <span>FIRST MONTH FREE</span>
             </div>
+            <h2 className="mb-12 max-w-3xl text-display-xl font-medium leading-[1.0] tracking-[-0.045em]">
+              <span className="cmd-line">{t("landing.pricing.title")}</span>
+            </h2>
+            <p className="mb-12 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              {t("landing.pricing.subtitle")}
+            </p>
+            <div className="ascii-rule mb-12" />
           </Reveal>
 
-          {/* The horizontal strip — one row, three cells. On mobile stacks. */}
-          <Reveal delay={80}>
-            <div className="grid border-y-2 border-foreground lg:grid-cols-3">
-              {plans.map((plan) => (
+          <div className="grid gap-px overflow-hidden border border-border bg-border lg:grid-cols-3">
+            {plans.map((plan) => (
+              <Reveal key={plan.name} delay={0}>
                 <div
-                  key={plan.name}
-                  className={`relative flex flex-col border-b border-border p-10 lg:border-b-0 lg:border-r lg:p-12 [&:last-child]:border-r-0 [&:last-child]:border-b-0 ${
-                    plan.featured ? "bg-saffron-500/5" : ""
+                  className={`flex h-full flex-col p-8 lg:p-10 ${
+                    plan.featured ? "bg-elevated" : "bg-background"
                   }`}
                 >
-                  {plan.featured && (
-                    <span className="absolute right-6 top-6 inline-flex items-center gap-1.5 bg-saffron-500 px-3 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.18em] text-background">
-                      <Sparkles className="h-3 w-3" />
-                      {t("landing.pricing.recommended")}
-                    </span>
-                  )}
-
-                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                    {plan.name}
+                  <div className="flex items-center justify-between text-xs uppercase tracking-[0.22em]">
+                    <span className="text-muted-foreground">./{plan.name.toLowerCase()}</span>
+                    {plan.featured && (
+                      <span className="border border-saffron-500 px-2 py-0.5 text-saffron-500">
+                        recommended
+                      </span>
+                    )}
                   </div>
 
-                  {/* MASSIVE price — Fraunces display, 96px tabular */}
-                  <div className="mt-6 font-display text-[clamp(64px,9vw,96px)] font-medium leading-none tracking-tight tabular-nums">
+                  <div className="mt-8 text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-none tracking-[-0.05em] tabular-nums text-foreground">
                     {plan.price}
                   </div>
 
-                  <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
                     {plan.body}
                   </p>
 
-                  <ul className="mt-10 space-y-3 text-sm">
+                  <div className="ascii-rule my-8" />
+
+                  <ul className="space-y-2.5 text-sm">
                     {plan.features.map((f) => (
                       <li key={f} className="flex items-start gap-2.5">
                         <Check className="mt-0.5 h-4 w-4 shrink-0 text-saffron-500" />
-                        <span>{f}</span>
+                        <span className="text-foreground/85">{f}</span>
                       </li>
                     ))}
                   </ul>
 
-                  <div className="mt-auto pt-12">
-                    <Link
-                      href={wa}
-                      className={`group inline-flex items-center gap-3 ${
-                        plan.featured
-                          ? "bg-foreground px-5 py-3 text-sm font-medium uppercase tracking-[0.18em] text-background transition-colors duration-220 hover:bg-saffron-500 hover:text-foreground"
-                          : "rule-underline font-mono text-xs uppercase tracking-[0.22em] text-foreground"
-                      }`}
-                    >
+                  <div className="mt-auto pt-10">
+                    <Link href={wa} className="bracket-cta">
                       {plan.cta}
-                      <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-220 group-hover:rotate-45 rtl:scale-x-[-1]" />
                     </Link>
                   </div>
                 </div>
-              ))}
-            </div>
-          </Reveal>
+              </Reveal>
+            ))}
+          </div>
 
           <Reveal>
-            <div className="mt-10 text-center">
+            <div className="mt-8">
               <Link
                 href={`/${locale}/pricing`}
-                className="rule-underline inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.22em] text-foreground"
+                className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-muted-foreground transition-colors duration-150 hover:text-saffron-500"
               >
+                <span>{">"}</span>
                 {t("landing.pricing.compareAll")}
                 <ArrowRight className="h-3 w-3 rtl:rotate-180" />
               </Link>
@@ -513,39 +462,34 @@ export default async function LandingPage({
       </section>
 
       {/* ════════════════════════════════════════════════════════════════
-          PAGE 06 — FAQ. Two-column magazine spread, Q.01 / Q.02 markers
+          $ man vocazai — FAQ as terminal man-page pairs
           ════════════════════════════════════════════════════════════════ */}
-      <section id="faq" className="relative border-t border-border bg-surface/40 py-32 sm:py-40">
-        <div
-          aria-hidden
-          className="cover-numeral pointer-events-none absolute -top-12 left-0 select-none sm:left-6"
-        >
-          06
-        </div>
-        <div className="container relative max-w-6xl">
+      <section id="faq" className="relative border-t border-border bg-surface py-28 sm:py-36">
+        <div className="container max-w-6xl">
           <Reveal>
-            <p className="folio mb-10">
-              <span>N°06</span>
-              <span aria-hidden>·</span>
+            <div className="status-line mb-10">
+              <span>$ man vocazai</span>
               <span>FAQ</span>
-            </p>
-            <h2 className="mb-20 max-w-3xl font-display text-display-xl font-medium leading-[0.92] tracking-tight">
-              {t("landing.faq.title")}
+            </div>
+            <h2 className="mb-12 max-w-3xl text-display-xl font-medium leading-[1.0] tracking-[-0.045em]">
+              <span className="cmd-line">{t("landing.faq.title")}</span>
             </h2>
+            <div className="ascii-rule mb-12" />
           </Reveal>
 
-          <div className="grid gap-x-16 gap-y-14 md:grid-cols-2">
+          <div className="grid gap-12 md:grid-cols-2 md:gap-x-16">
             {[1, 2, 3, 4].map((i) => (
               <Reveal key={i} delay={i * 60}>
-                <div className="border-t border-foreground pt-6">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-saffron-500">
-                    Q.0{i}
+                <div>
+                  <p className="text-xs uppercase tracking-[0.22em] text-saffron-500">
+                    Q.{String(i).padStart(2, "0")}
                   </p>
-                  <h3 className="mt-4 font-display text-2xl font-medium italic leading-snug">
+                  <h3 className="mt-3 text-xl font-medium leading-snug tracking-tight text-foreground">
                     {t(`landing.faq.q${i}`)}
                   </h3>
-                  <p className="mt-5 text-base leading-relaxed text-muted-foreground">
-                    {t(`landing.faq.a${i}`)}
+                  <p className="mt-4 flex gap-2 text-base leading-relaxed text-muted-foreground">
+                    <span className="shrink-0 text-saffron-500">{">"}</span>
+                    <span>{t(`landing.faq.a${i}`)}</span>
                   </p>
                 </div>
               </Reveal>
@@ -555,58 +499,52 @@ export default async function LandingPage({
       </section>
 
       {/* ════════════════════════════════════════════════════════════════
-          BACK COVER · PAGE 07 — final CTA, inverted, ink ground
+          EXIT — final CTA, full ground, phosphor everywhere
           ════════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-ink-900 py-40 text-saffron-50 sm:py-48">
-        <div
-          aria-hidden
-          className="cover-numeral pointer-events-none absolute -bottom-16 right-2 select-none text-saffron-500/30 sm:right-10"
-        >
-          07
-        </div>
-        <div className="pointer-events-none absolute inset-x-0 top-20 text-saffron-50/25">
-          <WaveformRule variant="active" />
-        </div>
-        <div className="pointer-events-none absolute inset-y-0 right-[12%] hidden w-px bg-saffron-50/10 lg:block" />
-
-        <div className="container relative">
+      <section className="relative overflow-hidden bg-background py-32 sm:py-40">
+        <div className="container">
           <Reveal>
-            <p className="folio mb-12" style={{ color: "hsl(var(--saffron-50) / 0.6)" }}>
-              <span>BACK COVER</span>
-              <span aria-hidden>·</span>
-              <span>N°07</span>
-            </p>
+            <div className="status-line mb-12">
+              <span><span className="glow">●</span> READY</span>
+              <span>$ ./start --trial</span>
+              <span>FIRST MONTH FREE</span>
+            </div>
           </Reveal>
 
           <Reveal delay={80}>
-            <h2 className="max-w-4xl font-display text-display-2xl font-medium leading-[0.86] tracking-[-0.04em]">
-              {t("landing.finalCta.title")}
+            <div className="ascii-rule mb-12" />
+          </Reveal>
+
+          <Reveal delay={120}>
+            <h2 className="max-w-4xl text-display-2xl font-medium leading-[0.96] tracking-[-0.05em]">
+              <span className="block">{t("landing.finalCta.title")}</span>
             </h2>
           </Reveal>
 
-          <Reveal delay={140}>
-            <p className="mt-12 max-w-2xl text-lg leading-relaxed text-saffron-50/75">
+          <Reveal delay={200}>
+            <p className="mt-12 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               {t("landing.finalCta.body")}
             </p>
           </Reveal>
 
-          <Reveal delay={220}>
-            <div className="mt-16 flex flex-wrap items-center gap-6 border-t border-saffron-50/15 pt-10">
-              <Link
-                href={wa}
-                className="group inline-flex cursor-pointer items-center gap-3 bg-saffron-500 px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-ink-900 transition-colors duration-220 hover:bg-saffron-400"
-              >
+          <Reveal delay={280}>
+            <div className="mt-12 flex flex-wrap items-center gap-6">
+              <Link href={wa} className="bracket-cta">
                 {t("landing.finalCta.cta")}
-                <ArrowUpRight className="h-4 w-4 transition-transform duration-220 group-hover:rotate-45 rtl:scale-x-[-1]" />
               </Link>
               <Link
                 href={`/${locale}/pricing`}
-                className="rule-underline inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.22em] text-saffron-50/80"
+                className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-muted-foreground transition-colors duration-150 hover:text-saffron-500"
               >
+                <span>{">"}</span>
                 {t("landing.pricing.compareAll")}
                 <ArrowRight className="h-3 w-3 rtl:rotate-180" />
               </Link>
             </div>
+          </Reveal>
+
+          <Reveal delay={360}>
+            <div className="ascii-rule mt-16" />
           </Reveal>
         </div>
       </section>
@@ -618,15 +556,15 @@ export default async function LandingPage({
 
 /* ===================== Sub-components ===================== */
 
-function Stat({ value, label }: { value: string; label: string }) {
+function StatCell({ value, label }: { value: string; label: string }) {
   return (
-    <li className="bg-background px-4 py-5 sm:py-7">
-      <div className="font-display text-xl font-medium tabular-nums sm:text-2xl">
-        {value}
-      </div>
-      <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+    <div className="bg-background px-4 py-5 sm:py-7">
+      <dt className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
         {label}
-      </div>
-    </li>
+      </dt>
+      <dd className="mt-2 text-xl font-medium tracking-tight text-foreground tabular-nums sm:text-2xl">
+        {value}
+      </dd>
+    </div>
   );
 }

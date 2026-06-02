@@ -55,19 +55,21 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
-        display: ["var(--font-fraunces)", "Fraunces", "Georgia", "serif"],
-        arabic: ["var(--font-tajawal)", "Tajawal", "system-ui", "sans-serif"],
-        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        /* Terminal Console — every family now resolves to mono. Fraunces
+           and Inter still ship for back-compat on internal pages but the
+           landing/splash compose on monospace exclusively. */
+        sans:    ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
+        display: ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
+        mono:    ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
+        arabic:  ["var(--font-tajawal)", "Tajawal", "system-ui", "sans-serif"],
       },
       fontSize: {
-        /* "Editorial Vermillion" type scale — Fraunces opsz variable.
-           Display sizes pushed so the magazine-cover feel actually reads
-           as cover, not "big body". */
-        "display-2xl": ["clamp(5rem, 11vw, 11.5rem)",   { lineHeight: "0.86", letterSpacing: "-0.04em" }],
-        "display-xl":  ["clamp(3rem, 7vw, 7rem)",       { lineHeight: "0.92", letterSpacing: "-0.035em" }],
-        "display-lg":  ["clamp(2.25rem, 5.5vw, 5rem)",  { lineHeight: "0.98", letterSpacing: "-0.03em" }],
-        "display-md":  ["clamp(1.75rem, 3.5vw, 2.75rem)", { lineHeight: "1.05", letterSpacing: "-0.02em" }],
+        /* Terminal console type scale — mono, tighter tracking, less drama
+           than serif display since condensed mono doesn't compress well. */
+        "display-2xl": ["clamp(3rem, 8vw, 7.5rem)",   { lineHeight: "0.96", letterSpacing: "-0.05em" }],
+        "display-xl":  ["clamp(2.5rem, 6vw, 5.5rem)", { lineHeight: "1.0",  letterSpacing: "-0.045em" }],
+        "display-lg":  ["clamp(2rem, 4.5vw, 4rem)",   { lineHeight: "1.05", letterSpacing: "-0.04em" }],
+        "display-md":  ["clamp(1.5rem, 3vw, 2.5rem)", { lineHeight: "1.1",  letterSpacing: "-0.03em" }],
         "kicker":      ["0.6875rem", { lineHeight: "1", letterSpacing: "0.22em" }],
       },
       transitionTimingFunction: {
