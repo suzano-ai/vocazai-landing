@@ -5,12 +5,19 @@ const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://vocazai.com";
 /**
  * Robots — search engines and AI assistants are explicitly welcome.
  *
- * The wildcard rule excludes the app surface (dashboard, login, api, auth).
- * The named rules ALLOW every major AI / answer-engine crawler so we can
- * be cited in ChatGPT, Claude, Perplexity, Gemini, Apple Intelligence, etc.
- * Many sites block these by default; we want the opposite.
+ * Why we DO NOT disallow /dashboard or /login here even though they are
+ * private: Google has been reporting "Indexed though blocked by robots.txt"
+ * for those routes, because internal links from the marketing site point
+ * at /login, and Google indexes them anyway from the link signal. Result:
+ * ghost entries in the index with no snippet. The fix is the inverse —
+ * leave them CRAWLABLE, and emit `noindex` from the page-level metadata
+ * so Google can read it and remove them properly. See:
+ *   /[locale]/(dashboard)/layout.tsx and /[locale]/(auth)/layout.tsx.
+ *
+ * /api/ and /auth/callback are NOT pages (no html output) so disallowing
+ * them is fine — Google will never try to index them.
  */
-const APP_DISALLOW = ["/*/dashboard", "/*/login", "/api/", "/auth/"];
+const APP_DISALLOW = ["/api/", "/auth/"];
 
 // Major AI / generative-engine crawlers — all explicitly allowed.
 // References (provider docs): OpenAI, Anthropic, Perplexity, Google, Apple,

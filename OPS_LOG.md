@@ -12,6 +12,13 @@
 
 ---
 
+## 2026-06-14 · Growth Engineer · fix GSC warning "Indexed though blocked by robots.txt"
+- User flagged the Google Search Console warning. This proves Google is actively crawling vocazai.com (good news).
+- Root cause: `src/app/robots.ts` was disallowing `/*/dashboard` and `/*/login`, but the marketing site links to `/login`. Google indexed those URLs from link signal alone, producing ghost entries with no snippet.
+- Fix: removed `/*/dashboard` and `/*/login` from robots disallow (kept `/api/` and `/auth/` which are not html pages). Added `noindex,nofollow` page-level metadata to `(dashboard)/layout.tsx` and created new `(auth)/layout.tsx` with the same. Google can now crawl, sees noindex, and removes them from the index properly.
+- Impact: cleaner index, no more orphan dashboard/login ghosts. Marketing pages get more of the crawl budget.
+- next: cron continues backlog.
+
 ## 2026-06-14 · CEO · IndexNow ping fired (HTTP 202) + WhatsApp prefill rewritten
 - Pinged Bing/Yandex IndexNow API with 10 URLs (new pricing post × 3 locales + sitemap + index pages). Real crawl trigger.
 - Google sitemap ping endpoint deprecated (410) since Jun 2023 — needs Search Console verification code from user to submit programmatically. Logged as blocker.
