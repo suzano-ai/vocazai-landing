@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `standardiste-virtuelle-24-7`
+- commit: `a2ae411`
+- Tier-1 #3. Honest split: what works / what needs prep / what doesn't. Counter to the marketing fluff in the niche. FR/EN/AR ~6 min.
+- next: cron A picks slug #4 (`agent-vocal-ia-restaurant-reservations`) at next :17.
+
 ## 2026-06-15 · Growth Engineer · CRO #6 — blog post end → internal links to /pricing /use-cases /blog
 - commit: `142d53b`
 - Distributes link equity from blog (which captures long-tail traffic) into money pages. Warm readers exiting an article are now routed to commercial surface instead of bouncing.
