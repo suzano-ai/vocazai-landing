@@ -63,6 +63,7 @@ export default async function BlogPostPage({
 
   const t = await getTranslations("blog");
   const tc = await getTranslations("common");
+  const tNav = await getTranslations("nav");
   const l = locale as BlogLocale;
   const wa = `https://wa.me/33777345056?text=${encodeURIComponent(tc("whatsapp"))}`;
   const dateStr = new Date(post.date).toLocaleDateString(
@@ -172,6 +173,38 @@ export default async function BlogPostPage({
               </Reveal>
             );
           })()}
+
+          {/* Next steps — internal links to money pages distribute link
+              equity and route warm readers toward the commercial surface. */}
+          <Reveal delay={130}>
+            <nav
+              aria-label="Next steps"
+              className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-border pt-6 font-mono text-xs uppercase tracking-wider text-muted-foreground"
+            >
+              <span>{">"}</span>
+              <Link
+                href={`/${locale}/pricing`}
+                className="inline-flex items-center gap-1.5 text-saffron-600 transition-colors duration-180 hover:text-saffron-400"
+              >
+                {tNav("pricing")}
+                <ArrowUpRight className="h-3 w-3 rtl:scale-x-[-1]" />
+              </Link>
+              <Link
+                href={`/${locale}/use-cases`}
+                className="inline-flex items-center gap-1.5 text-saffron-600 transition-colors duration-180 hover:text-saffron-400"
+              >
+                {tNav("useCases")}
+                <ArrowUpRight className="h-3 w-3 rtl:scale-x-[-1]" />
+              </Link>
+              <Link
+                href={`/${locale}/blog`}
+                className="inline-flex items-center gap-1.5 text-saffron-600 transition-colors duration-180 hover:text-saffron-400"
+              >
+                {tNav("blog")}
+                <ArrowUpRight className="h-3 w-3 rtl:scale-x-[-1]" />
+              </Link>
+            </nav>
+          </Reveal>
 
           {/* CTA */}
           <Reveal delay={140}>
