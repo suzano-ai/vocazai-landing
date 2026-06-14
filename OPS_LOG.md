@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-prise-rdv-automatique`
+- commit: `cca593d` "feat(blog): add agent-vocal-ia-prise-rdv-automatique"
+- Tier-1 #2 — appointment booking automation. ROI math ($486/mo saved), calendar integrations list, focus-trap warning. FR/EN/AR ~6 min read.
+- next: cron A picks slug #3 (`standardiste-virtuelle-24-7`) at the next :17.
+
 ## 2026-06-14 · Growth Engineer · fix `<html lang>` hardcoded "fr" at SSR
 - Root cause: `src/app/layout.tsx` had `lang="fr"` hardcoded; `LangSetter` updates the value on the client via `useEffect`. Googlebot does not always execute JS, so every `/en/*` and `/ar/*` page was served to crawlers as French. Triple-locale ranking signal broken.
 - Fix: middleware now detects locale from URL pathname and sets an `x-locale` request header. Root layout becomes async, reads `headers().get("x-locale")`, emits `<html lang={locale} dir={dir}>` at SSR. Googlebot now sees correct lang on first byte.
