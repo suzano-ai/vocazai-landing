@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · CRO #6 — blog post end → internal links to /pricing /use-cases /blog
+- commit: `142d53b`
+- Distributes link equity from blog (which captures long-tail traffic) into money pages. Warm readers exiting an article are now routed to commercial surface instead of bouncing.
+- next: cron A picks slug #3 at the next :17; cron B will hit Tech-SEO backlog at the next :47.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-prise-rdv-automatique`
 - commit: `cca593d` "feat(blog): add agent-vocal-ia-prise-rdv-automatique"
 - Tier-1 #2 — appointment booking automation. ROI math ($486/mo saved), calendar integrations list, focus-trap warning. FR/EN/AR ~6 min read.
