@@ -12,6 +12,12 @@
 
 ---
 
+## 2026-06-14 · Growth Engineer · fix `<html lang>` hardcoded "fr" at SSR
+- Root cause: `src/app/layout.tsx` had `lang="fr"` hardcoded; `LangSetter` updates the value on the client via `useEffect`. Googlebot does not always execute JS, so every `/en/*` and `/ar/*` page was served to crawlers as French. Triple-locale ranking signal broken.
+- Fix: middleware now detects locale from URL pathname and sets an `x-locale` request header. Root layout becomes async, reads `headers().get("x-locale")`, emits `<html lang={locale} dir={dir}>` at SSR. Googlebot now sees correct lang on first byte.
+- Impact: EN and AR pages will now rank for their actual languages instead of being filtered out by Google's language matcher.
+- next: cron continues backlog.
+
 ## 2026-06-14 · Growth Engineer · fix GSC warning "Indexed though blocked by robots.txt"
 - User flagged the Google Search Console warning. This proves Google is actively crawling vocazai.com (good news).
 - Root cause: `src/app/robots.ts` was disallowing `/*/dashboard` and `/*/login`, but the marketing site links to `/login`. Google indexed those URLs from link signal alone, producing ghost entries with no snippet.

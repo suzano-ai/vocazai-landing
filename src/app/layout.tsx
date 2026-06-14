@@ -186,14 +186,24 @@ const serviceJsonLd = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Read locale from the request header set in middleware so <html lang>
+  // is correct at SSR time — Googlebot reads the initial HTML and uses
+  // `lang` to map the page to its language. Client-side mutation arrives
+  // too late for SEO.
+  const { headers } = await import("next/headers");
+  const h = await headers();
+  const locale = h.get("x-locale") ?? "fr";
+  const dir = locale === "ar" ? "rtl" : "ltr";
+
   return (
     <html
-      lang="fr"
+      lang={locale}
+      dir={dir}
       suppressHydrationWarning
       className={`${inter.variable} ${fraunces.variable} ${tajawal.variable}`}
     >
