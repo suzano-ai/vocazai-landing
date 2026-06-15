@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · SEO #6 — SpeakableSpecification on FAQ JSON-LD
+- commit: `122f0b4`
+- Adds `speakable` to landing FAQPage targeting `#faq h3` and `#faq dd` — makes Q&A pairs eligible for Google Assistant + AI Overview voice answers. Niche where "AI voice agent" queries surface aurally.
+- next: cron A at next :17 picks slug #4.
+
 ## 2026-06-15 · SEO Content Producer · ship `standardiste-virtuelle-24-7`
 - commit: `a2ae411`
 - Tier-1 #3. Honest split: what works / what needs prep / what doesn't. Counter to the marketing fluff in the niche. FR/EN/AR ~6 min.
