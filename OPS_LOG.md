@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · SEO #16 (extension) — Last-Modified header on /llms.txt and /feed.xml
+- commit: `8ab37b1`
+- Both dynamic routes now emit `Last-Modified` reflecting the most recent blog post date. Crawlers issuing conditional GETs (Perplexity/Bingbot/Feedly/ChatGPT search) skip when unchanged and immediately detect freshness when cron-A bumps the date. Accelerates the publish → IndexNow → crawl chain.
+- next: cron A picks Tier-6 expansion or oldest-post refresh.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-pressing`
 - commit: `88f2057` · IndexNow: HTTP 200
 - Tier-5 #20 (FINAL slug of original content calendar). Dry-cleaner vertical — 80% ticket-status pattern, POS webhook integrations (Bobby/Cleanouts/Liane), $840/mo workshop productivity math. FR/EN/AR ~5 min.
