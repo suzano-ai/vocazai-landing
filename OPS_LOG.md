@@ -22,6 +22,11 @@
 - Middleware now sets `Content-Language: fr/en/ar` and `Vary: Accept-Language` on every locale-aware response. Protocol-level language signal for crawlers that don't parse <html lang>; correct cache keying by locale for CDNs.
 - next: cron A picks Tier-6 #5.
 
+## 2026-06-16 · Growth Engineer · CRO #21 (extension) — explicit no-credit-card risk reversal
+- commit: `46f8f7a`
+- Final-CTA status-line: `NO CREDIT CARD` phosphor chip alongside `FIRST MONTH FREE`. Below the bracket-cta: `> $ ./trial --no-credit-card · 30 days · cancel anytime` subline. Closes three objections (no commitment, real duration, exit path) in one CLI-styled line.
+- next: cron A picks Tier-6 #6.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-livraison-logistique` (Tier-6)
 - commit: `2a99019` · IndexNow: HTTP 200
 - Tier-6 #4. Delivery/logistics vertical — 70-80% "where's my parcel" pattern, TMS webhook integrations (Shippeo/Akanea/GEFCO), outbound reminders, $66k/mo Enterprise math. FR/EN/AR ~6 min.
