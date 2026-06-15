@@ -8,6 +8,27 @@ import { Waveform } from "@/components/zellige";
 type Lang      = "fr" | "en" | "ar";
 type DemoState = "idle" | "loading" | "speaking" | "listening" | "processing" | "done" | "error";
 type Message   = { role: "agent" | "user"; text: string };
+
+// Idle-state preview shown before the visitor clicks "demo" — proves the
+// value immediately so a first-time visitor sees a real-sounding exchange
+// instead of an empty card. Cleared the moment startDemo() runs.
+const SAMPLE_PREVIEW: Record<Lang, Message[]> = {
+  fr: [
+    { role: "agent", text: "Bonjour, agence VocazAI, je suis Yasmine. Comment puis-je vous aider ?" },
+    { role: "user",  text: "Je voudrais reserver une table pour 4 personnes vendredi soir." },
+    { role: "agent", text: "Avec plaisir. J'ai 19h30 ou 20h45 disponibles vendredi. Lequel preferez-vous ?" },
+  ],
+  en: [
+    { role: "agent", text: "Hi, VocazAI agency, this is Yasmine. How can I help?" },
+    { role: "user",  text: "I'd like to book a table for 4 on Friday evening." },
+    { role: "agent", text: "Of course. I have 7:30pm or 8:45pm available Friday. Which works best?" },
+  ],
+  ar: [
+    { role: "agent", text: "السلام عليكم، وكالة فوكازاي، أنا ياسمين. كيف يمكنني مساعدتك؟" },
+    { role: "user",  text: "بغيت نحجز طاولة لأربعة أشخاص نهار الجمعة فالعشية." },
+    { role: "agent", text: "بكل سرور. عندي السابعة والنصف ولا الثامنة وخمسة وأربعين دقيقة متوفرين الجمعة. شنو كتفضل؟" },
+  ],
+};
 type Collected = { name?: string; slot?: string; email?: string };
 
 // ─── Per-language config ──────────────────────────────────────────────────────
@@ -295,7 +316,7 @@ export function DemoCallCard({ locale }: { locale?: string }) {
   const [lang,      setLang]      = useState<Lang>(() => detectLang(locale));
   const [demoState, setDemoState] = useState<DemoState>("idle");
   const [,          setTurn]      = useState(0);
-  const [messages,  setMessages]  = useState<Message[]>([]);
+  const [messages,  setMessages]  = useState<Message[]>(() => SAMPLE_PREVIEW[detectLang(locale)]);
   const [elapsed,   setElapsed]   = useState(0);
   const [hint,      setHint]      = useState("");
   const [emailSent, setEmailSent] = useState(false);
@@ -316,6 +337,12 @@ export function DemoCallCard({ locale }: { locale?: string }) {
     const detected = detectLang(locale);
     setLang(detected);
     langRef.current = detected;
+    // Refresh the preview to match the new locale, only while idle so we
+    // never overwrite a live conversation.
+    setDemoState((s) => {
+      if (s === "idle") setMessages(SAMPLE_PREVIEW[detected]);
+      return s;
+    });
     return () => {
       audioRef.current?.pause();
       audioRef.current = null;
