@@ -1590,6 +1590,71 @@ export const POSTS: BlogPost[] = [
       ],
     },
   },
+  {
+    slug: "agent-vocal-ia-arabe-dialectes",
+    date: "2026-06-15",
+    readingMinutes: 6,
+    title: {
+      fr: "Agent vocal IA en arabe : standard et dialectes parlés — ce qu'il sait vraiment faire",
+      en: "AI voice agent in Arabic: Modern Standard vs spoken dialects — what it really handles",
+      ar: "الوكيل الصوتي الذكي بالعربية: الفصحى والعاميات — ما يستطيع فعله حقًا",
+    },
+    description: {
+      fr: "L'arabe standard et l'arabe parlé sont presque deux langues. Voici ce qu'un agent vocal IA gère vraiment dans chacun — et la stratégie qu'on recommande pour un standard professionnel.",
+      en: "Modern Standard Arabic and spoken Arabic are almost two languages. Here's what an AI voice agent actually handles in each — and the strategy we recommend for a professional front desk.",
+      ar: "العربية الفصحى والعربية العامية تكادان تكونان لغتين. إليك ما يستطيع الوكيل الصوتي الذكي إدارته فعلًا في كل منهما، والاستراتيجية التي ننصح بها لمكتب استقبال احترافي.",
+    },
+    body: {
+      fr: [
+        { type: "p", text: "La question revient à chaque démo en arabe : « est-ce que ça comprend ce que mes clients disent vraiment au téléphone ? ». Pour répondre honnêtement, il faut distinguer deux choses très différentes : l'arabe standard moderne (MSA) et les arabes parlés du quotidien." },
+        { type: "h2", text: "Ce que les modèles gèrent en MSA" },
+        { type: "p", text: "L'arabe standard moderne est la langue de la presse écrite, des journaux télévisés, du registre formel. Les modèles modernes (Voxtral, Whisper-large) y atteignent une précision excellente — taux d'erreur sous 5 % sur de l'audio téléphonique propre. Si vos appelants utilisent un registre soutenu, vous êtes en zone confortable." },
+        { type: "h2", text: "Ce qu'ils gèrent moins bien" },
+        { type: "ul", items: [
+          "Les arabes parlés régionaux : la précision tombe à 70-85 % selon le dialecte.",
+          "Les mélanges (arabe + français ou arabe + anglais dans la même phrase) : tenue correcte mais des termes peuvent être mal écrits.",
+          "Les noms propres locaux : à pré-injecter dans le prompt système si possible.",
+          "L'élocution rapide en colère ou en stress : c'est dur même pour un humain.",
+        ] },
+        { type: "h2", text: "La stratégie qui marche" },
+        { type: "p", text: "1. Premier message de l'agent en MSA neutre, lent, clair. Ça invite l'appelant à se caler sur ce registre. 2. Si l'appelant insiste en dialectal, l'agent comprend ~80 % et reformule à voix haute la demande pour confirmer. 3. Fallback : transfert humain si l'agent loupe deux fois la même information critique." },
+        { type: "h2", text: "Ce qu'on recommande chez VocazAI" },
+        { type: "p", text: "On configure par défaut un MSA accueillant + une compréhension dialectale tolérante, avec un seuil de confiance qui déclenche le transfert humain pour les appels difficiles. Résultat : 90 % des appels arabophones sont gérés bout-en-bout, 10 % vont à l'humain. Premier mois gratuit pour calibrer sur votre profil d'appels." },
+      ],
+      en: [
+        { type: "p", text: "The question comes up at every Arabic demo: \"does it understand what my customers actually say on the phone?\" To answer honestly, you have to separate two very different things: Modern Standard Arabic (MSA) and the spoken Arabics of daily life." },
+        { type: "h2", text: "What the models handle in MSA" },
+        { type: "p", text: "Modern Standard Arabic is the language of written press, TV news, the formal register. Modern models (Voxtral, Whisper-large) reach excellent accuracy here — error rate under 5 % on clean phone audio. If your callers use a formal register, you're in safe territory." },
+        { type: "h2", text: "What they handle less well" },
+        { type: "ul", items: [
+          "Spoken regional Arabics: accuracy drops to 70-85 % depending on the dialect.",
+          "Code-switching (Arabic + French or Arabic + English mid-sentence): held reasonably, but specific terms may be mistranscribed.",
+          "Local proper nouns: pre-inject into the system prompt when possible.",
+          "Fast or stressed speech: hard even for a human.",
+        ] },
+        { type: "h2", text: "The strategy that works" },
+        { type: "p", text: "1. First message from the agent in slow, clear, neutral MSA. That invites the caller into that register. 2. If the caller insists in dialect, the agent understands ~80 % and reads back the request out loud to confirm. 3. Fallback: human transfer if the agent misses the same critical piece twice." },
+        { type: "h2", text: "What we recommend at VocazAI" },
+        { type: "p", text: "Default config: welcoming MSA + tolerant dialect comprehension, with a confidence threshold that triggers human transfer on hard calls. Result: 90 % of Arabic-language calls handled end-to-end, 10 % go to a human. First month free to calibrate on your call profile." },
+      ],
+      ar: [
+        { type: "p", text: "السؤال يتكرّر في كل عرض بالعربية: «هل يفهم ما يقوله زبائني فعلًا على الهاتف؟». للإجابة بصدق، يجب التمييز بين شيئين مختلفين تمامًا: العربية الفصحى الحديثة والعربيات العامية اليومية." },
+        { type: "h2", text: "ما تُديره النماذج بالفصحى" },
+        { type: "p", text: "العربية الفصحى الحديثة لغة الصحافة المكتوبة، نشرات الأخبار، السجلّ الرسمي. النماذج الحديثة (Voxtral، Whisper-large) تبلغ هنا دقّة ممتازة — نسبة خطأ دون 5 % على صوت هاتفي نظيف. إن استعمل المتصلون بك سجلًا رسميًا، فأنت في منطقة آمنة." },
+        { type: "h2", text: "ما تُديره أقل" },
+        { type: "ul", items: [
+          "العاميات الإقليمية: تنخفض الدقّة إلى 70-85 % حسب اللهجة.",
+          "الخلط (عربية + فرنسية أو عربية + إنجليزية في الجملة نفسها): يُتحمَّل بشكل معقول، لكن بعض المصطلحات قد تُكتب خطأً.",
+          "أسماء الأعلام المحلية: تُحقَن مسبقًا في تعليمات النظام إن أمكن.",
+          "الكلام السريع أو المتوتّر: صعب حتى على الإنسان.",
+        ] },
+        { type: "h2", text: "الاستراتيجية الناجحة" },
+        { type: "p", text: "1. أوّل رسالة من الوكيل بالفصحى البطيئة الواضحة المحايدة. ذلك يدعو المتصل إلى التموضع في هذا السجلّ. 2. إن أصرّ المتصل على العامية، يفهم الوكيل نحو 80 % ويُعيد صياغة الطلب بصوت عالٍ للتأكيد. 3. الاحتياط: تحويل بشري إن فاتت نفس المعلومة الحرجة مرّتين." },
+        { type: "h2", text: "ما ننصح به في VocazAI" },
+        { type: "p", text: "الإعداد الافتراضي: فصحى مرحّبة + فهم عامية متسامح، مع عتبة ثقة تُشغّل التحويل البشري في المكالمات الصعبة. النتيجة: 90 % من المكالمات العربية تُدار من البداية للنهاية، و10 % تذهب إلى إنسان. الشهر الأول مجاني للضبط على ملف مكالماتك." },
+      ],
+    },
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
