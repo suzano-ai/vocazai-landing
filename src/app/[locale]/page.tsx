@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowDown, ArrowRight, Check } from "lucide-react";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
-import { DemoCallCard } from "@/components/landing/demo-call-card";
+import { DemoCallCard } from "@/components/landing/demo-call-card-lazy";
 import { Reveal } from "@/components/reveal";
 import { JsonLd } from "@/components/json-ld";
 
