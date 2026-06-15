@@ -46,6 +46,29 @@ export default async function LandingPage({
     },
   };
 
+  // Service schema — Google can surface this as a rich service result with
+  // the price range visible right in the SERP, lifting CTR vs. a plain
+  // SoftwareApplication card. Geography-neutral (areaServed: Global).
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: "AI voice receptionist",
+    name: "VocazAI Voice Agent",
+    description:
+      "Trilingual AI voice agent (French, Arabic, English) that answers your business phone 24/7, books appointments, qualifies leads, and handles FAQs.",
+    provider: { "@type": "Organization", name: "VocazAI", url: "https://vocazai.com" },
+    areaServed: "Global",
+    availableLanguage: ["French", "Arabic", "English"],
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "USD",
+      lowPrice: "499",
+      highPrice: "1490",
+      priceRange: "$499-$1,490",
+      offerCount: 2,
+    },
+  };
+
   /* ─────────────────────────────────────────────────────────────────────
      VocazAI · TERMINAL CONSOLE
      The landing reads like a CLI session — black ground, monospace,
@@ -114,6 +137,7 @@ export default async function LandingPage({
     <main className="bg-background text-foreground">
       <Header locale={locale} />
       <JsonLd data={faqJsonLd} />
+      <JsonLd data={serviceJsonLd} />
 
       {/* ════════════════════════════════════════════════════════════════
           BOOT SCREEN · the hero. CLI-style command + massive mono headline
