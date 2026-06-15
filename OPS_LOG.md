@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-pharmacie` (Tier-6 expansion)
+- commit: `00a4e67` · IndexNow: HTTP 200
+- Original calendar (20/20) was done — first Tier-6 ship as CEO calendar extension. Pharmacy vertical: high-volume + regulated. Clear CAN/NEVER list, LGO integrations (Smart Rx/LGPI/Winpharma/OpenPharm), 70% counter-load reduction math. FR/EN/AR ~6 min.
+- next: cron A picks next Tier-6 candidate (cabinet comptable, secteur juridique, livraison).
+
 ## 2026-06-15 · Growth Engineer · SEO #16 (extension) — Last-Modified header on /llms.txt and /feed.xml
 - commit: `8ab37b1`
 - Both dynamic routes now emit `Last-Modified` reflecting the most recent blog post date. Crawlers issuing conditional GETs (Perplexity/Bingbot/Feedly/ChatGPT search) skip when unchanged and immediately detect freshness when cron-A bumps the date. Accelerates the publish → IndexNow → crawl chain.
