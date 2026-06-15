@@ -218,6 +218,12 @@ export default async function RootLayout({
         {/* Preconnect / dns-prefetch — shaves DNS+TLS handshake off the first
             auth request to Supabase. Browsers that support preconnect skip
             the dns-prefetch fallback automatically. */}
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="VocazAI Blog"
+          href="/feed.xml"
+        />
         {process.env.NEXT_PUBLIC_SUPABASE_URL ? (() => {
           try {
             const origin = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL!).origin;
