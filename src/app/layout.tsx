@@ -1,7 +1,14 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
+
+// Theme color = phosphor green; tints the Safari iOS URL bar and the
+// Android Chrome status bar. Manifest covers the PWA install case;
+// this <meta> covers the in-tab browser chrome.
+export const viewport: Viewport = {
+  themeColor: "#00FF87",
+};
 
 // Self-hosted fonts (src/fonts/) — no build-time fetch to fonts.gstatic.com,
 // so Docker builds on the VPS are fast and never fail on a flaky Google reach.
