@@ -12,6 +12,12 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-coiffeur-salon`
+- commit: `f64aed9` · IndexNow: HTTP 200
+- Tier-5 #19. Salon vertical money page — upsell rule, reactivation flow, sector integrations (Planity/Treatwell/Booksy/Fresha), $2.6k/mo ROI math for 3-chair salon. FR/EN/AR ~6 min.
+- One syntax slip caught and fixed before commit (stray `} ,` in FR ul block).
+- next: cron A picks Tier-5 #20 (`agent-vocal-ia-pressing`).
+
 ## 2026-06-15 · Growth Engineer · SEO #15 (extension) — dns-prefetch + preconnect for wa.me
 - commit: `3b943c5`
 - Every START-TRIAL CTA redirects to wa.me. Pre-resolving the DNS+TLS handshake at page render shaves 30-100ms off the click → WhatsApp open path on mobile. This is conversion-path perf, not lighthouse decoration — the only revenue funnel step we currently have just got faster.
