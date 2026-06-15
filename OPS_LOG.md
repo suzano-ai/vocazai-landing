@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · CRO #13 — per-locale OG image
+- commit: `d9b510b`
+- New `[locale]/opengraph-image.tsx` switches headline by locale (FR/EN native, AR ASCII fallback since vercel/og has no Arabic font baked in). Fixes the bug where EN/AR social shares displayed a French preview.
+- next: cron A at next :17 picks slug #7.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-agence-immobiliere`
 - commit: `cd50df8`
 - Tier-1 #6 — real-estate vertical. 5-criteria qualification → 3-of-5 transfer rule, CRM push (HubSpot/Pipedrive/Apimo/Hektor), $4k/mo math. FR/EN/AR ~6 min.
