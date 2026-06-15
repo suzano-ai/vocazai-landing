@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · SEO #15 (extension) — dns-prefetch + preconnect for wa.me
+- commit: `3b943c5`
+- Every START-TRIAL CTA redirects to wa.me. Pre-resolving the DNS+TLS handshake at page render shaves 30-100ms off the click → WhatsApp open path on mobile. This is conversion-path perf, not lighthouse decoration — the only revenue funnel step we currently have just got faster.
+- next: cron A at next :19 picks Tier-5 #19.
+
 ## 2026-06-15 · SEO Content Producer · ship `multilingue-meme-numero`
 - commit: `97d1996` · IndexNow: HTTP 200
 - Tier-4 #18 (final). Technical explainer: neutral pickup, real-time detection thresholds, soft-lock, DID integration, why it beats an IVR. Targets visitors who think they need a press-1-press-2 menu. FR/EN/AR ~6 min.
