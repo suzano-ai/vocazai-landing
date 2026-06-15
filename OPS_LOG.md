@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · CRO #19 (extension) — `SETUP < 48H` chip in hero status-line
+- commit: `03b373f`
+- Hero already advertised SYSTEM ONLINE / TRILINGUAL / 24/7. Missing time-to-value commitment. Phosphor `SETUP < 48H` chip closes the "sounds complex, I'll come back later" objection above the fold without touching layout.
+- next: cron A picks next Tier-6 slug.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-pharmacie` (Tier-6 expansion)
 - commit: `00a4e67` · IndexNow: HTTP 200
 - Original calendar (20/20) was done — first Tier-6 ship as CEO calendar extension. Pharmacy vertical: high-volume + regulated. Clear CAN/NEVER list, LGO integrations (Smart Rx/LGPI/Winpharma/OpenPharm), 70% counter-load reduction math. FR/EN/AR ~6 min.
