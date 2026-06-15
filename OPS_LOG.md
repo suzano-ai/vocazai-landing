@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-anglais-business`
+- commit: `b529587` · IndexNow: HTTP 200
+- Tier-4 #17. English voice config — US/UK/AU defaults, accent pitfalls, optimal 145 wpm pace, spelling-on-request as the underrated must-have. FR/EN/AR ~6 min.
+- next: cron A picks Tier-4 #18 (`multilingue-meme-numero`).
+
 ## 2026-06-15 · Growth Engineer · SEO #14 (extension) — X-Robots-Tag noindex on infrastructure files
 - commit: `28aa1b6`
 - security.txt (both paths), humans.txt, IndexNow key, feed.xml now respond with `X-Robots-Tag: noindex` so they stop appearing as ghost search results. Feed gets `noindex, follow` so it still hands link signal to blog posts. Cache-Control rotation extended to /feed.xml.
