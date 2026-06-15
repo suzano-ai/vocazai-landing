@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · CRO #18 (extension) — tel: click-to-call in mobile sticky bar
+- commit: `b1b42e8`
+- 2-column grid: `[ CALL ]` + `[ START TRIAL ]`. Phone-led visitors (restaurants, medical, auto verticals) often prefer to speak before typing. Now two thumb-reach paths instead of one.
+- next: cron A at next :19 picks Tier-5 #20.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-coiffeur-salon`
 - commit: `f64aed9` · IndexNow: HTTP 200
 - Tier-5 #19. Salon vertical money page — upsell rule, reactivation flow, sector integrations (Planity/Treatwell/Booksy/Fresha), $2.6k/mo ROI math for 3-chair salon. FR/EN/AR ~6 min.
