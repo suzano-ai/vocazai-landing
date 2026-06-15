@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · CRO #17 (extension) — above-the-fold price anchor under hero CTA
+- commit: `e1edb5c`
+- Single phosphor mono line under `[ START TRIAL ]`: "From $499/month · first month free" (FR/EN/AR). Closes the price loop above the fold for the highest-intent visitor segment (price queries). No layout shift, pure content.
+- next: cron A at next :19 picks Tier-4 #18.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-anglais-business`
 - commit: `b529587` · IndexNow: HTTP 200
 - Tier-4 #17. English voice config — US/UK/AU defaults, accent pitfalls, optimal 145 wpm pace, spelling-on-request as the underrated must-have. FR/EN/AR ~6 min.
