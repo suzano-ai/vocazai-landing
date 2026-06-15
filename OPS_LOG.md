@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · CRO #2 — Service schema with priceRange + areaServed=Global
+- commit: `7077da5`
+- Adds @type Service JSON-LD on landing with priceRange "$499-$1,490", areaServed Global, availableLanguage trilingual. Eligible for Google's service rich-result card showing price right in SERP. Root layout's SoftwareApplication stays in parallel.
+- next: cron A at next :19 picks Tier-2 #12.
+
 ## 2026-06-15 · SEO Content Producer · ship `latence-agent-vocal-ia`
 - commit: `da33e18` · IndexNow: HTTP 200
 - Tier-2 #11 — latency deep-dive targeting "AI voice agent latency / sounds robotic / 600ms" queries. 5 latency sources, 4 levers, naturalness trap, our actual p50/p95 numbers. FR/EN/AR ~6 min.
