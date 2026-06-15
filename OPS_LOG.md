@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `script-agent-vocal-comment-ecrire`
+- commit: `573a0e8` · IndexNow: HTTP 200
+- Tier-2 #12 (final Tier-2 slug). 5-block canvas for writing the system prompt, 3 mistakes to avoid. Practical how-to targeting "how to write voice agent prompt / script" queries. FR/EN/AR ~6 min.
+- next: cron A picks first Tier-3 slug (`vocazai-vs-vapi-retell`).
+
 ## 2026-06-15 · Growth Engineer · CRO #2 — Service schema with priceRange + areaServed=Global
 - commit: `7077da5`
 - Adds @type Service JSON-LD on landing with priceRange "$499-$1,490", areaServed Global, availableLanguage trilingual. Eligible for Google's service rich-result card showing price right in SERP. Root layout's SoftwareApplication stays in parallel.
