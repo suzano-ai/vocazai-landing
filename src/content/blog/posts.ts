@@ -2075,6 +2075,73 @@ export const POSTS: BlogPost[] = [
       ],
     },
   },
+  {
+    slug: "agent-vocal-ia-cabinet-juridique",
+    date: "2026-06-15",
+    readingMinutes: 6,
+    title: {
+      fr: "Agent vocal IA pour cabinet juridique : confidentialité, prise de RDV et filtrage sans conseiller",
+      en: "AI voice agent for law firms: confidentiality, booking and triage without giving advice",
+      ar: "الوكيل الصوتي الذكي لمكتب المحاماة: السرّية، حجز المواعيد والفرز دون تقديم استشارة",
+    },
+    description: {
+      fr: "Un cabinet juridique reçoit des appels sensibles, urgents, souvent émotionnels. Voici comment un agent vocal IA filtre, prend RDV, oriente — sans jamais donner d'avis ni rompre le secret professionnel.",
+      en: "A law firm gets sensitive, urgent, often emotional calls. Here's how an AI voice agent triages, books, routes — without ever offering advice or breaching attorney-client privilege.",
+      ar: "مكتب المحاماة يستقبل مكالمات حسّاسة وعاجلة وغالبًا انفعالية. إليك كيف يُصفّي الوكيل الصوتي الذكي ويأخذ المواعيد ويُوجّه — دون تقديم رأي أو خرق السرّ المهني." },
+    body: {
+      fr: [
+        { type: "p", text: "Le cabinet juridique a une contrainte particulière : chaque mot dit au téléphone peut compter dans un dossier futur. Un agent vocal IA y joue un rôle utile mais bordé — il prend les RDV, filtre les nouvelles affaires, calme les urgences — sans jamais sortir du périmètre légal." },
+        { type: "h2", text: "Ce que l'agent peut dire" },
+        { type: "ul", items: [
+          "Horaires, adresse, modes de paiement, conditions d'honoraires publiées.",
+          "Prise de RDV pour première consultation (nom, téléphone, type général de dossier).",
+          "Confirmation qu'un dossier a bien été reçu par le secrétariat.",
+          "Indication du tour de garde pour les permanences (pénal, urgences).",
+          "Transfert immédiat sur urgence ou mention de garde à vue / placement.",
+        ] },
+        { type: "h2", text: "Ce que l'agent ne dit JAMAIS" },
+        { type: "p", text: "Aucun conseil, aucune appréciation d'un dossier, aucune estimation de durée ou de chances de succès. Au moindre signal de questions juridiques, l'agent dit « cette question demande l'avis de l'avocat, je vous prends un RDV » — et c'est tout." },
+        { type: "h2", text: "Le secret professionnel" },
+        { type: "p", text: "Tous les enregistrements sont chiffrés au repos, anonymisés sous 30 jours, et ne quittent jamais la région UE. Le contrat de sous-traitance RGPD signé entre VocazAI et le cabinet couvre explicitement le secret professionnel. La confidentialité ne dépend pas d'une promesse — elle dépend du contrat et du chiffrement." },
+        { type: "h2", text: "L'effet sur le secrétariat" },
+        { type: "p", text: "Le secrétariat juridique n'est jamais remplacé — il est protégé. L'agent filtre les 50-60 % d'appels routiniers (info, RDV, statut admin) pour que le secrétariat se concentre sur les dossiers vivants et la coordination avec les avocats. Premier mois VocazAI gratuit avec script juridique strict pré-configuré." },
+      ],
+      en: [
+        { type: "p", text: "Law firms have a specific constraint: every word said on the phone can later count in a case file. An AI voice agent plays a useful but bounded role — booking, triaging new matters, calming urgencies — without ever leaving its legal scope." },
+        { type: "h2", text: "What the agent can say" },
+        { type: "ul", items: [
+          "Hours, address, payment methods, published fee terms.",
+          "Booking for a first consultation (name, phone, general matter type).",
+          "Confirmation that a file has been received by the front desk.",
+          "Indication of on-call rotation for emergencies (criminal, urgent).",
+          "Immediate transfer on emergency or any mention of custody / detention.",
+        ] },
+        { type: "h2", text: "What the agent NEVER says" },
+        { type: "p", text: "No advice, no read on a case, no time or success estimate. At the first legal question, the agent says 'this question requires the lawyer's review, I'll book you an appointment' — and that's it." },
+        { type: "h2", text: "Attorney-client privilege" },
+        { type: "p", text: "All recordings are encrypted at rest, anonymized within 30 days, never leave the EU region. The GDPR data-processor agreement signed between VocazAI and the firm explicitly covers privilege. Confidentiality doesn't rest on a promise — it rests on the contract and the encryption." },
+        { type: "h2", text: "Effect on the front desk" },
+        { type: "p", text: "The legal front desk is never replaced — it's protected. The agent filters the 50-60 % of routine calls (info, booking, admin status) so the front desk can focus on live files and coordination with the attorneys. First month VocazAI free with a strict legal script pre-configured." },
+      ],
+      ar: [
+        { type: "p", text: "لمكاتب المحاماة قيد خاص: كل كلمة تُقال على الهاتف قد تُحسب لاحقًا في ملف قضائي. الوكيل الصوتي الذكي يلعب دورًا مفيدًا لكن محدودًا — أخذ مواعيد، فرز القضايا الجديدة، تهدئة الحالات الطارئة — دون الخروج عن النطاق القانوني." },
+        { type: "h2", text: "ما يستطيع الوكيل قوله" },
+        { type: "ul", items: [
+          "الأوقات، العنوان، وسائل الدفع، شروط الأتعاب المنشورة.",
+          "حجز استشارة أولى (الاسم، الهاتف، النوع العام للقضية).",
+          "تأكيد وصول ملف إلى مكتب الاستقبال.",
+          "الإشارة إلى نظام المناوبة في الحالات الطارئة (جزائي، عاجل).",
+          "تحويل فوري عند ذكر حبس احتياطي أو احتجاز.",
+        ] },
+        { type: "h2", text: "ما لا يقوله الوكيل أبدًا" },
+        { type: "p", text: "لا استشارة، لا تقييم لقضية، لا تقدير لمدّة أو فرص نجاح. عند أول سؤال قانوني، يقول الوكيل: «هذا السؤال يتطلّب رأي المحامي، سأحجز لك موعدًا» — وكفى." },
+        { type: "h2", text: "السرّ المهني" },
+        { type: "p", text: "كل التسجيلات مشفّرة في حالة الاحتفاظ، تُغفل هويتها في غضون 30 يومًا، ولا تغادر منطقة الاتحاد الأوروبي. عقد المعالجة الموقّع وفق GDPR بين VocazAI والمكتب يُغطّي السرّ المهني صراحةً. السرّية لا تستند إلى وعد — بل إلى العقد والتشفير." },
+        { type: "h2", text: "الأثر على الاستقبال" },
+        { type: "p", text: "استقبال المحاماة لا يُستبدَل أبدًا — بل يُحمى. الوكيل يُصفّي 50-60 % من المكالمات الروتينية (معلومات، حجز، حالة إدارية) لكي يُركّز الاستقبال على الملفات الحيّة والتنسيق مع المحامين. الشهر الأول من VocazAI مجاني مع سكريبت قانوني صارم مُعدّ مسبقًا." },
+      ],
+    },
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
