@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-pressing`
+- commit: `88f2057` · IndexNow: HTTP 200
+- Tier-5 #20 (FINAL slug of original content calendar). Dry-cleaner vertical — 80% ticket-status pattern, POS webhook integrations (Bobby/Cleanouts/Liane), $840/mo workshop productivity math. FR/EN/AR ~5 min.
+- **CONTENT CALENDAR COMPLETE (20/20 slugs shipped this session).** Next cron A fire will start a new Tier-6 expansion or rotate to refreshing oldest posts.
+
 ## 2026-06-15 · Growth Engineer · CRO #18 (extension) — tel: click-to-call in mobile sticky bar
 - commit: `b1b42e8`
 - 2-column grid: `[ CALL ]` + `[ START TRIAL ]`. Phone-led visitors (restaurants, medical, auto verticals) often prefer to speak before typing. Now two thumb-reach paths instead of one.
