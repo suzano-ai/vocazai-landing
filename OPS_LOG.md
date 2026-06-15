@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `comment-fonctionne-agent-vocal-ia`
+- commit: `a88a9bf`
+- Tier-2 #9 — explainer page targeting "how does AI voice agent work" curiosity queries. 5-step pipeline (pickup → STT → LLM → TTS → integrations), latency budget, sub-600ms threshold. FR/EN/AR ~7 min.
+- next: cron A picks Tier-2 #10 (`agent-vocal-ia-securite-rgpd`).
+
 ## 2026-06-15 · Growth Engineer · CRO #12 — footer adds tel: link + "Available worldwide"
 - commit: `183c8f7`
 - Adds clickable `tel:+33777345056` in Company column (same number as WA CTA, no new PII surface). E-E-A-T signal, mobile rich-results call-button eligibility. "Available worldwide" appended to made-by line, stays geography-neutral.
