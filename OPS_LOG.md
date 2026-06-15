@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · CRO #14 — `<meta name=theme-color>` via Next viewport export
+- commit: `6238da9`
+- Safari iOS and Android Chrome read theme-color from `<head>` to tint browser chrome. Manifest covers PWA install; this covers in-tab. Mobile visitor's first impression now phosphor-branded.
+- next: cron A at next :17 picks slug #5.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-restaurant-reservations`
 - commit: `e4cf0fe`
 - Tier-1 #4 — vertical money page for restaurants. ROI math ($8.4k/mo recovered), no-show reduction tactic, sector integrations list (TheFork/Zenchef/Resy/OpenTable). FR/EN/AR.
