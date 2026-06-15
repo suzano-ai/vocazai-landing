@@ -1941,6 +1941,73 @@ export const POSTS: BlogPost[] = [
       ],
     },
   },
+  {
+    slug: "agent-vocal-ia-pharmacie",
+    date: "2026-06-15",
+    readingMinutes: 6,
+    title: {
+      fr: "Agent vocal IA pour pharmacie : disponibilité de produits, garde et rappels sans empiéter sur le conseil",
+      en: "AI voice agent for pharmacies: stock availability, after-hours referrals and reminders without touching clinical advice",
+      ar: "الوكيل الصوتي الذكي للصيدلية: توفّر المنتجات، الحراسة والتذكير دون التعدّي على المشورة السريرية",
+    },
+    description: {
+      fr: "Une pharmacie reçoit 80-120 appels/jour, dont les deux tiers sont « avez-vous tel produit en stock ? » ou « êtes-vous de garde ? ». Voici comment un agent vocal IA répond, sans jamais sortir du périmètre légal.",
+      en: "A pharmacy takes 80-120 calls a day, two thirds being 'do you have X in stock?' or 'are you on call?'. Here's how an AI voice agent answers, never stepping outside its legal scope.",
+      ar: "الصيدلية تتلقى 80 إلى 120 مكالمة في اليوم، ثلثاها «هل لديكم هذا المنتج في المخزون؟» أو «هل أنتم في خدمة الحراسة؟». إليك كيف يردّ الوكيل الصوتي الذكي، دون الخروج عن النطاق القانوني." },
+    body: {
+      fr: [
+        { type: "p", text: "La pharmacie est un secteur à très haut volume d'appels et à très haute exigence réglementaire. L'agent vocal IA y a un rôle utile mais strictement délimité : il répond aux questions logistiques, jamais aux questions cliniques. Voici comment configurer pour rester conforme et fluide." },
+        { type: "h2", text: "Ce que l'agent peut faire" },
+        { type: "ul", items: [
+          "Vérifier la disponibilité d'un produit OTC en stock (paracétamol, vitamines, tests autodiagnostic).",
+          "Indiquer la pharmacie de garde la plus proche.",
+          "Donner les horaires, la possibilité de drive ou click-and-collect.",
+          "Confirmer la disponibilité d'une ordonnance préparée (avec numéro de ticket).",
+          "Rappeler un client si une ordonnance arrive en stock.",
+        ] },
+        { type: "h2", text: "Ce que l'agent ne fait JAMAIS" },
+        { type: "p", text: "Aucun conseil pharmaceutique, aucune posologie, aucune interaction médicamenteuse. Au moindre signal clinique (« j'ai mal », « est-ce que je peux prendre... »), l'agent transfère immédiatement au pharmacien — c'est non-négociable légalement et éthiquement." },
+        { type: "h2", text: "L'intégration au LGO" },
+        { type: "p", text: "L'agent se connecte aux logiciels métier (Smart Rx, LGPI, Winpharma, OpenPharm) via webhook pour vérifier le stock en temps réel et l'état de préparation d'une ordonnance. Sans intégration, l'agent fonctionne en mode dégradé (transfère pour tout statut de stock)." },
+        { type: "h2", text: "L'effet sur le comptoir" },
+        { type: "p", text: "Sur 100 appels/jour, l'agent absorbe les 60-70 questions purement logistiques. Le téléphone sonne 70 % moins au comptoir, donc les pharmaciens passent plus de temps en face-à-face avec le patient — exactement leur valeur ajoutée. Premier mois VocazAI gratuit avec script pharmacie pré-configuré." },
+      ],
+      en: [
+        { type: "p", text: "Pharmacy is a sector with very high call volume and very high regulatory scrutiny. An AI voice agent plays a useful but strictly bounded role: it answers logistical questions, never clinical ones. Here's how to configure to stay compliant and smooth." },
+        { type: "h2", text: "What the agent CAN do" },
+        { type: "ul", items: [
+          "Check OTC product availability (paracetamol, vitamins, self-tests).",
+          "Point to the closest on-call pharmacy.",
+          "Share hours and drive-through or click-and-collect options.",
+          "Confirm a prepared prescription is ready (with ticket number).",
+          "Call a customer back when an out-of-stock prescription item arrives.",
+        ] },
+        { type: "h2", text: "What the agent NEVER does" },
+        { type: "p", text: "No pharmaceutical advice, no dosage guidance, no drug interaction discussion. At the first clinical signal ('I have pain', 'can I take...'), the agent immediately transfers to the pharmacist — non-negotiable legally and ethically." },
+        { type: "h2", text: "Pharmacy management software integration" },
+        { type: "p", text: "The agent connects to your software (Smart Rx, LGPI, Winpharma, OpenPharm) via webhook to check live stock and prescription preparation status. Without integration, the agent degrades to transferring any stock-status question." },
+        { type: "h2", text: "Effect on the counter" },
+        { type: "p", text: "Out of 100 calls/day, the agent absorbs the 60-70 purely logistical questions. The phone rings 70 % less at the counter, so pharmacists spend more time face-to-face with patients — exactly where their value lies. First month VocazAI free with a pre-configured pharmacy script." },
+      ],
+      ar: [
+        { type: "p", text: "الصيدلية قطاع ذو حجم مكالمات مرتفع جدًا ورقابة تنظيمية صارمة. الوكيل الصوتي الذكي يلعب دورًا مفيدًا لكن محدودًا بدقّة: يُجيب عن الأسئلة اللوجستية، لا السريرية أبدًا. إليك كيف تُهيّئه للبقاء متوافقًا وسلسًا." },
+        { type: "h2", text: "ما يستطيع الوكيل فعله" },
+        { type: "ul", items: [
+          "التحقق من توفّر منتجات بدون وصفة (باراسيتامول، فيتامينات، اختبارات ذاتية).",
+          "الإشارة إلى صيدلية الحراسة الأقرب.",
+          "إعطاء الأوقات وخيارات الاستلام السريع أو الطلب والاستلام.",
+          "تأكيد أن وصفة جاهزة (برقم تذكرة).",
+          "معاودة الاتصال بالزبون عند وصول دواء كان غير متوفر.",
+        ] },
+        { type: "h2", text: "ما لا يفعله الوكيل أبدًا" },
+        { type: "p", text: "لا مشورة دوائية، لا توجيه لجرعات، لا حديث عن تفاعلات. عند أول إشارة سريرية («عندي ألم»، «هل يمكنني تناول...»)، يُحوّل الوكيل فورًا إلى الصيدلي — غير قابل للتفاوض قانونيًا وأخلاقيًا." },
+        { type: "h2", text: "التكامل مع نظام الإدارة" },
+        { type: "p", text: "يتّصل الوكيل ببرنامجك (Smart Rx، LGPI، Winpharma، OpenPharm) عبر webhook للتحقق من المخزون لحظيًا وحالة تحضير الوصفات. بدون تكامل، يعمل الوكيل في وضع مخفّض (تحويل لأي سؤال مخزون)." },
+        { type: "h2", text: "الأثر على الواجهة" },
+        { type: "p", text: "من بين 100 مكالمة يوميًا، يمتصّ الوكيل 60-70 سؤالًا لوجستيًا بحتًا. يرنّ الهاتف 70 % أقل في الواجهة، فيقضي الصيادلة وقتًا أكثر وجهًا لوجه مع المريض — بالضبط حيث تكمن قيمتهم. الشهر الأول من VocazAI مجاني مع سكريبت صيدلية مُعدّ مسبقًا." },
+      ],
+    },
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
