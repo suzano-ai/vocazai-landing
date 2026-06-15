@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `multilingue-meme-numero`
+- commit: `97d1996` · IndexNow: HTTP 200
+- Tier-4 #18 (final). Technical explainer: neutral pickup, real-time detection thresholds, soft-lock, DID integration, why it beats an IVR. Targets visitors who think they need a press-1-press-2 menu. FR/EN/AR ~6 min.
+- Tier-4 complete. next: cron A picks Tier-5 #19 (`agent-vocal-ia-coiffeur-salon`).
+
 ## 2026-06-15 · Growth Engineer · CRO #17 (extension) — above-the-fold price anchor under hero CTA
 - commit: `e1edb5c`
 - Single phosphor mono line under `[ START TRIAL ]`: "From $499/month · first month free" (FR/EN/AR). Closes the price loop above the fold for the highest-intent visitor segment (price queries). No layout shift, pure content.
