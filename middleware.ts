@@ -27,7 +27,10 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === "/") {
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set("x-locale", locale);
-    return NextResponse.next({ request: { headers: requestHeaders } });
+    const res = NextResponse.next({ request: { headers: requestHeaders } });
+    res.headers.set("Content-Language", locale);
+    res.headers.set("Vary", "Accept-Language");
+    return res;
   }
 
   // 3) Locale routing for every other content URL. Let intl middleware
@@ -41,6 +44,13 @@ export async function middleware(request: NextRequest) {
 
   // Preserve intl's rewrite + cookies + redirects by copying its headers.
   intlRes.headers.forEach((value, key) => merged.headers.set(key, value));
+
+  // Protocol-level language signal — some crawlers prefer Content-Language
+  // over the <html lang> attribute. Vary tells caches/CDNs the response
+  // differs by Accept-Language so they key on locale correctly.
+  merged.headers.set("Content-Language", locale);
+  merged.headers.set("Vary", "Accept-Language");
+
   // If intl returned a redirect, honor it directly.
   if (intlRes.status >= 300 && intlRes.status < 400) return intlRes;
   return merged;
