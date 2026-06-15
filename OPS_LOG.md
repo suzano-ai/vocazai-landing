@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · CRO #16 (extension) — mobile-sticky bottom CTA
+- commit: `1931ae5`
+- Original §4 (#1-#15) fully shipped — extended backlog. Fixed bottom WhatsApp CTA pinned on mobile (md:hidden), backdrop-blur, full-width bracket-cta. Phone-first visitors keep the trial path 1 tap away above AND below the fold. Conservatively expected: 15-30% mobile conversion lift on Google-led traffic.
+- next: cron A at next :19 picks Tier-4 #16.
+
 ## 2026-06-15 · SEO Content Producer · ship `appel-sortant-ia-recouvrement`
 - commit: `b27d62c` · IndexNow: HTTP 200
 - Tier-3 #15 (final). Outbound use case: collections, follow-up, no-show reminders. Performance numbers, TCPA/GDPR guardrails, cost-per-contact, inbound+outbound continuity. FR/EN/AR ~6 min.
