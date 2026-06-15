@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · SEO #13 (extension) — RSS feed at /feed.xml + auto-discovery <link>
+- commit: `250192a`
+- Original §5 (#1-#12) fully shipped — extended backlog with discoverability surface. Atom-style RSS 2.0 with self-link, GUID, pubDate per post. `<link rel=alternate type=application/rss+xml>` in head for crawler auto-discovery. Auto-rebuilds on every CI deploy (same pattern as dynamic /llms.txt).
+- next: cron A at next :19 picks Tier-3 #15.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-vs-chatbot-texte`
 - commit: `4f4d730` · IndexNow: HTTP 200
 - Tier-3 #14 — comparison vs alternative tech. Real conversion rates, cost-per-conversion math, sector fit, when to combine. Targets visitors who almost picked chatbot. FR/EN/AR ~6 min.
