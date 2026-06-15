@@ -151,6 +151,7 @@ export default async function LandingPage({
               <span>VOCAZAI v.0.2</span>
               <span>TRILINGUAL · FR · AR · EN</span>
               <span>24/7</span>
+              <span><span className="glow">SETUP &lt; 48H</span></span>
             </div>
           </Reveal>
 
