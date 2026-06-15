@@ -12,6 +12,20 @@
 
 ---
 
+## 2026-06-15 · CEO · SSH audit on VPS (76.13.55.187) — REAL TRAFFIC EVIDENCE
+- VPS git HEAD: `feafd47` (latest commit) — CI deploys reliably.
+- Containers `vocazai-app/tts/stt` UP healthy 17 min (latest CI rebuild).
+- Traefik 24h logs: 54 hits on `vocazai@docker` from 10 unique IPs.
+- **Bingbot ACTIVE**: `157.55.39.192 GET /ar/blog/appels-manques-cout-reel HTTP/2.0 200` at 05:04:25 UTC. `40.77.167.13 GET /fr/blog 200` at 05:32:28. IndexNow ping (HTTP 202) is converting to real crawl.
+- Full site crawl observed (sitemap, robots, llms.txt, all locales, legal pages, login).
+- No WhatsApp leads yet — but indexing-to-clicks gap is days/weeks. The pipeline is alive.
+- Fixed: `/security.txt` (root) was 404, RFC only requires `/.well-known/` — shipped a root mirror in commit `a02fdc8`.
+- next: Cron A updated to auto-ping IndexNow on every new blog post.
+
+## 2026-06-15 · CEO · ship `/security.txt` root mirror (Traefik logged a 404)
+- commit: `a02fdc8`
+- Scanner at `149.56.160.190` hit `/security.txt` and got 404 because the file only existed at `/.well-known/`. Mirror at root, canonical line still points to .well-known.
+
 ## 2026-06-15 · Growth Engineer · SEO #6b — extend blog-post Speakable to article h2
 - commit: `fdf8596`
 - Was h1 + lede; now also `article h2`. Voice assistants surface section headers like "ROI math" / "What works very well" instead of stuck on the intro paragraph. (#7 canonicals verified — already present on all routes.)
