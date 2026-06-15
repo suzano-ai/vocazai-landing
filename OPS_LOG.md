@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `vocazai-vs-vapi-retell`
+- commit: `19a4498` · IndexNow: HTTP 200
+- Tier-3 #13 — competitor comparison page (high commercial intent). Honest split of Vapi/Retell/VocazAI by audience profile + annualized pricing. Targets "vocazai vs vapi", "vapi vs retell", "AI voice agent comparison" queries. FR/EN/AR ~7 min.
+- next: cron A picks Tier-3 #14 (`agent-vocal-ia-vs-chatbot-texte`).
+
 ## 2026-06-15 · Growth Engineer · SEO #12 — code-split DemoCallCard (mobile perf)
 - commit: `99aaf06`
 - DemoCallCard (~900 LOC of audio/STT/TTS/WebRTC) split into a `next/dynamic` chunk via new `demo-call-card-lazy.tsx`. SSR stays on so the pre-filled sample still paints at first byte; interactive layer hydrates after LCP. CLS stays 0 via skeleton min-height. Improves mobile lighthouse TTI + TBT.
