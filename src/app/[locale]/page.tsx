@@ -184,6 +184,9 @@ export default async function LandingPage({
                   <Link href={wa} className="bracket-cta">
                     {t("landing.ctaPrimary")}
                   </Link>
+                  <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-saffron-500">
+                    {t("landing.priceAnchor")}
+                  </span>
                   <a
                     href="#demo"
                     className="group inline-flex items-center gap-2 self-start font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground transition-colors duration-150 hover:text-saffron-500"
