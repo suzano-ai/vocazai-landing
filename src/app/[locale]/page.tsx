@@ -540,6 +540,7 @@ export default async function LandingPage({
               <span><span className="glow">●</span> READY</span>
               <span>$ ./start --trial</span>
               <span>FIRST MONTH FREE</span>
+              <span><span className="glow">NO CREDIT CARD</span></span>
             </div>
           </Reveal>
 
@@ -573,6 +574,9 @@ export default async function LandingPage({
                 <ArrowRight className="h-3 w-3 rtl:rotate-180" />
               </Link>
             </div>
+            <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+              {"> "}$ ./trial --no-credit-card · 30 days · cancel anytime
+            </p>
           </Reveal>
 
           <Reveal delay={360}>
