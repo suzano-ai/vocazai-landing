@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-cabinet-juridique` (Tier-6)
+- commit: `a0c6234` · IndexNow: HTTP 200
+- Tier-6 #3. Law-firm vertical — privilege-aware scope, CAN/NEVER list, GDPR DPA + EU region + 30-day anonymization, front desk protection narrative. FR/EN/AR ~6 min.
+- next: cron A picks Tier-6 #4 (livraison, startup, gestion-immobilier).
+
 ## 2026-06-15 · Growth Engineer · SEO #17 (extension) — RFC 8288 Link headers (sitemap + feed)
 - commit: `ca9c3a7`
 - Every response now carries `Link: </sitemap.xml>; rel=sitemap, </feed.xml>; rel=alternate; type=application/rss+xml`. Crawlers that prefer headers (or hit non-HTML routes like /llms.txt where <link> tags can't live) now have full discoverability redundancy.
