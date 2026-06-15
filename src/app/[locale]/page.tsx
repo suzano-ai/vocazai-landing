@@ -147,7 +147,7 @@ export default async function LandingPage({
           {/* Status line — top of the booth screen */}
           <Reveal>
             <div className="status-line">
-              <span><span className="glow">●</span> SYSTEM ONLINE</span>
+              <span><span className="glow-pulse">●</span> SYSTEM ONLINE</span>
               <span>VOCAZAI v.0.2</span>
               <span>TRILINGUAL · FR · AR · EN</span>
               <span>24/7</span>

@@ -193,6 +193,20 @@
     text-shadow: 0 0 12px hsl(var(--saffron-500) / 0.4);
   }
 
+  /* Live phosphor pulse — wraps a glow dot/word with a slow heart-beat
+     animation. Used on SYSTEM ONLINE to signal "the agent is alive
+     right now". Pure CSS, GPU-accelerated, respects prefers-reduced-
+     motion via the global override at the top of the file. */
+  .glow-pulse {
+    color: hsl(var(--saffron-500));
+    text-shadow: 0 0 12px hsl(var(--saffron-500) / 0.4);
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+  @keyframes glow-pulse {
+    0%, 100% { opacity: 1;   text-shadow: 0 0 12px hsl(var(--saffron-500) / 0.4); }
+    50%      { opacity: 0.5; text-shadow: 0 0 18px hsl(var(--saffron-500) / 0.7); }
+  }
+
   /* Hr_thin — back-compat */
   .hr-thin {
     @apply h-px w-full bg-border;
