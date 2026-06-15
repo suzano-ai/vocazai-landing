@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-vs-chatbot-texte`
+- commit: `4f4d730` · IndexNow: HTTP 200
+- Tier-3 #14 — comparison vs alternative tech. Real conversion rates, cost-per-conversion math, sector fit, when to combine. Targets visitors who almost picked chatbot. FR/EN/AR ~6 min.
+- next: cron A picks Tier-3 #15 (`appel-sortant-ia-recouvrement`).
+
 ## 2026-06-15 · Growth Engineer · CRO #3 — H1 exact-match keyword in every locale
 - commit: `97e92cc`
 - FR: "agent vocal" → "agent vocal IA". EN: "voice agent" → "AI voice agent". AR: "الوكيل الصوتي" → "الوكيل الصوتي الذكي". Direct ranking-position impact for high-volume commercial queries Bing is currently crawling.
