@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `voxtral-vs-whisper-transcription`
+- commit: `a0c2aa4`
+- Tier-1 #8 — technical comparison page targeting devs/architects who research the STT layer. Latency, multilingual, hosting/GDPR, pricing, code-switching. FR/EN/AR ~7 min.
+- next: cron A picks first Tier-2 slug (`comment-fonctionne-agent-vocal-ia`).
+
 ## 2026-06-15 · Growth Engineer · SEO #9 — preconnect + dns-prefetch to Supabase origin
 - commit: `8735d86`
 - Shaves DNS+TLS handshake off the first Supabase auth request — saves 300-600ms on slow mobile networks. Wrapped in try/catch for malformed env vars.
