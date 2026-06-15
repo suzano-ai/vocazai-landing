@@ -215,6 +215,22 @@ export default async function RootLayout({
       className={`${inter.variable} ${fraunces.variable} ${tajawal.variable}`}
     >
       <head>
+        {/* Preconnect / dns-prefetch — shaves DNS+TLS handshake off the first
+            auth request to Supabase. Browsers that support preconnect skip
+            the dns-prefetch fallback automatically. */}
+        {process.env.NEXT_PUBLIC_SUPABASE_URL ? (() => {
+          try {
+            const origin = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL!).origin;
+            return (
+              <>
+                <link rel="preconnect" href={origin} crossOrigin="anonymous" />
+                <link rel="dns-prefetch" href={origin} />
+              </>
+            );
+          } catch {
+            return null;
+          }
+        })() : null}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
