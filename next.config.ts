@@ -34,8 +34,32 @@ const nextConfig: NextConfig = {
       { source: "/:path*", headers: SECURITY_HEADERS },
       // Discoverability / AI-discovery files: cacheable but cheap to revalidate.
       { source: "/llms.txt", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
-      { source: "/llms-full.txt", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
       { source: "/humans.txt", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
+      { source: "/feed.xml", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
+      // Non-page assets that crawlers find but shouldn't show in search
+      // results. RFC 9116 security.txt, humans.txt, IndexNow key file and
+      // the RSS feed are all infrastructure — let them be crawled, but tell
+      // search engines not to index them as standalone results.
+      {
+        source: "/security.txt",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+      {
+        source: "/.well-known/security.txt",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+      {
+        source: "/humans.txt",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+      {
+        source: "/c33f90e268df7ba8f138ee23aa4b571b.txt",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+      {
+        source: "/feed.xml",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }],
+      },
     ];
   },
 };
