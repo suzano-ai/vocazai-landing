@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-livraison-logistique` (Tier-6)
+- commit: `2a99019` · IndexNow: HTTP 200
+- Tier-6 #4. Delivery/logistics vertical — 70-80% "where's my parcel" pattern, TMS webhook integrations (Shippeo/Akanea/GEFCO), outbound reminders, $66k/mo Enterprise math. FR/EN/AR ~6 min.
+- next: cron A picks Tier-6 #5 (assurance, agence-voyage, location).
+
 ## 2026-06-15 · Growth Engineer · CRO #20 (extension) — phosphor pulse on SYSTEM ONLINE dot
 - commit: `6f35dbc`
 - 2s heart-beat opacity + text-shadow oscillation on the hero status dot. Static → live-signal. Pure CSS, GPU-accelerated, respects prefers-reduced-motion. Micro-persuasion that lifts the "this actually works" first-impression read.
