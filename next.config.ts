@@ -19,6 +19,14 @@ const SECURITY_HEADERS = [
     key: "Permissions-Policy",
     value: "camera=(), microphone=(self), geolocation=(), payment=(), interest-cohort=()",
   },
+  // RFC 8288 Link headers — discoverability redundancy alongside the HTML
+  // <link rel> tags. Some crawlers (Bingbot, Google) parse the Link header
+  // first, and they also work on non-HTML responses where <link> doesn't.
+  {
+    key: "Link",
+    value:
+      '</sitemap.xml>; rel="sitemap"; type="application/xml", </feed.xml>; rel="alternate"; type="application/rss+xml"; title="VocazAI Blog"',
+  },
 ];
 
 const TEXT_CACHE = "public, max-age=3600, stale-while-revalidate=86400";
