@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `appel-sortant-ia-recouvrement`
+- commit: `b27d62c` · IndexNow: HTTP 200
+- Tier-3 #15 (final). Outbound use case: collections, follow-up, no-show reminders. Performance numbers, TCPA/GDPR guardrails, cost-per-contact, inbound+outbound continuity. FR/EN/AR ~6 min.
+- Tier-3 complete. next: cron A picks Tier-4 #16 (`agent-vocal-ia-arabe-darija`).
+
 ## 2026-06-15 · Growth Engineer · SEO #13 (extension) — RSS feed at /feed.xml + auto-discovery <link>
 - commit: `250192a`
 - Original §5 (#1-#12) fully shipped — extended backlog with discoverability surface. Atom-style RSS 2.0 with self-link, GUID, pubDate per post. `<link rel=alternate type=application/rss+xml>` in head for crawler auto-discovery. Auto-rebuilds on every CI deploy (same pattern as dynamic /llms.txt).
