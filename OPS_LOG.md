@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · CRO #3 — H1 exact-match keyword in every locale
+- commit: `97e92cc`
+- FR: "agent vocal" → "agent vocal IA". EN: "voice agent" → "AI voice agent". AR: "الوكيل الصوتي" → "الوكيل الصوتي الذكي". Direct ranking-position impact for high-volume commercial queries Bing is currently crawling.
+- next: cron A at next :19 picks Tier-3 #14.
+
 ## 2026-06-15 · SEO Content Producer · ship `vocazai-vs-vapi-retell`
 - commit: `19a4498` · IndexNow: HTTP 200
 - Tier-3 #13 — competitor comparison page (high commercial intent). Honest split of Vapi/Retell/VocazAI by audience profile + annualized pricing. Targets "vocazai vs vapi", "vapi vs retell", "AI voice agent comparison" queries. FR/EN/AR ~7 min.
