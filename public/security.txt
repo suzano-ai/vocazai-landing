@@ -1,0 +1,9 @@
+# VocazAI — security disclosure policy
+# Mirror of /.well-known/security.txt (RFC 9116) for scanners that check
+# the root path instead of /.well-known/.
+
+Contact: mailto:security@vocazai.com
+Expires: 2027-06-15T00:00:00.000Z
+Preferred-Languages: en, fr, ar
+Canonical: https://vocazai.com/.well-known/security.txt
+Policy: https://vocazai.com/legal/privacy
