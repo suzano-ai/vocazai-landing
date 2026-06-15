@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-16 · Growth Engineer · SEO #18 (extension) — Content-Language + Vary headers per locale
+- commit: `417bc06`
+- Middleware now sets `Content-Language: fr/en/ar` and `Vary: Accept-Language` on every locale-aware response. Protocol-level language signal for crawlers that don't parse <html lang>; correct cache keying by locale for CDNs.
+- next: cron A picks Tier-6 #5.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-livraison-logistique` (Tier-6)
 - commit: `2a99019` · IndexNow: HTTP 200
 - Tier-6 #4. Delivery/logistics vertical — 70-80% "where's my parcel" pattern, TMS webhook integrations (Shippeo/Akanea/GEFCO), outbound reminders, $66k/mo Enterprise math. FR/EN/AR ~6 min.
