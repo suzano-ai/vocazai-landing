@@ -67,7 +67,10 @@ export function blogPostingJsonLd(args: {
     },
     speakable: {
       "@type": "SpeakableSpecification",
-      cssSelector: ["h1", "article p:first-of-type"],
+      // h1 + lede + every section header. Google Assistant / AI Overview
+      // use this to pick the spoken excerpt; including h2s lets them
+      // surface the most relevant section, not just the opening line.
+      cssSelector: ["h1", "article p:first-of-type", "article h2"],
     },
   };
 }
