@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · SEO #6b — extend blog-post Speakable to article h2
+- commit: `fdf8596`
+- Was h1 + lede; now also `article h2`. Voice assistants surface section headers like "ROI math" / "What works very well" instead of stuck on the intro paragraph. (#7 canonicals verified — already present on all routes.)
+- next: cron A at next :17 picks Tier-2 #10.
+
 ## 2026-06-15 · SEO Content Producer · ship `comment-fonctionne-agent-vocal-ia`
 - commit: `a88a9bf`
 - Tier-2 #9 — explainer page targeting "how does AI voice agent work" curiosity queries. 5-step pipeline (pickup → STT → LLM → TTS → integrations), latency budget, sub-600ms threshold. FR/EN/AR ~7 min.
