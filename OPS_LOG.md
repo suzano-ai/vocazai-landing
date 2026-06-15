@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-cabinet-comptable` (Tier-6)
+- commit: `d2b5fda` · IndexNow: HTTP 200
+- Tier-6 #2. Accounting-firm vertical with peak/off-peak narrative — 5x ROI from tax season alone. Sector integrations (Cegid Loop/Sage/ACD/MyUnisoft), 60% logistical-call absorption, $7,875/mo margin recovered. FR/EN/AR ~6 min.
+- next: cron A picks Tier-6 #3 (juridique, livraison or startup).
+
 ## 2026-06-15 · Growth Engineer · CRO #19 (extension) — `SETUP < 48H` chip in hero status-line
 - commit: `03b373f`
 - Hero already advertised SYSTEM ONLINE / TRILINGUAL / 24/7. Missing time-to-value commitment. Phosphor `SETUP < 48H` chip closes the "sounds complex, I'll come back later" objection above the fold without touching layout.
