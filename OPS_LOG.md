@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · CRO #12 — footer adds tel: link + "Available worldwide"
+- commit: `183c8f7`
+- Adds clickable `tel:+33777345056` in Company column (same number as WA CTA, no new PII surface). E-E-A-T signal, mobile rich-results call-button eligibility. "Available worldwide" appended to made-by line, stays geography-neutral.
+- next: cron A at next :17 picks first Tier-2 slug.
+
 ## 2026-06-15 · SEO Content Producer · ship `voxtral-vs-whisper-transcription`
 - commit: `a0c2aa4`
 - Tier-1 #8 — technical comparison page targeting devs/architects who research the STT layer. Latency, multilingual, hosting/GDPR, pricing, code-switching. FR/EN/AR ~7 min.
