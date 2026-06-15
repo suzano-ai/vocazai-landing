@@ -13,6 +13,9 @@ const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://vocazai.com";
  * to cite. A stale file under-represents the content we want surfaced.
  */
 export async function GET(): Promise<Response> {
+  const latestPost = POSTS_BY_DATE[0]?.date ?? "2026-01-01";
+  const lastModified = new Date(latestPost).toUTCString();
+
   const intro = [
     "# VocazAI",
     "",
@@ -55,6 +58,7 @@ export async function GET(): Promise<Response> {
     headers: {
       "Content-Type": "text/plain; charset=utf-8",
       "Cache-Control": "public, max-age=3600, s-maxage=3600",
+      "Last-Modified": lastModified,
     },
   });
 }
