@@ -2008,6 +2008,73 @@ export const POSTS: BlogPost[] = [
       ],
     },
   },
+  {
+    slug: "agent-vocal-ia-cabinet-comptable",
+    date: "2026-06-15",
+    readingMinutes: 6,
+    title: {
+      fr: "Agent vocal IA pour cabinet comptable : passer les périodes fiscales sans appels manqués",
+      en: "AI voice agent for accounting firms: surviving tax season without missing a call",
+      ar: "الوكيل الصوتي الذكي لمكتب المحاسبة: تجاوز فترات الضرائب دون مكالمات فائتة",
+    },
+    description: {
+      fr: "Un cabinet comptable bascule de 30 à 200 appels/jour pendant les périodes fiscales. Voici comment un agent vocal IA absorbe le pic sans diluer le conseil, et libère les comptables pour la production.",
+      en: "An accounting firm goes from 30 to 200 calls/day during tax season. Here's how an AI voice agent absorbs the peak without diluting advisory, and frees accountants for production.",
+      ar: "مكتب المحاسبة ينتقل من 30 إلى 200 مكالمة يوميًا خلال فترات الضرائب. إليك كيف يمتصّ الوكيل الصوتي الذكي الذروة دون تخفيف الاستشارة، ويُحرّر المحاسبين للعمل الإنتاجي." },
+    body: {
+      fr: [
+        { type: "p", text: "Un cabinet comptable a deux saisons : la saison calme et la saison fiscale. Pendant cette dernière, le téléphone explose littéralement — 5 à 7 fois le volume normal. Un agent vocal IA absorbe le pic sans diluer la qualité du conseil." },
+        { type: "h2", text: "Le pattern d'appels saisonnier" },
+        { type: "p", text: "60 % des appels en période fiscale sont : « avez-vous reçu mes documents ? », « quand sera prête ma déclaration ? », « pouvez-vous me rappeler ce que j'avais demandé ? ». Tous logistiques. L'agent répond depuis votre logiciel de cabinet en temps réel, sans réveiller un comptable." },
+        { type: "h2", text: "Ce que l'agent peut faire" },
+        { type: "ul", items: [
+          "Statut d'un dossier (réception, traitement, signature en attente, finalisé).",
+          "Rappel des documents manquants côté client.",
+          "Prise de RDV pour validation finale.",
+          "Question administrative simple (taux TVA standard, échéances, horaires).",
+          "Transfert immédiat sur toute question fiscale spécifique.",
+        ] },
+        { type: "h2", text: "L'intégration logiciel cabinet" },
+        { type: "p", text: "Les outils standards du secteur (Cegid Loop, Sage Production Comptable, ACD, MyUnisoft) exposent des webhooks pour la consultation de dossier. L'agent les utilise en lecture seule — il ne modifie rien, il informe et transfère." },
+        { type: "h2", text: "Le calcul brutal" },
+        { type: "p", text: "Cabinet de 8 comptables, 200 appels/jour en pic, dont 60 % logistiques = 120 appels absorbés. À 4 minutes par appel logistique × 22 jours = 175 heures comptables rendues sur la période. À $45/h chargés = $7 875 de marge en plus. Forfait Growth VocazAI à $1 490 : ROI 5x sur la seule période fiscale. Premier mois gratuit." },
+      ],
+      en: [
+        { type: "p", text: "An accounting firm has two seasons: the quiet one and the tax one. During the latter, the phone literally explodes — 5 to 7 times normal volume. An AI voice agent absorbs the peak without diluting advisory quality." },
+        { type: "h2", text: "The seasonal call pattern" },
+        { type: "p", text: "60 % of tax-season calls are: 'did you get my documents?', 'when will my return be ready?', 'can you remind me what I asked?'. All logistical. The agent answers from your practice software in real time, without waking an accountant." },
+        { type: "h2", text: "What the agent can do" },
+        { type: "ul", items: [
+          "File status (received, in progress, pending signature, finalized).",
+          "Reminder of missing client documents.",
+          "Booking for final validation.",
+          "Simple admin questions (standard VAT rate, deadlines, hours).",
+          "Immediate transfer on any specific tax question.",
+        ] },
+        { type: "h2", text: "Practice-software integration" },
+        { type: "p", text: "Standard sector tools (Cegid Loop, Sage Production Comptable, ACD, MyUnisoft) expose webhooks for file lookup. The agent uses them read-only — never modifies, just informs and transfers." },
+        { type: "h2", text: "Blunt math" },
+        { type: "p", text: "8-accountant firm, 200 calls/day at peak, 60 % logistical = 120 absorbed. At 4 minutes per logistical call × 22 days = 175 accountant hours given back. At $45/hr loaded = $7,875 extra margin. VocazAI Growth at $1,490: 5x ROI on the tax season alone. First month free." },
+      ],
+      ar: [
+        { type: "p", text: "لمكتب المحاسبة موسمان: الموسم الهادئ وموسم الضرائب. خلال الثاني، ينفجر الهاتف حرفيًا — من 5 إلى 7 أضعاف الحجم العادي. الوكيل الصوتي الذكي يمتصّ الذروة دون تخفيف جودة الاستشارة." },
+        { type: "h2", text: "نمط المكالمات الموسمي" },
+        { type: "p", text: "60 % من مكالمات موسم الضرائب هي: «هل وصلتكم وثائقي؟»، «متى ستجهز ضريبتي؟»، «هل يمكنكم تذكيري بما طلبت؟». كلها لوجستية. الوكيل يُجيب من برنامج المكتب لحظيًا، دون إيقاظ محاسب." },
+        { type: "h2", text: "ما يستطيع الوكيل فعله" },
+        { type: "ul", items: [
+          "حالة ملف (تمّ الاستلام، قيد المعالجة، بانتظار التوقيع، منتهٍ).",
+          "تذكير الوثائق الناقصة من جانب الزبون.",
+          "حجز للتحقق النهائي.",
+          "أسئلة إدارية بسيطة (معدّل ضريبة قياسي، استحقاقات، أوقات).",
+          "تحويل فوري لأي سؤال ضريبي محدّد.",
+        ] },
+        { type: "h2", text: "التكامل مع برنامج المكتب" },
+        { type: "p", text: "الأدوات القطاعية القياسية (Cegid Loop، Sage Production Comptable، ACD، MyUnisoft) تكشف webhooks للبحث في الملفات. يستخدمها الوكيل بصلاحية قراءة فقط — لا يُعدّل، يُعلم ويحوّل فحسب." },
+        { type: "h2", text: "الحساب الصريح" },
+        { type: "p", text: "مكتب بثمانية محاسبين، 200 مكالمة/يوم في الذروة، 60 % لوجستية = 120 مكالمة ممتَصّة. بـ4 دقائق لكل مكالمة × 22 يومًا = 175 ساعة محاسب مستردّة. بـ45 دولار/ساعة محمّلة = 7875 دولار هامش إضافي. باقة Growth من VocazAI بـ1490 دولارًا: عائد 5 أضعاف من موسم الضرائب وحده. الشهر الأول مجاني." },
+      ],
+    },
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
