@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-courtier-assurance` (Tier-6)
+- commit: `f412ff9` · IndexNow: HTTP 200
+- Tier-6 #5. Insurance-broker vertical: regulated scope (no advisory), claim intake structured into CRM (Aleas/Easybroker/eXalt/Solys), 14x ROI math from broker hours given back. FR/EN/AR ~6 min.
+- next: cron A picks Tier-6 #6 (agence-voyage, location-bien, startup-saas).
+
 ## 2026-06-16 · Growth Engineer · SEO #18 (extension) — Content-Language + Vary headers per locale
 - commit: `417bc06`
 - Middleware now sets `Content-Language: fr/en/ar` and `Vary: Accept-Language` on every locale-aware response. Protocol-level language signal for crawlers that don't parse <html lang>; correct cache keying by locale for CDNs.
