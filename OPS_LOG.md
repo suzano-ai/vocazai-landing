@@ -22,6 +22,11 @@
 - Middleware now sets `Content-Language: fr/en/ar` and `Vary: Accept-Language` on every locale-aware response. Protocol-level language signal for crawlers that don't parse <html lang>; correct cache keying by locale for CDNs.
 - next: cron A picks Tier-6 #5.
 
+## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-agence-voyage` (Tier-6)
+- commit: `00767fd` · IndexNow: HTTP 200
+- Tier-6 #6. Travel-agency vertical with peak/off-peak narrative, GDS integrations (Amadeus/Sabre/Travelgate/Galileo), D-3 pre-departure outbound call drops day-of incidents 40%, $10.5k/mo math. FR/EN/AR ~6 min.
+- next: cron A picks Tier-6 #7 (location-immobilière, startup-saas, gym-fitness).
+
 ## 2026-06-16 · Growth Engineer · CRO #21 (extension) — explicit no-credit-card risk reversal
 - commit: `46f8f7a`
 - Final-CTA status-line: `NO CREDIT CARD` phosphor chip alongside `FIRST MONTH FREE`. Below the bracket-cta: `> $ ./trial --no-credit-card · 30 days · cancel anytime` subline. Closes three objections (no commitment, real duration, exit path) in one CLI-styled line.
