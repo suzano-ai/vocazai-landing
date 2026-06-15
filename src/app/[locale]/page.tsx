@@ -40,6 +40,10 @@ export default async function LandingPage({
       name: t(`landing.faq.q${i}`),
       acceptedAnswer: { "@type": "Answer", text: t(`landing.faq.a${i}`) },
     })),
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["#faq h3", "#faq dd"],
+    },
   };
 
   /* ─────────────────────────────────────────────────────────────────────
