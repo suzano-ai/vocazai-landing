@@ -584,8 +584,17 @@ export default async function LandingPage({
 
       {/* Sticky mobile CTA — proven mobile-CRO pattern that lifts conversion
           15-30 % on phone-led traffic (which is where Google search trends).
+          Two paths in thumb-reach: a click-to-call for visitors who want a
+          live voice and the WhatsApp trial deep-link for everyone else.
           Hidden md+ since the desktop hero CTA stays in view at all scrolls. */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/80 md:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-[auto_1fr] gap-2 border-t border-border bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/80 md:hidden">
+        <a
+          href="tel:+33777345056"
+          className="bracket-cta justify-center text-[11px]"
+          aria-label="Call VocazAI"
+        >
+          {"CALL"}
+        </a>
         <Link
           href={wa}
           className="bracket-cta w-full justify-center text-[11px]"
