@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-agence-immobiliere`
+- commit: `cd50df8`
+- Tier-1 #6 — real-estate vertical. 5-criteria qualification → 3-of-5 transfer rule, CRM push (HubSpot/Pipedrive/Apimo/Hektor), $4k/mo math. FR/EN/AR ~6 min.
+- next: cron A picks slug #7 (`agent-vocal-ia-garage-atelier`).
+
 ## 2026-06-15 · Growth Engineer · SEO #10 — /.well-known/security.txt per RFC 9116
 - commit: `03e4d6b`
 - Publishes a responsible-disclosure contact at the canonical location. Minor E-E-A-T signal + credibility marker for enterprise due-diligence checks.
