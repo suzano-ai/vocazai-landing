@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · SEO #10 — /.well-known/security.txt per RFC 9116
+- commit: `03e4d6b`
+- Publishes a responsible-disclosure contact at the canonical location. Minor E-E-A-T signal + credibility marker for enterprise due-diligence checks.
+- next: cron A at next :17 picks slug #6.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-cabinet-medical`
 - commit: `a369e10`
 - Tier-1 #5 — vertical money page for medical practices. GDPR-compliant scope (what agent CAN do / NEVER does), strict-mode setup, DPA agreement mention. FR/EN/AR ~7 min.
