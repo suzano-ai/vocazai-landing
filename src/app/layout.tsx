@@ -224,6 +224,12 @@ export default async function RootLayout({
           title="VocazAI Blog"
           href="/feed.xml"
         />
+        {/* Pre-resolve the WhatsApp shortlink so the [ START TRIAL ] click
+            doesn't pay the DNS+TLS cost — every CTA on the site eventually
+            redirects to wa.me. Shaves ~30-100ms off the perceived open
+            time on mobile, where most Google traffic lands. */}
+        <link rel="dns-prefetch" href="https://wa.me" />
+        <link rel="preconnect" href="https://wa.me" crossOrigin="anonymous" />
         {process.env.NEXT_PUBLIC_SUPABASE_URL ? (() => {
           try {
             const origin = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL!).origin;
