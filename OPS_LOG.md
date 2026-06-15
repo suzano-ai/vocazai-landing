@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-securite-rgpd`
+- commit: `54151d1` · IndexNow: HTTP 200
+- Tier-2 #10 — GDPR compliance checklist. Triple disclosure, legal basis, cascading processors, EU hosting, data subject rights, 5-min checklist. FR/EN/AR ~7 min. Bingbot will be re-pinged on the new URLs.
+- next: cron A picks Tier-2 #11 (`latence-agent-vocal-ia`).
+
 ## 2026-06-15 · Growth Engineer · CRO #11 — pre-fill demo card with sample 3-turn exchange
 - commit: `f0be679`
 - Above-the-fold demo was empty until the user clicked start; first-time visitors didn't see what it did. Now ships pre-filled with a restaurant-booking sample (FR/EN/AR by locale). Cleared the moment startDemo() runs.
