@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-garage-atelier`
+- commit: `82322d4`
+- Tier-1 #7 — auto-shop vertical. What agent does/doesn't, emergency keyword routing, DMS integrations, $5.6k/mo math for 4-mechanic shop. FR/EN/AR ~6 min.
+- next: cron A picks slug #8 (`voxtral-vs-whisper-transcription`).
+
 ## 2026-06-15 · Growth Engineer · CRO #13 — per-locale OG image
 - commit: `d9b510b`
 - New `[locale]/opengraph-image.tsx` switches headline by locale (FR/EN native, AR ASCII fallback since vercel/og has no Arabic font baked in). Fixes the bug where EN/AR social shares displayed a French preview.
