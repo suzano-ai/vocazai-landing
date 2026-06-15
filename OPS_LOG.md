@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · SEO #12 — code-split DemoCallCard (mobile perf)
+- commit: `99aaf06`
+- DemoCallCard (~900 LOC of audio/STT/TTS/WebRTC) split into a `next/dynamic` chunk via new `demo-call-card-lazy.tsx`. SSR stays on so the pre-filled sample still paints at first byte; interactive layer hydrates after LCP. CLS stays 0 via skeleton min-height. Improves mobile lighthouse TTI + TBT.
+- next: cron A at next :19 picks Tier-3 #13.
+
 ## 2026-06-15 · SEO Content Producer · ship `script-agent-vocal-comment-ecrire`
 - commit: `573a0e8` · IndexNow: HTTP 200
 - Tier-2 #12 (final Tier-2 slug). 5-block canvas for writing the system prompt, 3 mistakes to avoid. Practical how-to targeting "how to write voice agent prompt / script" queries. FR/EN/AR ~6 min.
