@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · CRO #20 (extension) — phosphor pulse on SYSTEM ONLINE dot
+- commit: `6f35dbc`
+- 2s heart-beat opacity + text-shadow oscillation on the hero status dot. Static → live-signal. Pure CSS, GPU-accelerated, respects prefers-reduced-motion. Micro-persuasion that lifts the "this actually works" first-impression read.
+- next: cron A picks Tier-6 #4.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-cabinet-juridique` (Tier-6)
 - commit: `a0c6234` · IndexNow: HTTP 200
 - Tier-6 #3. Law-firm vertical — privilege-aware scope, CAN/NEVER list, GDPR DPA + EU region + 30-day anonymization, front desk protection narrative. FR/EN/AR ~6 min.
