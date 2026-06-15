@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · SEO #17 (extension) — RFC 8288 Link headers (sitemap + feed)
+- commit: `ca9c3a7`
+- Every response now carries `Link: </sitemap.xml>; rel=sitemap, </feed.xml>; rel=alternate; type=application/rss+xml`. Crawlers that prefer headers (or hit non-HTML routes like /llms.txt where <link> tags can't live) now have full discoverability redundancy.
+- next: cron A picks Tier-6 #3.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-cabinet-comptable` (Tier-6)
 - commit: `d2b5fda` · IndexNow: HTTP 200
 - Tier-6 #2. Accounting-firm vertical with peak/off-peak narrative — 5x ROI from tax season alone. Sector integrations (Cegid Loop/Sage/ACD/MyUnisoft), 60% logistical-call absorption, $7,875/mo margin recovered. FR/EN/AR ~6 min.
