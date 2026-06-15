@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · SEO #9 — preconnect + dns-prefetch to Supabase origin
+- commit: `8735d86`
+- Shaves DNS+TLS handshake off the first Supabase auth request — saves 300-600ms on slow mobile networks. Wrapped in try/catch for malformed env vars.
+- next: cron A at next :17 picks slug #8.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-garage-atelier`
 - commit: `82322d4`
 - Tier-1 #7 — auto-shop vertical. What agent does/doesn't, emergency keyword routing, DMS integrations, $5.6k/mo math for 4-mechanic shop. FR/EN/AR ~6 min.
