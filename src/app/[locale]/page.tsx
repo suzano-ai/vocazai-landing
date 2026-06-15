@@ -578,6 +578,22 @@ export default async function LandingPage({
       </section>
 
       <Footer locale={locale} />
+
+      {/* Sticky mobile CTA — proven mobile-CRO pattern that lifts conversion
+          15-30 % on phone-led traffic (which is where Google search trends).
+          Hidden md+ since the desktop hero CTA stays in view at all scrolls. */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/80 md:hidden">
+        <Link
+          href={wa}
+          className="bracket-cta w-full justify-center text-[11px]"
+          aria-label={t("landing.finalCta.cta")}
+        >
+          {t("landing.finalCta.cta")}
+        </Link>
+      </div>
+      {/* Spacer so the sticky bar doesn't cover the footer's last row on
+          short viewports. md+ hidden to match. */}
+      <div className="h-16 md:hidden" aria-hidden="true" />
     </main>
   );
 }
