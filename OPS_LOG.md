@@ -12,6 +12,12 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · CRO #11 — pre-fill demo card with sample 3-turn exchange
+- commit: `f0be679`
+- Above-the-fold demo was empty until the user clicked start; first-time visitors didn't see what it did. Now ships pre-filled with a restaurant-booking sample (FR/EN/AR by locale). Cleared the moment startDemo() runs.
+- Highest-leverage CRO change: value visible from the first byte, before any interaction.
+- next: cron A at next :19 picks Tier-2 #10.
+
 ## 2026-06-15 · CEO · SSH audit on VPS (76.13.55.187) — REAL TRAFFIC EVIDENCE
 - VPS git HEAD: `feafd47` (latest commit) — CI deploys reliably.
 - Containers `vocazai-app/tts/stt` UP healthy 17 min (latest CI rebuild).
