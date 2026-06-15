@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · SEO #14 (extension) — X-Robots-Tag noindex on infrastructure files
+- commit: `28aa1b6`
+- security.txt (both paths), humans.txt, IndexNow key, feed.xml now respond with `X-Robots-Tag: noindex` so they stop appearing as ghost search results. Feed gets `noindex, follow` so it still hands link signal to blog posts. Cache-Control rotation extended to /feed.xml.
+- next: cron A at next :19 picks Tier-4 #17.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-arabe-dialectes`
 - commit: `2343db3` · IndexNow: HTTP 200
 - Tier-4 #16. Rephrased from original calendar slug to comply with hard rule "no geographic refs" (dropped "darija" → "dialectes", no country names in body). MSA vs spoken Arabic, real accuracy numbers, recommended strategy. FR/EN/AR ~6 min.
