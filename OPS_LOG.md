@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · SEO Content Producer · ship `latence-agent-vocal-ia`
+- commit: `da33e18` · IndexNow: HTTP 200
+- Tier-2 #11 — latency deep-dive targeting "AI voice agent latency / sounds robotic / 600ms" queries. 5 latency sources, 4 levers, naturalness trap, our actual p50/p95 numbers. FR/EN/AR ~6 min.
+- next: cron A picks Tier-2 #12 (`script-agent-vocal-comment-ecrire`).
+
 ## 2026-06-15 · Growth Engineer · SEO #3 — dynamic /llms.txt route (auto-refreshes on every blog publish)
 - commit: `316fa14`
 - Old static /public/llms.txt listed only 3 posts; production had 17. Now /llms.txt is a Next route reading POSTS_BY_DATE → spec-compliant llmstxt.org doc that auto-includes every new post on each CI deploy. ChatGPT search / Perplexity / Gemini / Claude.ai will see the full surface.
