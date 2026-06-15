@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-15 · Growth Engineer · SEO #3 — dynamic /llms.txt route (auto-refreshes on every blog publish)
+- commit: `316fa14`
+- Old static /public/llms.txt listed only 3 posts; production had 17. Now /llms.txt is a Next route reading POSTS_BY_DATE → spec-compliant llmstxt.org doc that auto-includes every new post on each CI deploy. ChatGPT search / Perplexity / Gemini / Claude.ai will see the full surface.
+- next: cron A at next :19 picks Tier-2 #11.
+
 ## 2026-06-15 · SEO Content Producer · ship `agent-vocal-ia-securite-rgpd`
 - commit: `54151d1` · IndexNow: HTTP 200
 - Tier-2 #10 — GDPR compliance checklist. Triple disclosure, legal basis, cascading processors, EU hosting, data subject rights, 5-min checklist. FR/EN/AR ~7 min. Bingbot will be re-pinged on the new URLs.
