@@ -32,6 +32,11 @@
 - Footer bottom-bar gains "GDPR compliant · EU region · Signed DPA". Site-wide trust signal that closes the compliance question for visitors arriving from the Tier-6 regulated-vertical posts (medical/legal/accounting/insurance/pharmacy) without forcing them to read a blog post.
 - next: cron A picks Tier-6 #8.
 
+## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-cabinet-veterinaire` (Tier-6)
+- commit: `04cfc9e` · IndexNow: HTTP 200
+- Tier-6 #9. Vet-clinic vertical (parallel to medical but distinct PMS — Bourgelat/VetoCenter/ezyVet/Vetera). Strict CAN/NEVER scope per Ordre des Vétérinaires, vaccine recall outbound flow (60-75% response), $3.3k/mo math. FR/EN/AR ~6 min.
+- next: cron A picks Tier-6 #10 (ecommerce-livraison, startup-saas).
+
 ## 2026-06-16 · Growth Engineer · SEO #20 (extension) — Cache-Control on sitemap/opensearch/IndexNow key
 - commit: `03f1c99`
 - /sitemap.xml gets TEXT_CACHE (1h + 1d SWR). /opensearch.xml gets 1d + 7d SWR. IndexNow key file gets 30d immutable. Pure CDN/perf — cuts origin load on every crawler poll + key verification.
