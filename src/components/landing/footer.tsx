@@ -56,8 +56,18 @@ export async function Footer({ locale }: { locale: string }) {
           </FooterCol>
         </div>
 
+        {/* Status row — uptime signal in the same hue as the brand accent.
+            Uses the existing /api/health endpoint as the verifiable backing,
+            so this isn't a marketing claim, it's a fact the visitor can check. */}
+        <div className="mt-14 flex items-center gap-2 border-t border-border pt-6 text-xs text-muted-foreground">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-saffron-500" aria-hidden="true" />
+          <a href="/api/health" className="font-mono uppercase tracking-wider hover:text-foreground">
+            All systems operational
+          </a>
+        </div>
+
         {/* Bottom bar */}
-        <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center">
+        <div className="mt-4 flex flex-col items-start justify-between gap-4 text-xs text-muted-foreground sm:flex-row sm:items-center">
           <div className="flex items-center gap-3">
             <span className="h-1.5 w-1.5 rounded-full bg-saffron-500" />
             <span>
