@@ -107,6 +107,11 @@
 - Tier-7 cross-cutting #2. Anti-pattern / honest-list content: 7 fatal mistakes + rule for each + "we refund the second month if you see one" tactical commitment. Builds trust via honesty (counter-marketing positioning). Targets evaluators researching pitfalls. FR/EN/AR ~6 min.
 - next: cron A picks another cross-cutting or vertical.
 
+## 2026-06-16 · SEO Content Producer · ship `migrer-de-vapi-vers-vocazai` (Tier-7)
+- commit: `0dc48a5` · IndexNow: HTTP 200
+- Tier-7 #4 — competitive migration playbook. Friday/Saturday/Sunday timeline, what carries over, $7.3k/yr saving math. Targets existing Vapi users searching how to switch. High commercial intent. FR/EN/AR ~6 min.
+- next: cron A picks more cross-cutting or a vertical.
+
 ## 2026-06-16 · Growth Engineer · SEO #26 (extension) — articleSection + auto-derived keywords on blog JSON-LD
 - commit: `f37ce65`
 - Helper extended: `articleSection: "AI Voice Agent"` + keywords auto-derived from slug (groups first 3 tokens "agent vocal ia" as a phrase, then each vertical tail token). No per-post bookkeeping. Tightens Article rich-result eligibility for all existing posts on next deploy.
