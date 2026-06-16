@@ -2834,6 +2834,56 @@ export const POSTS: BlogPost[] = [
       ],
     },
   },
+  {
+    slug: "agent-vocal-ia-artisan-plombier",
+    date: "2026-06-16",
+    readingMinutes: 5,
+    title: {
+      fr: "Agent vocal IA pour artisan plombier/électricien : ne plus rater une urgence pendant qu'on est sur un chantier",
+      en: "AI voice agent for self-employed plumbers and electricians: stop missing emergencies while on a job",
+      ar: "الوكيل الصوتي الذكي للحرفي السبّاك/الكهربائي: لا تفوّت حالة طارئة وأنت على ورشة",
+    },
+    description: {
+      fr: "Un artisan qui est dans une cave ou sur un toit n'entend pas son téléphone. Voici comment un agent vocal IA prend la fuite, l'urgence, le devis — et envoie un SMS récap au bon moment.",
+      en: "A self-employed tradesperson in a basement or on a roof doesn't hear their phone. Here's how an AI voice agent intakes the leak, the emergency, the quote request — and texts a recap at the right moment.",
+      ar: "الحرفي وهو في قبو أو على سطح لا يسمع هاتفه. إليك كيف يأخذ الوكيل الصوتي الذكي التسرّب، الحالة الطارئة، طلب تسعير — ويُرسل ملخّصًا برسالة قصيرة في الوقت المناسب.",
+    },
+    body: {
+      fr: [
+        { type: "p", text: "Pour un plombier ou un électricien indépendant, chaque appel manqué est une intervention perdue qui part au voisin. Le téléphone sonne pendant qu'il est sous l'évier ou en train de tirer un câble. Un agent vocal IA décroche, qualifie, envoie un SMS récap quand l'artisan sortira de la cave." },
+        { type: "h2", text: "Le flow type" },
+        { type: "p", text: "L'agent répond : « Bonjour, plomberie [nom], je prends votre demande, fuite, dépannage ou devis ? ». 3 questions et c'est plié : type d'intervention, adresse, niveau d'urgence. SMS récap à l'artisan, SMS confirmation au client avec créneau proposé." },
+        { type: "h2", text: "La détection d'urgence" },
+        { type: "p", text: "Inondation, coupure totale d'électricité, fuite de gaz : l'agent les détecte par mots-clés et propose immédiatement le numéro d'astreinte ou l'intervention dans l'heure si l'artisan est dispo. Pas de fausse urgence (« j'ai juste un robinet qui goutte » est en RDV normal)." },
+        { type: "h2", text: "Le SMS récap intelligent" },
+        { type: "p", text: "L'artisan reçoit en SMS : nom · téléphone · adresse · type d'intervention · niveau urgence · créneau proposé. Pas de transcription de 5 minutes à lire — 6 lignes utiles. Il rappelle quand il sort du chantier, le client a déjà l'info." },
+        { type: "h2", text: "Le calcul" },
+        { type: "p", text: "Artisan recevant 15 appels/jour, 30 % manqués (chantier, repas, sommeil) = 4-5 perdus/jour. À $180 d'intervention moyenne × 50 % converties = 2 interventions récupérées/jour × $180 × 22 jours = $7 920/mois. Forfait Starter VocazAI à $499/mois — ROI 15x. Premier mois gratuit." },
+      ],
+      en: [
+        { type: "p", text: "For a self-employed plumber or electrician, every missed call is a job that goes to the neighbor. The phone rings while they're under a sink or pulling cable. An AI voice agent picks up, qualifies, and texts a recap when the tradesperson is back above ground." },
+        { type: "h2", text: "Standard flow" },
+        { type: "p", text: "Agent answers: 'Hi, [name] plumbing, I'll take your request — leak, breakdown or quote?'. 3 questions and it's done: intervention type, address, urgency. Recap SMS to the tradesperson, confirmation SMS to the customer with a proposed slot." },
+        { type: "h2", text: "Emergency detection" },
+        { type: "p", text: "Flooding, full power outage, gas leak: agent detects on keywords and immediately offers the on-call number or a within-the-hour visit if the tradesperson is free. No false urgency ('I just have a dripping faucet' goes to normal booking)." },
+        { type: "h2", text: "Smart recap SMS" },
+        { type: "p", text: "The tradesperson gets, via SMS: name · phone · address · job type · urgency · proposed slot. No 5-minute transcript to read — 6 useful lines. They call back when off the site, the customer already has the info." },
+        { type: "h2", text: "Math" },
+        { type: "p", text: "Tradesperson getting 15 calls/day, 30 % missed (jobsite, meals, sleep) = 4-5 lost/day. At $180 average job × 50 % converted = 2 jobs recovered/day × $180 × 22 days = $7,920/month. VocazAI Starter at $499/mo — 15x ROI. First month free." },
+      ],
+      ar: [
+        { type: "p", text: "للحرفي السبّاك أو الكهربائي المستقل، كل مكالمة فائتة عملية ضائعة تذهب للجار. الهاتف يرنّ وهو تحت المغسلة أو يسحب كابلًا. الوكيل الصوتي الذكي يردّ، يُؤهّل، ويُرسل ملخّصًا برسالة قصيرة حين يخرج الحرفي من الورشة." },
+        { type: "h2", text: "السيناريو القياسي" },
+        { type: "p", text: "يردّ الوكيل: «مرحبًا، سباكة [الاسم]، سأأخذ طلبك — تسرّب، عطل أو تسعير؟». ثلاثة أسئلة وانتهى الأمر: نوع التدخل، العنوان، مستوى الاستعجال. ملخّص بريد قصير للحرفي، تأكيد للزبون بموعد مقترح." },
+        { type: "h2", text: "اكتشاف الطوارئ" },
+        { type: "p", text: "غمر، انقطاع كهربائي كامل، تسرّب غاز: يكتشفها الوكيل بالكلمات المفتاحية ويعرض فورًا رقم المناوبة أو زيارة في غضون ساعة إن كان الحرفي متاحًا. لا طوارئ زائفة (الصنبور الذي يقطر يذهب إلى الحجز العادي)." },
+        { type: "h2", text: "رسالة ملخّص ذكية" },
+        { type: "p", text: "يستلم الحرفي عبر رسالة قصيرة: اسم · هاتف · عنوان · نوع التدخل · مستوى الاستعجال · موعد مقترح. لا نسخة 5 دقائق ليقرأها — 6 أسطر مفيدة. يُعاود الاتصال حين يخرج من الموقع، والزبون لديه المعلومة أصلًا." },
+        { type: "h2", text: "الحساب" },
+        { type: "p", text: "حرفي يتلقى 15 مكالمة/يوم، 30 % مفقودة (ورشة، وجبات، نوم) = 4-5 ضائعة يوميًا. بـ180 دولار متوسط التدخل × 50 % محوّلة = تدخّلان مستردّان يوميًا × 180 × 22 يومًا = 7920 دولارًا شهريًا. باقة Starter بـ499 — عائد 15 ضعفًا. الشهر الأول مجاني." },
+      ],
+    },
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
