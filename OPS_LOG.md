@@ -67,6 +67,11 @@
 - Tier-7 #9 — compliance how-to distinct from the broader `agent-vocal-ia-securite-rgpd` (Tier-2). Recording-specific: disclosure script, retention durations, security baseline, caller rights, the LLM-data-crossing-borders trap. Targets buyers researching call-recording legality. FR/EN/AR ~6 min.
 - next: cron A picks more cross-cutting or vertical.
 
+## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-pic-saisonnier` (Tier-7)
+- commit: `1841286`  · IndexNow: HTTP 200
+- Tier-7 #11. Seasonal peak playbook: 1-week-ahead diagnostic, hardened peak config, real-time KPIs, fallback plan, after-peak iteration loop, VocazAI surge plan ($300-500 extra). Targets buyers researching Black Friday / sales prep. FR/EN/AR ~5 min.
+- next: cron A picks more cross-cutting or vertical.
+
 ## 2026-06-16 · Growth Engineer · CRO #32 (extension) — Back-to-top anchor on blog posts
 - commit: `cc9f289`
 - Server-rendered "↑ Top" link between post body and related-posts grid. Points to #main (CRO #24). Smooth-scroll already configured. Lifts dwell time on mobile (1100-1500 chars × ~6 h2 sections × related-posts grid is a long scroll).
