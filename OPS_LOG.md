@@ -72,6 +72,11 @@
 - Footer bottom-bar gains "GDPR compliant · EU region · Signed DPA". Site-wide trust signal that closes the compliance question for visitors arriving from the Tier-6 regulated-vertical posts (medical/legal/accounting/insurance/pharmacy) without forcing them to read a blog post.
 - next: cron A picks Tier-6 #8.
 
+## 2026-06-16 · Growth Engineer · SEO #23 (extension) — Windows tile branding (browserconfig.xml + msapplication)
+- commit: `0cb3025`
+- `/browserconfig.xml` declares 150x150 logo + #00FF87 TileColor. `<meta msapplication-TileColor>` and `msapplication-config` in head. Windows pinning now renders brand-matched phosphor tile instead of generic IE-era screenshot. Distinct discovery surface.
+- next: cron A picks Tier-6 #15.
+
 ## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-ecole-langue` (Tier-6)
 - commit: `6ac0bab` · IndexNow: HTTP 200
 - Tier-6 #12. Language-school vertical — paradoxically perfect demo context (caller already expects multilingual). Express level test in target language, school software integrations (Aurion/Yparéo/Hyperplanning/OpenSchool), $3.75k/yr math. FR/EN/AR ~5 min.
