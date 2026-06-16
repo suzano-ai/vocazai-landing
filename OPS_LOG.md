@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-changement-langue-mi-appel` (Tier-7 cross-cutting #12)
+- commit: `3b8b925` · IndexNow: HTTP 200
+- Tier-7 #12. Mid-call language switching playbook — 3 switch scenarios (isolated loanword / short B inside A flow / two full sentences in B), 80 % confidence threshold across two consecutive sentences, context retention through LLM memory (no reset on switch), 4 typical errors, 4-scenario calibration test. Also fixed Next 15 lint blocker: footer health-status anchor `<a href="/api/health">` → `<Link prefetch={false}>`. FR/EN/AR ~5 min.
+- next: cron A picks Tier-7 #13 (mesurer-conversion-business, accents-anglais, banque-finance) or new Tier-6 vertical.
+
 ## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-salle-sport` (Tier-6)
 - commit: `2dddb54` · IndexNow: HTTP 200
 - Tier-6 #7. Gym/fitness vertical — membership-info conversion narrative (3-4x lift vs voicemail), club software integrations (HeitzSystem/Resamania/Mindbody/Glofox/Gymnasium), 16x ROI on Starter math. FR/EN/AR ~5 min.
