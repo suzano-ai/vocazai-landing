@@ -47,6 +47,9 @@ export async function Footer({ locale }: { locale: string }) {
             <FooterLink href={`/${locale}/about`}>{tNav("about")}</FooterLink>
             <FooterLink href="mailto:hello@vocazai.com">{tNav("contact")}</FooterLink>
             <FooterLink href="tel:+33777345056">+33 7 77 34 50 56</FooterLink>
+            <FooterLink href="https://wa.me/33777345056?text=Hi%20Aymane%2C%20I%20have%20a%20question%20about%20VocazAI.">
+              Ask the founder
+            </FooterLink>
             <FooterLink href={`/${locale}/login`}>{tNav("signIn")}</FooterLink>
           </FooterCol>
 
