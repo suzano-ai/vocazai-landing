@@ -238,6 +238,12 @@ export default async function RootLayout({
             via the GitHub profile. Mastodon shows a green checkmark on
             verified profile links; IndieAuth uses it for login federation. */}
         <link rel="me" href="https://github.com/suzano-ai/vocazai-landing" />
+        {/* Windows Start menu / Edge tile branding. When a Windows user
+            pins vocazai.com, the OS reads browserconfig.xml + these meta
+            tags to render a proper phosphor tile instead of a generic
+            screenshot preview. Distinct discovery surface. */}
+        <meta name="msapplication-TileColor" content="#00FF87" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
         {/* Pre-resolve the WhatsApp shortlink so the [ START TRIAL ] click
             doesn't pay the DNS+TLS cost — every CTA on the site eventually
             redirects to wa.me. Shaves ~30-100ms off the perceived open
