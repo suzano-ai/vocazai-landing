@@ -20,6 +20,17 @@ const WEBSITE_JSONLD = {
   name: "VocazAI",
   url: SITE,
   inLanguage: ["fr", "en", "ar"],
+  // SearchAction — makes the site eligible for Google's sitelinks search
+  // box (an inline search box inside the SERP entry for vocazai.com). The
+  // urlTemplate matches the OpenSearch description doc at /opensearch.xml.
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${SITE}/en/blog?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
 };
 
 /**
