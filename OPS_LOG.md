@@ -22,6 +22,11 @@
 - `/public/opensearch.xml` + head link. Firefox/Edge/Chrome auto-detect on first visit, user can add VocazAI to their browser search bar. Distinct discovery surface that survives a Google ranking dip.
 - next: cron A picks Tier-6 #7.
 
+## 2026-06-16 · Growth Engineer · CRO #22 (extension) — GDPR + EU + DPA trust line in footer
+- commit: `ef40549`
+- Footer bottom-bar gains "GDPR compliant · EU region · Signed DPA". Site-wide trust signal that closes the compliance question for visitors arriving from the Tier-6 regulated-vertical posts (medical/legal/accounting/insurance/pharmacy) without forcing them to read a blog post.
+- next: cron A picks Tier-6 #8.
+
 ## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-courtier-assurance` (Tier-6)
 - commit: `f412ff9` · IndexNow: HTTP 200
 - Tier-6 #5. Insurance-broker vertical: regulated scope (no advisory), claim intake structured into CRM (Aleas/Easybroker/eXalt/Solys), 14x ROI math from broker hours given back. FR/EN/AR ~6 min.
