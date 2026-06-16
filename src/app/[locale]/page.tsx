@@ -134,7 +134,7 @@ export default async function LandingPage({
   ];
 
   return (
-    <main className="bg-background text-foreground">
+    <main id="main" className="bg-background text-foreground">
       <Header locale={locale} />
       <JsonLd data={faqJsonLd} />
       <JsonLd data={serviceJsonLd} />

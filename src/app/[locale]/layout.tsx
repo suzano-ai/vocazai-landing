@@ -42,6 +42,14 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
+      {/* WCAG 2.1 skip-link — invisible until tabbed, then jumps focus to
+          the main content. Standard for keyboard and screen-reader users. */}
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:border focus:border-saffron-500 focus:bg-background focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-wider focus:text-foreground focus:outline-none"
+      >
+        Skip to main content
+      </a>
       <LangSetter locale={locale} />
       <JsonLd data={WEBSITE_JSONLD} />
       {children}
