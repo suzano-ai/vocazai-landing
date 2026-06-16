@@ -32,6 +32,11 @@
 - Footer adds a pulsing phosphor dot + "All systems operational" link → /api/health. SSH-confirmed earlier that the app/tts/stt containers are UP healthy, so the link is verifiable, not marketing. Concrete uptime trust signal site-wide.
 - next: cron A picks Tier-6 #10.
 
+## 2026-06-16 · Growth Engineer · SEO #21 (extension) — X-Robots-Tag SERP preview hints
+- commit: `2ee889c`
+- Site-wide HTTP header: `max-image-preview:large, max-snippet:-1, max-video-preview:-1`. Redundancy alongside metadata.robots.googleBot — some crawlers parse only one of the two surfaces. Path-specific noindex rules (security.txt etc) take precedence.
+- next: cron A picks Tier-6 #11.
+
 ## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-gestion-locative` (Tier-6)
 - commit: `1f8a3bc` · IndexNow: HTTP 200
 - Tier-6 #8. Property-management vertical, distinct from real-estate sales (#6). Maintenance ticketing, emergency keyword routing, sector integrations (Rentila/Smovin/MyLodgement/Pap.fr Pro/Orpi Connect), $3.3k/mo math + 24/7 tenant value. FR/EN/AR ~6 min.
