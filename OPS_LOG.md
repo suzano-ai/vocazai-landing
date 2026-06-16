@@ -77,6 +77,11 @@
 - Tier-7 #6 — disambiguation content. Closes confusion with the old "press-1-press-2" callbot. 5 callbot traits / 5 agent traits, the 15-second test, hangup-rate math (35-50% callbot vs 5-12% agent). Targets curiosity-stage buyers. FR/EN/AR ~5 min.
 - next: cron A picks another cross-cutting or vertical.
 
+## 2026-06-16 · Growth Engineer · SEO #28 (extension) — refresh humans.txt with current state
+- commit: `932a27c`
+- Pulls together every operator-attribution + stack-transparency thread shipped this week: Mare Nostrum SARL legal entity, founder WA link, RFC 9116/8288/IndieAuth standards inventory, full voice stack, A11Y patterns. E-E-A-T touch — humans.txt is a credibility check journalists and Google quality reviewers actually open on serious domains.
+- next: cron A picks next blog post.
+
 ## 2026-06-16 · Growth Engineer · SEO #27 (extension) — Organization JSON-LD legalName + numberOfEmployees
 - commit: `e727bfd`
 - Organization schema gains `legalName: "Mare Nostrum SARL"` (sync with footer CRO #29) and `numberOfEmployees: 1-10 QuantitativeValue`. Two E-E-A-T-positive fields Google rewards as quality signals.
