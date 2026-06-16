@@ -62,6 +62,11 @@
 - Footer copyright line now reads "© VocazAI by Mare Nostrum SARL". Two wins: (1) trust signal — registered legal entity visible site-wide, important for regulated-vertical buyers running due diligence; (2) E-E-A-T publisher attribution for Google.
 - next: cron A picks next blog post.
 
+## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-vs-callbot-difference` (Tier-7)
+- commit: `f41592e` · IndexNow: HTTP 200
+- Tier-7 #6 — disambiguation content. Closes confusion with the old "press-1-press-2" callbot. 5 callbot traits / 5 agent traits, the 15-second test, hangup-rate math (35-50% callbot vs 5-12% agent). Targets curiosity-stage buyers. FR/EN/AR ~5 min.
+- next: cron A picks another cross-cutting or vertical.
+
 ## 2026-06-16 · Growth Engineer · SEO #27 (extension) — Organization JSON-LD legalName + numberOfEmployees
 - commit: `e727bfd`
 - Organization schema gains `legalName: "Mare Nostrum SARL"` (sync with footer CRO #29) and `numberOfEmployees: 1-10 QuantitativeValue`. Two E-E-A-T-positive fields Google rewards as quality signals.
