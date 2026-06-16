@@ -42,6 +42,11 @@
 - Footer adds a pulsing phosphor dot + "All systems operational" link → /api/health. SSH-confirmed earlier that the app/tts/stt containers are UP healthy, so the link is verifiable, not marketing. Concrete uptime trust signal site-wide.
 - next: cron A picks Tier-6 #10.
 
+## 2026-06-16 · Growth Engineer · CRO #25 (extension) — price comparison anchor under CTA
+- commit: `fc45ed9`
+- Adds "vs $4,200/mo for a full-time receptionist" muted-color line under the existing phosphor price anchor. Real loaded-cost benchmark (~$50k/yr + 30% benefits/payroll), answers the unspoken "is $499 expensive?" question without further selling. FR/EN/AR.
+- next: cron A picks Tier-6 #14.
+
 ## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-startup-saas` (Tier-6)
 - commit: `211d52e` · IndexNow: HTTP 200
 - Tier-6 #11. SaaS-startup angle: SDR cost-replacement narrative ($25/lead vs $400 for SDR), 5-criterion qualification flow, CRM integrations (HubSpot/Pipedrive/Attio/Salesforce/Close). Targets founder ICP. FR/EN/AR ~5 min.
