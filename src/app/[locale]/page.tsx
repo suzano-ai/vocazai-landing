@@ -42,7 +42,10 @@ export default async function LandingPage({
     })),
     speakable: {
       "@type": "SpeakableSpecification",
-      cssSelector: ["#faq h3", "#faq dd"],
+      // Selectors must match the actual markup so Google Assistant / Bing
+      // narration reads the right blocks. Answers live in <p> siblings of
+      // <summary> inside the <details> accordion below.
+      cssSelector: ["#faq h3", "#faq summary + p"],
     },
   };
 
@@ -524,21 +527,41 @@ export default async function LandingPage({
             <div className="ascii-rule mb-12" />
           </Reveal>
 
-          <div className="grid gap-12 md:grid-cols-2 md:gap-x-16">
+          {/* Inline FAQ accordion — native <details>/<summary> so it stays
+              keyboard-accessible and SEO-readable. First 3 open by default
+              so Googlebot + visitors see the most important answers without
+              a click; the 4th (longest) collapses to keep the page scannable.
+              Schema (FAQPage above) carries all 4 answers regardless of the
+              `open` state, so the accordion does NOT degrade SEO. */}
+          <div className="grid gap-6 md:grid-cols-2 md:gap-x-16 md:gap-y-8">
             {[1, 2, 3, 4].map((i) => (
               <Reveal key={i} delay={i * 60}>
-                <div>
-                  <p className="text-xs uppercase tracking-[0.22em] text-saffron-500">
-                    Q.{String(i).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-3 text-xl font-medium leading-snug tracking-tight text-foreground">
-                    {t(`landing.faq.q${i}`)}
-                  </h3>
+                <details
+                  open={i <= 3}
+                  className="group border-l border-saffron-500/30 pl-5 [&_summary::-webkit-details-marker]:hidden"
+                >
+                  <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <p className="text-xs uppercase tracking-[0.22em] text-saffron-500">
+                        Q.{String(i).padStart(2, "0")}
+                      </p>
+                      <h3 className="mt-3 text-xl font-medium leading-snug tracking-tight text-foreground">
+                        {t(`landing.faq.q${i}`)}
+                      </h3>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      className="mt-1 shrink-0 font-mono text-sm text-saffron-500 transition-transform"
+                    >
+                      <span className="group-open:hidden">[+]</span>
+                      <span className="hidden group-open:inline">[-]</span>
+                    </span>
+                  </summary>
                   <p className="mt-4 flex gap-2 text-base leading-relaxed text-muted-foreground">
                     <span className="shrink-0 text-saffron-500">{">"}</span>
                     <span>{t(`landing.faq.a${i}`)}</span>
                   </p>
-                </div>
+                </details>
               </Reveal>
             ))}
           </div>
