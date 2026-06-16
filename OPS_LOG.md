@@ -82,6 +82,11 @@
 - Footer bottom-bar gains "GDPR compliant · EU region · Signed DPA". Site-wide trust signal that closes the compliance question for visitors arriving from the Tier-6 regulated-vertical posts (medical/legal/accounting/insurance/pharmacy) without forcing them to read a blog post.
 - next: cron A picks Tier-6 #8.
 
+## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-centre-formation-pro` (Tier-6)
+- commit: `6465c6b` · IndexNow: HTTP 200
+- Tier-6 #17. Vocational-training-center vertical, distinct from ecole-langue (#12). 3-audience routing (self/employer/public-funded), Aurion/FormaSup/Digiforma integrations, $3.2k/mo math + 20% conversion lift. FR/EN/AR ~6 min.
+- next: cron A picks Tier-6 #18.
+
 ## 2026-06-16 · Growth Engineer · SEO #24 (extension) — WebSite JSON-LD SearchAction
 - commit: `688724b`
 - WEBSITE_JSONLD extended with `potentialAction: SearchAction` pointing to /en/blog?q=. Makes vocazai.com eligible for Google's sitelinks-search-box (inline search box inside the SERP entry). Matches the OpenSearch description doc target. Zero runtime cost.
