@@ -52,6 +52,11 @@
 - All 5 WhatsApp `<Link>` instances (hero, pricing card, final CTA, mobile sticky, blog post end) now `target="_blank" rel="noopener noreferrer"`. Desktop visitor keeps the landing page open and can browse back after the WA hop. Mobile unchanged (intent-deep-link bypasses target). Clean external-link signal for Google.
 - next: cron A picks Tier-6 #18.
 
+## 2026-06-16 · Growth Engineer · CRO #28 (extension) — data-vocazai-track on every key CTA
+- commit: `f3a50eb`
+- Future-proofing analytics. 5 unique tags: hero_cta_wa, pricing_cta_growth/tier, final_cta_wa, mobile_sticky_call, mobile_sticky_wa. When analytics gets wired, every click is selectable via attribute. Zero cost now, max optionality later.
+- next: cron A picks the next blog post.
+
 ## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-syndic-copropriete` (Tier-6)
 - commit: `190da3c` · IndexNow: HTTP 200
 - Tier-6 #16. Property-manager / condo-syndic vertical, distinct from gestion-locative (#8). Multi-stakeholder dynamics, AG/proxy info, syndic software integrations (eSyndic/Esabora/Crypto/Yves Vendome/Quilo). FR/EN/AR ~6 min. Cleaned up stray field before commit.
