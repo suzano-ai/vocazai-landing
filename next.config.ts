@@ -44,6 +44,20 @@ const nextConfig: NextConfig = {
       { source: "/llms.txt", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
       { source: "/humans.txt", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
       { source: "/feed.xml", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
+      // Sitemap: CDN-cacheable for an hour. Stale-while-revalidate keeps it
+      // serving fresh-enough content even while the origin builds the next.
+      { source: "/sitemap.xml", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
+      // OpenSearch description: practically static, can sit a day.
+      {
+        source: "/opensearch.xml",
+        headers: [{ key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" }],
+      },
+      // IndexNow key file: static-forever. Long cache so neither Bing nor
+      // Yandex re-fetch it on every ping verification.
+      {
+        source: "/c33f90e268df7ba8f138ee23aa4b571b.txt",
+        headers: [{ key: "Cache-Control", value: "public, max-age=2592000, immutable" }],
+      },
       // Non-page assets that crawlers find but shouldn't show in search
       // results. RFC 9116 security.txt, humans.txt, IndexNow key file and
       // the RSS feed are all infrastructure — let them be crawled, but tell
