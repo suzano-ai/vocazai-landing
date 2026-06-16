@@ -230,6 +230,12 @@ export default async function RootLayout({
           title="VocazAI Blog"
           href="/feed.xml"
         />
+        <link
+          rel="alternate"
+          type="application/feed+json"
+          title="VocazAI Blog (JSON Feed)"
+          href="/feed.json"
+        />
         {/* OpenSearch — lets users add VocazAI to their browser's search
             bar (Firefox/Edge/Chrome auto-detect this). Distinct discovery
             surface that survives a Google ranking dip. */}

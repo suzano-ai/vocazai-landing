@@ -51,6 +51,7 @@ const nextConfig: NextConfig = {
       { source: "/llms.txt", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
       { source: "/humans.txt", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
       { source: "/feed.xml", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
+      { source: "/feed.json", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
       // robots.txt — crawlers hit this constantly. Short CDN cache + long
       // stale-while-revalidate keeps the origin protected without freezing
       // the file (robots changes flow within an hour after deploy).
