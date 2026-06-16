@@ -42,6 +42,11 @@
 - Footer adds a pulsing phosphor dot + "All systems operational" link → /api/health. SSH-confirmed earlier that the app/tts/stt containers are UP healthy, so the link is verifiable, not marketing. Concrete uptime trust signal site-wide.
 - next: cron A picks Tier-6 #10.
 
+## 2026-06-16 · Growth Engineer · CRO #26 (extension) — aria-current=page on active nav items
+- commit: `697dd26`
+- Active nav `<Link>` (desktop pill nav + mobile drawer) now carries `aria-current="page"`. Screen readers announce the current page state explicitly; WCAG 2.1 SC 4.1.2 compliance. Visual styling unchanged.
+- next: cron A picks Tier-6 #16.
+
 ## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-artisan-plombier` (Tier-6)
 - commit: `f50d515` · IndexNow: HTTP 200
 - Tier-6 #14. Self-employed-tradesperson vertical (plumber/electrician). 3-question flow, emergency keyword routing, SMS recap pattern (6 useful lines), $7.9k/mo ROI for high-frequency missed-call profile. FR/EN/AR ~5 min.
