@@ -52,6 +52,11 @@
 - Footer bottom-bar gains "GDPR compliant · EU region · Signed DPA". Site-wide trust signal that closes the compliance question for visitors arriving from the Tier-6 regulated-vertical posts (medical/legal/accounting/insurance/pharmacy) without forcing them to read a blog post.
 - next: cron A picks Tier-6 #8.
 
+## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-ecole-langue` (Tier-6)
+- commit: `6ac0bab` · IndexNow: HTTP 200
+- Tier-6 #12. Language-school vertical — paradoxically perfect demo context (caller already expects multilingual). Express level test in target language, school software integrations (Aurion/Yparéo/Hyperplanning/OpenSchool), $3.75k/yr math. FR/EN/AR ~5 min.
+- next: cron A picks Tier-6 #13 (taxi-vtc, plombier-artisan, agence-com).
+
 ## 2026-06-16 · Growth Engineer · CRO #24 (extension) — WCAG 2.1 skip-to-main-content link
 - commit: `7046cd2`
 - Standard a11y pattern: visually hidden `Skip to main content` link in locale layout, becomes visible/focused on first Tab. `id="main"` on landing `<main>`. WCAG 2.1 SC 2.4.1 (Bypass Blocks). Lifts Lighthouse a11y + indirect SEO via quality-signal correlation.
