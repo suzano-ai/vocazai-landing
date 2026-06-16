@@ -57,6 +57,11 @@
 - Tier-7 #5 — competitive migration playbook companion to vapi-migration. 4 triggers, what carries over, sector-by-sector matching (medical/ecommerce/restaurant/real-estate/vet/pharmacy), $10.9k/yr saving. Targets Retell users searching switch. FR/EN/AR ~6 min.
 - next: cron A picks more cross-cutting or vertical.
 
+## 2026-06-16 · Growth Engineer · CRO #30 (extension) — "Ask the founder" wa.me link in footer
+- commit: `a9e163b`
+- Footer Company column gains a personal-tone WA link with prefill "Hi Aymane, I have a question about VocazAI." 4th conversion path alongside mailto/tel/sign-in. Trust + E-E-A-T positive (named founder).
+- next: cron A picks next blog post.
+
 ## 2026-06-16 · Growth Engineer · CRO #29 (extension) — name the operating company in footer
 - commit: `59c97c6`
 - Footer copyright line now reads "© VocazAI by Mare Nostrum SARL". Two wins: (1) trust signal — registered legal entity visible site-wide, important for regulated-vertical buyers running due diligence; (2) E-E-A-T publisher attribution for Google.
