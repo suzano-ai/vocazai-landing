@@ -182,7 +182,13 @@ export default async function LandingPage({
                   {t("landing.heroSubtitle")}
                 </p>
                 <div className="flex flex-col gap-4">
-                  <Link href={wa} target="_blank" rel="noopener noreferrer" className="bracket-cta">
+                  <Link
+                    href={wa}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bracket-cta"
+                    data-vocazai-track="hero_cta_wa"
+                  >
                     {t("landing.ctaPrimary")}
                   </Link>
                   <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-saffron-500">
@@ -472,7 +478,13 @@ export default async function LandingPage({
                   </ul>
 
                   <div className="mt-auto pt-10">
-                    <Link href={wa} target="_blank" rel="noopener noreferrer" className="bracket-cta">
+                    <Link
+                      href={wa}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bracket-cta"
+                      data-vocazai-track={`pricing_cta_${plan.featured ? "growth" : "tier"}`}
+                    >
                       {plan.cta}
                     </Link>
                   </div>
@@ -565,7 +577,13 @@ export default async function LandingPage({
 
           <Reveal delay={280}>
             <div className="mt-12 flex flex-wrap items-center gap-6">
-              <Link href={wa} target="_blank" rel="noopener noreferrer" className="bracket-cta">
+              <Link
+                href={wa}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bracket-cta"
+                data-vocazai-track="final_cta_wa"
+              >
                 {t("landing.finalCta.cta")}
               </Link>
               <Link
@@ -600,6 +618,7 @@ export default async function LandingPage({
           href="tel:+33777345056"
           className="bracket-cta justify-center text-[11px]"
           aria-label="Call VocazAI"
+          data-vocazai-track="mobile_sticky_call"
         >
           {"CALL"}
         </a>
@@ -609,6 +628,7 @@ export default async function LandingPage({
           rel="noopener noreferrer"
           className="bracket-cta w-full justify-center text-[11px]"
           aria-label={t("landing.finalCta.cta")}
+          data-vocazai-track="mobile_sticky_wa"
         >
           {t("landing.finalCta.cta")}
         </Link>
