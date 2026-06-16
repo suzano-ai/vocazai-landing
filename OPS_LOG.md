@@ -57,6 +57,11 @@
 - Tier-7 #5 — competitive migration playbook companion to vapi-migration. 4 triggers, what carries over, sector-by-sector matching (medical/ecommerce/restaurant/real-estate/vet/pharmacy), $10.9k/yr saving. Targets Retell users searching switch. FR/EN/AR ~6 min.
 - next: cron A picks more cross-cutting or vertical.
 
+## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-tres-petite-entreprise` (Tier-7)
+- commit: `e46b1f9` · IndexNow: HTTP 200
+- Tier-7 #7. Addresses the "we're too small" objection that gates many micro-business sales. Includes honest "when it's NOT for you" section + micro-business math ($10k/mo loss over 5 calls/day @ 60% missed). FR/EN/AR ~5 min.
+- next: cron A picks more cross-cutting or vertical.
+
 ## 2026-06-16 · Growth Engineer · CRO #30 (extension) — "Ask the founder" wa.me link in footer
 - commit: `a9e163b`
 - Footer Company column gains a personal-tone WA link with prefill "Hi Aymane, I have a question about VocazAI." 4th conversion path alongside mailto/tel/sign-in. Trust + E-E-A-T positive (named founder).
