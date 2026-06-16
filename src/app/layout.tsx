@@ -132,6 +132,12 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "VocazAI",
+  // Legal entity attribution — matches the operator named in the footer.
+  // Google E-E-A-T treats legalName + numberOfEmployees as quality signals
+  // when present alongside the brand name.
+  legalName: "Mare Nostrum SARL",
+  alternateName: "VocazAI by Mare Nostrum",
+  numberOfEmployees: { "@type": "QuantitativeValue", minValue: 1, maxValue: 10 },
   url: BASE_URL,
   logo: `${BASE_URL}/opengraph-image`,
   description:
