@@ -64,9 +64,13 @@ export async function Footer({ locale }: { locale: string }) {
             so this isn't a marketing claim, it's a fact the visitor can check. */}
         <div className="mt-14 flex items-center gap-2 border-t border-border pt-6 text-xs text-muted-foreground">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-saffron-500" aria-hidden="true" />
-          <a href="/api/health" className="font-mono uppercase tracking-wider hover:text-foreground">
+          <Link
+            href="/api/health"
+            prefetch={false}
+            className="font-mono uppercase tracking-wider hover:text-foreground"
+          >
             All systems operational
-          </a>
+          </Link>
         </div>
 
         {/* Bottom bar */}

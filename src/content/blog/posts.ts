@@ -4046,6 +4046,88 @@ export const POSTS: BlogPost[] = [
       ],
     },
   },
+  {
+    slug: "agent-vocal-ia-changement-langue-mi-appel",
+    date: "2026-06-17",
+    readingMinutes: 5,
+    title: {
+      fr: "Quand le client change de langue en plein appel : comment l'agent vocal IA suit",
+      en: "When the customer switches language mid-call: how the AI voice agent follows",
+      ar: "حين يُبدّل الزبون اللغة في منتصف المكالمة: كيف يتبع الوكيل الصوتي الذكي",
+    },
+    description: {
+      fr: "Un client commence en français, vous demande son numéro de commande, glisse trois mots d'arabe, puis termine en anglais. Voici comment un agent vocal IA garde le contexte sans réinitialiser.",
+      en: "A customer starts in French, gives their order number, slips three Arabic words, then finishes in English. Here's how an AI voice agent keeps context without resetting.",
+      ar: "زبون يبدأ بالفرنسية، يُعطي رقم طلبيته، يدسّ ثلاث كلمات بالعربية، ثم ينهي بالإنجليزية. إليك كيف يحتفظ الوكيل الصوتي الذكي بالسياق دون إعادة تعيين." },
+    body: {
+      fr: [
+        { type: "p", text: "Le changement de langue en plein appel est la situation la plus difficile pour un agent vocal IA — et la plus courante en clientèle bilingue. Un mauvais agent demande au client de répéter ou bascule à chaque mot étranger. Le bon agent suit, garde la mémoire, et reformule au besoin." },
+        { type: "h2", text: "Les 3 scénarios de changement" },
+        { type: "ul", items: [
+          "Mot emprunté isolé (« okay », « shukran », « bonjour ») : ne déclenche AUCUN changement.",
+          "Phrase courte dans la langue B au milieu d'un flux A : l'agent y répond mais reste en A.",
+          "Deux phrases complètes en B : l'agent bascule en B et continue.",
+        ] },
+        { type: "h2", text: "La règle du seuil 80 %" },
+        { type: "p", text: "Le moteur de reconnaissance vocale assigne un score de confiance par langue. La bascule ne se déclenche qu'au-dessus de 80 % sur deux phrases consécutives. En dessous, l'agent garde la langue principale et répond dans celle-là — quitte à devoir reformuler poliment." },
+        { type: "h2", text: "Le maintien du contexte" },
+        { type: "p", text: "Critique : quand l'agent bascule, le LLM garde tout le contexte précédent. Si le client dit en français « mon RDV mardi 10h » puis bascule en anglais pour demander « can you confirm? », l'agent répond en anglais avec le RDV en mémoire. Pas de répétition, pas de réinitialisation." },
+        { type: "h2", text: "Les erreurs typiques" },
+        { type: "ul", items: [
+          "Basculer sur un mot isolé (« ok »).",
+          "Ne pas basculer même quand le client insiste 3 fois.",
+          "Reformuler dans la nouvelle langue ce que le client n'a pas dit (paraphrase erronée).",
+          "Oublier le numéro de RDV en changeant de langue (perte de contexte).",
+        ] },
+        { type: "h2", text: "Le test final" },
+        { type: "p", text: "Appelez votre propre agent et faites les 4 scénarios : (1) un mot anglais dans une phrase française, (2) une phrase entière en anglais après 30 s de français, (3) bascule arabe→français en plein RDV, (4) bascule erronée provoquée par un homonyme. Si l'agent passe les 4, vous êtes en production-ready. Premier mois VocazAI gratuit pour calibrer." },
+      ],
+      en: [
+        { type: "p", text: "Mid-call language switching is the hardest situation for an AI voice agent — and the most common in bilingual clienteles. A bad agent asks the customer to repeat or switches on every foreign word. The good agent follows, keeps memory, and rephrases when needed." },
+        { type: "h2", text: "The 3 switch scenarios" },
+        { type: "ul", items: [
+          "Isolated loanword ('okay', 'shukran', 'bonjour'): triggers NO switch.",
+          "Short phrase in language B inside a flow in A: agent answers it but stays in A.",
+          "Two full sentences in B: agent switches to B and continues.",
+        ] },
+        { type: "h2", text: "The 80 % threshold rule" },
+        { type: "p", text: "The speech-recognition engine assigns a per-language confidence score. Switching only triggers above 80 % across two consecutive sentences. Below that, the agent keeps the main language and answers in it — politely rephrasing if needed." },
+        { type: "h2", text: "Context retention" },
+        { type: "p", text: "Critical: when the agent switches, the LLM retains all prior context. If the customer says in French 'my appointment Tuesday 10am' then switches to English asking 'can you confirm?', the agent answers in English with the appointment in memory. No repetition, no reset." },
+        { type: "h2", text: "Typical errors" },
+        { type: "ul", items: [
+          "Switching on an isolated word ('ok').",
+          "Not switching even when the customer insists 3 times.",
+          "Paraphrasing in the new language what the customer didn't say (incorrect rephrasing).",
+          "Forgetting the appointment number when switching language (lost context).",
+        ] },
+        { type: "h2", text: "Final test" },
+        { type: "p", text: "Call your own agent and run the 4 scenarios: (1) one English word in a French sentence, (2) one full English sentence after 30 s of French, (3) Arabic→French switch mid-booking, (4) erroneous switch triggered by a homonym. If the agent passes all 4, you're production-ready. First month VocazAI free to calibrate." },
+      ],
+      ar: [
+        { type: "p", text: "تبديل اللغة في منتصف المكالمة هو الموقف الأصعب على الوكيل الصوتي الذكي — والأكثر شيوعًا في الجمهور ثنائي اللغة. الوكيل السيّئ يطلب من الزبون التكرار أو يبدّل عند كل كلمة أجنبية. الجيّد يتبع، يحتفظ بالذاكرة، ويُعيد الصياغة عند الحاجة." },
+        { type: "h2", text: "السيناريوهات الثلاثة للتبديل" },
+        { type: "ul", items: [
+          "كلمة معزولة مستعارة («okay»، «شكرا»، «bonjour»): لا تُطلق أي تبديل.",
+          "جملة قصيرة باللغة B داخل تدفّق باللغة A: يردّ الوكيل عليها لكنه يبقى في A.",
+          "جملتان كاملتان بـB: يبدّل الوكيل إلى B ويُكمل.",
+        ] },
+        { type: "h2", text: "قاعدة عتبة الـ80 %" },
+        { type: "p", text: "محرّك التعرّف الصوتي يُعطي درجة ثقة لكل لغة. التبديل يُفعَّل فقط فوق 80 % على جملتين متتاليتين. تحت ذلك، يحتفظ الوكيل باللغة الرئيسية ويُجيب بها — مع إعادة صياغة مهذّبة عند الحاجة." },
+        { type: "h2", text: "الاحتفاظ بالسياق" },
+        { type: "p", text: "حاسم: عند التبديل، يحتفظ النموذج اللغوي بكل السياق السابق. إن قال الزبون بالفرنسية «موعدي الثلاثاء العاشرة» ثم بدّل إلى الإنجليزية ليسأل «can you confirm?»، يُجيب الوكيل بالإنجليزية مع الموعد في الذاكرة. لا تكرار، لا إعادة تعيين." },
+        { type: "h2", text: "الأخطاء النموذجية" },
+        { type: "ul", items: [
+          "التبديل على كلمة معزولة («ok»).",
+          "عدم التبديل حتى بعد إصرار الزبون 3 مرّات.",
+          "إعادة صياغة في اللغة الجديدة ما لم يقله الزبون (إعادة صياغة خاطئة).",
+          "نسيان رقم الموعد عند تبديل اللغة (فقد السياق).",
+        ] },
+        { type: "h2", text: "الاختبار النهائي" },
+        { type: "p", text: "اتّصل بوكيلك وشغّل السيناريوهات الأربعة: (1) كلمة إنجليزية في جملة فرنسية، (2) جملة إنجليزية كاملة بعد 30 ثانية فرنسية، (3) تبديل عربية→فرنسية في منتصف حجز، (4) تبديل خاطئ بسبب لفظ مشترك. إن نجح الوكيل في الأربعة، أنت جاهز للإنتاج. الشهر الأول من VocazAI مجاني للضبط." },
+      ],
+    },
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
