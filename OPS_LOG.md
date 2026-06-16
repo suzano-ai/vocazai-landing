@@ -22,6 +22,11 @@
 - `/public/opensearch.xml` + head link. Firefox/Edge/Chrome auto-detect on first visit, user can add VocazAI to their browser search bar. Distinct discovery surface that survives a Google ranking dip.
 - next: cron A picks Tier-6 #7.
 
+## 2026-06-16 · Growth Engineer · SEO #22 (extension) — <link rel=me> IndieAuth/Mastodon identity claim
+- commit: `486abd7`
+- HTML-spec complement to the existing Schema.org Organization `sameAs:[github]`. Mastodon shows verified checkmark on profile links back; IndieAuth uses it for federated identity. One-line ship.
+- next: cron A picks Tier-6 #13.
+
 ## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-ecommerce-sav` (Tier-6)
 - commit: `5b32cb9` · IndexNow: HTTP 200
 - Tier-6 #10. E-commerce after-sales vertical (calm vs peak regimes). Shopify/WooCommerce/Magento/PrestaShop/BigCommerce integrations, RMA flow, $24-42k/mo peak-quarter math. FR/EN/AR ~6 min.
