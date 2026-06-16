@@ -160,13 +160,20 @@
     font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    transition: background-color 150ms ease, color 150ms ease;
+    transition: background-color 150ms ease, color 150ms ease,
+                transform 150ms ease, box-shadow 150ms ease;
   }
   .bracket-cta::before { content: "["; opacity: 0.8; }
   .bracket-cta::after  { content: "]"; opacity: 0.8; }
   .bracket-cta:hover {
     background: hsl(var(--saffron-500));
     color: hsl(var(--bg));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px hsl(var(--saffron-500) / 0.25);
+  }
+  .bracket-cta:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px hsl(var(--saffron-500) / 0.2);
   }
 
   /* Status line — top-of-section ticker style, mono caps. */
