@@ -3019,6 +3019,73 @@ export const POSTS: BlogPost[] = [
       ],
     },
   },
+  {
+    slug: "agent-vocal-ia-centre-formation-pro",
+    date: "2026-06-16",
+    readingMinutes: 6,
+    title: {
+      fr: "Agent vocal IA pour centre de formation professionnelle : financement, inscription et planning sans saturer le pédagogique",
+      en: "AI voice agent for vocational training centers: funding, enrollment and scheduling without overloading the academic team",
+      ar: "الوكيل الصوتي الذكي لمركز التكوين المهني: التمويل، التسجيل والجدولة دون إغراق الفريق البيداغوجي",
+    },
+    description: {
+      fr: "Un centre de formation pro reçoit des appels mixtes : OPCO, CPF, RH, particuliers. Voici comment un agent vocal IA répond à chacun, qualifie le canal de financement et programme un entretien avec le bon référent.",
+      en: "A vocational training center fields a mix of calls: funding bodies, individual learners, employer HR. Here's how an AI voice agent answers each, qualifies the funding path, and books an interview with the right counselor.",
+      ar: "مركز التكوين المهني يستقبل مكالمات متنوعة: هيئات التمويل، أفراد، موارد بشرية. إليك كيف يردّ الوكيل الصوتي الذكي على كل منها، يُؤهّل قناة التمويل، ويحجز مقابلة مع المستشار المناسب." },
+    body: {
+      fr: [
+        { type: "p", text: "Un centre de formation professionnelle a un téléphone qui sonne pour trois publics complètement différents : le particulier qui demande si une formation est éligible CPF, le RH d'entreprise qui cherche à former une équipe via OPCO, et le futur stagiaire qui veut s'inscrire. Un agent vocal IA répond à chacun avec le bon discours." },
+        { type: "h2", text: "Le routage par profil" },
+        { type: "p", text: "Trois questions courtes au décrochage : appel pour vous-même ou pour votre entreprise ? Profession actuelle ou en transition ? Connaissez-vous votre canal de financement ? L'agent classe automatiquement entre CPF, OPCO/employeur, financement personnel et conseille la suite." },
+        { type: "h2", text: "Ce que l'agent gère" },
+        { type: "ul", items: [
+          "Information sur l'éligibilité d'une formation (CPF, AIF, FNE, OPCO).",
+          "Calendrier des sessions ouvertes par formation.",
+          "Prix par formation et durée.",
+          "Test de niveau initial pour les formations qui en exigent (anglais, dev, soft skills).",
+          "Inscription à une réunion d'information collective.",
+        ] },
+        { type: "h2", text: "L'intégration outils sectoriels" },
+        { type: "p", text: "L'agent se connecte aux plateformes du métier (Aurion, FormaSup, Iziform, Digiforma, Qualiopi-compliant LMS) via API. Le dossier candidat arrive structuré, prêt pour le conseiller pédagogique. Le canal de financement est déjà flaggé." },
+        { type: "h2", text: "Le calcul" },
+        { type: "p", text: "Centre de 5 formateurs + 2 conseillers, 60 appels/jour en pic, 70 % qualifiables routine = 42 absorbés. À 6 min × 22 jours = 92 heures rendues/mois × $35 = $3 220/mois. Plus l'amélioration de 20 % du taux de conversion lead-vers-inscription (réponse instantanée 24/7 sur l'éligibilité). Forfait Growth VocazAI à $1 490/mo, ROI 5x+. Premier mois gratuit." },
+      ],
+      en: [
+        { type: "p", text: "A vocational training center has a phone that rings for three completely different audiences: the individual asking if a course is CPF-eligible, the corporate HR looking to train a team via the funding body, and the prospective trainee who wants to enroll. An AI voice agent answers each with the right script." },
+        { type: "h2", text: "Profile-based routing" },
+        { type: "p", text: "Three short questions at pickup: are you calling for yourself or your company? Current profession or in transition? Do you know your funding channel? The agent automatically classifies into self-funded, employer-funded, public-funding, and advises accordingly." },
+        { type: "h2", text: "What the agent handles" },
+        { type: "ul", items: [
+          "Eligibility information per course (public funding programs).",
+          "Open-session calendar per course.",
+          "Pricing per course and duration.",
+          "Initial level test for courses that need it (English, dev, soft skills).",
+          "Sign-up to a group info session.",
+        ] },
+        { type: "h2", text: "Sector-tool integration" },
+        { type: "p", text: "The agent connects to industry platforms (Aurion, FormaSup, Iziform, Digiforma, Qualiopi-compliant LMS) via API. The trainee file lands structured, ready for the academic counselor. Funding channel is already flagged." },
+        { type: "h2", text: "Math" },
+        { type: "p", text: "5-trainer + 2-counselor center, 60 calls/day at peak, 70 % qualifiable routine = 42 absorbed. At 6 min × 22 days = 92 hours back/month × $35 = $3,220/month. Plus a 20 % lead-to-enrollment conversion bump (instant 24/7 eligibility answer). VocazAI Growth at $1,490/mo, 5x+ ROI. First month free." },
+      ],
+      ar: [
+        { type: "p", text: "لمركز تكوين مهني هاتف يرنّ لثلاث جماهير مختلفة تمامًا: الفرد الذي يسأل عن أهلية تكوين، مسؤول الموارد البشرية في الشركة الذي يبحث عن تكوين فريق عبر هيئة التمويل، والمتدرّب المحتمل الذي يريد التسجيل. الوكيل الصوتي الذكي يردّ على كل منهم بالخطاب المناسب." },
+        { type: "h2", text: "التوجيه حسب الملف" },
+        { type: "p", text: "ثلاثة أسئلة قصيرة عند الردّ: هل تتّصل لنفسك أم لشركتك؟ مهنة حالية أم في انتقال؟ هل تعرف قناة تمويلك؟ يُصنّف الوكيل تلقائيًا بين تمويل ذاتي، تمويل صاحب العمل، تمويل عمومي، وينصح بالخطوة التالية." },
+        { type: "h2", text: "ما يديره الوكيل" },
+        { type: "ul", items: [
+          "معلومة أهلية لكل تكوين (برامج التمويل العمومي).",
+          "تقويم الدورات المفتوحة لكل تكوين.",
+          "أسعار التكوين ومدّته.",
+          "اختبار مستوى أوّلي للتكوينات التي تتطلّبه (إنجليزية، تطوير، مهارات ناعمة).",
+          "تسجيل في جلسة إعلامية جماعية.",
+        ] },
+        { type: "h2", text: "التكامل مع أدوات القطاع" },
+        { type: "p", text: "يتّصل الوكيل بمنصّات القطاع (Aurion، FormaSup، Iziform، Digiforma، LMS متوافقة مع Qualiopi) عبر API. ملف المتدرّب يصل منظَّمًا، جاهزًا للمستشار البيداغوجي. قناة التمويل مُؤشّرة مسبقًا." },
+        { type: "h2", text: "الحساب" },
+        { type: "p", text: "مركز بـ5 مكوّنين + مستشارَين، 60 مكالمة/يوم في الذروة، 70 % روتينية قابلة للتأهيل = 42 ممتَصّة. بـ6 دقائق × 22 يومًا = 92 ساعة مستردّة/شهر × 35 دولارًا = 3220 دولارًا/شهر. زائد 20 % تحسّن في تحويل الزبائن إلى تسجيل (ردّ فوري 24/7 على الأهلية). VocazAI Growth بـ1490 دولارًا، عائد 5 أضعاف+. الشهر الأول مجاني." },
+      ],
+    },
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
