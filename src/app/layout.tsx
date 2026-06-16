@@ -224,6 +224,15 @@ export default async function RootLayout({
           title="VocazAI Blog"
           href="/feed.xml"
         />
+        {/* OpenSearch — lets users add VocazAI to their browser's search
+            bar (Firefox/Edge/Chrome auto-detect this). Distinct discovery
+            surface that survives a Google ranking dip. */}
+        <link
+          rel="search"
+          type="application/opensearchdescription+xml"
+          title="VocazAI"
+          href="/opensearch.xml"
+        />
         {/* Pre-resolve the WhatsApp shortlink so the [ START TRIAL ] click
             doesn't pay the DNS+TLS cost — every CTA on the site eventually
             redirects to wa.me. Shaves ~30-100ms off the perceived open
