@@ -51,6 +51,10 @@ const nextConfig: NextConfig = {
       { source: "/llms.txt", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
       { source: "/humans.txt", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
       { source: "/feed.xml", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
+      // robots.txt — crawlers hit this constantly. Short CDN cache + long
+      // stale-while-revalidate keeps the origin protected without freezing
+      // the file (robots changes flow within an hour after deploy).
+      { source: "/robots.txt", headers: [{ key: "Cache-Control", value: "public, max-age=3600, stale-while-revalidate=86400" }] },
       // Sitemap: CDN-cacheable for an hour. Stale-while-revalidate keeps it
       // serving fresh-enough content even while the origin builds the next.
       { source: "/sitemap.xml", headers: [{ key: "Cache-Control", value: TEXT_CACHE }] },
