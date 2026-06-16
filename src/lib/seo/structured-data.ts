@@ -46,7 +46,20 @@ export function blogPostingJsonLd(args: {
   inLanguage: string;
   wordCount?: number;
   keywords?: string[];
+  slug?: string;
 }): Record<string, unknown> {
+  // Auto-derive keywords from the slug when none provided. Slugs are
+  // hyphen-separated semantic tokens (e.g. "agent-vocal-ia-pharmacie"
+  // -> ["agent vocal ia", "pharmacie"]) — usable as-is by Google.
+  const derivedKeywords =
+    args.keywords ??
+    (args.slug ? args.slug.split("-").reduce<string[]>((acc, token, i, all) => {
+      // Group "agent-vocal-ia" as one keyword phrase, then the vertical tail.
+      if (i === 0 && all.length > 3) acc.push(all.slice(0, 3).join(" "));
+      if (i >= 3) acc.push(token);
+      return acc;
+    }, []) : undefined);
+
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -58,7 +71,8 @@ export function blogPostingJsonLd(args: {
     mainEntityOfPage: abs(args.url),
     url: abs(args.url),
     wordCount: args.wordCount,
-    keywords: args.keywords,
+    keywords: derivedKeywords,
+    articleSection: "AI Voice Agent",
     author: { "@type": "Organization", name: "VocazAI", url: SITE },
     publisher: {
       "@type": "Organization",

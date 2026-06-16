@@ -85,6 +85,7 @@ export default async function BlogPostPage({
     datePublished: post.date,
     inLanguage: locale,
     wordCount,
+    slug,
   });
 
   const breadcrumb = breadcrumbJsonLd([
