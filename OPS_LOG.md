@@ -77,6 +77,11 @@
 - Tier-7 #6 — disambiguation content. Closes confusion with the old "press-1-press-2" callbot. 5 callbot traits / 5 agent traits, the 15-second test, hangup-rate math (35-50% callbot vs 5-12% agent). Targets curiosity-stage buyers. FR/EN/AR ~5 min.
 - next: cron A picks another cross-cutting or vertical.
 
+## 2026-06-16 · SEO Content Producer · ship `prompt-systeme-agent-vocal-ia-template` (Tier-7)
+- commit: `de9dc0e` · IndexNow: HTTP 200
+- Tier-7 #8 — copy-ready prompt template. 5-block canvas with concrete examples, 4 pitfalls to avoid, 5-scenario final test. Distinct from script-comment-ecrire (Tier-2) — that was the abstract canvas; this is the literal template. Practical dev/ops audience. FR/EN/AR ~6 min.
+- next: cron A picks another cross-cutting or vertical.
+
 ## 2026-06-16 · Growth Engineer · SEO #28 (extension) — refresh humans.txt with current state
 - commit: `932a27c`
 - Pulls together every operator-attribution + stack-transparency thread shipped this week: Mare Nostrum SARL legal entity, founder WA link, RFC 9116/8288/IndieAuth standards inventory, full voice stack, A11Y patterns. E-E-A-T touch — humans.txt is a credibility check journalists and Google quality reviewers actually open on serious domains.
