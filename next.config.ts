@@ -27,6 +27,13 @@ const SECURITY_HEADERS = [
     value:
       '</sitemap.xml>; rel="sitemap"; type="application/xml", </feed.xml>; rel="alternate"; type="application/rss+xml"; title="VocazAI Blog"',
   },
+  // Hint Google to surface large image previews, full snippets and full
+  // video previews in SERP. The same hints live in metadata.robots.googleBot
+  // but the HTTP header is independent (some bots parse only one of the two).
+  {
+    key: "X-Robots-Tag",
+    value: "max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  },
 ];
 
 const TEXT_CACHE = "public, max-age=3600, stale-while-revalidate=86400";
