@@ -52,6 +52,11 @@
 - All 5 WhatsApp `<Link>` instances (hero, pricing card, final CTA, mobile sticky, blog post end) now `target="_blank" rel="noopener noreferrer"`. Desktop visitor keeps the landing page open and can browse back after the WA hop. Mobile unchanged (intent-deep-link bypasses target). Clean external-link signal for Google.
 - next: cron A picks Tier-6 #18.
 
+## 2026-06-16 · SEO Content Producer · ship `kpi-agent-vocal-ia-production` (Tier-7)
+- commit: `5541237` · IndexNow: HTTP 200
+- Tier-7 #3. Operational KPIs: completion, transfer, duration, p95 latency, CSAT, business conversion. Specific thresholds + review cadence. Targets buyers who are running production and need to optimize. FR/EN/AR ~6 min.
+- next: cron A picks another cross-cutting or vertical.
+
 ## 2026-06-16 · Growth Engineer · CRO #28 (extension) — data-vocazai-track on every key CTA
 - commit: `f3a50eb`
 - Future-proofing analytics. 5 unique tags: hero_cta_wa, pricing_cta_growth/tier, final_cta_wa, mobile_sticky_call, mobile_sticky_wa. When analytics gets wired, every click is selectable via attribute. Zero cost now, max optionality later.
