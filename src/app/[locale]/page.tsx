@@ -188,6 +188,9 @@ export default async function LandingPage({
                   <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-saffron-500">
                     {t("landing.priceAnchor")}
                   </span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    {t("landing.priceComparison")}
+                  </span>
                   <a
                     href="#demo"
                     className="group inline-flex items-center gap-2 self-start font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground transition-colors duration-150 hover:text-saffron-500"
