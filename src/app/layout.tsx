@@ -233,6 +233,11 @@ export default async function RootLayout({
           title="VocazAI"
           href="/opensearch.xml"
         />
+        {/* IndieAuth / Mastodon rel=me identity claim — makes the site
+            bidirectionally verifiable for any third-party that links back
+            via the GitHub profile. Mastodon shows a green checkmark on
+            verified profile links; IndieAuth uses it for login federation. */}
+        <link rel="me" href="https://github.com/suzano-ai/vocazai-landing" />
         {/* Pre-resolve the WhatsApp shortlink so the [ START TRIAL ] click
             doesn't pay the DNS+TLS cost — every CTA on the site eventually
             redirects to wa.me. Shaves ~30-100ms off the perceived open
