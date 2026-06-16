@@ -52,6 +52,11 @@
 - All 5 WhatsApp `<Link>` instances (hero, pricing card, final CTA, mobile sticky, blog post end) now `target="_blank" rel="noopener noreferrer"`. Desktop visitor keeps the landing page open and can browse back after the WA hop. Mobile unchanged (intent-deep-link bypasses target). Clean external-link signal for Google.
 - next: cron A picks Tier-6 #18.
 
+## 2026-06-16 · Growth Engineer · CRO #29 (extension) — name the operating company in footer
+- commit: `59c97c6`
+- Footer copyright line now reads "© VocazAI by Mare Nostrum SARL". Two wins: (1) trust signal — registered legal entity visible site-wide, important for regulated-vertical buyers running due diligence; (2) E-E-A-T publisher attribution for Google.
+- next: cron A picks next blog post.
+
 ## 2026-06-16 · SEO Content Producer · ship `kpi-agent-vocal-ia-production` (Tier-7)
 - commit: `5541237` · IndexNow: HTTP 200
 - Tier-7 #3. Operational KPIs: completion, transfer, duration, p95 latency, CSAT, business conversion. Specific thresholds + review cadence. Targets buyers who are running production and need to optimize. FR/EN/AR ~6 min.
