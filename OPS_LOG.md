@@ -22,6 +22,11 @@
 - `/public/opensearch.xml` + head link. Firefox/Edge/Chrome auto-detect on first visit, user can add VocazAI to their browser search bar. Distinct discovery surface that survives a Google ranking dip.
 - next: cron A picks Tier-6 #7.
 
+## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-taxi-vtc` (Tier-6)
+- commit: `835f1b0` · IndexNow: HTTP 200
+- Tier-6 #13. Taxi/VTC dispatch vertical — sub-2-second answer mandate, real-time dispatch integrations (Mobilix/Sokovan/eCab/Bolt Drivers/FreeNow), $22.5k/mo lost-rides math + 12-15x ROI. FR/EN/AR ~5 min.
+- next: cron A picks Tier-6 #14 (artisan-plombier, agence-com, formation-pro).
+
 ## 2026-06-16 · Growth Engineer · SEO #22 (extension) — <link rel=me> IndieAuth/Mastodon identity claim
 - commit: `486abd7`
 - HTML-spec complement to the existing Schema.org Organization `sameAs:[github]`. Mastodon shows verified checkmark on profile links back; IndieAuth uses it for federated identity. One-line ship.
