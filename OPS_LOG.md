@@ -42,6 +42,11 @@
 - Footer adds a pulsing phosphor dot + "All systems operational" link → /api/health. SSH-confirmed earlier that the app/tts/stt containers are UP healthy, so the link is verifiable, not marketing. Concrete uptime trust signal site-wide.
 - next: cron A picks Tier-6 #10.
 
+## 2026-06-16 · SEO Content Producer · ship `deployer-agent-vocal-ia-en-48h` (Tier-7 cross-cutting)
+- commit: `f730d03` · IndexNow: HTTP 200
+- Pivoted from yet another vertical to a how-to. Closes the loop on the `SETUP < 48H` hero chip — hour-by-hour timeline, 4 common mistakes, contractual second-month-free if we slip past 72h. Converts visitors who are sold but anxious about onboarding. FR/EN/AR ~6 min.
+- next: cron A picks another cross-cutting or pivots back to a vertical.
+
 ## 2026-06-16 · Growth Engineer · CRO #27 (extension) — open WhatsApp CTAs in new tab
 - commit: `168b90a`
 - All 5 WhatsApp `<Link>` instances (hero, pricing card, final CTA, mobile sticky, blog post end) now `target="_blank" rel="noopener noreferrer"`. Desktop visitor keeps the landing page open and can browse back after the WA hop. Mobile unchanged (intent-deep-link bypasses target). Clean external-link signal for Google.
