@@ -92,6 +92,11 @@
 - Tier-7 #8 — copy-ready prompt template. 5-block canvas with concrete examples, 4 pitfalls to avoid, 5-scenario final test. Distinct from script-comment-ecrire (Tier-2) — that was the abstract canvas; this is the literal template. Practical dev/ops audience. FR/EN/AR ~6 min.
 - next: cron A picks another cross-cutting or vertical.
 
+## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-couts-caches` (Tier-7)
+- commit: `40e7e30` · IndexNow: HTTP 200
+- Tier-7 #10. Counter-marketing pricing transparency. 7 hidden cost lines with concrete numbers (telco, LLM, premium voice, integrations, support, dashboard, DPA), then VocazAI all-in math. Anti-bait-and-switch positioning. FR/EN/AR ~6 min.
+- next: cron A picks more cross-cutting or vertical.
+
 ## 2026-06-16 · Growth Engineer · SEO #29 (extension) — Cache-Control on /robots.txt
 - commit: `b555a48`
 - robots.txt was inheriting Next's default. Explicit `public, max-age=3600, stale-while-revalidate=86400`. Most-hit URL on the site (every crawler reaches for it first); CDN serves an hour stale + day SWR. Cuts origin hits dramatically without freezing edits.
