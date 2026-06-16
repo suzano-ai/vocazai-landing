@@ -2,13 +2,22 @@
 /* https://humanstxt.org */
 
 [Team]
-  Owner: Mare Nostrum SARL
-  Lead: Aymane
+  Owner:   Mare Nostrum SARL (legal entity)
+  Brand:   VocazAI
+  Lead:    Aymane
   Contact: hello@vocazai.com
+  Founder: https://wa.me/33777345056
   Languages: French · Arabic · English
 
 [Site]
-  Last update: 2026-05
-  Standards: HTML5, CSS3, schema.org, llms.txt, IndexNow
-  Components: Next.js 15, React, TypeScript, Tailwind, next-intl
-  Voice: Mistral Voxtral (STT), Piper (TTS), self-hosted faster-whisper fallback
+  Last update: 2026-06-16
+  Standards:   HTML5, CSS3, schema.org, llms.txt, IndexNow, RFC 9116 (security.txt), OpenSearch, RFC 8288 (Link headers), RSS 2.0, IndieAuth rel=me
+  Components:  Next.js 15 App Router, React 19, TypeScript strict, Tailwind v3, next-intl, Supabase, Stripe, Resend
+  Voice stack: Mistral Voxtral (STT primary), faster-whisper medium (STT fallback, self-hosted Docker), Piper ONNX (TTS, self-hosted), Vapi/Retell provider abstraction
+  Infra:       Hostinger VPS, Docker Compose, Traefik v2, CI/CD via GitHub Actions
+  Accessibility: WCAG 2.1 skip-to-content, aria-current=page, prefers-reduced-motion respected, dark-mode-first contrast
+
+[Thanks]
+  schema.org · indexnow.org · llmstxt.org · humanstxt.org
+  Tailwind, Next.js and the React communities
+  Every visitor who reads this — you're our kind of curious.
