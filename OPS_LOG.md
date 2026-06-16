@@ -107,6 +107,11 @@
 - Tier-7 cross-cutting #2. Anti-pattern / honest-list content: 7 fatal mistakes + rule for each + "we refund the second month if you see one" tactical commitment. Builds trust via honesty (counter-marketing positioning). Targets evaluators researching pitfalls. FR/EN/AR ~6 min.
 - next: cron A picks another cross-cutting or vertical.
 
+## 2026-06-16 · Growth Engineer · SEO #26 (extension) — articleSection + auto-derived keywords on blog JSON-LD
+- commit: `f37ce65`
+- Helper extended: `articleSection: "AI Voice Agent"` + keywords auto-derived from slug (groups first 3 tokens "agent vocal ia" as a phrase, then each vertical tail token). No per-post bookkeeping. Tightens Article rich-result eligibility for all existing posts on next deploy.
+- next: cron A picks next blog post.
+
 ## 2026-06-16 · Growth Engineer · SEO #25 (extension) — RFC 8288 hreflang Link headers per route
 - commit: `c2dfce0`
 - Every locale-aware response now carries `Link: <fr-url>; rel="alternate"; hreflang="fr"` + en + ar + x-default. Appends to the existing Link header (sitemap+feed). Redundant signal to the HTML `<link rel=alternate>` Next emits via `metadata.alternates` — crawlers that parse headers first get hreflang one layer earlier.
