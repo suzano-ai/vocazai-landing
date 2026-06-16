@@ -51,6 +51,22 @@ export async function middleware(request: NextRequest) {
   merged.headers.set("Content-Language", locale);
   merged.headers.set("Vary", "Accept-Language");
 
+  // RFC 8288 hreflang Link headers — every locale variant of the current
+  // path advertised as alternate. Crawlers that parse the Link header
+  // before fetching the HTML get the hreflang map instantly, same as the
+  // <link rel="alternate" hreflang> tags Next emits via metadata.alternates.
+  const base = process.env.NEXT_PUBLIC_APP_URL ?? "https://vocazai.com";
+  const pathWithoutLocale = request.nextUrl.pathname.replace(
+    new RegExp(`^/(${(routing.locales as readonly string[]).join("|")})(?=/|$)`),
+    "",
+  );
+  const hreflangLinks = (routing.locales as readonly string[])
+    .map((l) => `<${base}/${l}${pathWithoutLocale}>; rel="alternate"; hreflang="${l}"`)
+    .concat(`<${base}/fr${pathWithoutLocale}>; rel="alternate"; hreflang="x-default"`)
+    .join(", ");
+  const existingLink = merged.headers.get("Link");
+  merged.headers.set("Link", existingLink ? `${existingLink}, ${hreflangLinks}` : hreflangLinks);
+
   // If intl returned a redirect, honor it directly.
   if (intlRes.status >= 300 && intlRes.status < 400) return intlRes;
   return merged;
