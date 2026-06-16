@@ -52,6 +52,11 @@
 - All 5 WhatsApp `<Link>` instances (hero, pricing card, final CTA, mobile sticky, blog post end) now `target="_blank" rel="noopener noreferrer"`. Desktop visitor keeps the landing page open and can browse back after the WA hop. Mobile unchanged (intent-deep-link bypasses target). Clean external-link signal for Google.
 - next: cron A picks Tier-6 #18.
 
+## 2026-06-16 · SEO Content Producer · ship `migrer-de-retell-vers-vocazai` (Tier-7)
+- commit: `88bbf3d` · IndexNow: HTTP 200
+- Tier-7 #5 — competitive migration playbook companion to vapi-migration. 4 triggers, what carries over, sector-by-sector matching (medical/ecommerce/restaurant/real-estate/vet/pharmacy), $10.9k/yr saving. Targets Retell users searching switch. FR/EN/AR ~6 min.
+- next: cron A picks more cross-cutting or vertical.
+
 ## 2026-06-16 · Growth Engineer · CRO #29 (extension) — name the operating company in footer
 - commit: `59c97c6`
 - Footer copyright line now reads "© VocazAI by Mare Nostrum SARL". Two wins: (1) trust signal — registered legal entity visible site-wide, important for regulated-vertical buyers running due diligence; (2) E-E-A-T publisher attribution for Google.
