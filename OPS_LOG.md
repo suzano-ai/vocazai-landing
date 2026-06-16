@@ -32,6 +32,11 @@
 - Footer bottom-bar gains "GDPR compliant · EU region · Signed DPA". Site-wide trust signal that closes the compliance question for visitors arriving from the Tier-6 regulated-vertical posts (medical/legal/accounting/insurance/pharmacy) without forcing them to read a blog post.
 - next: cron A picks Tier-6 #8.
 
+## 2026-06-16 · Growth Engineer · SEO #20 (extension) — Cache-Control on sitemap/opensearch/IndexNow key
+- commit: `03f1c99`
+- /sitemap.xml gets TEXT_CACHE (1h + 1d SWR). /opensearch.xml gets 1d + 7d SWR. IndexNow key file gets 30d immutable. Pure CDN/perf — cuts origin load on every crawler poll + key verification.
+- next: cron A picks Tier-6 #9.
+
 ## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-courtier-assurance` (Tier-6)
 - commit: `f412ff9` · IndexNow: HTTP 200
 - Tier-6 #5. Insurance-broker vertical: regulated scope (no advisory), claim intake structured into CRM (Aleas/Easybroker/eXalt/Solys), 14x ROI math from broker hours given back. FR/EN/AR ~6 min.
