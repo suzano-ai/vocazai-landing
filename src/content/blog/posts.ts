@@ -2884,6 +2884,73 @@ export const POSTS: BlogPost[] = [
       ],
     },
   },
+  {
+    slug: "agent-vocal-ia-agence-communication",
+    date: "2026-06-16",
+    readingMinutes: 5,
+    title: {
+      fr: "Agent vocal IA pour agence de communication : recueillir le brief avant que le directeur ait fini son rendez-vous",
+      en: "AI voice agent for marketing & communications agencies: take the brief before the director finishes their meeting",
+      ar: "الوكيل الصوتي الذكي لوكالة الاتصال: التقاط الموجز قبل أن ينتهي المدير من اجتماعه",
+    },
+    description: {
+      fr: "Une agence de com perd des appels prospects pendant les réunions client. Voici comment un agent vocal IA recueille le brief, qualifie l'opportunité et programme un rappel avec le bon créatif disponible.",
+      en: "A marketing agency drops prospect calls during client meetings. Here's how an AI voice agent intakes the brief, qualifies the opportunity, and books a call-back with the right available creative.",
+      ar: "وكالة الاتصال تخسر مكالمات الزبائن المحتملين خلال اجتماعات الزبائن. إليك كيف يلتقط الوكيل الصوتي الذكي الموجز، يُؤهّل الفرصة، ويحجز معاودة اتصال مع المبدع المناسب المتاح." },
+    body: {
+      fr: [
+        { type: "p", text: "Dans une agence de communication, les fondateurs sont autant en pitch qu'en production. Quand le téléphone sonne, ils sont en visio avec un client ou en relecture d'un livrable. Le prospect qui appelle tombe sur un répondeur — et va voir l'agence d'en face. Un agent vocal IA garde la porte ouverte." },
+        { type: "h2", text: "Le brief recueilli en 90 secondes" },
+        { type: "p", text: "L'agent répond, salue, demande : « Pour quel type de projet appelez-vous ? Site web, identité, campagne, content ? ». Puis : taille d'entreprise, budget approximatif, deadline, décideur ou opérateur. Le brief arrive dans Notion/HubSpot/Pipedrive avec ces 5 champs préremplis." },
+        { type: "h2", text: "La qualification douce" },
+        { type: "ul", items: [
+          "Type de mission (identité, web, social, vidéo, conseil).",
+          "Budget ordre de grandeur (sous $5k, $5-30k, $30k+).",
+          "Deadline (urgent, 1 mois, 3 mois, exploration).",
+          "Stade (premier brief, comparaison agences, choix final).",
+          "Décideur ou intermédiaire.",
+        ] },
+        { type: "h2", text: "Le routing créatif" },
+        { type: "p", text: "L'agent peut router selon l'expertise : projet vidéo → DA vidéo, refonte site → directeur tech, campagne 360 → directeur conseil. La règle d'affectation se configure une fois ; après, chaque appel arrive à la bonne personne avec brief en pièce jointe." },
+        { type: "h2", text: "Le calcul" },
+        { type: "p", text: "Agence de 8 personnes, 30 appels prospects/semaine, 50 % manqués (réunions) = 60 leads/mois perdus. À 8 % de conversion sur lead qualifié et $25k panier moyen agence = 4 missions/mois × $25k = $100k/mois récupérables. Forfait Growth VocazAI à $1 490/mo : ROI très conséquent. Premier mois gratuit pour calibrer." },
+      ],
+      en: [
+        { type: "p", text: "In a marketing agency, founders are as much in pitch as in production. When the phone rings, they're on a Zoom with a client or proofing a deliverable. The prospect lands on voicemail — and goes to the agency across the street. An AI voice agent keeps the door open." },
+        { type: "h2", text: "Brief intake in 90 seconds" },
+        { type: "p", text: "The agent answers, greets, asks: 'What kind of project are you calling about? Website, identity, campaign, content?'. Then: company size, ballpark budget, deadline, decision-maker or operator. The brief lands in Notion/HubSpot/Pipedrive with those 5 fields pre-filled." },
+        { type: "h2", text: "Soft qualification" },
+        { type: "ul", items: [
+          "Type of project (identity, web, social, video, advisory).",
+          "Budget range (under $5k, $5-30k, $30k+).",
+          "Deadline (urgent, 1 month, 3 months, exploration).",
+          "Stage (first brief, comparing agencies, final pick).",
+          "Decision-maker or intermediary.",
+        ] },
+        { type: "h2", text: "Creative routing" },
+        { type: "p", text: "The agent can route by expertise: video project → video AD, website rebuild → tech director, 360 campaign → advisory director. Assignment rules are set once; afterward, every call lands on the right person with the brief attached." },
+        { type: "h2", text: "Math" },
+        { type: "p", text: "8-person agency, 30 prospect calls/week, 50 % missed (meetings) = 60 lost leads/month. At 8 % conversion on qualified lead and $25k average agency ticket = 4 projects/month × $25k = $100k/month recoverable. VocazAI Growth at $1,490/mo: massive ROI. First month free to calibrate." },
+      ],
+      ar: [
+        { type: "p", text: "في وكالة الاتصال، المؤسّسون منقسمون بين عروض البيع والإنتاج. حين يرنّ الهاتف، يكونون في اجتماع Zoom مع زبون أو يُراجعون تسليمًا. الزبون المحتمل يقع على صندوق صوتي — ويذهب إلى الوكالة المجاورة. الوكيل الصوتي الذكي يُبقي الباب مفتوحًا." },
+        { type: "h2", text: "التقاط الموجز في 90 ثانية" },
+        { type: "p", text: "يردّ الوكيل، يُحيّي، يسأل: «ما نوع المشروع الذي تتّصل بشأنه؟ موقع، هوية، حملة، محتوى؟». ثم: حجم الشركة، الميزانية التقريبية، الموعد النهائي، صاحب القرار أو وسيط. ينزل الموجز في Notion/HubSpot/Pipedrive بهذه الحقول الخمسة مُعبّأة مسبقًا." },
+        { type: "h2", text: "تأهيل لين" },
+        { type: "ul", items: [
+          "نوع المهمة (هوية، ويب، اجتماعي، فيديو، استشارة).",
+          "نطاق الميزانية (أقل من 5 آلاف، 5-30 ألف، 30 ألف+).",
+          "الموعد النهائي (عاجل، شهر، 3 أشهر، استكشاف).",
+          "المرحلة (موجز أول، مقارنة وكالات، اختيار نهائي).",
+          "صاحب القرار أو وسيط.",
+        ] },
+        { type: "h2", text: "التوجيه الإبداعي" },
+        { type: "p", text: "يستطيع الوكيل التوجيه حسب الخبرة: مشروع فيديو → مدير فني فيديو، إعادة بناء موقع → مدير تقني، حملة 360 → مدير الاستشارة. تُضبط قواعد التوزيع مرّة واحدة، وبعدها كل مكالمة تصل إلى الشخص الصحيح مع الموجز مرفقًا." },
+        { type: "h2", text: "الحساب" },
+        { type: "p", text: "وكالة بـ8 أشخاص، 30 مكالمة محتمل/أسبوع، 50 % مفقودة (اجتماعات) = 60 زبون محتمل ضائع شهريًا. بمعدّل تحويل 8 % على الزبون المؤهّل وفاتورة 25 ألف دولار في المتوسط = 4 مشاريع/شهر × 25 ألف = 100 ألف/شهر قابلة للاسترداد. VocazAI Growth بـ1490 — عائد ضخم. الشهر الأول مجاني للضبط." },
+      ],
+    },
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
