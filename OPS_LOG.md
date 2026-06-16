@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-roi-comment-prouver` (Tier-7 cross-cutting #13)
+- commit: `51e3a91` · IndexNow: HTTP 200
+- Tier-7 #13. CFO-facing ROI attribution playbook — 30-day baseline mandate, 4 business KPIs (answer rate, call→booking conversion, no-show rate, revenue per inbound call), clean attribution rule (count ONLY bookings that wouldn't exist without the agent), 12-month projection with worked Starter example ($1,440/mo lift on $499 cost → ~350 % annual ROI), single-slide sign-off test. Bottom-of-funnel commercial intent. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 #14 (accents-anglais, banque-finance, or new Tier-6 vertical).
+
 ## 2026-06-17 · Growth Engineer · CRO #7 — inline FAQ accordion, first 3 open by default
 - commit: `a74e777`
 - Landing `#faq` block converted from flat grid to native `<details>`/`<summary>` accordion. Q.01-Q.03 open at load (high-intent answers visible without a click), Q.04 collapses (longest). `[+]`/`[-]` marker via `group-open:` Tailwind variant — zero JS, zero animation (respects `prefers-reduced-motion`). FAQPage JSON-LD emits all 4 answers regardless of state → SEO impact additive only. Speakable `cssSelector` corrected from stale `#faq dd` to `#faq summary + p` (actual answer markup).
