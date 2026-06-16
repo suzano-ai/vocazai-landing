@@ -42,6 +42,11 @@
 - Footer adds a pulsing phosphor dot + "All systems operational" link → /api/health. SSH-confirmed earlier that the app/tts/stt containers are UP healthy, so the link is verifiable, not marketing. Concrete uptime trust signal site-wide.
 - next: cron A picks Tier-6 #10.
 
+## 2026-06-16 · Growth Engineer · CRO #27 (extension) — open WhatsApp CTAs in new tab
+- commit: `168b90a`
+- All 5 WhatsApp `<Link>` instances (hero, pricing card, final CTA, mobile sticky, blog post end) now `target="_blank" rel="noopener noreferrer"`. Desktop visitor keeps the landing page open and can browse back after the WA hop. Mobile unchanged (intent-deep-link bypasses target). Clean external-link signal for Google.
+- next: cron A picks Tier-6 #18.
+
 ## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-syndic-copropriete` (Tier-6)
 - commit: `190da3c` · IndexNow: HTTP 200
 - Tier-6 #16. Property-manager / condo-syndic vertical, distinct from gestion-locative (#8). Multi-stakeholder dynamics, AG/proxy info, syndic software integrations (eSyndic/Esabora/Crypto/Yves Vendome/Quilo). FR/EN/AR ~6 min. Cleaned up stray field before commit.
