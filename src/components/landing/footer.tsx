@@ -60,7 +60,9 @@ export async function Footer({ locale }: { locale: string }) {
         <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center">
           <div className="flex items-center gap-3">
             <span className="h-1.5 w-1.5 rounded-full bg-saffron-500" />
-            <span>{t("made")} · Available worldwide · © {new Date().getFullYear()} VocazAI · {t("rights")}</span>
+            <span>
+              {t("made")} · Available worldwide · GDPR compliant · EU region · Signed DPA · © {new Date().getFullYear()} VocazAI · {t("rights")}
+            </span>
           </div>
           <div className="flex items-center gap-1 rounded-full border border-border/60 bg-elevated px-1.5 py-1">
             {[
