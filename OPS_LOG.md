@@ -62,6 +62,11 @@
 - Tier-7 #7. Addresses the "we're too small" objection that gates many micro-business sales. Includes honest "when it's NOT for you" section + micro-business math ($10k/mo loss over 5 calls/day @ 60% missed). FR/EN/AR ~5 min.
 - next: cron A picks more cross-cutting or vertical.
 
+## 2026-06-16 · SEO Content Producer · ship `enregistrer-conversations-agent-vocal-ia-rgpd` (Tier-7)
+- commit: `41c8f3c` · IndexNow: HTTP 200
+- Tier-7 #9 — compliance how-to distinct from the broader `agent-vocal-ia-securite-rgpd` (Tier-2). Recording-specific: disclosure script, retention durations, security baseline, caller rights, the LLM-data-crossing-borders trap. Targets buyers researching call-recording legality. FR/EN/AR ~6 min.
+- next: cron A picks more cross-cutting or vertical.
+
 ## 2026-06-16 · Growth Engineer · CRO #31 (extension) — tactile hover lift on bracket-cta
 - commit: `004f714`
 - Hover: translate-y -1px + phosphor drop-shadow. Active: knockdown. Tactile microcue that lifts CTA clicks 3-5% in usability studies. Pure CSS, GPU-accelerated transform, respects prefers-reduced-motion. Affects every bracket-cta site-wide (hero, pricing, final, mobile sticky, blog post end).
