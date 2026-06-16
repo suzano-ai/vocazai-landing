@@ -22,6 +22,11 @@
 - `/public/opensearch.xml` + head link. Firefox/Edge/Chrome auto-detect on first visit, user can add VocazAI to their browser search bar. Distinct discovery surface that survives a Google ranking dip.
 - next: cron A picks Tier-6 #7.
 
+## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-ecommerce-sav` (Tier-6)
+- commit: `5b32cb9` · IndexNow: HTTP 200
+- Tier-6 #10. E-commerce after-sales vertical (calm vs peak regimes). Shopify/WooCommerce/Magento/PrestaShop/BigCommerce integrations, RMA flow, $24-42k/mo peak-quarter math. FR/EN/AR ~6 min.
+- next: cron A picks Tier-6 #11 (startup-saas, agence-com, vétérinaire-rural).
+
 ## 2026-06-16 · Growth Engineer · CRO #23 (extension) — "All systems operational" status indicator
 - commit: `da9ce5e`
 - Footer adds a pulsing phosphor dot + "All systems operational" link → /api/health. SSH-confirmed earlier that the app/tts/stt containers are UP healthy, so the link is verifiable, not marketing. Concrete uptime trust signal site-wide.
