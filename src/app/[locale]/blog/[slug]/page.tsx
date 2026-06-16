@@ -211,6 +211,8 @@ export default async function BlogPostPage({
             <div className="mt-16 rounded-lg border border-saffron-500/30 bg-saffron-500/8 p-8 text-center">
               <Link
                 href={wa}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-ink-900 px-7 py-4 text-sm font-medium text-saffron-50 transition-all duration-220 ease-soft hover:gap-3 hover:bg-saffron-500 hover:text-ink-900 dark:bg-saffron-500 dark:text-ink-900 dark:hover:bg-saffron-400"
               >
                 {t("cta")}

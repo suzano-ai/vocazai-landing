@@ -182,7 +182,7 @@ export default async function LandingPage({
                   {t("landing.heroSubtitle")}
                 </p>
                 <div className="flex flex-col gap-4">
-                  <Link href={wa} className="bracket-cta">
+                  <Link href={wa} target="_blank" rel="noopener noreferrer" className="bracket-cta">
                     {t("landing.ctaPrimary")}
                   </Link>
                   <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-saffron-500">
@@ -472,7 +472,7 @@ export default async function LandingPage({
                   </ul>
 
                   <div className="mt-auto pt-10">
-                    <Link href={wa} className="bracket-cta">
+                    <Link href={wa} target="_blank" rel="noopener noreferrer" className="bracket-cta">
                       {plan.cta}
                     </Link>
                   </div>
@@ -565,7 +565,7 @@ export default async function LandingPage({
 
           <Reveal delay={280}>
             <div className="mt-12 flex flex-wrap items-center gap-6">
-              <Link href={wa} className="bracket-cta">
+              <Link href={wa} target="_blank" rel="noopener noreferrer" className="bracket-cta">
                 {t("landing.finalCta.cta")}
               </Link>
               <Link
@@ -605,6 +605,8 @@ export default async function LandingPage({
         </a>
         <Link
           href={wa}
+          target="_blank"
+          rel="noopener noreferrer"
           className="bracket-cta w-full justify-center text-[11px]"
           aria-label={t("landing.finalCta.cta")}
         >
