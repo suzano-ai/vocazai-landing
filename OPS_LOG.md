@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-salle-sport` (Tier-6)
+- commit: `2dddb54` · IndexNow: HTTP 200
+- Tier-6 #7. Gym/fitness vertical — membership-info conversion narrative (3-4x lift vs voicemail), club software integrations (HeitzSystem/Resamania/Mindbody/Glofox/Gymnasium), 16x ROI on Starter math. FR/EN/AR ~5 min.
+- next: cron A picks Tier-6 #8 (startup-saas, location-bien, ecommerce-livraison).
+
 ## 2026-06-16 · Growth Engineer · SEO #19 (extension) — OpenSearch description doc + <link rel=search>
 - commit: `97183bf`
 - `/public/opensearch.xml` + head link. Firefox/Edge/Chrome auto-detect on first visit, user can add VocazAI to their browser search bar. Distinct discovery surface that survives a Google ranking dip.
