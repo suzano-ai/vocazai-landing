@@ -96,6 +96,7 @@ export function Header({ locale }: { locale: string }) {
               <Link
                 key={href}
                 href={href}
+                aria-current={active ? "page" : undefined}
                 className={`relative rounded-full px-4 py-1.5 font-medium transition-all duration-180 ${
                   active
                     ? "bg-background text-foreground shadow-sm shadow-ink-900/8"
@@ -168,6 +169,7 @@ export function Header({ locale }: { locale: string }) {
                   key={href}
                   href={href}
                   onClick={closeMobile}
+                  aria-current={active ? "page" : undefined}
                   style={{ transitionDelay: mobileOpen ? `${i * 35}ms` : "0ms" }}
                   className={`flex items-center justify-between rounded-xl px-3.5 py-3 text-sm font-medium transition-all duration-180 ${
                     active
