@@ -92,6 +92,11 @@
 - Tier-7 #8 — copy-ready prompt template. 5-block canvas with concrete examples, 4 pitfalls to avoid, 5-scenario final test. Distinct from script-comment-ecrire (Tier-2) — that was the abstract canvas; this is the literal template. Practical dev/ops audience. FR/EN/AR ~6 min.
 - next: cron A picks another cross-cutting or vertical.
 
+## 2026-06-16 · Growth Engineer · SEO #29 (extension) — Cache-Control on /robots.txt
+- commit: `b555a48`
+- robots.txt was inheriting Next's default. Explicit `public, max-age=3600, stale-while-revalidate=86400`. Most-hit URL on the site (every crawler reaches for it first); CDN serves an hour stale + day SWR. Cuts origin hits dramatically without freezing edits.
+- next: cron A picks next blog post.
+
 ## 2026-06-16 · Growth Engineer · SEO #28 (extension) — refresh humans.txt with current state
 - commit: `932a27c`
 - Pulls together every operator-attribution + stack-transparency thread shipped this week: Mare Nostrum SARL legal entity, founder WA link, RFC 9116/8288/IndieAuth standards inventory, full voice stack, A11Y patterns. E-E-A-T touch — humans.txt is a credibility check journalists and Google quality reviewers actually open on serious domains.
