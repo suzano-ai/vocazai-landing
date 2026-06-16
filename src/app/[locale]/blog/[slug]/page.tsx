@@ -140,6 +140,22 @@ export default async function BlogPostPage({
             </div>
           </Reveal>
 
+          {/* Back-to-top — server-rendered anchor link to the main element
+              tagged in the locale layout. Helps mobile readers who scrolled
+              through 1100+ chars per locale × 6+ h2 sections. */}
+          <Reveal delay={100}>
+            <div className="mt-10 flex justify-end">
+              <a
+                href="#main"
+                className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground transition-colors duration-180 hover:text-saffron-500"
+                aria-label="Back to top"
+              >
+                <ArrowLeft className="h-3 w-3 rotate-90 rtl:scale-x-[-1]" />
+                Top
+              </a>
+            </div>
+          </Reveal>
+
           {/* Related posts — internal linking lifts SEO and dwell time. */}
           {(() => {
             const related = POSTS_BY_DATE.filter((p) => p.slug !== slug).slice(0, 2);
