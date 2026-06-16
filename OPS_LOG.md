@@ -92,6 +92,11 @@
 - Footer bottom-bar gains "GDPR compliant · EU region · Signed DPA". Site-wide trust signal that closes the compliance question for visitors arriving from the Tier-6 regulated-vertical posts (medical/legal/accounting/insurance/pharmacy) without forcing them to read a blog post.
 - next: cron A picks Tier-6 #8.
 
+## 2026-06-16 · Growth Engineer · SEO #25 (extension) — RFC 8288 hreflang Link headers per route
+- commit: `c2dfce0`
+- Every locale-aware response now carries `Link: <fr-url>; rel="alternate"; hreflang="fr"` + en + ar + x-default. Appends to the existing Link header (sitemap+feed). Redundant signal to the HTML `<link rel=alternate>` Next emits via `metadata.alternates` — crawlers that parse headers first get hreflang one layer earlier.
+- next: cron A picks Tier-6 #19 or another cross-cutting.
+
 ## 2026-06-16 · SEO Content Producer · ship `agent-vocal-ia-centre-formation-pro` (Tier-6)
 - commit: `6465c6b` · IndexNow: HTTP 200
 - Tier-6 #17. Vocational-training-center vertical, distinct from ecole-langue (#12). 3-audience routing (self/employer/public-funded), Aurion/FormaSup/Digiforma integrations, $3.2k/mo math + 20% conversion lift. FR/EN/AR ~6 min.
