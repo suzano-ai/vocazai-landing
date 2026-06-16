@@ -62,6 +62,11 @@
 - Footer copyright line now reads "© VocazAI by Mare Nostrum SARL". Two wins: (1) trust signal — registered legal entity visible site-wide, important for regulated-vertical buyers running due diligence; (2) E-E-A-T publisher attribution for Google.
 - next: cron A picks next blog post.
 
+## 2026-06-16 · Growth Engineer · SEO #27 (extension) — Organization JSON-LD legalName + numberOfEmployees
+- commit: `e727bfd`
+- Organization schema gains `legalName: "Mare Nostrum SARL"` (sync with footer CRO #29) and `numberOfEmployees: 1-10 QuantitativeValue`. Two E-E-A-T-positive fields Google rewards as quality signals.
+- next: cron A picks next blog post.
+
 ## 2026-06-16 · SEO Content Producer · ship `kpi-agent-vocal-ia-production` (Tier-7)
 - commit: `5541237` · IndexNow: HTTP 200
 - Tier-7 #3. Operational KPIs: completion, transfer, duration, p95 latency, CSAT, business conversion. Specific thresholds + review cadence. Targets buyers who are running production and need to optimize. FR/EN/AR ~6 min.
