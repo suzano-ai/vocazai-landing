@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · CRO #7 — inline FAQ accordion, first 3 open by default
+- commit: `a74e777`
+- Landing `#faq` block converted from flat grid to native `<details>`/`<summary>` accordion. Q.01-Q.03 open at load (high-intent answers visible without a click), Q.04 collapses (longest). `[+]`/`[-]` marker via `group-open:` Tailwind variant — zero JS, zero animation (respects `prefers-reduced-motion`). FAQPage JSON-LD emits all 4 answers regardless of state → SEO impact additive only. Speakable `cssSelector` corrected from stale `#faq dd` to `#faq summary + p` (actual answer markup).
+- next: cron B picks Tier-7 SEO or remaining CRO (Tier-7 #13 prompts also available).
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-changement-langue-mi-appel` (Tier-7 cross-cutting #12)
 - commit: `3b8b925` · IndexNow: HTTP 200
 - Tier-7 #12. Mid-call language switching playbook — 3 switch scenarios (isolated loanword / short B inside A flow / two full sentences in B), 80 % confidence threshold across two consecutive sentences, context retention through LLM memory (no reset on switch), 4 typical errors, 4-scenario calibration test. Also fixed Next 15 lint blocker: footer health-status anchor `<a href="/api/health">` → `<Link prefetch={false}>`. FR/EN/AR ~5 min.
