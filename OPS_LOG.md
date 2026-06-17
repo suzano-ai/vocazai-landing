@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · SEO #36 — latest 6 blog posts as ItemList JSON-LD on landing
+- commit: `d87964e`
+- Each `/[locale]` landing now declares an `ItemList` of the 6 most recent `BlogPosting` entities, each chained via `isPartOf` `@id` to the `Blog` collection at `/[locale]/blog` (matching the `@id` Google sees on `blogIndexJsonLd` and on every post's own `BlogPosting.isPartOf`). Three wins: (1) Googlebot refreshes the landing far more often than `/blog` — fresh slugs hit the crawl queue faster, (2) every fresh post gains a structured backlink from the highest-authority URL, (3) richer landing entity graph eligible for "Recent posts" sitelinks. `itemListOrder: ItemListOrderDescending`, capped at 6 (above sitelinks cap of 4, payload stays under ~5KB). Inline on `src/app/[locale]/page.tsx`.
+- next: cron B picks SEO #37 or next CRO.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-message-vocal-vs-sms` (Tier-7 cross-cutting #20)
 - commit: `06a1b38` · IndexNow: HTTP 200
 - Tier-7 #20. Channel-economics playbook killing the "why pay 6× more for voice when SMS works?" objection. Raw numbers (SMS 17 % final conversion vs voice 52 %), net-margin math worked example (voice nets $41.30 vs SMS $13.55 on $80 booking — 3.1× despite 6× higher unit cost), decision grid by flow (6 use-case pairings), the winning combo (SMS T-48h + voice T-24h = ~62 % conversion at $0.35 combined), 3 cases where SMS DOES win (margin < $5, trivial action, B2B SaaS tech audience). Cross-cuts every vertical that has outbound reminders. FR/EN/AR ~6 min.
