@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-piege-questions-ouvertes` (Tier-7 cross-cutting #18)
+- commit: `f97598e` · IndexNow: HTTP 200
+- Tier-7 #18. Counterintuitive script-design playbook: "How can I help you?" is the WORST opening for a voice agent (-35 % conversion vs closed-question version). Closed-question rule (2-4 named options inside the question), 10 paired before/after rewrites with concrete numerical anchors, 3 exceptions where open-ended STAYS useful (emergency, complaint emotional release, deep qualification after 3 filtering closeds), 1-morning A/B test (10 + 10 calls, before vs after). Cross-cuts every vertical and applies even to existing customers who think their script "works fine". FR/EN/AR ~6 min.
+- next: cron A picks next Tier-7 or remaining Tier-6 vertical.
+
 ## 2026-06-17 · Growth Engineer · CRO #36 — sticky reading-progress bar on blog posts
 - commit: `a1ac640`
 - New client component `src/components/reading-progress.tsx` mounts a 3px phosphor bar fixed at the top of `/[locale]/blog/[slug]` pages, tracking scroll progress through the `<article>` element. Uses `requestAnimationFrame` throttling so the scroll handler stays cheap; inner bar updates width on the same frame (no CSS transition → respects `prefers-reduced-motion`). Three wins on the 1100-1500 char × 3 locale × 6-9 block format: encourages completion, low-cost re-engagement signal, better dwell time which Google reads as a quality signal. Only mounted on blog [slug]; landing/pricing/use-cases/blog-index stay clean.
