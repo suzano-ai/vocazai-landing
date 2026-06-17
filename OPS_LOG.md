@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · SEO #33 — Product + AggregateOffer JSON-LD on /[locale]/pricing
+- commit: `db889f5`
+- The canonical money page now emits `schema.org/Product` with `AggregateOffer` wrapping Starter ($499) and Growth ($1,490) as concrete USD `Offer`s — each with `UnitPriceSpecification` (P1M billing, unitText "month") and `availability: InStock`. `lowPrice`/`highPrice` give Google a "from $499/mo" snippet directly from /pricing in search results. Until now only the landing page had `SoftwareApplication.Offer`; the URL most likely to rank for high-intent queries like "VocazAI tarifs" had only `BreadcrumbList`. Enterprise is intentionally omitted from structured Offers (no fixed price → Google rejects). New helper: `pricingJsonLd()` in `src/lib/seo/structured-data.ts`.
+- next: cron B picks next CRO or SEO #34.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-clinique-dentaire` (Tier-6 vertical)
 - commit: `72382b8` · IndexNow: HTTP 200
 - Tier-6 vertical. Dental-clinic no-show kill playbook — frames the agent against the industry's #1 pain (15-25 % no-show rate). T-24h confirmation script with 17:00-19:00 sweet-spot, 4-branch decision tree (yes/no/unsure/no-answer + SMS cascade), 5 solo flows (first consult, emergency, pricing, insurance, cancel→waitlist), Doctolib/Maiia/Logos/Julie integrations, ROI math (-$1,481/mo net on Starter after dropping no-shows from 30 to 8/month). FR/EN/AR ~6 min.
