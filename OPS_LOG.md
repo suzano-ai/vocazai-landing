@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · CRO #42 — latest 3 blog posts strip in the footer
+- commit: `4f28177`
+- New "Latest articles" strip between the 4-column main grid and the uptime/copyright rows in the global footer. 3 responsive cards (sm:grid-cols-3), each title (line-clamp-2) + ISO date, linking to the matching `/[locale]/blog/[slug]`. Footer is the single most-trafficked UI on the site (visible across landing/pricing/use-cases/blog/about/every post/legal). Three wins: (1) lifts blog discovery from non-blog pages (buyer on /pricing seeing fresh "Number portability" or "ROI proof" gets a one-click path to depth), (2) re-engages would-bounce visitors with a fresh title in peripheral vision, (3) signals freshness to every visitor without navigating to /blog. Auto-updates per post ship via `POSTS_BY_DATE.slice(0, 3)`. `data-vocazai-track="footer-latest-post"` for analytics. New i18n key `landing.footer.latestKicker` (FR/EN/AR). Touched: `src/components/landing/footer.tsx`, `messages/{fr,en,ar}.json`.
+- next: cron B picks next SEO or CRO #43.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-monitoring-quotidien-5-minutes` (Tier-7 cross-cutting #29)
 - commit: `f8c9579` · IndexNow: HTTP 200
 - Tier-7 #29. Daily-operations discipline playbook addressing dashboard overload (50 widgets, no one looks). 5 numbers to scan each morning with concrete sweet-spot ranges + escalation triggers: (1) handoff rate (88 % target, <80 % prompt issue, >95 % under-handoff), (2) booking conversion (35-55 % normal, <30 % qualification issue, >60 % duplicate check), (3) average call duration (90-150 s simple booking, trend > absolute), (4) critical alerts in 24 h (0-2 normal, listen-to-3-calls trigger), (5) monthly minutes consumption (react at day 10, not day 28). 3 widgets to IGNORE (5-star vanity, cumulative keywords, geo heatmap). Distinct from `kpi-production` (which defined KPIs); this one is the operational morning routine. FR/EN/AR ~5 min.
