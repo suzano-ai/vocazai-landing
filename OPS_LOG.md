@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · SEO #31 — Blog + BlogPosting collection JSON-LD on /[locale]/blog
+- commit: `6270dba`
+- New `blogIndexJsonLd` helper in `src/lib/seo/structured-data.ts` emits schema.org `Blog` with every published post as a nested `BlogPosting` reference (slug, headline, description, datePublished, inLanguage, mainEntityOfPage). Wired into `src/app/[locale]/blog/page.tsx`. Tells Google the index IS a structured collection — accelerates discovery of newly-added slugs, makes the index page eligible for richer SERP presentation (multi-item list, sitelinks), and lets AI Overviews cite individual posts from a single index fetch.
+- next: cron B picks next CRO from §4 or another SEO extension.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-roi-comment-prouver` (Tier-7 cross-cutting #13)
 - commit: `51e3a91` · IndexNow: HTTP 200
 - Tier-7 #13. CFO-facing ROI attribution playbook — 30-day baseline mandate, 4 business KPIs (answer rate, call→booking conversion, no-show rate, revenue per inbound call), clean attribution rule (count ONLY bookings that wouldn't exist without the agent), 12-month projection with worked Starter example ($1,440/mo lift on $499 cost → ~350 % annual ROI), single-slide sign-off test. Bottom-of-funnel commercial intent. FR/EN/AR ~6 min.
