@@ -223,6 +223,25 @@ export default async function LandingPage({
               <div className="ascii-rule mt-12" />
             </Reveal>
 
+            {/* Trilingual greeting chip — the brand promise (FR / EN / AR)
+                made visceral with the three actual greetings instead of
+                an abstract "TRILINGUAL" label. Differentiation reinforced
+                above the fold without scrolling. Each greeting is rendered
+                in its native script — Arabic flips to rtl inside the chip
+                while the chip itself stays ltr (no layout shift). */}
+            <Reveal delay={230}>
+              <div className="mt-10 inline-flex items-center gap-3 rounded-full border border-saffron-500/30 bg-saffron-500/8 px-4 py-1.5 font-mono text-xs uppercase tracking-wider text-foreground">
+                <span className="h-1 w-1 rounded-full bg-saffron-500" aria-hidden="true" />
+                <span>Bonjour</span>
+                <span aria-hidden="true" className="text-muted-foreground/50">·</span>
+                <span>Hello</span>
+                <span aria-hidden="true" className="text-muted-foreground/50">·</span>
+                <span dir="rtl" lang="ar" className="font-normal normal-case tracking-normal">
+                  السلام عليكم
+                </span>
+              </div>
+            </Reveal>
+
             <Reveal delay={260}>
               <div className="mt-12 grid gap-12 lg:grid-cols-[1.4fr_1fr]">
                 <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
