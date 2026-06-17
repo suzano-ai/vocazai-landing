@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-debordement-equipe-existante` (Tier-7 cross-cutting #14)
+- commit: `547194a` · IndexNow: HTTP 200
+- Tier-7 #14. Overflow-mode playbook — neutralizes the #1 demo objection ("my team already answers"). Frames the agent as 30-40% recovery on the calls the human team can't catch: 4 unanswerable moments (simultaneous, breaks, weekends, peaks), conditional routing rule (>4 rings OR all-busy OR after-hours), explicit handoff boundary (anything > 3 min reasoning → human), 5-line ROI math, 14-day proof window. Top-of-funnel objection killer. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 #15 (banque-finance, accents-anglais, or Tier-6 vertical).
+
 ## 2026-06-17 · Growth Engineer · SEO #31 — Blog + BlogPosting collection JSON-LD on /[locale]/blog
 - commit: `6270dba`
 - New `blogIndexJsonLd` helper in `src/lib/seo/structured-data.ts` emits schema.org `Blog` with every published post as a nested `BlogPosting` reference (slug, headline, description, datePublished, inLanguage, mainEntityOfPage). Wired into `src/app/[locale]/blog/page.tsx`. Tells Google the index IS a structured collection — accelerates discovery of newly-added slugs, makes the index page eligible for richer SERP presentation (multi-item list, sitelinks), and lets AI Overviews cite individual posts from a single index fetch.
