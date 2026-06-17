@@ -7,6 +7,7 @@ import { Footer } from "@/components/landing/footer";
 import { DemoCallCard } from "@/components/landing/demo-call-card-lazy";
 import { Reveal } from "@/components/reveal";
 import { JsonLd } from "@/components/json-ld";
+import { POSTS_BY_DATE, type BlogLocale } from "@/content/blog/posts";
 
 export async function generateMetadata({
   params,
@@ -70,6 +71,48 @@ export default async function LandingPage({
       priceRange: "$499-$1,490",
       offerCount: 2,
     },
+  };
+
+  // Latest-posts ItemList — surfaces the 6 newest blog posts from the
+  // site's highest-authority URL (the locale landing). Crawlers refresh
+  // the home page far more often than /blog; declaring fresh BlogPosting
+  // entities here accelerates discovery of newly-shipped slugs and chains
+  // them into the same Blog @id used by /blog and each post's isPartOf
+  // (see blogIndexJsonLd / blogPostingJsonLd). Three wins: faster crawl
+  // of fresh content, additional internal-linking signal, and a richer
+  // landing-page entity graph that Google can surface as sitelinks.
+  const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://vocazai.com";
+  const l = locale as BlogLocale;
+  const latestPostsJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": `${BASE_URL}/${locale}#latest-posts`,
+    name: "Latest from VocazAI Blog",
+    inLanguage: locale,
+    itemListOrder: "https://schema.org/ItemListOrderDescending",
+    numberOfItems: Math.min(6, POSTS_BY_DATE.length),
+    itemListElement: POSTS_BY_DATE.slice(0, 6).map((p, i) => {
+      const url = `${BASE_URL}/${locale}/blog/${p.slug}`;
+      return {
+        "@type": "ListItem",
+        position: i + 1,
+        url,
+        item: {
+          "@type": "BlogPosting",
+          "@id": url,
+          url,
+          headline: p.title[l],
+          description: p.description[l],
+          datePublished: new Date(p.date).toISOString(),
+          inLanguage: locale,
+          isPartOf: {
+            "@type": "Blog",
+            "@id": `${BASE_URL}/${locale}/blog`,
+          },
+          author: { "@type": "Organization", name: "VocazAI", url: BASE_URL },
+        },
+      };
+    }),
   };
 
   /* ─────────────────────────────────────────────────────────────────────
@@ -141,6 +184,7 @@ export default async function LandingPage({
       <Header locale={locale} />
       <JsonLd data={faqJsonLd} />
       <JsonLd data={serviceJsonLd} />
+      <JsonLd data={latestPostsJsonLd} />
 
       {/* ════════════════════════════════════════════════════════════════
           BOOT SCREEN · the hero. CLI-style command + massive mono headline
