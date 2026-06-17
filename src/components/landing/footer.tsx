@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { ArrowUpRight } from "lucide-react";
+import { POSTS_BY_DATE, type BlogLocale } from "@/content/blog/posts";
 
 export async function Footer({ locale }: { locale: string }) {
   const t    = await getTranslations("landing.footer");
   const tNav = await getTranslations("nav");
+  const l    = locale as BlogLocale;
+  const latest = POSTS_BY_DATE.slice(0, 3);
 
   return (
     <footer className="border-t border-border bg-background">
@@ -58,6 +61,40 @@ export async function Footer({ locale }: { locale: string }) {
             <FooterLink href={`/${locale}/legal/privacy`}>{tNav("privacy")}</FooterLink>
           </FooterCol>
         </div>
+
+        {/* Latest articles strip — the footer is the most-trafficked
+            UI element on the site (visible across every page), so
+            surfacing the 3 most recent blog posts here lifts blog
+            discovery from non-blog pages and re-engages visitors
+            about to leave with one click on a fresh title. */}
+        {latest.length > 0 ? (
+          <div className="mt-14 border-t border-border pt-10">
+            <div className="mb-5 flex items-center gap-2.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-saffron-500" aria-hidden="true" />
+              <span className="font-mono text-kicker uppercase tracking-widest text-muted-foreground/70">
+                {t("latestKicker")}
+              </span>
+            </div>
+            <ul className="grid gap-4 sm:grid-cols-3">
+              {latest.map((p) => (
+                <li key={p.slug}>
+                  <Link
+                    href={`/${locale}/blog/${p.slug}`}
+                    data-vocazai-track="footer-latest-post"
+                    className="group block rounded-lg border border-border bg-elevated p-4 transition-colors duration-220 hover:border-foreground"
+                  >
+                    <span className="line-clamp-2 font-display text-sm font-medium leading-snug transition-colors duration-220 group-hover:text-saffron-600">
+                      {p.title[l]}
+                    </span>
+                    <span className="mt-2 block font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                      <time dateTime={p.date}>{p.date}</time>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
 
         {/* Status row — uptime signal in the same hue as the brand accent.
             Uses the existing /api/health endpoint as the verifiable backing,

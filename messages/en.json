@@ -140,7 +140,8 @@
     "footer": {
       "tagline": "The trilingual AI voice agent for your business.",
       "made": "Crafted with care",
-      "rights": "All rights reserved"
+      "rights": "All rights reserved",
+      "latestKicker": "Latest articles"
     }
   },
   "about": {
