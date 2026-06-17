@@ -152,19 +152,29 @@ export default async function PricingPage({
       <section className="pb-24">
         <div className="container">
           <div className="grid gap-4 lg:grid-cols-3">
-            {plans.map((p, idx) => (
-              <Reveal key={p.key} delay={idx * 80}>
-                <PlanCard
-                  name={tCommon(`${p.key}`)}
-                  price={p.key === "enterprise" ? "—" : tCommon(`${p.key}Price`)}
-                  body={tCommon(`${p.key}Body`)}
-                  cta={p.key === "enterprise" ? tCommon("ctaContact") : tCommon("cta")}
-                  href={wa}
-                  features={p.features}
-                  featured={p.featured}
-                />
-              </Reveal>
-            ))}
+            {plans.map((p, idx) => {
+              // Pre-fill WhatsApp message with the selected plan name so
+              // the founder sees the chosen tier on first reply instead
+              // of having to ask "which plan?" — faster qualification,
+              // higher close rate than the generic landing-CTA template.
+              const planName = tCommon(p.key);
+              const planWa = `https://wa.me/33777345056?text=${encodeURIComponent(
+                tc("whatsappPlan", { plan: planName })
+              )}`;
+              return (
+                <Reveal key={p.key} delay={idx * 80}>
+                  <PlanCard
+                    name={planName}
+                    price={p.key === "enterprise" ? "—" : tCommon(`${p.key}Price`)}
+                    body={tCommon(`${p.key}Body`)}
+                    cta={p.key === "enterprise" ? tCommon("ctaContact") : tCommon("cta")}
+                    href={planWa}
+                    features={p.features}
+                    featured={p.featured}
+                  />
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>

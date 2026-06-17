@@ -14,7 +14,8 @@
     "switchTheme": "Switch theme",
     "language": "Language",
     "whatsapp": "Hi, I'd like to start the free 1-month trial of VocazAI. My business gets around ___ calls/day.",
-    "whatsappFromBlog": "Hi, I read your article '{title}' and would like to start the free 1-month trial of VocazAI. My business gets around ___ calls/day."
+    "whatsappFromBlog": "Hi, I read your article '{title}' and would like to start the free 1-month trial of VocazAI. My business gets around ___ calls/day.",
+    "whatsappPlan": "Hi, I'm interested in the {plan} plan from VocazAI. My business gets around ___ calls/day."
   },
   "nav": {
     "how": "How it works",
