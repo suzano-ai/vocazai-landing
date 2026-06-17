@@ -49,6 +49,7 @@ export function blogPostingJsonLd(args: {
   slug?: string;
   readingMinutes?: number;
   articleBody?: string;
+  mentions?: { url: string; title: string }[];
 }): Record<string, unknown> {
   // Auto-derive keywords from the slug when none provided. Slugs are
   // hyphen-separated semantic tokens (e.g. "agent-vocal-ia-pharmacie"
@@ -84,6 +85,18 @@ export function blogPostingJsonLd(args: {
     // precise, sometimes wrong). The payload cost is small (~1-2KB
     // per locale) for a meaningful share of voice in answer engines.
     articleBody: args.articleBody,
+    // Cross-link siblings — each post mentions its 2 nearest neighbors
+    // (semantic for vertical posts via shared keyword tokens, recency
+    // for cross-cutting ones). Google reads `mentions` as a topical-
+    // cluster signal: when one post in the cluster ranks well, the
+    // others inherit some of that authority instead of having to
+    // earn it from scratch. Also helps AI engines surface a "related"
+    // carousel when citing the post.
+    mentions: args.mentions?.map((m) => ({
+      "@type": "CreativeWork",
+      url: abs(m.url),
+      name: m.title,
+    })),
     // ISO 8601 duration — Google reads `timeRequired` as a freshness +
     // depth signal and may use it for "X-min read" SERP annotations.
     timeRequired:

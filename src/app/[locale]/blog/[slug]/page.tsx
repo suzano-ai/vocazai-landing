@@ -145,6 +145,27 @@ export default async function BlogPostPage({
     })
     .join("\n\n");
 
+  // Compute 2 nearest neighbors for the BlogPosting `mentions` field.
+  // Score = number of shared slug tokens between this post's slug and
+  // each candidate's slug — higher = more topically related. Falls
+  // back to recency when no candidate shares a token (rare). The
+  // result is the cluster signal Google uses to spread authority
+  // between semantically-adjacent posts.
+  const thisTokens = new Set(slug.split("-"));
+  const neighbors = POSTS_BY_DATE.filter((p) => p.slug !== slug)
+    .map((p) => {
+      const shared = p.slug
+        .split("-")
+        .reduce((n, tok) => n + (thisTokens.has(tok) ? 1 : 0), 0);
+      return { post: p, score: shared };
+    })
+    .sort((a, b) => b.score - a.score || (a.post.date < b.post.date ? 1 : -1))
+    .slice(0, 2)
+    .map((x) => ({
+      url: `/${locale}/blog/${x.post.slug}`,
+      title: x.post.title[l],
+    }));
+
   const articleJsonLd = blogPostingJsonLd({
     title: post.title[l],
     description: post.description[l],
@@ -155,6 +176,7 @@ export default async function BlogPostPage({
     slug,
     readingMinutes: post.readingMinutes,
     articleBody,
+    mentions: neighbors,
   });
 
   const breadcrumb = breadcrumbJsonLd([
