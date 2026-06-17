@@ -228,7 +228,8 @@
       "q2": "Puis-je changer de formule en cours de route ?",
       "a2": "Oui, à tout moment. Le changement est facturé au prorata du jour de la bascule.",
       "q3": "Y a-t-il des frais de mise en place ?",
-      "a3": "Zéro. Notre équipe configure votre premier agent gratuitement pendant l'essai."
+      "a3": "Zéro. Notre équipe configure votre premier agent gratuitement pendant l'essai.",
+      "learnMore": "Lire le guide complet"
     },
     "cta": {
       "title": "Prêt à ne plus rater un appel ?",

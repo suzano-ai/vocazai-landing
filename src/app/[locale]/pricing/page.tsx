@@ -325,10 +325,39 @@ export default async function PricingPage({
               </h2>
             </div>
           </Reveal>
+          {/* Each FAQ answer links to the deep-dive blog post most
+              likely to address the follow-up question a high-intent
+              buyer would have after reading the short answer. Three
+              wins: keeps the buyer educated on /blog instead of
+              bouncing, adds 3 internal links from a money page to
+              the blog cluster (lifts blog authority signal), and
+              pre-qualifies the eventual trial click (better-informed
+              visitors convert higher). */}
           <div className="divide-y divide-border">
-            <Faq q={t("faq.q1")} a={t("faq.a1")} />
-            <Faq q={t("faq.q2")} a={t("faq.a2")} />
-            <Faq q={t("faq.q3")} a={t("faq.a3")} />
+            <Faq
+              q={t("faq.q1")}
+              a={t("faq.a1")}
+              learnMore={{
+                href: `/${locale}/blog/agent-vocal-ia-couts-caches`,
+                label: t("faq.learnMore"),
+              }}
+            />
+            <Faq
+              q={t("faq.q2")}
+              a={t("faq.a2")}
+              learnMore={{
+                href: `/${locale}/blog/agent-vocal-ia-roi-comment-prouver`,
+                label: t("faq.learnMore"),
+              }}
+            />
+            <Faq
+              q={t("faq.q3")}
+              a={t("faq.a3")}
+              learnMore={{
+                href: `/${locale}/blog/agent-vocal-ia-deployer-en-48h`,
+                label: t("faq.learnMore"),
+              }}
+            />
           </div>
         </div>
       </section>
@@ -460,7 +489,15 @@ function Cell({ v, highlight = false }: { v: string | boolean; highlight?: boole
   return <span>{v}</span>;
 }
 
-function Faq({ q, a }: { q: string; a: string }) {
+function Faq({
+  q,
+  a,
+  learnMore,
+}: {
+  q: string;
+  a: string;
+  learnMore?: { href: string; label: string };
+}) {
   return (
     <details className="group cursor-pointer py-6">
       <summary className="flex list-none items-start justify-between gap-6">
@@ -474,6 +511,16 @@ function Faq({ q, a }: { q: string; a: string }) {
       <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground">
         {a}
       </p>
+      {learnMore ? (
+        <Link
+          href={learnMore.href}
+          data-vocazai-track="pricing-faq-learn-more"
+          className="mt-3 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-saffron-600 transition-colors duration-180 hover:text-saffron-400"
+        >
+          {learnMore.label}
+          <ArrowUpRight className="h-3 w-3 rtl:scale-x-[-1]" />
+        </Link>
+      ) : null}
     </details>
   );
 }

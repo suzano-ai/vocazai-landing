@@ -228,7 +228,8 @@
       "q2": "Can I switch plans?",
       "a2": "Yes, anytime. The change is prorated from the day of switch.",
       "q3": "Are there setup fees?",
-      "a3": "Zero. Our team configures your first agent for free during the trial."
+      "a3": "Zero. Our team configures your first agent for free during the trial.",
+      "learnMore": "Read the full guide"
     },
     "cta": {
       "title": "Ready to stop missing calls?",
