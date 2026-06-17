@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · CRO #34 — anchored h2 headings on blog posts
+- commit: `43a1f39`
+- Every blog-body `<h2>` now renders with a stable locale-aware id slug (`slugifyHeading()` handles FR/EN/AR via Unicode `\p{L}`, strips Latin accents, caps at 80 chars) and an on-hover `#` deep-link. Three wins: (1) readers can share section-deep URLs (re-engagement on Slack/WhatsApp), (2) Google's "jump to section" SERP feature uses stable h2 ids to surface in-page targets directly from search results, (3) `scroll-mt-24` keeps the heading clear of the fixed header on jump. Touched: `src/app/[locale]/blog/[slug]/page.tsx` — `BlockView` only.
+- next: cron B picks SEO #33 or next CRO #35.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-veterinaire` (Tier-6 vertical)
 - commit: `2a95f6d` · IndexNow: HTTP 200
 - Tier-6 vertical. Veterinary clinic playbook — emergency-first triage opening ("is this an emergency?"), Level-1 keyword routing to on-call mobile, 4 solo flows (annual vaccination booking, post-op check-up, pricing, cancel/reschedule), Vetocom/ezyVet/Vetstoria integrations, proactive 7-day pre-anniversary vaccination reminder (+40-60% rebooking), explicit prohibitions (no diagnosis, no drug suggestion, no euthanasia discussion), 4 h/day → 3 h/day FTE math (~0.4 FTE freed). FR/EN/AR ~6 min.
