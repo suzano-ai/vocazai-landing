@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowDown, ArrowRight, Check } from "lucide-react";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
+import { MobileStickyBar } from "@/components/landing/mobile-sticky-bar";
 import { DemoCallCard } from "@/components/landing/demo-call-card-lazy";
 import { Reveal } from "@/components/reveal";
 import { JsonLd } from "@/components/json-ld";
@@ -693,35 +694,7 @@ export default async function LandingPage({
       </section>
 
       <Footer locale={locale} />
-
-      {/* Sticky mobile CTA — proven mobile-CRO pattern that lifts conversion
-          15-30 % on phone-led traffic (which is where Google search trends).
-          Two paths in thumb-reach: a click-to-call for visitors who want a
-          live voice and the WhatsApp trial deep-link for everyone else.
-          Hidden md+ since the desktop hero CTA stays in view at all scrolls. */}
-      <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-[auto_1fr] gap-2 border-t border-border bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/80 md:hidden">
-        <a
-          href="tel:+33777345056"
-          className="bracket-cta justify-center text-[11px]"
-          aria-label="Call VocazAI"
-          data-vocazai-track="mobile_sticky_call"
-        >
-          {"CALL"}
-        </a>
-        <Link
-          href={wa}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bracket-cta w-full justify-center text-[11px]"
-          aria-label={t("landing.finalCta.cta")}
-          data-vocazai-track="mobile_sticky_wa"
-        >
-          {t("landing.finalCta.cta")}
-        </Link>
-      </div>
-      {/* Spacer so the sticky bar doesn't cover the footer's last row on
-          short viewports. md+ hidden to match. */}
-      <div className="h-16 md:hidden" aria-hidden="true" />
+      <MobileStickyBar wa={wa} />
     </main>
   );
 }

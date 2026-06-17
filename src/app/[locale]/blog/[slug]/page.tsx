@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
+import { MobileStickyBar } from "@/components/landing/mobile-sticky-bar";
 import { Khatam } from "@/components/zellige";
 import { Reveal } from "@/components/reveal";
 import { JsonLd } from "@/components/json-ld";
@@ -373,6 +374,7 @@ export default async function BlogPostPage({
       </article>
 
       <Footer locale={locale} />
+      <MobileStickyBar wa={wa} />
     </main>
   );
 }

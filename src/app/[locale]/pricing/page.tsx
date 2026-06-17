@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight, Check, X, Sparkles } from "lucide-react";
 import { Header } from "@/components/landing/header";
 import { Footer } from "@/components/landing/footer";
+import { MobileStickyBar } from "@/components/landing/mobile-sticky-bar";
 import { Khatam, HexLattice, Arch } from "@/components/zellige";
 import { Reveal } from "@/components/reveal";
 import { JsonLd } from "@/components/json-ld";
@@ -407,6 +408,7 @@ export default async function PricingPage({
       </section>
 
       <Footer locale={locale} />
+      <MobileStickyBar wa={wa} />
     </main>
   );
 }
