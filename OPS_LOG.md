@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-handoff-humain-quand` (Tier-7 cross-cutting #17)
+- commit: `6bf0444` · IndexNow: HTTP 200
+- Tier-7 #17. Operational decision playbook for the #2 demo question (after price): when should the agent transfer to a human? 5 trigger signals (emergency keyword, detected emotion, 3-repeat misunderstanding, out-of-scope, explicit human request), 3-second handoff rule (acknowledge → save context → route), hot vs cold transfer mapping by vertical, "% handled without handoff" as the #1 quality KPI (not call duration), 50-call calibration test with concrete targets (<15 % Starter, <8 % Growth). Cross-cuts every vertical. FR/EN/AR ~6 min.
+- next: cron A picks remaining Tier-6 or Tier-7 cross-cutting.
+
 ## 2026-06-17 · Growth Engineer · SEO #34 — ItemList + Service JSON-LD on /[locale]/use-cases
 - commit: `6044f05`
 - Declares /use-cases as a structured `schema.org/ItemList` enumeration of services, with each of the 4 vertical cards (clinic, realty, ecom, restau) nested as a `Service` entity that links to its matching deep-dive blog post (cabinet-medical, agence-immobiliere, ecommerce-sav, restaurant-reservations). Three wins: (1) Google can surface the page as a sitelink/list rich-result with the 4 verticals visible directly in SERP, (2) each Service carries `inLanguage` so locale variants stay coherent, (3) each item's `url` pushes internal link equity into the matching long-form vertical blog post. Inline schema (no helper) since wiring is page-specific. Touched: `src/app/[locale]/use-cases/page.tsx`.
