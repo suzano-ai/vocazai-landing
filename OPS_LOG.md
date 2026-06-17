@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-bruit-environnement-noisy` (Tier-7 cross-cutting #28)
+- commit: `a548100` · IndexNow: HTTP 200
+- Tier-7 #28. Noisy-environment handling playbook — addresses the 40 % of mobile calls with significant background noise (car / café / construction). 4-layer technical stack: (1) RNNoise/Krisp/WebRTC NS input-side suppression -20 dB → STT accuracy 60-65 % → 85-90 %; (2) noise-trained STT (Voxtral / Whisper Large v3 / Deepgram Nova) +10-15 pts on brouhaha; (3) explicit numeric-field confirmation (zero wrong-number bookings); (4) SMS fallback after 2 repeat requests (recovers ~80 % of would-hang-up calls). 3 pitfalls (TTS too loud causing mic saturation, complex polite phrasing, infinite "I didn't understand" loop). Weekend test protocol from 3 real noisy environments. Cross-cuts every mobile-heavy vertical. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (cold outbound, spam shield, dashboard KPIs) or remaining Tier-6.
+
 ## 2026-06-17 · Growth Engineer · CRO #41 — deep-dive blog link below each pricing FAQ answer
 - commit: `d1bc7eb`
 - Each of the 3 pricing-FAQ answers now ends with a "Read the full guide" link to the blog post most likely to address the buyer's follow-up question: q1 (overage) → `agent-vocal-ia-couts-caches`, q2 (plan switching) → `agent-vocal-ia-roi-comment-prouver`, q3 (setup fees) → `agent-vocal-ia-deployer-en-48h`. Three wins: (1) keeps the buyer learning on /blog instead of bouncing, (2) 3 internal links from highest-intent money page into the blog cluster lifts blog authority signals, (3) better-informed visitors convert higher on the bottom WhatsApp CTA. `Faq` extended with `learnMore?: { href, label }`. New `pricing.faq.learnMore` i18n key (FR/EN/AR). `data-vocazai-track="pricing-faq-learn-more"` for analytics. Touched: `pricing/page.tsx`, `messages/{fr,en,ar}.json`.
