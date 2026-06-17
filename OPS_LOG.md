@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · CRO #33 — pre-fill blog-post WhatsApp CTA with the post title
+- commit: `4b487e9`
+- Blog `[slug]` end-CTA's `wa.me` link now opens WhatsApp with `"I read your article '<title>' and would like to start the free 1-month trial"` instead of the generic template. New i18n key `common.whatsappFromBlog` (FR/EN/AR) with `{title}` placeholder. Visitors landing from Google on a vertical/topic post now arrive in WhatsApp pre-tagged — founder qualifies faster on first reply, visitor perceives the team is paying attention to entry context. Landing/other surfaces unchanged.
+- next: cron B picks next CRO #34 or SEO extension.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-debordement-equipe-existante` (Tier-7 cross-cutting #14)
 - commit: `547194a` · IndexNow: HTTP 200
 - Tier-7 #14. Overflow-mode playbook — neutralizes the #1 demo objection ("my team already answers"). Frames the agent as 30-40% recovery on the calls the human team can't catch: 4 unanswerable moments (simultaneous, breaks, weekends, peaks), conditional routing rule (>4 rings OR all-busy OR after-hours), explicit handoff boundary (anything > 3 min reasoning → human), 5-line ROI math, 14-day proof window. Top-of-funnel objection killer. FR/EN/AR ~6 min.
