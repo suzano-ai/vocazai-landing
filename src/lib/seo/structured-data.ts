@@ -47,6 +47,7 @@ export function blogPostingJsonLd(args: {
   wordCount?: number;
   keywords?: string[];
   slug?: string;
+  readingMinutes?: number;
 }): Record<string, unknown> {
   // Auto-derive keywords from the slug when none provided. Slugs are
   // hyphen-separated semantic tokens (e.g. "agent-vocal-ia-pharmacie"
@@ -60,6 +61,11 @@ export function blogPostingJsonLd(args: {
       return acc;
     }, []) : undefined);
 
+  // Locale-aware Blog @id reference — links every BlogPosting back to
+  // the collection emitted on /[locale]/blog (see blogIndexJsonLd). Tells
+  // Google the post is a child of the blog entity, not a standalone page.
+  const blogIndexId = `${SITE}/${args.inLanguage}/blog`;
+
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -71,6 +77,20 @@ export function blogPostingJsonLd(args: {
     mainEntityOfPage: abs(args.url),
     url: abs(args.url),
     wordCount: args.wordCount,
+    // ISO 8601 duration — Google reads `timeRequired` as a freshness +
+    // depth signal and may use it for "X-min read" SERP annotations.
+    timeRequired:
+      typeof args.readingMinutes === "number"
+        ? `PT${args.readingMinutes}M`
+        : undefined,
+    // Entity-graph chain: post → blog collection → website. Reusing the
+    // same @id Google saw on /blog stitches everything into one graph
+    // and concentrates authority signals on the collection.
+    isPartOf: {
+      "@type": "Blog",
+      "@id": blogIndexId,
+      url: blogIndexId,
+    },
     keywords: derivedKeywords,
     articleSection: "AI Voice Agent",
     // Article rich-result eligibility on Google requires a non-empty
