@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-banque-courtier-credit` (Tier-6 regulated vertical)
+- commit: `3959269` · IndexNow: HTTP 200
+- Tier-6 regulated vertical. Banking + credit-broker playbook — kills the "we can't do this" myth. Clear red-line list (account balance, transactions, IBAN/card data, investment advice, credit accept/refuse) vs 5 high-value flows the agent legally CAN handle (mortgage pre-qualification with 8-question score, branch/video RDV, compliance-validated FAQ, document checklist, instant human handover on sensitive signals). Mandatory 4-second compliance opening that passes ACPR/AMF audits. Quanteo/La Centrale du Financement/ID Crédit/FluxImmo broker CRM writes. ~20x ROI on Growth via off-hours capture + qualification. FR/EN/AR ~6 min.
+- next: cron A picks remaining Tier-6 verticals or Tier-7 cross-cutting.
+
 ## 2026-06-17 · Growth Engineer · CRO #35 — pre-fill pricing page per-plan WhatsApp CTAs with the plan name
 - commit: `d40bc29`
 - Each plan card on `/[locale]/pricing` now opens WhatsApp with a message pre-tagged with the visitor's chosen tier ("I'm interested in the Starter / Growth / Enterprise plan from VocazAI"). Founder skips the "which plan?" qualifying round on first reply; visitor feels the team is tracking their entry path. New i18n key `common.whatsappPlan` (FR/EN/AR, `{plan}` placeholder resolving to localized plan name). Bottom-of-page closing CTA keeps generic `common.whatsapp` unchanged (fires from visitors who scroll past pricing without picking a tier). Touched: `src/app/[locale]/pricing/page.tsx`, `messages/{fr,en,ar}.json`.
