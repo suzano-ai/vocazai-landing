@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-anti-spam-numero-reputation` (Tier-7 cross-cutting #31)
+- commit: `232fa04` · IndexNow: HTTP 200
+- Tier-7 #31. Number-reputation defense playbook addressing the silent ~60 % answer-rate cliff when Hiya/Truecaller/native Android filters flag a number. 5 levers: (1) frequency + time window (max 1 call/72 h same destination, 9am-7pm local, no Sundays, <80 % baseline daily), (2) STIR/SHAKEN attestation A interrogation script with concrete "vague answer = change provider" rule, (3) branded calling (First Orion / Hiya Connect / SSN Registry, $50-200/mo → 3× answer rate), (4) weekly reputation monitoring + unflag ticket process, (5) 14-day warm-up curve (20→40→80 over 7 days vs 100 cold = banned in 48h). Recycled-number trap (>5 prior reports = refuse). Monthly 5-phone self-test protocol. Cross-cuts every vertical that runs outbound. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (multi-turn, HIPAA, payment compliance) or remaining Tier-6.
+
 ## 2026-06-17 · Growth Engineer · SEO #41 — `mentions` cross-link graph on every BlogPosting
 - commit: `3ebcb6a`
 - Every `BlogPosting` JSON-LD now emits a `mentions` array of 2 semantically-adjacent posts (CreativeWork refs with url + name). Adjacency = shared slug-token count between current and candidate post (e.g. `agent-vocal-ia-veterinaire` shares 3 tokens with `agent-vocal-ia-cabinet-medical`); ties broken by recency. Token overlap → semantic; no overlap → recency fallback emerges naturally from the sort. Google reads `mentions` as a topical-cluster signal: when one post in the cluster ranks well, the others inherit some of that authority instead of having to earn it from scratch. AI engines use it for "related" citation carousels. UI "Read next" stays recency-based; this JSON-LD signal is semantic-first. Touched: `src/lib/seo/structured-data.ts`, `src/app/[locale]/blog/[slug]/page.tsx`.
