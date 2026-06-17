@@ -66,6 +66,50 @@ export default async function AboutPage({
           { name: tNav("about"), url: `/${locale}/about` },
         ])}
       />
+      {/* AboutPage JSON-LD — schema.org's specific subtype for "about
+          us" pages. Tells Google this URL IS the canonical About surface
+          (vs a generic WebPage), and points `mainEntity` at the
+          Organization entity declared in the root layout so the entity
+          graph stays unified across pages. Improves E-E-A-T:
+          authoritativeness signals concentrate on a single Organization
+          @id rather than fragmenting across page-local definitions. */}
+      <JsonLd
+        data={(() => {
+          const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://vocazai.com";
+          const url = `${BASE}/${locale}/about`;
+          return {
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "@id": url,
+            url,
+            inLanguage: locale,
+            // Organization @id matches the one used in the root layout's
+            // organizationJsonLd — Google reads matching @ids as a
+            // single entity, so authority signals stack rather than
+            // splitting across page-local copies.
+            mainEntity: {
+              "@type": "Organization",
+              "@id": `${BASE}/#organization`,
+              name: "VocazAI",
+              legalName: "Mare Nostrum SARL",
+              url: BASE,
+            },
+            isPartOf: {
+              "@type": "WebSite",
+              "@id": `${BASE}/#website`,
+              url: BASE,
+              name: "VocazAI",
+            },
+            breadcrumb: {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "VocazAI", item: `${BASE}/${locale}` },
+                { "@type": "ListItem", position: 2, name: tNav("about"), item: url },
+              ],
+            },
+          };
+        })()}
+      />
 
       {/* HERO */}
       <section className="relative overflow-hidden">

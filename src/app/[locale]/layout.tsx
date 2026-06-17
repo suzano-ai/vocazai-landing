@@ -17,6 +17,11 @@ const SITE = process.env.NEXT_PUBLIC_APP_URL ?? "https://vocazai.com";
 const WEBSITE_JSONLD = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  // Stable @id so per-page JSON-LD (AboutPage, BlogPosting isPartOf,
+  // …) can reference the same WebSite entity. Google reads matching
+  // @ids as one node; authority signals stack rather than splitting
+  // across page-local copies.
+  "@id": `${SITE}/#website`,
   name: "VocazAI",
   url: SITE,
   inLanguage: ["fr", "en", "ar"],

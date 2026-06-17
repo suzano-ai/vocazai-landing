@@ -131,6 +131,10 @@ export const metadata: Metadata = {
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  // Stable @id so per-page JSON-LD (AboutPage mainEntity, footer
+  // attributions, …) can reference the same Organization entity.
+  // Matching @ids let Google fold all signals into one node.
+  "@id": `${BASE_URL}/#organization`,
   name: "VocazAI",
   // Legal entity attribution — matches the operator named in the footer.
   // Google E-E-A-T treats legalName + numberOfEmployees as quality signals
