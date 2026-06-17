@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · CRO #36 — sticky reading-progress bar on blog posts
+- commit: `a1ac640`
+- New client component `src/components/reading-progress.tsx` mounts a 3px phosphor bar fixed at the top of `/[locale]/blog/[slug]` pages, tracking scroll progress through the `<article>` element. Uses `requestAnimationFrame` throttling so the scroll handler stays cheap; inner bar updates width on the same frame (no CSS transition → respects `prefers-reduced-motion`). Three wins on the 1100-1500 char × 3 locale × 6-9 block format: encourages completion, low-cost re-engagement signal, better dwell time which Google reads as a quality signal. Only mounted on blog [slug]; landing/pricing/use-cases/blog-index stay clean.
+- next: cron B picks next SEO or CRO #37.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-handoff-humain-quand` (Tier-7 cross-cutting #17)
 - commit: `6bf0444` · IndexNow: HTTP 200
 - Tier-7 #17. Operational decision playbook for the #2 demo question (after price): when should the agent transfer to a human? 5 trigger signals (emergency keyword, detected emotion, 3-repeat misunderstanding, out-of-scope, explicit human request), 3-second handoff rule (acknowledge → save context → route), hot vs cold transfer mapping by vertical, "% handled without handoff" as the #1 quality KPI (not call duration), 50-call calibration test with concrete targets (<15 % Starter, <8 % Growth). Cross-cuts every vertical. FR/EN/AR ~6 min.
