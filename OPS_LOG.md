@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-conversations-multi-tour` (Tier-7 cross-cutting #32)
+- commit: `d07d923` · IndexNow: HTTP 200
+- Tier-7 #32. Multi-turn conversation architecture playbook addressing the 15 % of complex calls where IVRs break and conversion is won/lost. 5-field conversational state (identity / primary intent / collected fields / decisions / detected emotions). Context-window sweet spot (6-10 raw turns + structured JSON state, ~2x cost / +30 % conversion). Correction-handling rule (silence on old, focus on new). 3 working patterns (progressive probing / mid-call recap / dynamic branching). Premature-reset trap (silence < 10 s = think; > 10 s = re-engage WITH context). 10-turn calibration test with concrete complex scenario (4 people / shellfish allergy / 30-min shift / headcount change). Cross-cuts every vertical with non-trivial bookings. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (HIPAA, PCI compliance, load testing) or remaining Tier-6.
+
 ## 2026-06-17 · Growth Engineer · CRO #43 — trilingual greeting chip above the hero subtitle
 - commit: `eeb0b2c`
 - New pill between hero ascii-rule and subtitle: "Bonjour · Hello · السلام عليكم" — three actual greetings, each in its native script (`dir="rtl" lang="ar"` on Arabic, ltr chip wrapper, normal-case + tracking-normal inside Arabic span to preserve glyph readability). Brand differentiation (trilingual AI agent) currently communicated abstractly via a status-line "TRILINGUAL · FR · AR · EN" label that's easy to miss in a 2-second skim. The greeting chip makes the promise visceral, captures FR/AR-locale visitors with their own greeting in the mix, and reinforces credibility (anyone can claim multilingual; only a real product writes the right script). Zero deps, zero JS, zero new i18n keys (greetings ARE the demo, never translated). Touched: `src/app/[locale]/page.tsx` only.
