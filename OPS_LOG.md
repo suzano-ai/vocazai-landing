@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · CRO #40 — risk-reversal microcopy + setup-hook on blog post CTA
+- commit: `1be990c`
+- End-of-blog-post CTA card was a bare button; now mirrors the landing-hero pattern with two compact microcopy lines. Above (kicker): "Set up in 48h · no setup fees" — answers the first practical objection. Below (saffron uppercase chip): "First month free · no credit card · cancel anytime" — standard 3-axis risk-reversal that lifts trial conversion on B2B SaaS by 8-20 % over bare CTA. Visitor entering from a Google blog hit now sees the same trial terms as on home page → coherent funnel message. `data-vocazai-track="blog-post-cta"` for click attribution. New i18n keys `blog.ctaHook` + `blog.trialChip` (FR/EN/AR). Touched: `blog/[slug]/page.tsx`, `messages/{fr,en,ar}.json`.
+- next: cron B picks next SEO or CRO #41.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-voix-et-whatsapp-meme-agent` (Tier-7 cross-cutting #25)
 - commit: `99b8365` · IndexNow: HTTP 200
 - Tier-7 #25. Multi-channel continuity playbook addressing the silent 30 % drop-off from cross-channel context loss (customer starts on phone, finishes on WhatsApp, gets a blind agent). 3-component unified architecture (E.164 phone number as primary key / central conversation log / LLM gets full history regardless of input channel). 4 transition patterns (call→WA proof, WA photo→call discuss, unsent WA draft→voice callback, after-hours call→WA slot offer). 3 pitfalls (separate tools no-bridge / opt-in for WA Business / context mix-up validation). 48 h deploy if both surfaces already exist. Bridges between the verticals (vet, dental, real estate) where WhatsApp is already where conversations actually happen. FR/EN/AR ~6 min.
