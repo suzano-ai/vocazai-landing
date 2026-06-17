@@ -45,7 +45,9 @@
     "readMore": "Lire l'article",
     "publishedOn": "Publié le",
     "relatedTitle": "À lire ensuite",
-    "cta": "Essayer VocazAI gratuitement"
+    "cta": "Essayer VocazAI gratuitement",
+    "ctaHook": "Configuration en 48 h · sans frais d'installation",
+    "trialChip": "Premier mois gratuit · sans carte bancaire · annulez à tout moment"
   },
   "landing": {
     "kicker": "Trilingue · Français · Arabe · Anglais",

@@ -305,18 +305,30 @@ export default async function BlogPostPage({
             </nav>
           </Reveal>
 
-          {/* CTA */}
+          {/* CTA — hook microcopy above the button frames *why* now, and a
+              risk-reversal chip below quantifies what the visitor commits
+              to (nothing). Mirrors the landing-hero CTA pattern so the
+              promise stays consistent across the funnel — a visitor who
+              entered from a blog post sees the same trial terms they
+              would on the home page. */}
           <Reveal delay={140}>
             <div className="mt-16 rounded-lg border border-saffron-500/30 bg-saffron-500/8 p-8 text-center">
+              <p className="mb-5 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                {t("ctaHook")}
+              </p>
               <Link
                 href={wa}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-vocazai-track="blog-post-cta"
                 className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-ink-900 px-7 py-4 text-sm font-medium text-saffron-50 transition-all duration-220 ease-soft hover:gap-3 hover:bg-saffron-500 hover:text-ink-900 dark:bg-saffron-500 dark:text-ink-900 dark:hover:bg-saffron-400"
               >
                 {t("cta")}
                 <ArrowUpRight className="h-4 w-4 transition-transform duration-220 group-hover:rotate-45 rtl:scale-x-[-1]" />
               </Link>
+              <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.18em] text-saffron-700 dark:text-saffron-400">
+                {t("trialChip")}
+              </p>
             </div>
           </Reveal>
         </div>

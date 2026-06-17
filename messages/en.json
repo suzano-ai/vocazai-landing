@@ -45,7 +45,9 @@
     "readMore": "Read article",
     "publishedOn": "Published on",
     "relatedTitle": "Read next",
-    "cta": "Try VocazAI for free"
+    "cta": "Try VocazAI for free",
+    "ctaHook": "Set up in 48h · no setup fees",
+    "trialChip": "First month free · no credit card · cancel anytime"
   },
   "landing": {
     "kicker": "Trilingual · French · Arabic · English",
