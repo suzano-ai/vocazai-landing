@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · SEO #37 — AboutPage JSON-LD + stable `@id` chain on Organization + WebSite
+- commit: `fa3614f`
+- Three coordinated changes that turn separate page-local entities into one chained entity graph: (1) `/[locale]/about` now emits `schema.org/AboutPage` with `mainEntity` referencing `${BASE}/#organization` and `isPartOf` referencing `${BASE}/#website` (AboutPage is Google's specific E-E-A-T-relevant subtype for "about us" pages — concentrating authoritativeness on the brand entity); (2) root layout's `organizationJsonLd` now carries `@id: ${BASE_URL}/#organization` (Google folds matching @ids into one node so /about signals stack with root signals instead of fragmenting); (3) locale layout's `WEBSITE_JSONLD` now carries `@id: ${SITE}/#website` (every per-page reference now anchors to one node). Unlocks all future SEO ships to chain via @id without redeclaring. Touched: `about/page.tsx`, `src/app/layout.tsx`, `src/app/[locale]/layout.tsx`.
+- next: cron B picks next CRO or SEO #38.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-evaluation-fournisseur` (Tier-7 cross-cutting #22)
 - commit: `084d3ba` · IndexNow: HTTP 200
 - Tier-7 #22. Top-of-funnel buyer-side checklist: 12 questions to ask any AI voice agent vendor before signing. 4 blocks (business model: per-minute cost / hidden fees / overage / cancel terms; technical quality: latency <700 ms / barge-in handling / handoff %; compliance: storage location / DPA / data deletion; operation: time-to-prod / support response time). Golden rule (vendor failing >3/12 lacks technical command). Strategic angle: positions VocazAI as the answer to its own audit grid — competitors who duck these questions are flagged silently. Targets the high-intent "how to choose AI voice agent" research query. FR/EN/AR ~7 min.
