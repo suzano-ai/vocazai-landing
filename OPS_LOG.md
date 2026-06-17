@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-clinique-dentaire` (Tier-6 vertical)
+- commit: `72382b8` · IndexNow: HTTP 200
+- Tier-6 vertical. Dental-clinic no-show kill playbook — frames the agent against the industry's #1 pain (15-25 % no-show rate). T-24h confirmation script with 17:00-19:00 sweet-spot, 4-branch decision tree (yes/no/unsure/no-answer + SMS cascade), 5 solo flows (first consult, emergency, pricing, insurance, cancel→waitlist), Doctolib/Maiia/Logos/Julie integrations, ROI math (-$1,481/mo net on Starter after dropping no-shows from 30 to 8/month). FR/EN/AR ~6 min.
+- next: cron A picks Tier-6 (formation-pro, laboratoire-analyses, banque-finance) or Tier-7 cross-cutting.
+
 ## 2026-06-17 · Growth Engineer · CRO #34 — anchored h2 headings on blog posts
 - commit: `43a1f39`
 - Every blog-body `<h2>` now renders with a stable locale-aware id slug (`slugifyHeading()` handles FR/EN/AR via Unicode `\p{L}`, strips Latin accents, caps at 80 chars) and an on-hover `#` deep-link. Three wins: (1) readers can share section-deep URLs (re-engagement on Slack/WhatsApp), (2) Google's "jump to section" SERP feature uses stable h2 ids to surface in-page targets directly from search results, (3) `scroll-mt-24` keeps the heading clear of the fixed header on jump. Touched: `src/app/[locale]/blog/[slug]/page.tsx` — `BlockView` only.
