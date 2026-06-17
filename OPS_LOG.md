@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · CRO #41 — deep-dive blog link below each pricing FAQ answer
+- commit: `d1bc7eb`
+- Each of the 3 pricing-FAQ answers now ends with a "Read the full guide" link to the blog post most likely to address the buyer's follow-up question: q1 (overage) → `agent-vocal-ia-couts-caches`, q2 (plan switching) → `agent-vocal-ia-roi-comment-prouver`, q3 (setup fees) → `agent-vocal-ia-deployer-en-48h`. Three wins: (1) keeps the buyer learning on /blog instead of bouncing, (2) 3 internal links from highest-intent money page into the blog cluster lifts blog authority signals, (3) better-informed visitors convert higher on the bottom WhatsApp CTA. `Faq` extended with `learnMore?: { href, label }`. New `pricing.faq.learnMore` i18n key (FR/EN/AR). `data-vocazai-track="pricing-faq-learn-more"` for analytics. Touched: `pricing/page.tsx`, `messages/{fr,en,ar}.json`.
+- next: cron B picks SEO #40 or CRO #42.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-weekends-jours-feries-strategie` (Tier-7 cross-cutting #27)
 - commit: `e5371de` · IndexNow: HTTP 200
 - Tier-7 #27. Off-hours competitive-edge playbook — frames the 31 % of the year (115 days = 104 weekend + 11 holiday) when competitors aren't picking up as a market window the agent monopolizes. 3 weekend modes: deferred-to-Monday booking (most common, fills 80 % of Monday before doors open) / emergency routed to on-call / B2B qualify + Monday-9am callback. Holiday config (calendar import, adapted greeting, post-holiday SMS reminder). Christmas + August double-check (strongest ROI window). Concrete economics: $33,120/yr captured at 8 calls × 40 % × $90 vs Growth $17,880/yr → ~$15k net year-one. Cross-cuts every vertical. FR/EN/AR ~6 min.
