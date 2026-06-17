@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · SEO #38 — FAQPage JSON-LD on /[locale]/pricing
+- commit: `77307c5`
+- Wires the 3 pricing-FAQ Q&A pairs (q1: overage / q2: plan switching / q3: billing) as `schema.org/FAQPage` structured data so Google's FAQ rich result can expand them directly under the `/pricing` SERP entry. Landing already had its own `FAQPage` for general FAQs; this one is distinct because its questions are exactly the billing/overage/plan-switching concerns high-intent searchers want answered BEFORE they click "Start trial" — surfacing answers pre-click both qualifies the click that happens and pushes the entry vertically in the result list. Inline schema (page-scoped). Touched: `src/app/[locale]/pricing/page.tsx` only.
+- next: cron B picks next CRO or SEO #39.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-affichage-numero-sortant` (Tier-7 cross-cutting #24)
 - commit: `d00ef69` · IndexNow: HTTP 200
 - Tier-7 #24. Outbound caller-ID strategy playbook — the answer-rate factor most operators ignore. Concrete numbers per strategy: main business number 50-60 % vs dedicated geo-local 30-40 % vs short code 8-15 % vs hidden <5 %. 4-strategy comparison with use-cases, 1-question decision rule by daily outbound volume, the recognition bonus SMS script that adds 8-15 pts over 3 months. Cross-cuts every vertical with outbound reminders/callbacks. FR/EN/AR ~6 min.
