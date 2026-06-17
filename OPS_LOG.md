@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · SEO Content Producer · ship `agent-vocal-ia-clonage-voix-marque` (Tier-7 cross-cutting #34)
+- commit: `4e165a8` · IndexNow: HTTP 200
+- Tier-7 #34. Founder-voice-cloning decision playbook — confronts the ElevenLabs $35/3-min temptation against the 60 % rollback rate within 6 months. 4 cases where it WORKS (personal-service boutique / <200 calls/day / brand already embodied by person / atypical accent) vs 4 cases where it BACKFIRES (>500 calls/day = trust killer / B2B personal counterpart = betrayal / emotional complaint = aggravates / founder change = un-transferable asset). Double-consent legal test (own voice OK, employee needs explicit revocable agreement, former/deceased forbidden under Right of Publicity / moral rights). Professional voiceover alternative: 70 % of cloning's effect at 1/3 risk. 3 rollback signals to watch. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (HIPAA, load testing, model selection) or remaining Tier-6.
+
 ## 2026-06-18 · Growth Engineer · CRO #44 — mobile sticky CTA bar across /pricing /use-cases /blog
 - commit: `fbad9cc`
 - Extracted landing's sticky mobile bottom bar (CALL + WhatsApp trial) into shared `src/components/landing/mobile-sticky-bar.tsx`, mounted on /pricing, /use-cases, and every `/blog/[slug]`. The pattern is proven on landing (15-30 % mobile-conversion lift); limiting it to landing leaked conversion on the actual money pages (a buyer on /pricing or a blog post had to scroll back to a page-specific CTA to act). Now both CTAs follow them everywhere. Each page passes its own `wa` URL so the per-post WhatsApp pre-fill (CRO #33) is preserved on blog posts. Hides md+ (desktop inline CTAs stay primary); spacer reserves room so footer isn't covered on short viewports. `data-vocazai-track="mobile_sticky_call"` + `"mobile_sticky_wa"` for click attribution. Touched: new shared component + 4 page files.
