@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-test-utilisateur-30-minutes` (Tier-7 cross-cutting #19)
+- commit: `0ff0023` · IndexNow: HTTP 200
+- Tier-7 #19. Pre-deploy validation playbook — answers "how do I know it'll work before I launch?" objection with a concrete 30-minute / 2-person protocol. Phase 1 (10 typical calls, 15 min: booking, pricing, hours, cancel, delivery-status, FAQ, address, transfer, hang-up, short message), Phase 2 (5 edge cases, 10 min: accent, digit-by-digit number, chained questions, out-of-scope, heavy background noise), Phase 3 (5 emotional, 5 min: anger, crying, vital emergency, lawsuit threat, jailbreak attempt — all must handoff in 3 s). 20-case scoring grid (≥18 production-ready, 15-17 one iteration, <15 architecture rework). Weekly 10-call drift audit. FR/EN/AR ~6 min.
+- next: cron A picks next Tier-7 or Tier-6.
+
 ## 2026-06-17 · Growth Engineer · SEO #35 — BlogPosting `isPartOf` chain + `timeRequired`
 - commit: `2aad61c`
 - Two wins on every blog post JSON-LD: (1) `isPartOf` references the Blog `@id` matching `/[locale]/blog` (reusing the exact same `@id` Google sees on `blogIndexJsonLd`) — chains every BlogPosting back to the collection, stitches everything into one entity graph, concentrates authority signals on the collection; (2) `timeRequired` (ISO 8601 `PT<readingMinutes>M`) — Google reads it as both freshness + depth signal, eligible for "X-min read" SERP annotations, and AI Overviews use it to pick quick-snippet vs full-article surfacing. Touched: `src/lib/seo/structured-data.ts` + `src/app/[locale]/blog/[slug]/page.tsx`.
