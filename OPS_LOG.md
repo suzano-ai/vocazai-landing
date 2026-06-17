@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · CRO #43 — trilingual greeting chip above the hero subtitle
+- commit: `eeb0b2c`
+- New pill between hero ascii-rule and subtitle: "Bonjour · Hello · السلام عليكم" — three actual greetings, each in its native script (`dir="rtl" lang="ar"` on Arabic, ltr chip wrapper, normal-case + tracking-normal inside Arabic span to preserve glyph readability). Brand differentiation (trilingual AI agent) currently communicated abstractly via a status-line "TRILINGUAL · FR · AR · EN" label that's easy to miss in a 2-second skim. The greeting chip makes the promise visceral, captures FR/AR-locale visitors with their own greeting in the mix, and reinforces credibility (anyone can claim multilingual; only a real product writes the right script). Zero deps, zero JS, zero new i18n keys (greetings ARE the demo, never translated). Touched: `src/app/[locale]/page.tsx` only.
+- next: cron B picks next SEO or CRO #44.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-anti-spam-numero-reputation` (Tier-7 cross-cutting #31)
 - commit: `232fa04` · IndexNow: HTTP 200
 - Tier-7 #31. Number-reputation defense playbook addressing the silent ~60 % answer-rate cliff when Hiya/Truecaller/native Android filters flag a number. 5 levers: (1) frequency + time window (max 1 call/72 h same destination, 9am-7pm local, no Sundays, <80 % baseline daily), (2) STIR/SHAKEN attestation A interrogation script with concrete "vague answer = change provider" rule, (3) branded calling (First Orion / Hiya Connect / SSN Registry, $50-200/mo → 3× answer rate), (4) weekly reputation monitoring + unflag ticket process, (5) 14-day warm-up curve (20→40→80 over 7 days vs 100 cold = banned in 48h). Recycled-number trap (>5 prior reports = refuse). Monthly 5-phone self-test protocol. Cross-cuts every vertical that runs outbound. FR/EN/AR ~6 min.
