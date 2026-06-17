@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · SEO #39 — `articleBody` plain-text on every BlogPosting JSON-LD
+- commit: `716e9f3`
+- Every blog post's `BlogPosting` JSON-LD now emits the full body as a plain-text `articleBody` field (typed `Block[]` flattened with `## ` h2 prefix + `- ` ul bullet prefix + double newlines between blocks). Google AI Overviews / Gemini / Bing Copilot pick cited passages directly from `articleBody` when present — without it they fall back to HTML scraping, which is slower, less precise, and especially fragile on RTL Arabic. Having a structured-data fallback means we control exactly which text the answer engines quote. Cost ~1-2KB/locale × 29 posts × 3 locales ≈ 120KB peak — trivial vs share-of-voice gain in answer engines. Extended `blogPostingJsonLd()` helper with optional `articleBody` arg. Touched: `src/lib/seo/structured-data.ts`, `src/app/[locale]/blog/[slug]/page.tsx`.
+- next: cron B picks next CRO or SEO #40.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-portage-numero-existant` (Tier-7 cross-cutting #26)
 - commit: `2e56180` · IndexNow: HTTP 200
 - Tier-7 #26. Number-portability playbook addressing the #2 buyer objection after price ("can I keep my number?"). Why porting matters (200 cards / 5 yr ads / WA Business memorized). 3 cases where porting is required (GMB-visible / >50 organic callbacks/day / license-bound) vs 3 cases where new number is enough (new business / parallel POC / spam-flagged number). Realistic timeline (marketing 24 h vs reality 5-15 business days), 2-4 h sensitive cutover window, 3 mitigation tactics (1-week customer notice / Sunday-night cut / 7-day forwarding). Unprepared-port trap with parallel-bridge solution. Cost rule of thumb: > 1 year of business history = always port. FR/EN/AR ~6 min.
