@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-voix-et-whatsapp-meme-agent` (Tier-7 cross-cutting #25)
+- commit: `99b8365` · IndexNow: HTTP 200
+- Tier-7 #25. Multi-channel continuity playbook addressing the silent 30 % drop-off from cross-channel context loss (customer starts on phone, finishes on WhatsApp, gets a blind agent). 3-component unified architecture (E.164 phone number as primary key / central conversation log / LLM gets full history regardless of input channel). 4 transition patterns (call→WA proof, WA photo→call discuss, unsent WA draft→voice callback, after-hours call→WA slot offer). 3 pitfalls (separate tools no-bridge / opt-in for WA Business / context mix-up validation). 48 h deploy if both surfaces already exist. Bridges between the verticals (vet, dental, real estate) where WhatsApp is already where conversations actually happen. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (cold outbound, spam shield, dashboard KPIs) or remaining Tier-6.
+
 ## 2026-06-17 · Growth Engineer · SEO #38 — FAQPage JSON-LD on /[locale]/pricing
 - commit: `77307c5`
 - Wires the 3 pricing-FAQ Q&A pairs (q1: overage / q2: plan switching / q3: billing) as `schema.org/FAQPage` structured data so Google's FAQ rich result can expand them directly under the `/pricing` SERP entry. Landing already had its own `FAQPage` for general FAQs; this one is distinct because its questions are exactly the billing/overage/plan-switching concerns high-intent searchers want answered BEFORE they click "Start trial" — surfacing answers pre-click both qualifies the click that happens and pushes the entry vertically in the result list. Inline schema (page-scoped). Touched: `src/app/[locale]/pricing/page.tsx` only.
