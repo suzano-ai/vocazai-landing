@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-prospection-froide-quand-utiliser` (Tier-7 cross-cutting #30)
+- commit: `ae5003c` · IndexNow: HTTP 200
+- Tier-7 #30. Cold-outbound ethics + use-case playbook. Frames the 12 000 contacts/mo at $0.30 temptation against the 90 % deployments that end in regulator complaints + cascading Google reviews + carrier spam-flagging. 3 legitimate cases (lapsed-customer reactivation 8-15 % conv / unreturned inbound lead 25-40 % conv / CRM hygiene + opt-out capture) vs 3 forbidden (purchased/scraped numbers / B2C cold to never-contacted / robocalls disguised as humans). Double-opt-in rule (voluntary action in last 6 mo + no explicit opt-out since) blocks 99 % of risk. Mandatory AI-identification opening script. "Mom test" heuristic (would she hang up? don't send). Alternative SMS + email + WA combo for genuinely cold prospects. Position-defining post — establishes VocazAI's ethical stance. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (spam shield, multi-turn, hipaa) or remaining Tier-6.
+
 ## 2026-06-17 · Growth Engineer · CRO #42 — latest 3 blog posts strip in the footer
 - commit: `4f28177`
 - New "Latest articles" strip between the 4-column main grid and the uptime/copyright rows in the global footer. 3 responsive cards (sm:grid-cols-3), each title (line-clamp-2) + ISO date, linking to the matching `/[locale]/blog/[slug]`. Footer is the single most-trafficked UI on the site (visible across landing/pricing/use-cases/blog/about/every post/legal). Three wins: (1) lifts blog discovery from non-blog pages (buyer on /pricing seeing fresh "Number portability" or "ROI proof" gets a one-click path to depth), (2) re-engages would-bounce visitors with a fresh title in peripheral vision, (3) signals freshness to every visitor without navigating to /blog. Auto-updates per post ship via `POSTS_BY_DATE.slice(0, 3)`. `data-vocazai-track="footer-latest-post"` for analytics. New i18n key `landing.footer.latestKicker` (FR/EN/AR). Touched: `src/components/landing/footer.tsx`, `messages/{fr,en,ar}.json`.
