@@ -296,11 +296,39 @@ export default async function BlogPostPage({
   );
 }
 
+// Stable per-locale slug for h2 ids — strip Latin accents, lowercase,
+// fold any non-letter / non-digit run into a single dash. Works for FR,
+// EN and AR text (Unicode \p{L} matches Arabic letters too); the URL
+// fragment displays decoded in modern browsers.
+function slugifyHeading(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}
+
 function BlockView({ block }: { block: Block }) {
   if (block.type === "h2") {
+    // Anchored heading — readers can share a deep link to a specific
+    // section, and Google's "jump to section" SERP feature uses these
+    // ids to surface in-page targets directly from search results.
+    const id = slugifyHeading(block.text);
     return (
-      <h2 className="pt-4 font-display text-2xl font-medium leading-snug">
+      <h2
+        id={id}
+        className="group scroll-mt-24 pt-4 font-display text-2xl font-medium leading-snug"
+      >
         {block.text}
+        <a
+          href={`#${id}`}
+          aria-label="Link to this section"
+          className="ms-2 align-middle font-mono text-saffron-500/0 transition-opacity duration-200 group-hover:text-saffron-500/70 hover:!text-saffron-500"
+        >
+          #
+        </a>
       </h2>
     );
   }
