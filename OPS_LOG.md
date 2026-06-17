@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · SEO #40 — `WebPage` chain on /pricing + `CollectionPage` on /use-cases
+- commit: `fcdfa91`
+- Extends the `@id` entity graph started in SEO #37 (root `#organization` + locale `#website`) to cover the remaining non-blog surfaces. (1) `/use-cases` now declares `schema.org/CollectionPage` with `mainContentOfPage` → existing ItemList, `about` → Organization `@id`, `isPartOf` → WebSite `@id`. (2) `/pricing` declares `schema.org/WebPage` with `mainEntity` → Product `@id` (telling Google the AggregateOffer entity IS the page), `significantLink` → the WhatsApp trial CTA (Google reads it as the page's primary CTA for click-flow signals). Every public page now chained to one Organization + WebSite node — authority signals stack instead of fragmenting. ~150 bytes JSON per page. Touched: `pricing/page.tsx`, `use-cases/page.tsx`.
+- next: cron B picks next CRO or SEO #41.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-bruit-environnement-noisy` (Tier-7 cross-cutting #28)
 - commit: `a548100` · IndexNow: HTTP 200
 - Tier-7 #28. Noisy-environment handling playbook — addresses the 40 % of mobile calls with significant background noise (car / café / construction). 4-layer technical stack: (1) RNNoise/Krisp/WebRTC NS input-side suppression -20 dB → STT accuracy 60-65 % → 85-90 %; (2) noise-trained STT (Voxtral / Whisper Large v3 / Deepgram Nova) +10-15 pts on brouhaha; (3) explicit numeric-field confirmation (zero wrong-number bookings); (4) SMS fallback after 2 repeat requests (recovers ~80 % of would-hang-up calls). 3 pitfalls (TTS too loud causing mic saturation, complex polite phrasing, infinite "I didn't understand" loop). Weekend test protocol from 3 real noisy environments. Cross-cuts every mobile-heavy vertical. FR/EN/AR ~6 min.
