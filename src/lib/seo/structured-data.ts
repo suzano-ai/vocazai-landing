@@ -143,3 +143,59 @@ export function blogIndexJsonLd(args: {
     }),
   };
 }
+
+/**
+ * Pricing (Product + AggregateOffer) — declares /pricing as a Product page
+ * with a concrete USD price range. Without it, Google can't extract price
+ * directly from this URL (the SoftwareApplication Offer on the landing page
+ * helps the homepage, not /pricing). Adding it here unlocks rich-result
+ * eligibility for the canonical money page — price chips in SERP, "from
+ * $499/mo" snippets, and the Shopping/Software-pricing carousel.
+ *
+ * Only Starter + Growth are emitted as concrete Offers (offerCount: 2).
+ * Enterprise is "contact us" with no fixed price and is described in copy
+ * but intentionally NOT as a structured Offer (Google rejects Offers with
+ * missing price).
+ */
+export function pricingJsonLd(args: {
+  locale: string;
+  name: string;
+  description: string;
+}): Record<string, unknown> {
+  const url = `${SITE}/${args.locale}/pricing`;
+  const offer = (name: string, price: string) => ({
+    "@type": "Offer",
+    name,
+    price,
+    priceCurrency: "USD",
+    url,
+    availability: "https://schema.org/InStock",
+    priceSpecification: {
+      "@type": "UnitPriceSpecification",
+      price,
+      priceCurrency: "USD",
+      billingDuration: "P1M",
+      unitText: "month",
+    },
+  });
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": url,
+    name: args.name,
+    description: args.description,
+    url,
+    image: `${SITE}/${args.locale}/opengraph-image`,
+    brand: { "@type": "Brand", name: "VocazAI" },
+    category: "AI voice receptionist software",
+    inLanguage: args.locale,
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "USD",
+      lowPrice: "499",
+      highPrice: "1490",
+      offerCount: 2,
+      offers: [offer("Starter", "499"), offer("Growth", "1490")],
+    },
+  };
+}

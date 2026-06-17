@@ -7,7 +7,7 @@ import { Footer } from "@/components/landing/footer";
 import { Khatam, HexLattice, Arch } from "@/components/zellige";
 import { Reveal } from "@/components/reveal";
 import { JsonLd } from "@/components/json-ld";
-import { breadcrumbJsonLd } from "@/lib/seo/structured-data";
+import { breadcrumbJsonLd, pricingJsonLd } from "@/lib/seo/structured-data";
 
 export async function generateMetadata({
   params,
@@ -98,6 +98,18 @@ export default async function PricingPage({
           { name: "VocazAI", url: `/${locale}` },
           { name: tNav("pricing"), url: `/${locale}/pricing` },
         ])}
+      />
+      {/* Product + AggregateOffer — declares the page as the canonical
+          source of truth for VocazAI pricing. Without it, Google can't
+          extract the price from /pricing (the SoftwareApplication Offer
+          on the landing page helps the homepage, not this URL). */}
+      <JsonLd
+        data={pricingJsonLd({
+          locale,
+          name: "VocazAI Voice Agent",
+          description:
+            "Trilingual AI voice agents (French / Arabic / English) for businesses of every size. Virtual receptionist available 24/7 — front-desk, appointment booking, lead qualification.",
+        })}
       />
 
       {/* HERO */}
