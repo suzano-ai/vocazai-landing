@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · SEO Content Producer · ship `agent-vocal-ia-paiement-carte-pci-dss` (Tier-7 cross-cutting #33)
+- commit: `2367454` · IndexNow: HTTP 200
+- Tier-7 #33. PCI DSS card-payment architecture playbook — answers the "can I take card payments by phone?" decision that gates e-commerce / hospitality / services deployments. Hard rule: agent NEVER hears the 16 digits (else PCI DSS Level 1 = $30k+/yr audits). 3 compliant architectures with concrete cost/use-case: (1) post-call Stripe/Mollie/Adyen one-shot link via SMS (75-85 % conversion, zero PCI scope, most-used); (2) DTMF transfer to PCI-certified IVR (Sycurio/PCI Pal/CallVU, $250-600/mo, senior-friendly); (3) email pre-payment link during call (no-show killer for services > $90). 4 NEVER-do violations (repeat for confirmation, pause-recording trick, CVV/PAN in SMS receipts, CVV storage). 1-question decision rule by customer's SMS habit. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (HIPAA, load testing, vendor pricing transparency) or remaining Tier-6.
+
 ## 2026-06-18 · Growth Engineer · SEO #42 — image-sitemap extension on every sitemap entry
 - commit: `f95198e`
 - Every (locale × marketing page) and (locale × blog post) entry in `sitemap.xml` now carries an `images: [\${BASE}/\${locale}/opengraph-image]` array. Next emits this as the standard `<image:image><image:loc>...</image:loc></image:image>` XML extension. Google Image Search uses this as the authoritative "image belongs to URL" signal; without it Google guesses via `og:image` scraping (slower, less reliable, niche pages never get into image results). Per-locale is intentional — French post indexes with French OG, English with English, consistent with hreflang. All ~100+ URLs now eligible for image-search instead of just the homepage. Touched: `src/app/sitemap.ts` only.
