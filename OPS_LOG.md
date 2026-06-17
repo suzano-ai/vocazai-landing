@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-conversation-interrompue` (Tier-7 cross-cutting #21)
+- commit: `88a5aa4` · IndexNow: HTTP 200
+- Tier-7 #21. Barge-in handling playbook — addresses the #1 "AI feels robotic" complaint (agent talking over the caller). Three tunable parameters: (1) voice detection threshold (150-200 ms continuous voice, >25 dB above background), (2) cut-off duration (80-120 ms target, zero perceptible overlap), (3) contextual resume (LLM with multi-turn state, NOT FIFO of pre-generated phrases — must respond to NEW input, not repeat its own sentence). 4 barge-in patterns (question during explain / correction / early answer / urgent override), 5-call calibration test. Cross-cuts every vertical. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (CLI strategy, vendor selection, cold outbound).
+
 ## 2026-06-17 · Growth Engineer · SEO #36 — latest 6 blog posts as ItemList JSON-LD on landing
 - commit: `d87964e`
 - Each `/[locale]` landing now declares an `ItemList` of the 6 most recent `BlogPosting` entities, each chained via `isPartOf` `@id` to the `Blog` collection at `/[locale]/blog` (matching the `@id` Google sees on `blogIndexJsonLd` and on every post's own `BlogPosting.isPartOf`). Three wins: (1) Googlebot refreshes the landing far more often than `/blog` — fresh slugs hit the crawl queue faster, (2) every fresh post gains a structured backlink from the highest-authority URL, (3) richer landing entity graph eligible for "Recent posts" sitelinks. `itemListOrder: ItemListOrderDescending`, capped at 6 (above sitelinks cap of 4, payload stays under ~5KB). Inline on `src/app/[locale]/page.tsx`.
