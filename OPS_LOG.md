@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-evaluation-fournisseur` (Tier-7 cross-cutting #22)
+- commit: `084d3ba` · IndexNow: HTTP 200
+- Tier-7 #22. Top-of-funnel buyer-side checklist: 12 questions to ask any AI voice agent vendor before signing. 4 blocks (business model: per-minute cost / hidden fees / overage / cancel terms; technical quality: latency <700 ms / barge-in handling / handoff %; compliance: storage location / DPA / data deletion; operation: time-to-prod / support response time). Golden rule (vendor failing >3/12 lacks technical command). Strategic angle: positions VocazAI as the answer to its own audit grid — competitors who duck these questions are flagged silently. Targets the high-intent "how to choose AI voice agent" research query. FR/EN/AR ~7 min.
+- next: cron A picks Tier-7 (CLI strategy, cold outbound, mixed team).
+
 ## 2026-06-17 · Growth Engineer · CRO #38 — "vs hiring a receptionist" anchor callout on /pricing
 - commit: `deef7bc`
 - New compact 2-column callout between comparison table and FAQ on `/[locale]/pricing`. Human receptionist (~$3,500/mo, struck-through) vs VocazAI Starter ($499/mo) → net savings highlight "$3,000+ per month". Classic price-anchoring move that reframes $499 from a NEW cost into a discount on the alternative the buyer was already weighing. Honest footnote acknowledges the human still matters for high-value relationships, pre-empting the "should I fire my receptionist?" objection. FAQ section's prefix bumped 03 → 04. New `pricing.savings` i18n block (FR/EN/AR). Touched: `pricing/page.tsx` + `messages/{fr,en,ar}.json`.
