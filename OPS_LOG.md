@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-veterinaire` (Tier-6 vertical)
+- commit: `2a95f6d` · IndexNow: HTTP 200
+- Tier-6 vertical. Veterinary clinic playbook — emergency-first triage opening ("is this an emergency?"), Level-1 keyword routing to on-call mobile, 4 solo flows (annual vaccination booking, post-op check-up, pricing, cancel/reschedule), Vetocom/ezyVet/Vetstoria integrations, proactive 7-day pre-anniversary vaccination reminder (+40-60% rebooking), explicit prohibitions (no diagnosis, no drug suggestion, no euthanasia discussion), 4 h/day → 3 h/day FTE math (~0.4 FTE freed). FR/EN/AR ~6 min.
+- next: cron A picks Tier-6 vertical (formation-pro, clinique-dentaire, laboratoire-analyses, banque-finance) or Tier-7 cross-cutting.
+
 ## 2026-06-17 · Growth Engineer · SEO #32 — complete per-blog-post Article metadata surface
 - commit: `28b91a9`
 - Two ships in one: (1) `BlogPosting` JSON-LD now declares an `image` ImageObject (per-locale `/opengraph-image`, 1200x630) — Google's Article rich-result hard-blocker resolved. (2) Per-blog-post `generateMetadata` now emits the full OG Article tag set: `modifiedTime`, `authors`, `section`, `tags` (derived from slug, max 5), `locale` (fr_FR/en_US/ar_001), `images[]` with per-locale OG route, plus an explicit `twitter` `summary_large_image` card. Social shares switch from generic website cards to richer Article cards on X/Slack/Mastodon. Touched: `src/lib/seo/structured-data.ts`, `src/app/[locale]/blog/[slug]/page.tsx`.
