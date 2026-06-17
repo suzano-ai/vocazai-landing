@@ -206,6 +206,18 @@
         "onprem": "On-premise"
       }
     },
+    "savings": {
+      "kicker": "Cost comparison",
+      "title": "Hiring a receptionist?",
+      "humanLabel": "Full-time receptionist",
+      "humanPrice": "≈ $3,500/month",
+      "humanNote": "Salary + benefits, typical range by market.",
+      "vocazaiLabel": "VocazAI Starter",
+      "vocazaiPrice": "$499/month",
+      "vocazaiNote": "24/7, three languages, set up in 48h.",
+      "highlight": "Net savings: $3,000+ per month",
+      "footnote": "At comparable volume. A human receptionist remains key for high-value relationships; the AI voice agent covers the front desk and bookings."
+    },
     "faq": {
       "kicker": "Pricing FAQ",
       "title": "Common questions.",

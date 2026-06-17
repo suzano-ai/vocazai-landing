@@ -233,6 +233,60 @@ export default async function PricingPage({
         </div>
       </section>
 
+      {/* Anchor pricing against the alternative buyers actually weigh
+          (hiring a receptionist). The point is to reframe $499 from a
+          cost into a saving — anchoring research shows this lifts paid
+          conversion materially on B2B SaaS pricing pages. */}
+      <section className="py-20 sm:py-24">
+        <div className="container max-w-4xl">
+          <Reveal>
+            <div className="mb-10">
+              <div className="inline-flex items-center gap-2.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-saffron-500" />
+                <span className="font-mono text-kicker uppercase text-muted-foreground">
+                  03 — {t("savings.kicker")}
+                </span>
+              </div>
+              <h2 className="mt-4 font-display text-display-md font-medium">
+                {t("savings.title")}
+              </h2>
+            </div>
+          </Reveal>
+          <Reveal>
+            <div className="grid gap-4 rounded-lg border border-border bg-elevated p-6 sm:grid-cols-2 sm:p-8">
+              <div className="border-b border-border pb-6 sm:border-b-0 sm:border-r sm:pb-0 sm:pr-8">
+                <div className="font-mono text-kicker uppercase text-muted-foreground">
+                  {t("savings.humanLabel")}
+                </div>
+                <div className="mt-2 font-display text-2xl font-medium text-muted-foreground line-through">
+                  {t("savings.humanPrice")}
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {t("savings.humanNote")}
+                </p>
+              </div>
+              <div className="sm:pl-2">
+                <div className="font-mono text-kicker uppercase text-saffron-600">
+                  {t("savings.vocazaiLabel")}
+                </div>
+                <div className="mt-2 font-display text-2xl font-medium text-foreground">
+                  {t("savings.vocazaiPrice")}
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {t("savings.vocazaiNote")}
+                </p>
+              </div>
+              <div className="mt-2 rounded-md border border-saffron-500/30 bg-saffron-500/10 px-4 py-3 text-center font-mono text-sm uppercase tracking-wider text-saffron-700 dark:text-saffron-400 sm:col-span-2">
+                {t("savings.highlight")}
+              </div>
+              <p className="text-xs leading-relaxed text-muted-foreground sm:col-span-2">
+                {t("savings.footnote")}
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* FAQ light */}
       <section className="py-24 sm:py-32">
         <div className="container max-w-4xl">
@@ -241,7 +295,7 @@ export default async function PricingPage({
               <div className="inline-flex items-center gap-2.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-saffron-500" />
                 <span className="font-mono text-kicker uppercase text-muted-foreground">
-                  03 — {t("faq.kicker")}
+                  04 — {t("faq.kicker")}
                 </span>
               </div>
               <h2 className="mt-4 font-display text-display-lg font-medium">

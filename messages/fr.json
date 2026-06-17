@@ -206,6 +206,18 @@
         "onprem": "On-premise"
       }
     },
+    "savings": {
+      "kicker": "Comparaison coût",
+      "title": "Embaucher une réceptionniste ?",
+      "humanLabel": "Réceptionniste à temps plein",
+      "humanPrice": "≈ 3 500 $/mois",
+      "humanNote": "Salaire + charges, plage typique selon le marché.",
+      "vocazaiLabel": "VocazAI Starter",
+      "vocazaiPrice": "499 $/mois",
+      "vocazaiNote": "24/7, trois langues, configuration en 48 h.",
+      "highlight": "Économie nette : 3 000 $+ par mois",
+      "footnote": "À volume comparable. Une réceptionniste humaine reste indispensable pour la relation client à forte valeur ; l'agent vocal IA couvre le standardiste et la prise de RDV."
+    },
     "faq": {
       "kicker": "FAQ tarifs",
       "title": "Questions fréquentes.",
