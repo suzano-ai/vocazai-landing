@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · Growth Engineer · SEO #42 — image-sitemap extension on every sitemap entry
+- commit: `f95198e`
+- Every (locale × marketing page) and (locale × blog post) entry in `sitemap.xml` now carries an `images: [\${BASE}/\${locale}/opengraph-image]` array. Next emits this as the standard `<image:image><image:loc>...</image:loc></image:image>` XML extension. Google Image Search uses this as the authoritative "image belongs to URL" signal; without it Google guesses via `og:image` scraping (slower, less reliable, niche pages never get into image results). Per-locale is intentional — French post indexes with French OG, English with English, consistent with hreflang. All ~100+ URLs now eligible for image-search instead of just the homepage. Touched: `src/app/sitemap.ts` only.
+- next: cron B picks CRO #44 or SEO #43.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-conversations-multi-tour` (Tier-7 cross-cutting #32)
 - commit: `d07d923` · IndexNow: HTTP 200
 - Tier-7 #32. Multi-turn conversation architecture playbook addressing the 15 % of complex calls where IVRs break and conversion is won/lost. 5-field conversational state (identity / primary intent / collected fields / decisions / detected emotions). Context-window sweet spot (6-10 raw turns + structured JSON state, ~2x cost / +30 % conversion). Correction-handling rule (silence on old, focus on new). 3 working patterns (progressive probing / mid-call recap / dynamic branching). Premature-reset trap (silence < 10 s = think; > 10 s = re-engage WITH context). 10-turn calibration test with concrete complex scenario (4 people / shellfish allergy / 30-min shift / headcount change). Cross-cuts every vertical with non-trivial bookings. FR/EN/AR ~6 min.
