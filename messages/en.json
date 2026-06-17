@@ -13,7 +13,8 @@
     "live": "Online",
     "switchTheme": "Switch theme",
     "language": "Language",
-    "whatsapp": "Hi, I'd like to start the free 1-month trial of VocazAI. My business gets around ___ calls/day."
+    "whatsapp": "Hi, I'd like to start the free 1-month trial of VocazAI. My business gets around ___ calls/day.",
+    "whatsappFromBlog": "Hi, I read your article '{title}' and would like to start the free 1-month trial of VocazAI. My business gets around ___ calls/day."
   },
   "nav": {
     "how": "How it works",

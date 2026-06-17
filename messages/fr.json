@@ -13,7 +13,8 @@
     "live": "En ligne",
     "switchTheme": "Changer de thème",
     "language": "Langue",
-    "whatsapp": "Bonjour, je veux démarrer l'essai gratuit (1 mois) de VocazAI. Mon entreprise reçoit environ ___ appels/jour."
+    "whatsapp": "Bonjour, je veux démarrer l'essai gratuit (1 mois) de VocazAI. Mon entreprise reçoit environ ___ appels/jour.",
+    "whatsappFromBlog": "Bonjour, j'ai lu votre article « {title} » et je veux démarrer l'essai gratuit (1 mois) de VocazAI. Mon entreprise reçoit environ ___ appels/jour."
   },
   "nav": {
     "how": "Comment ça marche",

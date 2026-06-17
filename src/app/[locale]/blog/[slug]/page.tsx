@@ -65,7 +65,13 @@ export default async function BlogPostPage({
   const tc = await getTranslations("common");
   const tNav = await getTranslations("nav");
   const l = locale as BlogLocale;
-  const wa = `https://wa.me/33777345056?text=${encodeURIComponent(tc("whatsapp"))}`;
+  // Pre-fill the WhatsApp message with this post's title so the founder
+  // sees immediate context on first reply ("I read your article on X").
+  // Higher perceived attentiveness + faster qualification = better close
+  // rate than the generic trial-start template used elsewhere on the site.
+  const wa = `https://wa.me/33777345056?text=${encodeURIComponent(
+    tc("whatsappFromBlog", { title: post.title[l] })
+  )}`;
   const dateStr = new Date(post.date).toLocaleDateString(
     DATE_LOCALE[locale] ?? "fr-FR",
     { year: "numeric", month: "long", day: "numeric" }
