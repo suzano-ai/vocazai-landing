@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · CRO #38 — "vs hiring a receptionist" anchor callout on /pricing
+- commit: `deef7bc`
+- New compact 2-column callout between comparison table and FAQ on `/[locale]/pricing`. Human receptionist (~$3,500/mo, struck-through) vs VocazAI Starter ($499/mo) → net savings highlight "$3,000+ per month". Classic price-anchoring move that reframes $499 from a NEW cost into a discount on the alternative the buyer was already weighing. Honest footnote acknowledges the human still matters for high-value relationships, pre-empting the "should I fire my receptionist?" objection. FAQ section's prefix bumped 03 → 04. New `pricing.savings` i18n block (FR/EN/AR). Touched: `pricing/page.tsx` + `messages/{fr,en,ar}.json`.
+- next: cron B picks next SEO or CRO #39.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-conversation-interrompue` (Tier-7 cross-cutting #21)
 - commit: `88a5aa4` · IndexNow: HTTP 200
 - Tier-7 #21. Barge-in handling playbook — addresses the #1 "AI feels robotic" complaint (agent talking over the caller). Three tunable parameters: (1) voice detection threshold (150-200 ms continuous voice, >25 dB above background), (2) cut-off duration (80-120 ms target, zero perceptible overlap), (3) contextual resume (LLM with multi-turn state, NOT FIFO of pre-generated phrases — must respond to NEW input, not repeat its own sentence). 4 barge-in patterns (question during explain / correction / early answer / urgent override), 5-call calibration test. Cross-cuts every vertical. FR/EN/AR ~6 min.
