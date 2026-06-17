@@ -8,6 +8,7 @@ import { Footer } from "@/components/landing/footer";
 import { Khatam } from "@/components/zellige";
 import { Reveal } from "@/components/reveal";
 import { JsonLd } from "@/components/json-ld";
+import { ReadingProgress } from "@/components/reading-progress";
 import { blogPostingJsonLd, breadcrumbJsonLd } from "@/lib/seo/structured-data";
 import { POSTS, POSTS_BY_DATE, getPost, type BlogLocale, type Block } from "@/content/blog/posts";
 import { routing } from "../../../../../i18n/routing";
@@ -150,6 +151,10 @@ export default async function BlogPostPage({
       <Header locale={locale} />
       <JsonLd data={articleJsonLd} />
       <JsonLd data={breadcrumb} />
+      {/* Sticky reading-progress bar — visible only on long-form posts.
+          Tracks scroll position through the <article> below, encouraging
+          completion and giving readers a low-cost progress signal. */}
+      <ReadingProgress target="article" />
 
       <article className="relative overflow-hidden">
         <Khatam
