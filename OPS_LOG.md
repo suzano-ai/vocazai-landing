@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · CRO #39 — visible topic-tag chips in blog post header
+- commit: `909f69a`
+- Every blog post header now renders a row of small monospace pill chips below the description, listing the auto-derived topic tags (same `derivedTags(slug)` already used for OG `tags` meta + `BlogPosting.keywords` — "agent vocal ia" phrase + vertical tail tokens). Three wins: (1) skim-readers get an immediate topic-relevance signal above the fold, (2) mirrors the JSON-LD keyword set with visible body text (Google's semantic matcher weights structured data + visible echoes higher than pure-JSON-LD), (3) forward hook for tag-filtered `/blog?tag=X` views — chips can become Links without restructuring. Zero new JS / no deps. Touched: `src/app/[locale]/blog/[slug]/page.tsx` only.
+- next: cron B picks next SEO or CRO #40.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-onboarding-equipe-humaine` (Tier-7 cross-cutting #23)
 - commit: `664b877` · IndexNow: HTTP 200
 - Tier-7 #23. People-side deployment playbook — 60 % of rollouts stall because of internal human resistance, not technical issues. The lie not to tell ("the agent will take the phone off your hands" = heard as "you're replaced"); right framing reverses it. Task-redistribution 5-line table (what the agent does / what YOU do instead / MORE / LESS / freed time). Written 3-point team contract (no layoffs / role expands / training planned). 30 min/week training ritual that lets the team train the agent, not the other way. 3 success signals + the hidden-rollout trap that turns silent boycott into a project-killer. Distinct from technical posts — addresses the buyer's deepest non-technical objection. FR/EN/AR ~6 min.
