@@ -187,6 +187,31 @@ export default async function BlogPostPage({
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
               {post.description[l]}
             </p>
+            {/* Topic tag chips — derived from the slug (same logic as the
+                OG `tags` meta + BlogPosting `keywords`). Surfacing them
+                visibly in the header gives skim-readers an immediate
+                topic-relevance signal, mirrors the JSON-LD keyword set
+                with visible text (good for Google semantic matching), and
+                creates a future hook for tag-filtered blog views. */}
+            {(() => {
+              const tags = derivedTags(slug);
+              if (tags.length === 0) return null;
+              return (
+                <ul
+                  aria-label="Topic tags"
+                  className="mt-6 flex flex-wrap items-center gap-2"
+                >
+                  {tags.map((tag) => (
+                    <li
+                      key={tag}
+                      className="rounded-full border border-border bg-surface px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground"
+                    >
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              );
+            })()}
           </Reveal>
 
           <Reveal delay={80}>
