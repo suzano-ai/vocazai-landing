@@ -73,6 +73,16 @@ export function blogPostingJsonLd(args: {
     wordCount: args.wordCount,
     keywords: derivedKeywords,
     articleSection: "AI Voice Agent",
+    // Article rich-result eligibility on Google requires a non-empty
+    // `image` field. We point at the per-locale OG route so the chosen
+    // image matches the reading language; 1200x630 is Google's preferred
+    // aspect ratio for Top Stories / Article carousels.
+    image: {
+      "@type": "ImageObject",
+      url: `${SITE}/${args.inLanguage}/opengraph-image`,
+      width: 1200,
+      height: 630,
+    },
     author: { "@type": "Organization", name: "VocazAI", url: SITE },
     publisher: {
       "@type": "Organization",

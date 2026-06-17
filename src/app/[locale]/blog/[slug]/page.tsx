@@ -20,6 +20,23 @@ export function generateStaticParams() {
   );
 }
 
+// Derive a small tag list from the slug — same convention as
+// blogPostingJsonLd. Groups "agent-vocal-ia" as one phrase, then any
+// vertical tail tokens. Returns at most 5 OG tags.
+function derivedTags(slug: string): string[] {
+  const all = slug.split("-");
+  const tags: string[] = [];
+  if (all.length > 3) tags.push(all.slice(0, 3).join(" "));
+  for (let i = 3; i < all.length; i++) tags.push(all[i]);
+  return tags.slice(0, 5);
+}
+
+const OG_LOCALE: Record<string, string> = {
+  fr: "fr_FR",
+  en: "en_US",
+  ar: "ar_001",
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -29,6 +46,7 @@ export async function generateMetadata({
   const post = getPost(slug);
   if (!post) return {};
   const l = locale as BlogLocale;
+  const tags = derivedTags(slug);
   return {
     title: post.title[l],
     description: post.description[l],
@@ -41,12 +59,39 @@ export async function generateMetadata({
         "x-default": `/fr/blog/${slug}`,
       },
     },
+    // Complete Open Graph Article tag set. Without `images`, social
+    // previews fall back to the site-wide OG; without `authors`,
+    // `section`, `modifiedTime`, and `tags`, FB / LinkedIn / Slack
+    // render a generic "website" card rather than the richer Article
+    // card. Together these also pad the E-E-A-T signal Google reads
+    // for Article rich-result eligibility.
     openGraph: {
       title: post.title[l],
       description: post.description[l],
       url: `/${locale}/blog/${slug}`,
       type: "article",
       publishedTime: post.date,
+      modifiedTime: post.date,
+      authors: ["VocazAI"],
+      section: "AI Voice Agent",
+      tags,
+      locale: OG_LOCALE[locale] ?? "fr_FR",
+      images: [
+        {
+          url: `/${locale}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: post.title[l],
+        },
+      ],
+    },
+    // Explicit Twitter card so X / Slack / Mastodon render the large
+    // image preview instead of falling back to the link-text card.
+    twitter: {
+      card: "summary_large_image",
+      title: post.title[l],
+      description: post.description[l],
+      images: [`/${locale}/opengraph-image`],
     },
   };
 }
