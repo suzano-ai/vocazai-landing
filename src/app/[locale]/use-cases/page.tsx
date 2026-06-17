@@ -122,6 +122,27 @@ export default async function UseCasesPage({
         ])}
       />
       <JsonLd data={useCasesItemListJsonLd} />
+      {/* CollectionPage entity — schema.org's specific subtype for
+          category/index pages that enumerate things. Wires this URL
+          into the @id-graph started in SEO #37 (Organization #organization
+          + WebSite #website) so authority signals chain. The
+          mainContentOfPage reference points back at the ItemList above
+          so the entity hierarchy is unambiguous. */}
+      <JsonLd
+        data={(() => {
+          const url = `${BASE_URL}/${locale}/use-cases`;
+          return {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "@id": url,
+            url,
+            inLanguage: locale,
+            isPartOf: { "@type": "WebSite", "@id": `${BASE_URL}/#website` },
+            mainContentOfPage: { "@id": `${BASE_URL}/${locale}/use-cases` },
+            about: { "@type": "Organization", "@id": `${BASE_URL}/#organization` },
+          };
+        })()}
+      />
       <Header locale={locale} />
 
       {/* HERO */}

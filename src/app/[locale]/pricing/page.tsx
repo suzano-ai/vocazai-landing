@@ -133,6 +133,29 @@ export default async function PricingPage({
           })),
         }}
       />
+      {/* WebPage entity — chains /pricing into the @id-graph started in
+          SEO #37 (Organization + WebSite). The `mainEntity` points back
+          at the Product/Offer block above so Google sees pricing as the
+          canonical money page for this Product. `significantLink`
+          references the WhatsApp trial CTA — Google reads this as the
+          primary call-to-action on the page. */}
+      <JsonLd
+        data={(() => {
+          const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://vocazai.com";
+          const url = `${BASE}/${locale}/pricing`;
+          return {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "@id": url,
+            url,
+            inLanguage: locale,
+            isPartOf: { "@type": "WebSite", "@id": `${BASE}/#website` },
+            mainEntity: { "@id": url },
+            about: { "@type": "Organization", "@id": `${BASE}/#organization` },
+            significantLink: wa,
+          };
+        })()}
+      />
 
       {/* HERO */}
       <section className="relative overflow-hidden">
