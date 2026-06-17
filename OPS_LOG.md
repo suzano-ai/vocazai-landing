@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-affichage-numero-sortant` (Tier-7 cross-cutting #24)
+- commit: `d00ef69` · IndexNow: HTTP 200
+- Tier-7 #24. Outbound caller-ID strategy playbook — the answer-rate factor most operators ignore. Concrete numbers per strategy: main business number 50-60 % vs dedicated geo-local 30-40 % vs short code 8-15 % vs hidden <5 %. 4-strategy comparison with use-cases, 1-question decision rule by daily outbound volume, the recognition bonus SMS script that adds 8-15 pts over 3 months. Cross-cuts every vertical with outbound reminders/callbacks. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (cold outbound, spam shield, multi-channel) or remaining Tier-6.
+
 ## 2026-06-17 · Growth Engineer · CRO #39 — visible topic-tag chips in blog post header
 - commit: `909f69a`
 - Every blog post header now renders a row of small monospace pill chips below the description, listing the auto-derived topic tags (same `derivedTags(slug)` already used for OG `tags` meta + `BlogPosting.keywords` — "agent vocal ia" phrase + vertical tail tokens). Three wins: (1) skim-readers get an immediate topic-relevance signal above the fold, (2) mirrors the JSON-LD keyword set with visible body text (Google's semantic matcher weights structured data + visible echoes higher than pure-JSON-LD), (3) forward hook for tag-filtered `/blog?tag=X` views — chips can become Links without restructuring. Zero new JS / no deps. Touched: `src/app/[locale]/blog/[slug]/page.tsx` only.
