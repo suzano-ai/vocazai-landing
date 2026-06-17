@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-monitoring-quotidien-5-minutes` (Tier-7 cross-cutting #29)
+- commit: `f8c9579` · IndexNow: HTTP 200
+- Tier-7 #29. Daily-operations discipline playbook addressing dashboard overload (50 widgets, no one looks). 5 numbers to scan each morning with concrete sweet-spot ranges + escalation triggers: (1) handoff rate (88 % target, <80 % prompt issue, >95 % under-handoff), (2) booking conversion (35-55 % normal, <30 % qualification issue, >60 % duplicate check), (3) average call duration (90-150 s simple booking, trend > absolute), (4) critical alerts in 24 h (0-2 normal, listen-to-3-calls trigger), (5) monthly minutes consumption (react at day 10, not day 28). 3 widgets to IGNORE (5-star vanity, cumulative keywords, geo heatmap). Distinct from `kpi-production` (which defined KPIs); this one is the operational morning routine. FR/EN/AR ~5 min.
+- next: cron A picks Tier-7 (cold outbound, spam shield, multi-turn) or remaining Tier-6.
+
 ## 2026-06-17 · Growth Engineer · SEO #40 — `WebPage` chain on /pricing + `CollectionPage` on /use-cases
 - commit: `fcdfa91`
 - Extends the `@id` entity graph started in SEO #37 (root `#organization` + locale `#website`) to cover the remaining non-blog surfaces. (1) `/use-cases` now declares `schema.org/CollectionPage` with `mainContentOfPage` → existing ItemList, `about` → Organization `@id`, `isPartOf` → WebSite `@id`. (2) `/pricing` declares `schema.org/WebPage` with `mainEntity` → Product `@id` (telling Google the AggregateOffer entity IS the page), `significantLink` → the WhatsApp trial CTA (Google reads it as the page's primary CTA for click-flow signals). Every public page now chained to one Organization + WebSite node — authority signals stack instead of fragmenting. ~150 bytes JSON per page. Touched: `pricing/page.tsx`, `use-cases/page.tsx`.
