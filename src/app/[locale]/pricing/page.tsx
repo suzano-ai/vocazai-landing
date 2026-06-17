@@ -111,6 +111,28 @@ export default async function PricingPage({
             "Trilingual AI voice agents (French / Arabic / English) for businesses of every size. Virtual receptionist available 24/7 — front-desk, appointment booking, lead qualification.",
         })}
       />
+      {/* FAQPage JSON-LD — wires the 3 pricing-FAQ Q&A pairs as
+          structured data so Google's FAQ rich result can expand them
+          directly under the /pricing SERP entry. The landing page has
+          a similar block for its own FAQ; this one is distinct because
+          the questions are pricing-specific (overage, plan switching,
+          billing) — exactly what high-intent searchers want answered
+          before they click "Start trial". */}
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          inLanguage: locale,
+          mainEntity: [1, 2, 3].map((i) => ({
+            "@type": "Question",
+            name: t(`faq.q${i}`),
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: t(`faq.a${i}`),
+            },
+          })),
+        }}
+      />
 
       {/* HERO */}
       <section className="relative overflow-hidden">
