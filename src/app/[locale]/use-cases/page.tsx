@@ -63,12 +63,55 @@ export default async function UseCasesPage({
   const tNav = await getTranslations("nav");
   const wa = `https://wa.me/33777345056?text=${encodeURIComponent(tc("whatsapp"))}`;
 
+  // Each use-case maps to its deepest blog post — same vertical, same
+  // narrative. The ItemList JSON-LD below links each card to its blog
+  // post so internal link equity flows from this enumeration page into
+  // the long-form vertical content.
   const cases = [
-    { key: "clinic", icon: <Stethoscope className="h-5 w-5" />, shape: "khatam" as const },
-    { key: "realty", icon: <Home className="h-5 w-5" />, shape: "arch" as const },
-    { key: "ecom", icon: <Truck className="h-5 w-5" />, shape: "quatrefoil" as const },
-    { key: "restau", icon: <Utensils className="h-5 w-5" />, shape: "khatam" as const },
+    { key: "clinic", icon: <Stethoscope className="h-5 w-5" />, shape: "khatam" as const,
+      slug: "agent-vocal-ia-cabinet-medical" },
+    { key: "realty", icon: <Home className="h-5 w-5" />, shape: "arch" as const,
+      slug: "agent-vocal-ia-agence-immobiliere" },
+    { key: "ecom", icon: <Truck className="h-5 w-5" />, shape: "quatrefoil" as const,
+      slug: "agent-vocal-ia-ecommerce-sav" },
+    { key: "restau", icon: <Utensils className="h-5 w-5" />, shape: "khatam" as const,
+      slug: "agent-vocal-ia-restaurant-reservations" },
   ];
+
+  // ItemList JSON-LD — declares the page as a structured enumeration of
+  // services VocazAI provides, each item nested as a schema.org Service
+  // that links to its deep-dive blog post. Three wins: (1) Google can
+  // surface the page as a sitelink/list rich-result, (2) each Service
+  // entity carries `inLanguage` so locale-specific cards stay coherent,
+  // (3) the `url` per item pushes internal link equity into the matching
+  // vertical blog post.
+  const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://vocazai.com";
+  const useCasesItemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": `${BASE_URL}/${locale}/use-cases`,
+    url: `${BASE_URL}/${locale}/use-cases`,
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    numberOfItems: cases.length,
+    inLanguage: locale,
+    itemListElement: cases.map((c, i) => {
+      const target = `${BASE_URL}/${locale}/blog/${c.slug}`;
+      return {
+        "@type": "ListItem",
+        position: i + 1,
+        url: target,
+        item: {
+          "@type": "Service",
+          name: t(`${c.key}.title`),
+          description: t(`${c.key}.lede`),
+          serviceType: "AI voice receptionist",
+          provider: { "@type": "Organization", name: "VocazAI", url: BASE_URL },
+          url: target,
+          inLanguage: locale,
+        },
+      };
+    }),
+  };
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -78,6 +121,7 @@ export default async function UseCasesPage({
           { name: tNav("useCases"), url: `/${locale}/use-cases` },
         ])}
       />
+      <JsonLd data={useCasesItemListJsonLd} />
       <Header locale={locale} />
 
       {/* HERO */}
