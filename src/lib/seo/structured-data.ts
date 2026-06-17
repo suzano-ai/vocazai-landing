@@ -48,6 +48,7 @@ export function blogPostingJsonLd(args: {
   keywords?: string[];
   slug?: string;
   readingMinutes?: number;
+  articleBody?: string;
 }): Record<string, unknown> {
   // Auto-derive keywords from the slug when none provided. Slugs are
   // hyphen-separated semantic tokens (e.g. "agent-vocal-ia-pharmacie"
@@ -77,6 +78,12 @@ export function blogPostingJsonLd(args: {
     mainEntityOfPage: abs(args.url),
     url: abs(args.url),
     wordCount: args.wordCount,
+    // Full plain-text body. AI Overviews / Gemini / Bing Copilot pick
+    // citations from `articleBody` directly when it's present; without
+    // it, they have to infer the body from HTML scraping (slower, less
+    // precise, sometimes wrong). The payload cost is small (~1-2KB
+    // per locale) for a meaningful share of voice in answer engines.
+    articleBody: args.articleBody,
     // ISO 8601 duration — Google reads `timeRequired` as a freshness +
     // depth signal and may use it for "X-min read" SERP annotations.
     timeRequired:

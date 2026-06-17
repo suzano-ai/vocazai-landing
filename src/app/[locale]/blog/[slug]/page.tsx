@@ -130,6 +130,21 @@ export default async function BlogPostPage({
     return n;
   }, 0);
 
+  // Flatten the typed body blocks into plain text for the BlogPosting
+  // `articleBody` field. AI answer engines (Google AI Overviews,
+  // Gemini, Bing Copilot) pick citations from articleBody directly
+  // when it's present — without it they have to scrape HTML which is
+  // slower and sometimes inaccurate. H2 → "## " prefix preserves
+  // section boundaries; ul → "- " bullet prefix preserves list
+  // structure. Newline-separated so the model can identify breaks.
+  const articleBody = post.body[l]
+    .map((block) => {
+      if (block.type === "h2") return `## ${block.text}`;
+      if (block.type === "ul") return block.items.map((it) => `- ${it}`).join("\n");
+      return block.text;
+    })
+    .join("\n\n");
+
   const articleJsonLd = blogPostingJsonLd({
     title: post.title[l],
     description: post.description[l],
@@ -139,6 +154,7 @@ export default async function BlogPostPage({
     wordCount,
     slug,
     readingMinutes: post.readingMinutes,
+    articleBody,
   });
 
   const breadcrumb = breadcrumbJsonLd([
