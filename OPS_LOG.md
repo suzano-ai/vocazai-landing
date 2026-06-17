@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-portage-numero-existant` (Tier-7 cross-cutting #26)
+- commit: `2e56180` · IndexNow: HTTP 200
+- Tier-7 #26. Number-portability playbook addressing the #2 buyer objection after price ("can I keep my number?"). Why porting matters (200 cards / 5 yr ads / WA Business memorized). 3 cases where porting is required (GMB-visible / >50 organic callbacks/day / license-bound) vs 3 cases where new number is enough (new business / parallel POC / spam-flagged number). Realistic timeline (marketing 24 h vs reality 5-15 business days), 2-4 h sensitive cutover window, 3 mitigation tactics (1-week customer notice / Sunday-night cut / 7-day forwarding). Unprepared-port trap with parallel-bridge solution. Cost rule of thumb: > 1 year of business history = always port. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (cold outbound, spam shield, dashboard KPIs) or remaining Tier-6.
+
 ## 2026-06-17 · Growth Engineer · CRO #40 — risk-reversal microcopy + setup-hook on blog post CTA
 - commit: `1be990c`
 - End-of-blog-post CTA card was a bare button; now mirrors the landing-hero pattern with two compact microcopy lines. Above (kicker): "Set up in 48h · no setup fees" — answers the first practical objection. Below (saffron uppercase chip): "First month free · no credit card · cancel anytime" — standard 3-axis risk-reversal that lifts trial conversion on B2B SaaS by 8-20 % over bare CTA. Visitor entering from a Google blog hit now sees the same trial terms as on home page → coherent funnel message. `data-vocazai-track="blog-post-cta"` for click attribution. New i18n keys `blog.ctaHook` + `blog.trialChip` (FR/EN/AR). Touched: `blog/[slug]/page.tsx`, `messages/{fr,en,ar}.json`.
