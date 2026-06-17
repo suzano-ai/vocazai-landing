@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-message-vocal-vs-sms` (Tier-7 cross-cutting #20)
+- commit: `06a1b38` · IndexNow: HTTP 200
+- Tier-7 #20. Channel-economics playbook killing the "why pay 6× more for voice when SMS works?" objection. Raw numbers (SMS 17 % final conversion vs voice 52 %), net-margin math worked example (voice nets $41.30 vs SMS $13.55 on $80 booking — 3.1× despite 6× higher unit cost), decision grid by flow (6 use-case pairings), the winning combo (SMS T-48h + voice T-24h = ~62 % conversion at $0.35 combined), 3 cases where SMS DOES win (margin < $5, trivial action, B2B SaaS tech audience). Cross-cuts every vertical that has outbound reminders. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (CLI strategy, barge-in, vendor selection) or another Tier-6.
+
 ## 2026-06-17 · Growth Engineer · CRO #37 — per-vertical WhatsApp CTA inside each /use-cases card
 - commit: `f335ca8`
 - Each of the 4 use-case rows on `/[locale]/use-cases` now ends with its own pre-filled WA link ("Try VocazAI for this business" → opens with "I'd like to try VocazAI for my [Clinic/Realty/Ecom/Restau] business"). Until now the page had only a single bottom CTA after all 4 verticals — readers who recognized themselves in the 1st or 2nd card had no immediate action. Founder skips "what's your business?" round; visitor feels the team is tracking their entry path. New i18n keys: `common.whatsappVertical` (`{vertical}` placeholder) + `common.tryVerticalCta` (FR/EN/AR). `UseCaseRow` extended with `ctaHref` + `ctaLabel` props. `data-vocazai-track="use-cases-vertical-cta"` flags the click event for analytics. Touched: `src/app/[locale]/use-cases/page.tsx`, `messages/{fr,en,ar}.json`.
