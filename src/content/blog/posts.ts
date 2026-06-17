@@ -5150,6 +5150,110 @@ export const POSTS: BlogPost[] = [
       ],
     },
   },
+  {
+    slug: "agent-vocal-ia-evaluation-fournisseur",
+    date: "2026-06-17",
+    readingMinutes: 7,
+    title: {
+      fr: "Comment choisir un fournisseur d'agent vocal IA : 12 questions à poser avant de signer",
+      en: "How to choose an AI voice agent vendor: 12 questions to ask before signing",
+      ar: "كيف تختار مزوّد وكيل صوتي ذكي: 12 سؤالًا قبل التوقيع",
+    },
+    description: {
+      fr: "Tous les fournisseurs d'agent vocal IA disent la même chose en démo. Voici les 12 questions qui font tomber les masques en 20 minutes, et celles que la concurrence évitera de répondre.",
+      en: "Every AI voice agent vendor says the same things in demos. Here are the 12 questions that unmask them in 20 minutes — and the ones competitors will dodge.",
+      ar: "كل مزوّدي الوكيل الصوتي الذكي يقولون الشيء نفسه في العرض التوضيحي. إليك الـ12 سؤالًا التي تكشف الأقنعة في 20 دقيقة، وتلك التي سيتفاداها المنافسون.",
+    },
+    body: {
+      fr: [
+        { type: "p", text: "Le marché de l'agent vocal IA déborde de vendeurs qui promettent tout, expliquent peu, et facturent par surprise. Voici les 12 questions à poser systématiquement avant de signer. Notez la qualité des réponses — c'est votre meilleur signal de différenciation." },
+        { type: "h2", text: "Bloc 1 — modèle économique" },
+        { type: "ul", items: [
+          "Quel est le coût par minute appelée, hors abonnement ? (Doit être < 0,50 $ pour être viable.)",
+          "Y a-t-il un coût caché sur les transferts humains, les SMS de relance, ou les enregistrements ? (« Non » est la seule bonne réponse.)",
+          "Que se passe-t-il si je dépasse le quota d'un mois ? (Surfacturation à l'unité acceptable ; coupure d'appels rédhibitoire.)",
+          "Puis-je annuler en 1 clic, à la fin du mois en cours ? (Engagement > 1 mois = drapeau rouge sur PME.)",
+        ] },
+        { type: "h2", text: "Bloc 2 — qualité technique" },
+        { type: "ul", items: [
+          "Quelle latence moyenne entre la fin de la phrase du client et le début de celle de l'agent ? (Doit être < 700 ms.)",
+          "Comment l'agent gère-t-il le barge-in (interruption du client) ? (Réponse vague = échec ; chiffres en ms = sérieux.)",
+          "Quel pourcentage d'appels gérés sans handoff humain en production chez vos clients existants ? (85-92 % est crédible ; > 95 % est suspect.)",
+        ] },
+        { type: "h2", text: "Bloc 3 — conformité et données" },
+        { type: "ul", items: [
+          "Où sont stockées les transcriptions (UE, US, autre) ? Sous quelle réglementation ?",
+          "Avez-vous signé un DPA (Data Processing Agreement) ? (Indispensable RGPD.)",
+          "Que se passe-t-il aux données client si je résilie ? (Suppression sous 30 jours est le standard.)",
+        ] },
+        { type: "h2", text: "Bloc 4 — opération réelle" },
+        { type: "ul", items: [
+          "Délai de mise en production sur un cas typique ? (24-72 h est crédible ; « ça dépend » est un drapeau rouge.)",
+          "Combien de temps en moyenne votre équipe support met-elle à répondre ? (Réponse précise en heures = sérieux ; « le plus vite possible » = échec.)",
+        ] },
+        { type: "h2", text: "La règle d'or" },
+        { type: "p", text: "Le vendeur qui hésite, contourne, ou répond « ça dépend » à plus de 3 de ces 12 questions n'a pas la maîtrise technique de son propre produit. Le vendeur qui répond avec chiffres + ordres de grandeur sur 10/12 est probablement opérationnel. Premier mois VocazAI gratuit pour tester nos réponses sur votre flux réel." },
+      ],
+      en: [
+        { type: "p", text: "The AI voice agent market is full of vendors who promise everything, explain little, and surprise-bill later. Here are the 12 questions to ask before signing. Track the response quality — that's your best differentiation signal." },
+        { type: "h2", text: "Block 1 — business model" },
+        { type: "ul", items: [
+          "What's the per-minute cost above the subscription? (Should be under $0.50 to be viable.)",
+          "Are there hidden costs on human transfers, follow-up SMS, or recordings? ('No' is the only good answer.)",
+          "What happens if I exceed monthly quota? (Per-unit overage acceptable; cutting off calls is a deal-breaker.)",
+          "Can I cancel in 1 click, end of current month? (Lock-in > 1 month = red flag for SMBs.)",
+        ] },
+        { type: "h2", text: "Block 2 — technical quality" },
+        { type: "ul", items: [
+          "What's the average latency between the customer's last word and the agent's first? (Under 700ms required.)",
+          "How does the agent handle barge-in (caller interruption)? (Vague answer = fail; numbers in ms = serious.)",
+          "What share of calls are handled without human handover at your existing customers? (85-92% is credible; >95% is suspicious.)",
+        ] },
+        { type: "h2", text: "Block 3 — compliance and data" },
+        { type: "ul", items: [
+          "Where are transcripts stored (EU, US, other)? Under which regulation?",
+          "Did you sign a DPA (Data Processing Agreement)? (Required under GDPR.)",
+          "What happens to customer data if I cancel? (Deletion within 30 days is standard.)",
+        ] },
+        { type: "h2", text: "Block 4 — actual operation" },
+        { type: "ul", items: [
+          "Time-to-production on a typical case? (24-72h is credible; 'it depends' is a red flag.)",
+          "Average support response time? (Specific in hours = serious; 'ASAP' = fail.)",
+        ] },
+        { type: "h2", text: "The golden rule" },
+        { type: "p", text: "A vendor who hesitates, dodges, or answers 'it depends' to more than 3 of these 12 questions doesn't have technical command of their own product. A vendor answering with numbers + magnitudes on 10/12 is probably operational. First month VocazAI free to test our answers against your real flow." },
+      ],
+      ar: [
+        { type: "p", text: "سوق الوكيل الصوتي الذكي مليء بالبائعين الذين يَعِدون بكل شيء، يشرحون قليلًا، ويُفاجئون بالفواتير لاحقًا. إليك الـ12 سؤالًا التي يجب طرحها قبل التوقيع. تابع جودة الإجابات — هذه أفضل إشارة للتمييز." },
+        { type: "h2", text: "الكتلة 1 — النموذج التجاري" },
+        { type: "ul", items: [
+          "ما هي كلفة الدقيقة فوق الاشتراك؟ (يجب أن تكون أقل من 0,50 دولار لتكون قابلة للحياة.)",
+          "هل توجد تكاليف خفيّة على التحويلات البشرية، رسائل المتابعة، أو التسجيلات؟ («لا» هي الجواب الجيّد الوحيد.)",
+          "ماذا يحدث إن تجاوزت الحصّة الشهرية؟ (فوترة بالوحدة مقبولة؛ قطع المكالمات مرفوض.)",
+          "هل يمكنني الإلغاء بنقرة واحدة في نهاية الشهر الجاري؟ (التزام > شهر = علم أحمر للشركات الصغيرة.)",
+        ] },
+        { type: "h2", text: "الكتلة 2 — الجودة التقنية" },
+        { type: "ul", items: [
+          "ما متوسّط الكمون بين آخر كلمة للزبون وبداية كلام الوكيل؟ (يجب أن يكون < 700 مللي ثانية.)",
+          "كيف يُدير الوكيل المقاطعة (barge-in)؟ (إجابة غامضة = فشل؛ أرقام بالمللي ثانية = جدّية.)",
+          "ما نسبة المكالمات المُعالجة دون تحويل بشري لدى زبائنك الحاليين؟ (85-92 % مصداقية؛ > 95 % مشبوه.)",
+        ] },
+        { type: "h2", text: "الكتلة 3 — الامتثال والبيانات" },
+        { type: "ul", items: [
+          "أين تُخزَّن التفريغات (الاتحاد الأوروبي، الولايات المتحدة، غيرهما)؟ تحت أيّ تنظيم؟",
+          "هل وقّعتم اتفاقية معالجة بيانات DPA؟ (إلزامي تحت RGPD.)",
+          "ماذا يحدث لبيانات الزبائن إن ألغيت؟ (الحذف خلال 30 يومًا هو المعيار.)",
+        ] },
+        { type: "h2", text: "الكتلة 4 — التشغيل الفعلي" },
+        { type: "ul", items: [
+          "زمن الوصول للإنتاج على حالة نموذجية؟ (24-72 ساعة مصداقية؛ «حسب الحالة» علم أحمر.)",
+          "متوسّط زمن استجابة الدعم؟ (محدّد بالساعات = جدّية؛ «بأسرع وقت» = فشل.)",
+        ] },
+        { type: "h2", text: "القاعدة الذهبية" },
+        { type: "p", text: "البائع الذي يتردّد، يُراوغ، أو يُجيب «حسب الحالة» على أكثر من 3 من هذه الـ12، لا يملك السيطرة التقنية على منتجه. البائع الذي يُجيب بأرقام + أحجام على 10/12 على الأرجح تشغيلي. الشهر الأوّل من VocazAI مجاني لاختبار إجاباتنا على تدفّقك الفعلي." },
+      ],
+    },
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
