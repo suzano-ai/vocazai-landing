@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · SEO #41 — `mentions` cross-link graph on every BlogPosting
+- commit: `3ebcb6a`
+- Every `BlogPosting` JSON-LD now emits a `mentions` array of 2 semantically-adjacent posts (CreativeWork refs with url + name). Adjacency = shared slug-token count between current and candidate post (e.g. `agent-vocal-ia-veterinaire` shares 3 tokens with `agent-vocal-ia-cabinet-medical`); ties broken by recency. Token overlap → semantic; no overlap → recency fallback emerges naturally from the sort. Google reads `mentions` as a topical-cluster signal: when one post in the cluster ranks well, the others inherit some of that authority instead of having to earn it from scratch. AI engines use it for "related" citation carousels. UI "Read next" stays recency-based; this JSON-LD signal is semantic-first. Touched: `src/lib/seo/structured-data.ts`, `src/app/[locale]/blog/[slug]/page.tsx`.
+- next: cron B picks next CRO or SEO #42.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-prospection-froide-quand-utiliser` (Tier-7 cross-cutting #30)
 - commit: `ae5003c` · IndexNow: HTTP 200
 - Tier-7 #30. Cold-outbound ethics + use-case playbook. Frames the 12 000 contacts/mo at $0.30 temptation against the 90 % deployments that end in regulator complaints + cascading Google reviews + carrier spam-flagging. 3 legitimate cases (lapsed-customer reactivation 8-15 % conv / unreturned inbound lead 25-40 % conv / CRM hygiene + opt-out capture) vs 3 forbidden (purchased/scraped numbers / B2C cold to never-contacted / robocalls disguised as humans). Double-opt-in rule (voluntary action in last 6 mo + no explicit opt-out since) blocks 99 % of risk. Mandatory AI-identification opening script. "Mom test" heuristic (would she hang up? don't send). Alternative SMS + email + WA combo for genuinely cold prospects. Position-defining post — establishes VocazAI's ethical stance. FR/EN/AR ~6 min.
