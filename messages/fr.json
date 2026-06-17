@@ -15,7 +15,9 @@
     "language": "Langue",
     "whatsapp": "Bonjour, je veux démarrer l'essai gratuit (1 mois) de VocazAI. Mon entreprise reçoit environ ___ appels/jour.",
     "whatsappFromBlog": "Bonjour, j'ai lu votre article « {title} » et je veux démarrer l'essai gratuit (1 mois) de VocazAI. Mon entreprise reçoit environ ___ appels/jour.",
-    "whatsappPlan": "Bonjour, je suis intéressé(e) par la formule {plan} de VocazAI. Mon entreprise reçoit environ ___ appels/jour."
+    "whatsappPlan": "Bonjour, je suis intéressé(e) par la formule {plan} de VocazAI. Mon entreprise reçoit environ ___ appels/jour.",
+    "whatsappVertical": "Bonjour, je voudrais essayer VocazAI pour mon activité « {vertical} ». Mon entreprise reçoit environ ___ appels/jour.",
+    "tryVerticalCta": "Essayer VocazAI pour ce métier"
   },
   "nav": {
     "how": "Comment ça marche",

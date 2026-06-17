@@ -153,23 +153,34 @@ export default async function UseCasesPage({
       {/* CASES — alternating layout */}
       <section className="border-t border-border py-24 sm:py-32">
         <div className="container space-y-32">
-          {cases.map((c, idx) => (
-            <Reveal key={c.key} delay={(idx % 2) * 80}>
-              <UseCaseRow
-                idx={idx}
-                title={t(`${c.key}.title`)}
-                lede={t(`${c.key}.lede`)}
-                body={t(`${c.key}.body`)}
-                bullets={[
-                  t(`${c.key}.b1`),
-                  t(`${c.key}.b2`),
-                  t(`${c.key}.b3`),
-                ]}
-                icon={c.icon}
-                shape={c.shape}
-              />
-            </Reveal>
-          ))}
+          {cases.map((c, idx) => {
+            // Per-vertical WhatsApp pre-fill — visitor lands in WhatsApp
+            // already tagged with their specific business type, so the
+            // founder skips the "what's your business?" qualifying round.
+            const verticalName = t(`${c.key}.title`);
+            const verticalWa = `https://wa.me/33777345056?text=${encodeURIComponent(
+              tc("whatsappVertical", { vertical: verticalName })
+            )}`;
+            return (
+              <Reveal key={c.key} delay={(idx % 2) * 80}>
+                <UseCaseRow
+                  idx={idx}
+                  title={verticalName}
+                  lede={t(`${c.key}.lede`)}
+                  body={t(`${c.key}.body`)}
+                  bullets={[
+                    t(`${c.key}.b1`),
+                    t(`${c.key}.b2`),
+                    t(`${c.key}.b3`),
+                  ]}
+                  icon={c.icon}
+                  shape={c.shape}
+                  ctaHref={verticalWa}
+                  ctaLabel={tc("tryVerticalCta")}
+                />
+              </Reveal>
+            );
+          })}
         </div>
       </section>
 
@@ -205,6 +216,8 @@ function UseCaseRow({
   bullets,
   icon,
   shape,
+  ctaHref,
+  ctaLabel,
 }: {
   idx: number;
   title: string;
@@ -213,6 +226,8 @@ function UseCaseRow({
   bullets: string[];
   icon: React.ReactNode;
   shape: "khatam" | "arch" | "quatrefoil";
+  ctaHref: string;
+  ctaLabel: string;
 }) {
   const reverse = idx % 2 === 1;
   const Shape = shape === "arch" ? Arch : shape === "quatrefoil" ? Quatrefoil : Khatam;
@@ -243,6 +258,19 @@ function UseCaseRow({
             </li>
           ))}
         </ul>
+        {/* Per-vertical CTA — visitor opens WhatsApp pre-tagged with this
+            specific business type. Cuts a qualifying round on first
+            reply vs the generic site-wide trial CTA. */}
+        <Link
+          href={ctaHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-vocazai-track="use-cases-vertical-cta"
+          className="group mt-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-saffron-600 transition-colors duration-180 hover:text-saffron-400"
+        >
+          {ctaLabel}
+          <ArrowUpRight className="h-3 w-3 transition-transform duration-220 group-hover:translate-x-0.5 rtl:scale-x-[-1]" />
+        </Link>
       </div>
       <div className="relative">
         <div className="relative overflow-hidden rounded-lg border border-border bg-elevated p-6 sm:p-12 lg:aspect-[5/4]">
