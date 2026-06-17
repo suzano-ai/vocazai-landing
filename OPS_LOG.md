@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · SEO #32 — complete per-blog-post Article metadata surface
+- commit: `28b91a9`
+- Two ships in one: (1) `BlogPosting` JSON-LD now declares an `image` ImageObject (per-locale `/opengraph-image`, 1200x630) — Google's Article rich-result hard-blocker resolved. (2) Per-blog-post `generateMetadata` now emits the full OG Article tag set: `modifiedTime`, `authors`, `section`, `tags` (derived from slug, max 5), `locale` (fr_FR/en_US/ar_001), `images[]` with per-locale OG route, plus an explicit `twitter` `summary_large_image` card. Social shares switch from generic website cards to richer Article cards on X/Slack/Mastodon. Touched: `src/lib/seo/structured-data.ts`, `src/app/[locale]/blog/[slug]/page.tsx`.
+- next: cron B picks next CRO or SEO #33.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-langue-decrochage-comment-choisir` (Tier-7 cross-cutting #15)
 - commit: `785a633` · IndexNow: HTTP 200
 - Tier-7 #15. Greeting-language decision tree for multilingual lines — the first technical decision on any trilingual deployment. 3 strategies (single-language greeting, compressed bilingual, IVR question), each with costs/benefits and recommended caller-base profile. 1-question selection rule based on language-mix percentages, 7-day A/B test protocol with 30 s config toggle. Bottom-line: 10-15 % conversion swing on the first 2 seconds. FR/EN/AR ~5 min.
