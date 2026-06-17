@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · SEO #35 — BlogPosting `isPartOf` chain + `timeRequired`
+- commit: `2aad61c`
+- Two wins on every blog post JSON-LD: (1) `isPartOf` references the Blog `@id` matching `/[locale]/blog` (reusing the exact same `@id` Google sees on `blogIndexJsonLd`) — chains every BlogPosting back to the collection, stitches everything into one entity graph, concentrates authority signals on the collection; (2) `timeRequired` (ISO 8601 `PT<readingMinutes>M`) — Google reads it as both freshness + depth signal, eligible for "X-min read" SERP annotations, and AI Overviews use it to pick quick-snippet vs full-article surfacing. Touched: `src/lib/seo/structured-data.ts` + `src/app/[locale]/blog/[slug]/page.tsx`.
+- next: cron B picks next CRO or SEO #36.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-piege-questions-ouvertes` (Tier-7 cross-cutting #18)
 - commit: `f97598e` · IndexNow: HTTP 200
 - Tier-7 #18. Counterintuitive script-design playbook: "How can I help you?" is the WORST opening for a voice agent (-35 % conversion vs closed-question version). Closed-question rule (2-4 named options inside the question), 10 paired before/after rewrites with concrete numerical anchors, 3 exceptions where open-ended STAYS useful (emergency, complaint emotional release, deep qualification after 3 filtering closeds), 1-morning A/B test (10 + 10 calls, before vs after). Cross-cuts every vertical and applies even to existing customers who think their script "works fine". FR/EN/AR ~6 min.
