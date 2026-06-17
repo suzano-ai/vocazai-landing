@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-weekends-jours-feries-strategie` (Tier-7 cross-cutting #27)
+- commit: `e5371de` · IndexNow: HTTP 200
+- Tier-7 #27. Off-hours competitive-edge playbook — frames the 31 % of the year (115 days = 104 weekend + 11 holiday) when competitors aren't picking up as a market window the agent monopolizes. 3 weekend modes: deferred-to-Monday booking (most common, fills 80 % of Monday before doors open) / emergency routed to on-call / B2B qualify + Monday-9am callback. Holiday config (calendar import, adapted greeting, post-holiday SMS reminder). Christmas + August double-check (strongest ROI window). Concrete economics: $33,120/yr captured at 8 calls × 40 % × $90 vs Growth $17,880/yr → ~$15k net year-one. Cross-cuts every vertical. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (cold outbound, spam shield) or remaining Tier-6.
+
 ## 2026-06-17 · Growth Engineer · SEO #39 — `articleBody` plain-text on every BlogPosting JSON-LD
 - commit: `716e9f3`
 - Every blog post's `BlogPosting` JSON-LD now emits the full body as a plain-text `articleBody` field (typed `Block[]` flattened with `## ` h2 prefix + `- ` ul bullet prefix + double newlines between blocks). Google AI Overviews / Gemini / Bing Copilot pick cited passages directly from `articleBody` when present — without it they fall back to HTML scraping, which is slower, less precise, and especially fragile on RTL Arabic. Having a structured-data fallback means we control exactly which text the answer engines quote. Cost ~1-2KB/locale × 29 posts × 3 locales ≈ 120KB peak — trivial vs share-of-voice gain in answer engines. Extended `blogPostingJsonLd()` helper with optional `articleBody` arg. Touched: `src/lib/seo/structured-data.ts`, `src/app/[locale]/blog/[slug]/page.tsx`.
