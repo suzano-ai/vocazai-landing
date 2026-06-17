@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · CRO #37 — per-vertical WhatsApp CTA inside each /use-cases card
+- commit: `f335ca8`
+- Each of the 4 use-case rows on `/[locale]/use-cases` now ends with its own pre-filled WA link ("Try VocazAI for this business" → opens with "I'd like to try VocazAI for my [Clinic/Realty/Ecom/Restau] business"). Until now the page had only a single bottom CTA after all 4 verticals — readers who recognized themselves in the 1st or 2nd card had no immediate action. Founder skips "what's your business?" round; visitor feels the team is tracking their entry path. New i18n keys: `common.whatsappVertical` (`{vertical}` placeholder) + `common.tryVerticalCta` (FR/EN/AR). `UseCaseRow` extended with `ctaHref` + `ctaLabel` props. `data-vocazai-track="use-cases-vertical-cta"` flags the click event for analytics. Touched: `src/app/[locale]/use-cases/page.tsx`, `messages/{fr,en,ar}.json`.
+- next: cron B picks next SEO or CRO #38.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-test-utilisateur-30-minutes` (Tier-7 cross-cutting #19)
 - commit: `0ff0023` · IndexNow: HTTP 200
 - Tier-7 #19. Pre-deploy validation playbook — answers "how do I know it'll work before I launch?" objection with a concrete 30-minute / 2-person protocol. Phase 1 (10 typical calls, 15 min: booking, pricing, hours, cancel, delivery-status, FAQ, address, transfer, hang-up, short message), Phase 2 (5 edge cases, 10 min: accent, digit-by-digit number, chained questions, out-of-scope, heavy background noise), Phase 3 (5 emotional, 5 min: anger, crying, vital emergency, lawsuit threat, jailbreak attempt — all must handoff in 3 s). 20-case scoring grid (≥18 production-ready, 15-17 one iteration, <15 architecture rework). Weekly 10-call drift audit. FR/EN/AR ~6 min.
