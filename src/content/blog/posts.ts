@@ -4288,6 +4288,73 @@ export const POSTS: BlogPost[] = [
       ],
     },
   },
+  {
+    slug: "agent-vocal-ia-langue-decrochage-comment-choisir",
+    date: "2026-06-17",
+    readingMinutes: 5,
+    title: {
+      fr: "Quelle langue pour le décrochage : la décision qui pèse 15 % de votre conversion",
+      en: "Which language to greet with: the decision that swings 15% of your conversion",
+      ar: "أيّ لغة لتحية بدء المكالمة: القرار الذي يُحرّك 15 % من تحويلك",
+    },
+    description: {
+      fr: "Sur une ligne trilingue, le premier mot de l'agent décide 15 % du taux de conversion. Voici les 3 stratégies, leur coût caché, et celle à choisir selon votre profil client.",
+      en: "On a trilingual line, the agent's first word decides 15% of your conversion rate. Here are the 3 strategies, their hidden cost, and which one fits your customer profile.",
+      ar: "على خطّ ثلاثي اللغة، أوّل كلمة من الوكيل تُقرّر 15 % من نسبة التحويل. إليك الاستراتيجيات الثلاث، وكلفتها الخفيّة، وأيّها يناسب ملفّ زبونك." },
+    body: {
+      fr: [
+        { type: "p", text: "« Quelle langue ouvre l'appel ? » — c'est la première vraie décision technique d'un déploiement multilingue. Le mauvais choix coûte 10 à 15 % de taux de conversion en silence : l'appelant ne raccroche pas, mais il devient méfiant en 2 secondes. Voici les 3 stratégies et la règle de sélection." },
+        { type: "h2", text: "Stratégie 1 — Greeting unique dans la langue dominante" },
+        { type: "p", text: "Exemple : « Bonjour, VocazAI à votre écoute. » L'agent ouvre en français quoi qu'il arrive, puis bascule sur détection. Avantage : naturel, court (1,2 s), zéro friction pour 70 % de la base. Inconvénient : les 30 % d'appelants non-francophones perdent confiance avant la 2e phrase." },
+        { type: "h2", text: "Stratégie 2 — Greeting bilingue compressé" },
+        { type: "p", text: "Exemple : « Bonjour / Hello / السلام عليكم, VocazAI. » Trois mots, trois langues, en 2,5 s. Avantage : tout le monde se sent attendu. Inconvénient : long pour l'appelant pressé, et perçu comme « robotique » si mal prononcé. Recommandé seulement si moins de 50 % des appelants partagent la même langue." },
+        { type: "h2", text: "Stratégie 3 — IVR question rapide" },
+        { type: "p", text: "Exemple : « Pour le français tapez 1, English press 2, للعربية اضغط 3. » Avantage : zéro ambiguïté, idéal pour les services à fort volume bilingue (cabinets médicaux, agences immobilières). Inconvénient : 8-12 % de l'appelants raccrochent à l'IVR — surtout les seniors et les appelants pressés." },
+        { type: "h2", text: "La règle de décision en 1 question" },
+        { type: "ul", items: [
+          "≥ 70 % de votre base partage la même langue → Stratégie 1 (greeting unique).",
+          "50-69 % langue dominante + 1 langue secondaire forte → Stratégie 2 (bilingue compressé).",
+          "Volume > 100 appels/jour ET split équilibré (3 langues à 30-40 % chacune) → Stratégie 3 (IVR).",
+        ] },
+        { type: "h2", text: "Le test A/B sur 7 jours" },
+        { type: "p", text: "Sur Starter, vous pouvez basculer la stratégie via la config en 30 secondes. Lancez A 7 jours, B 7 jours, mesurez le taux de raccroché avant 15 s. Le gagnant garde 1-3 % de conversion en plus. Premier mois VocazAI gratuit pour faire ce test sans tâtonner." },
+      ],
+      en: [
+        { type: "p", text: "'Which language opens the call?' — that's the first real technical decision on a multilingual deployment. The wrong choice quietly costs 10-15% of conversion: the caller doesn't hang up, but their trust drops within 2 seconds. Here are the 3 strategies and the selection rule." },
+        { type: "h2", text: "Strategy 1 — Single greeting in the dominant language" },
+        { type: "p", text: "Example: 'Hello, this is VocazAI.' The agent opens in English no matter what, then switches based on detection. Pro: natural, short (1.2s), zero friction for 70% of the base. Con: the 30% of non-English callers lose trust before sentence two." },
+        { type: "h2", text: "Strategy 2 — Compressed bilingual greeting" },
+        { type: "p", text: "Example: 'Hello / Bonjour / السلام عليكم, VocazAI.' Three words, three languages, in 2.5s. Pro: everyone feels expected. Con: long for an impatient caller, and perceived as 'robotic' if mispronounced. Recommended only when fewer than 50% of callers share the same language." },
+        { type: "h2", text: "Strategy 3 — Quick IVR question" },
+        { type: "p", text: "Example: 'For English press 1, pour le français tapez 2, للعربية اضغط 3.' Pro: zero ambiguity, ideal for high-volume bilingual services (medical practices, real estate agencies). Con: 8-12% of callers hang up at the IVR — especially seniors and impatient callers." },
+        { type: "h2", text: "The 1-question decision rule" },
+        { type: "ul", items: [
+          "≥ 70% of your base shares one language → Strategy 1 (single greeting).",
+          "50-69% dominant + 1 strong secondary → Strategy 2 (compressed bilingual).",
+          "Volume > 100 calls/day AND balanced split (3 languages at 30-40% each) → Strategy 3 (IVR).",
+        ] },
+        { type: "h2", text: "The 7-day A/B test" },
+        { type: "p", text: "On Starter, you can toggle strategy in config in 30 seconds. Run A for 7 days, B for 7 days, measure hang-up rate before 15s. The winner keeps an extra 1-3% conversion. First month VocazAI free to run this test without guesswork." },
+      ],
+      ar: [
+        { type: "p", text: "«أيّ لغة تفتح المكالمة؟» — هذا هو القرار التقني الحقيقي الأوّل في النشر متعدّد اللغات. الاختيار الخاطئ يُكلّف بصمت 10-15 % من التحويل: المتّصل لا يُغلق، لكن ثقته تنخفض في غضون ثانيتين. إليك الاستراتيجيات الثلاث وقاعدة الاختيار." },
+        { type: "h2", text: "الاستراتيجية 1 — تحية واحدة باللغة المهيمنة" },
+        { type: "p", text: "مثال: «السلام عليكم، VocazAI في خدمتكم». الوكيل يفتح بالعربية مهما كان، ثم يبدّل حسب الكشف. الميزة: طبيعي، قصير (1,2 ثانية)، صفر احتكاك لـ70 % من القاعدة. العيب: الـ30 % غير الناطقين بالعربية يفقدون الثقة قبل الجملة الثانية." },
+        { type: "h2", text: "الاستراتيجية 2 — تحية ثنائية مضغوطة" },
+        { type: "p", text: "مثال: «السلام عليكم / Bonjour / Hello, VocazAI». ثلاث كلمات، ثلاث لغات، في 2,5 ثانية. الميزة: الجميع يشعر بالترقّب. العيب: طويلة لمتّصل مستعجل، وتُدرك «روبوتية» إذا أُسيء النطق. مُوصى بها فقط إذا كان أقل من 50 % من المتّصلين يتشاركون لغة واحدة." },
+        { type: "h2", text: "الاستراتيجية 3 — سؤال IVR سريع" },
+        { type: "p", text: "مثال: «للعربية اضغط 1، pour le français tapez 2، for English press 3». الميزة: صفر غموض، مثالي للخدمات ذات الحجم الثنائي العالي (عيادات طبّية، وكالات عقارية). العيب: 8-12 % من المتّصلين يُغلقون عند IVR — خصوصًا المسنّون والمستعجلون." },
+        { type: "h2", text: "قاعدة القرار في سؤال واحد" },
+        { type: "ul", items: [
+          "≥ 70 % من قاعدتك يتشاركون لغة واحدة → الاستراتيجية 1 (تحية وحيدة).",
+          "50-69 % مهيمنة + لغة ثانوية قوية → الاستراتيجية 2 (ثنائية مضغوطة).",
+          "حجم > 100 مكالمة/يوم وتوزيع متوازن (3 لغات 30-40 % لكلٍّ) → الاستراتيجية 3 (IVR).",
+        ] },
+        { type: "h2", text: "اختبار A/B على 7 أيّام" },
+        { type: "p", text: "على Starter، يمكنك تبديل الاستراتيجية في الإعدادات في 30 ثانية. شغّل A لـ7 أيّام، B لـ7 أيّام، قِس نسبة الإغلاق قبل 15 ثانية. الفائز يحفظ 1-3 % تحويل إضافي. الشهر الأوّل من VocazAI مجاني لإجراء هذا الاختبار دون تخمين." },
+      ],
+    },
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
