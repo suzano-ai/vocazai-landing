@@ -88,3 +88,48 @@ export function blogPostingJsonLd(args: {
     },
   };
 }
+
+/**
+ * Blog (collection) — schema.org Blog with every published post nested as
+ * a BlogPosting reference. Tells Google the index page IS a structured
+ * list of articles (not just a generic page), accelerates discovery of
+ * newly-added slugs, and makes the blog index eligible for richer SERP
+ * presentation (multi-item list, sitelinks, "more from this blog").
+ */
+export function blogIndexJsonLd(args: {
+  locale: string;
+  name: string;
+  description: string;
+  posts: { slug: string; date: string; title: string; description: string }[];
+}): Record<string, unknown> {
+  const indexUrl = `${SITE}/${args.locale}/blog`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": indexUrl,
+    url: indexUrl,
+    name: args.name,
+    description: args.description,
+    inLanguage: args.locale,
+    publisher: {
+      "@type": "Organization",
+      name: "VocazAI",
+      url: SITE,
+      logo: { "@type": "ImageObject", url: `${SITE}/opengraph-image` },
+    },
+    blogPost: args.posts.map((p) => {
+      const url = `${SITE}/${args.locale}/blog/${p.slug}`;
+      return {
+        "@type": "BlogPosting",
+        "@id": url,
+        url,
+        mainEntityOfPage: url,
+        headline: p.title,
+        description: p.description,
+        datePublished: new Date(p.date).toISOString(),
+        inLanguage: args.locale,
+        author: { "@type": "Organization", name: "VocazAI", url: SITE },
+      };
+    }),
+  };
+}

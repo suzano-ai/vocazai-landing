@@ -7,7 +7,7 @@ import { Footer } from "@/components/landing/footer";
 import { Khatam, HexLattice } from "@/components/zellige";
 import { Reveal } from "@/components/reveal";
 import { JsonLd } from "@/components/json-ld";
-import { breadcrumbJsonLd } from "@/lib/seo/structured-data";
+import { breadcrumbJsonLd, blogIndexJsonLd } from "@/lib/seo/structured-data";
 import { POSTS_BY_DATE, type BlogLocale } from "@/content/blog/posts";
 
 const DATE_LOCALE: Record<string, string> = { fr: "fr-FR", en: "en-US", ar: "ar-MA" };
@@ -65,6 +65,24 @@ export default async function BlogIndexPage({
           { name: "VocazAI", url: `/${locale}` },
           { name: tNav("blog"), url: `/${locale}/blog` },
         ])}
+      />
+      {/* Blog collection JSON-LD — declares this index as a structured
+          schema.org Blog with every post as a nested BlogPosting reference.
+          Helps Google discover newly-added slugs without waiting for a
+          full sitemap re-crawl, and makes the index page itself eligible
+          for richer SERP presentation (multi-item list result). */}
+      <JsonLd
+        data={blogIndexJsonLd({
+          locale,
+          name: t("metaTitle"),
+          description: t("metaDescription"),
+          posts: POSTS_BY_DATE.map((p) => ({
+            slug: p.slug,
+            date: p.date,
+            title: p.title[l],
+            description: p.description[l],
+          })),
+        })}
       />
 
       {/* HERO */}
