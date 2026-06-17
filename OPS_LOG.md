@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-onboarding-equipe-humaine` (Tier-7 cross-cutting #23)
+- commit: `664b877` · IndexNow: HTTP 200
+- Tier-7 #23. People-side deployment playbook — 60 % of rollouts stall because of internal human resistance, not technical issues. The lie not to tell ("the agent will take the phone off your hands" = heard as "you're replaced"); right framing reverses it. Task-redistribution 5-line table (what the agent does / what YOU do instead / MORE / LESS / freed time). Written 3-point team contract (no layoffs / role expands / training planned). 30 min/week training ritual that lets the team train the agent, not the other way. 3 success signals + the hidden-rollout trap that turns silent boycott into a project-killer. Distinct from technical posts — addresses the buyer's deepest non-technical objection. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (CLI strategy, cold outbound, spam shield).
+
 ## 2026-06-17 · Growth Engineer · SEO #37 — AboutPage JSON-LD + stable `@id` chain on Organization + WebSite
 - commit: `fa3614f`
 - Three coordinated changes that turn separate page-local entities into one chained entity graph: (1) `/[locale]/about` now emits `schema.org/AboutPage` with `mainEntity` referencing `${BASE}/#organization` and `isPartOf` referencing `${BASE}/#website` (AboutPage is Google's specific E-E-A-T-relevant subtype for "about us" pages — concentrating authoritativeness on the brand entity); (2) root layout's `organizationJsonLd` now carries `@id: ${BASE_URL}/#organization` (Google folds matching @ids into one node so /about signals stack with root signals instead of fragmenting); (3) locale layout's `WEBSITE_JSONLD` now carries `@id: ${SITE}/#website` (every per-page reference now anchors to one node). Unlocks all future SEO ships to chain via @id without redeclaring. Touched: `about/page.tsx`, `src/app/layout.tsx`, `src/app/[locale]/layout.tsx`.
