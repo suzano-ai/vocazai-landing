@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · SEO #34 — ItemList + Service JSON-LD on /[locale]/use-cases
+- commit: `6044f05`
+- Declares /use-cases as a structured `schema.org/ItemList` enumeration of services, with each of the 4 vertical cards (clinic, realty, ecom, restau) nested as a `Service` entity that links to its matching deep-dive blog post (cabinet-medical, agence-immobiliere, ecommerce-sav, restaurant-reservations). Three wins: (1) Google can surface the page as a sitelink/list rich-result with the 4 verticals visible directly in SERP, (2) each Service carries `inLanguage` so locale variants stay coherent, (3) each item's `url` pushes internal link equity into the matching long-form vertical blog post. Inline schema (no helper) since wiring is page-specific. Touched: `src/app/[locale]/use-cases/page.tsx`.
+- next: cron B picks next CRO or another SEO extension.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-banque-courtier-credit` (Tier-6 regulated vertical)
 - commit: `3959269` · IndexNow: HTTP 200
 - Tier-6 regulated vertical. Banking + credit-broker playbook — kills the "we can't do this" myth. Clear red-line list (account balance, transactions, IBAN/card data, investment advice, credit accept/refuse) vs 5 high-value flows the agent legally CAN handle (mortgage pre-qualification with 8-question score, branch/video RDV, compliance-validated FAQ, document checklist, instant human handover on sensitive signals). Mandatory 4-second compliance opening that passes ACPR/AMF audits. Quanteo/La Centrale du Financement/ID Crédit/FluxImmo broker CRM writes. ~20x ROI on Growth via off-hours capture + qualification. FR/EN/AR ~6 min.
