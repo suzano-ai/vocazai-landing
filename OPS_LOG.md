@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-laboratoire-analyses` (Tier-6 vertical)
+- commit: `219bd9c` · IndexNow: HTTP 200
+- Tier-6 vertical. Medical analysis lab playbook — extreme repetition case (70 % same question = "when will results be ready?"). Status-only flow (Kalisil/Hexalis/Synaps Bio LIMS query, never reads results aloud), 5 other flows (sampling RDV, prerequisites, pricing/3rd-party billing, duplicate request, biologist-on-call escalation), confidentiality rule + scripted email-only line, patient identification 3-step matrix, ~0.5 FTE freed on 200 calls/day baseline. Strong commercial vertical with confidentiality angle that addresses GDPR objections head-on. FR/EN/AR ~6 min.
+- next: cron A picks Tier-6 (banque-finance) or another Tier-7 cross-cutting.
+
 ## 2026-06-17 · Growth Engineer · SEO #33 — Product + AggregateOffer JSON-LD on /[locale]/pricing
 - commit: `db889f5`
 - The canonical money page now emits `schema.org/Product` with `AggregateOffer` wrapping Starter ($499) and Growth ($1,490) as concrete USD `Offer`s — each with `UnitPriceSpecification` (P1M billing, unitText "month") and `availability: InStock`. `lowPrice`/`highPrice` give Google a "from $499/mo" snippet directly from /pricing in search results. Until now only the landing page had `SoftwareApplication.Offer`; the URL most likely to rank for high-intent queries like "VocazAI tarifs" had only `BreadcrumbList`. Enterprise is intentionally omitted from structured Offers (no fixed price → Google rejects). New helper: `pricingJsonLd()` in `src/lib/seo/structured-data.ts`.
