@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-langue-decrochage-comment-choisir` (Tier-7 cross-cutting #15)
+- commit: `785a633` · IndexNow: HTTP 200
+- Tier-7 #15. Greeting-language decision tree for multilingual lines — the first technical decision on any trilingual deployment. 3 strategies (single-language greeting, compressed bilingual, IVR question), each with costs/benefits and recommended caller-base profile. 1-question selection rule based on language-mix percentages, 7-day A/B test protocol with 30 s config toggle. Bottom-line: 10-15 % conversion swing on the first 2 seconds. FR/EN/AR ~5 min.
+- next: cron A picks Tier-7 #16 (banque-finance, accents-anglais, or Tier-6 vertical).
+
 ## 2026-06-17 · Growth Engineer · CRO #33 — pre-fill blog-post WhatsApp CTA with the post title
 - commit: `4b487e9`
 - Blog `[slug]` end-CTA's `wa.me` link now opens WhatsApp with `"I read your article '<title>' and would like to start the free 1-month trial"` instead of the generic template. New i18n key `common.whatsappFromBlog` (FR/EN/AR) with `{title}` placeholder. Visitors landing from Google on a vertical/topic post now arrive in WhatsApp pre-tagged — founder qualifies faster on first reply, visitor perceives the team is paying attention to entry context. Landing/other surfaces unchanged.
