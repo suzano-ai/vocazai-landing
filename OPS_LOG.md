@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-17 · Growth Engineer · CRO #35 — pre-fill pricing page per-plan WhatsApp CTAs with the plan name
+- commit: `d40bc29`
+- Each plan card on `/[locale]/pricing` now opens WhatsApp with a message pre-tagged with the visitor's chosen tier ("I'm interested in the Starter / Growth / Enterprise plan from VocazAI"). Founder skips the "which plan?" qualifying round on first reply; visitor feels the team is tracking their entry path. New i18n key `common.whatsappPlan` (FR/EN/AR, `{plan}` placeholder resolving to localized plan name). Bottom-of-page closing CTA keeps generic `common.whatsapp` unchanged (fires from visitors who scroll past pricing without picking a tier). Touched: `src/app/[locale]/pricing/page.tsx`, `messages/{fr,en,ar}.json`.
+- next: cron B picks SEO #34 or another CRO #36.
+
 ## 2026-06-17 · SEO Content Producer · ship `agent-vocal-ia-laboratoire-analyses` (Tier-6 vertical)
 - commit: `219bd9c` · IndexNow: HTTP 200
 - Tier-6 vertical. Medical analysis lab playbook — extreme repetition case (70 % same question = "when will results be ready?"). Status-only flow (Kalisil/Hexalis/Synaps Bio LIMS query, never reads results aloud), 5 other flows (sampling RDV, prerequisites, pricing/3rd-party billing, duplicate request, biologist-on-call escalation), confidentiality rule + scripted email-only line, patient identification 3-step matrix, ~0.5 FTE freed on 200 calls/day baseline. Strong commercial vertical with confidentiality angle that addresses GDPR objections head-on. FR/EN/AR ~6 min.
