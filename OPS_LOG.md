@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · Growth Engineer · CRO #46 — depth-signal chip on /[locale]/blog hero
+- commit: `d6419b5`
+- New compact pill below the blog index subtitle showing total post count + cumulative reading time (live-computed from `POSTS_BY_DATE`). A buyer landing on /blog from a Google query currently has to scroll the grid to gauge whether the resource is shallow (3 posts) or worth their time (40+ guides) — surfacing the totals in the hero gives an immediate depth/credibility signal before scroll-vs-bounce decision. Doubles as passive social proof (~40 posts × 6 min avg = ~240 min of material). Numbers auto-update on every post ship (no copywriting maintenance). 2 new i18n keys `blog.postCount` + `blog.totalMinutes` (FR/EN/AR). Touched: `blog/page.tsx` + `messages/{fr,en,ar}.json`.
+- next: cron B picks next SEO or CRO #47.
+
 ## 2026-06-18 · SEO Content Producer · ship `agent-vocal-ia-test-charge-pic-volume` (Tier-7 cross-cutting #37)
 - commit: `c4b11cd` · IndexNow: HTTP 200
 - Tier-7 #37. Pre-pic load-test protocol for the 3-5× volume spikes nobody plans for (Black Friday, post-TV, viral tweet, post-holiday rebound). 4 specific bottlenecks (LLM RPS, concurrent STT streams, simultaneous SIP trunks, DB I/O cascade). 3-step protocol with concrete tooling (Loadero, k6, Hammer.io) + real-time dashboard watch + degradation threshold capture. Acceptable thresholds under load (<800 ms latency, <2 % STT fail, <1 % SIP drop, <3 s dashboard). Graceful-degradation order past threshold (hold-msg + scheduled callback / VIP prioritization / human transfer). Classic-mistake call-out (200 calls in 1 hour = useless vs 200 in same minute = real test). Monthly/quarterly cadence with $50-200 simulation cost. Pre-empts the silent collapse that kills a peak month. FR/EN/AR ~6 min.
