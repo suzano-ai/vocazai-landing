@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · SEO Content Producer · ship `agent-vocal-ia-llm-modele-choisir` (Tier-7 cross-cutting #38)
+- commit: `fdfb757` · IndexNow: HTTP 200
+- Tier-7 #38. LLM-selection grid for the most expensive and least-discussed deployment decision. 4 model honest profiles with concrete numbers: GPT-4o-mini (default 70 % case, $0.01-0.03/conv, 200-400 ms, B2C generalist); Claude Haiku 3.5 (long-nuanced + emotional contexts, healthcare/vet/premium B2B, $0.02-0.05); Mistral Large 2 / Voxtral (trilingual native FR/AR/EN, $0.008-0.02, 150-350 ms, combined LLM+STT); Llama 3.3 70B self-hosted (HIPAA/sovereignty/banking, $0.005-0.015 after amortization, 300-700 ms, large account only). 3 costliest selection mistakes (paying for "best" not "fit", testing on 10 calls then generalizing, optimizing LLM before prompt). 30-day default-and-iterate rule. Position-defining (Mistral/Voxtral angle aligns with VocazAI's stack). FR/EN/AR ~7 min.
+- next: cron A picks Tier-7 (HIPAA, dead-air, voice-tone) or remaining Tier-6.
+
 ## 2026-06-18 · Growth Engineer · CRO #46 — depth-signal chip on /[locale]/blog hero
 - commit: `d6419b5`
 - New compact pill below the blog index subtitle showing total post count + cumulative reading time (live-computed from `POSTS_BY_DATE`). A buyer landing on /blog from a Google query currently has to scroll the grid to gauge whether the resource is shallow (3 posts) or worth their time (40+ guides) — surfacing the totals in the hero gives an immediate depth/credibility signal before scroll-vs-bounce decision. Doubles as passive social proof (~40 posts × 6 min avg = ~240 min of material). Numbers auto-update on every post ship (no copywriting maintenance). 2 new i18n keys `blog.postCount` + `blog.totalMinutes` (FR/EN/AR). Touched: `blog/page.tsx` + `messages/{fr,en,ar}.json`.
