@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · Growth Engineer · SEO #45 — slug-derived `articleSection` on BlogPosting
+- commit: `edc8bdc`
+- Replaces blanket `articleSection: "AI Voice Agent"` with token-driven classifier mapping each post to one of 4 distinct sections: "Industry Verticals" (cabinet-medical, veterinaire, agence-immobiliere, etc.), "Technical & Compliance" (rgpd, pci, hipaa, llm, voix-clonage, barge-in, etc.), "Implementation & Operations" (deployer, migrer, test, kpi, monitoring, charge-pic, handoff, evaluation-fournisseur, portage, etc.), and "Best Practices" (fallback). Google reads `articleSection` as a topical clustering signal — collapsing 41 posts into one bucket diluted authority across the whole pile; splitting into 4 sections concentrates authority per cluster so verticals' ranking lifts other verticals (not implementation posts) and vice versa. Token-driven so accuracy stays automatic as new posts ship — no per-post config ever. Touched: `src/lib/seo/structured-data.ts` only.
+- next: cron B picks next CRO or SEO #46.
+
 ## 2026-06-18 · SEO Content Producer · ship `agent-vocal-ia-llm-modele-choisir` (Tier-7 cross-cutting #38)
 - commit: `fdfb757` · IndexNow: HTTP 200
 - Tier-7 #38. LLM-selection grid for the most expensive and least-discussed deployment decision. 4 model honest profiles with concrete numbers: GPT-4o-mini (default 70 % case, $0.01-0.03/conv, 200-400 ms, B2C generalist); Claude Haiku 3.5 (long-nuanced + emotional contexts, healthcare/vet/premium B2B, $0.02-0.05); Mistral Large 2 / Voxtral (trilingual native FR/AR/EN, $0.008-0.02, 150-350 ms, combined LLM+STT); Llama 3.3 70B self-hosted (HIPAA/sovereignty/banking, $0.005-0.015 after amortization, 300-700 ms, large account only). 3 costliest selection mistakes (paying for "best" not "fit", testing on 10 calls then generalizing, optimizing LLM before prompt). 30-day default-and-iterate rule. Position-defining (Mistral/Voxtral angle aligns with VocazAI's stack). FR/EN/AR ~7 min.
