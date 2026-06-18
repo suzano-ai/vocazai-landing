@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · SEO Content Producer · ship `agent-vocal-ia-export-donnees-portabilite` (Tier-7 cross-cutting #35)
+- commit: `a2dd77d` · IndexNow: HTTP 200
+- Tier-7 #35. Vendor lock-in defense playbook — answers the rarely-asked "what if I want to leave?" question that determines partnership vs fatal dependency. Clear separation of what's YOURS (GDPR Art. 20: full transcripts + raw audio + CRM contacts + custom prompts/flows) vs what's NOT (TTS/STT/LLM algorithms, SIP infra, fine-tuned models, proprietary voices). Contract requirements (5-day max export, JSON/CSV + UTF-8, MP3/WAV 16-bit audio, 30-day post-termination deletion + destruction certificate, ZERO export fees). 3 lock-in red flags (>30-day monthly cancel notice, migration fees, closed proprietary transcript format). Month-1 export test as practical lock-in detector. Hidden benefit: regular export = operational resilience for analytics/reporting even if you stay. Pre-empts the trust objection that blocks contract signing. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (HIPAA, load testing, model selection) or remaining Tier-6.
+
 ## 2026-06-18 · Growth Engineer · SEO #43 — `CollectionPage` entity on /[locale]/blog closes the @id graph
 - commit: `f2bba9a`
 - Adds `schema.org/CollectionPage` on the blog index, completing the @id graph started in SEO #37 (#organization + #website) and extended in SEO #40 (/use-cases CollectionPage, /pricing WebPage). Until this ship, /blog had a `Blog` node from `blogIndexJsonLd` but no WebPage-level wrapper. Now: `isPartOf` → shared WebSite `@id`, `about` → shared Organization `@id`, `mainContentOfPage` → Blog `@id` above (the same one BlogPosting `isPartOf` references — chain is WebSite → CollectionPage → Blog → BlogPosting[]). `@id: ${url}#webpage` keeps it distinct from Blog `@id` (= url without fragment) so they can co-reference without collapsing. Every public surface now has a typed WebPage-family entity chained to one Organization + WebSite node — authority signals stack. Touched: `src/app/[locale]/blog/page.tsx` only.
