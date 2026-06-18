@@ -84,6 +84,32 @@ export default async function BlogIndexPage({
           })),
         })}
       />
+      {/* CollectionPage entity — wires /blog into the @id graph started
+          in SEO #37 (Organization #organization + WebSite #website) and
+          extended in SEO #40 (/use-cases CollectionPage, /pricing
+          WebPage). Without it, /blog had a Blog node but no WebPage
+          wrapper, leaving Google to guess at the page-level entity.
+          `mainContentOfPage` references the Blog @id above so the
+          hierarchy is unambiguous: WebSite → CollectionPage → Blog →
+          BlogPosting[]. Closes the chain across every public surface. */}
+      <JsonLd
+        data={(() => {
+          const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://vocazai.com";
+          const url = `${BASE}/${locale}/blog`;
+          return {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "@id": `${url}#webpage`,
+            url,
+            inLanguage: locale,
+            name: t("metaTitle"),
+            description: t("metaDescription"),
+            isPartOf: { "@type": "WebSite", "@id": `${BASE}/#website` },
+            mainContentOfPage: { "@id": url },
+            about: { "@type": "Organization", "@id": `${BASE}/#organization` },
+          };
+        })()}
+      />
 
       {/* HERO */}
       <section className="relative overflow-hidden">
