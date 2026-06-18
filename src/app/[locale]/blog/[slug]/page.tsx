@@ -256,6 +256,50 @@ export default async function BlogPostPage({
             })()}
           </Reveal>
 
+          {/* In-article table of contents — server-rendered jump-links to
+              every h2 in the post body, matching the slugified ids
+              BlockView already emits (see slugifyHeading + CRO #34).
+              Three wins: skim-readers jump straight to the section
+              they care about (scannability), TOC clicks count as
+              interactions that lift blog-dwell metrics, and Google's
+              "jump to section" SERP feature surfaces the headings
+              directly from the SERP entry. Hidden when the post has
+              fewer than 3 h2s — TOC for 1-2 sections is noise. */}
+          {(() => {
+            const headings = post.body[l]
+              .filter((b): b is { type: "h2"; text: string } => b.type === "h2")
+              .map((b) => ({ id: slugifyHeading(b.text), text: b.text }));
+            if (headings.length < 3) return null;
+            return (
+              <Reveal delay={70}>
+                <nav
+                  aria-label={t("toc")}
+                  className="mt-10 rounded-lg border border-border bg-elevated p-5"
+                >
+                  <div className="mb-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                    <span className="h-1 w-1 rounded-full bg-saffron-500" aria-hidden="true" />
+                    {t("toc")}
+                  </div>
+                  <ol className="space-y-2 text-sm">
+                    {headings.map((h, i) => (
+                      <li key={h.id} className="flex gap-2.5">
+                        <span className="shrink-0 font-mono text-[11px] text-saffron-500">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <a
+                          href={`#${h.id}`}
+                          className="text-muted-foreground transition-colors duration-180 hover:text-saffron-600"
+                        >
+                          {h.text}
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                </nav>
+              </Reveal>
+            );
+          })()}
+
           <Reveal delay={80}>
             <div className="mt-12 space-y-6">
               {post.body[l].map((block, i) => (
