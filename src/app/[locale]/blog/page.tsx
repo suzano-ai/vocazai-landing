@@ -61,10 +61,13 @@ export default async function BlogIndexPage({
     <main className="min-h-screen bg-background text-foreground">
       <Header locale={locale} />
       <JsonLd
-        data={breadcrumbJsonLd([
-          { name: "VocazAI", url: `/${locale}` },
-          { name: tNav("blog"), url: `/${locale}/blog` },
-        ])}
+        data={breadcrumbJsonLd(
+          [
+            { name: "VocazAI", url: `/${locale}` },
+            { name: tNav("blog"), url: `/${locale}/blog` },
+          ],
+          { url: `/${locale}/blog`, locale }
+        )}
       />
       {/* Blog collection JSON-LD — declares this index as a structured
           schema.org Blog with every post as a nested BlogPosting reference.
@@ -107,6 +110,7 @@ export default async function BlogIndexPage({
             isPartOf: { "@type": "WebSite", "@id": `${BASE}/#website` },
             mainContentOfPage: { "@id": url },
             about: { "@type": "Organization", "@id": `${BASE}/#organization` },
+            breadcrumb: { "@id": `${url}#breadcrumb` },
           };
         })()}
       />

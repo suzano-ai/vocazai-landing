@@ -61,10 +61,13 @@ export default async function AboutPage({
     <main className="min-h-screen bg-background text-foreground">
       <Header locale={locale} />
       <JsonLd
-        data={breadcrumbJsonLd([
-          { name: "VocazAI", url: `/${locale}` },
-          { name: tNav("about"), url: `/${locale}/about` },
-        ])}
+        data={breadcrumbJsonLd(
+          [
+            { name: "VocazAI", url: `/${locale}` },
+            { name: tNav("about"), url: `/${locale}/about` },
+          ],
+          { url: `/${locale}/about`, locale }
+        )}
       />
       {/* AboutPage JSON-LD — schema.org's specific subtype for "about
           us" pages. Tells Google this URL IS the canonical About surface
@@ -100,13 +103,11 @@ export default async function AboutPage({
               url: BASE,
               name: "VocazAI",
             },
-            breadcrumb: {
-              "@type": "BreadcrumbList",
-              itemListElement: [
-                { "@type": "ListItem", position: 1, name: "VocazAI", item: `${BASE}/${locale}` },
-                { "@type": "ListItem", position: 2, name: tNav("about"), item: url },
-              ],
-            },
+            // Reference the BreadcrumbList @id emitted above instead of
+            // redeclaring the list inline. Matching @ids let Google fold
+            // every reference into one node — entity-graph win at zero
+            // payload cost.
+            breadcrumb: { "@id": `${url}#breadcrumb` },
           };
         })()}
       />

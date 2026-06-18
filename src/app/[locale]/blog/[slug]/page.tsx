@@ -180,11 +180,14 @@ export default async function BlogPostPage({
     mentions: neighbors,
   });
 
-  const breadcrumb = breadcrumbJsonLd([
-    { name: "VocazAI", url: `/${locale}` },
-    { name: t("kicker"), url: `/${locale}/blog` },
-    { name: post.title[l], url: `/${locale}/blog/${slug}` },
-  ]);
+  const breadcrumb = breadcrumbJsonLd(
+    [
+      { name: "VocazAI", url: `/${locale}` },
+      { name: t("kicker"), url: `/${locale}/blog` },
+      { name: post.title[l], url: `/${locale}/blog/${slug}` },
+    ],
+    { url: `/${locale}/blog/${slug}`, locale }
+  );
 
   return (
     <main className="min-h-screen bg-background text-foreground">

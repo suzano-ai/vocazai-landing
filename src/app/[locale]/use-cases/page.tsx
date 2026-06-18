@@ -117,10 +117,13 @@ export default async function UseCasesPage({
   return (
     <main className="min-h-screen bg-background text-foreground">
       <JsonLd
-        data={breadcrumbJsonLd([
-          { name: "VocazAI", url: `/${locale}` },
-          { name: tNav("useCases"), url: `/${locale}/use-cases` },
-        ])}
+        data={breadcrumbJsonLd(
+          [
+            { name: "VocazAI", url: `/${locale}` },
+            { name: tNav("useCases"), url: `/${locale}/use-cases` },
+          ],
+          { url: `/${locale}/use-cases`, locale }
+        )}
       />
       <JsonLd data={useCasesItemListJsonLd} />
       {/* CollectionPage entity — schema.org's specific subtype for
@@ -141,6 +144,7 @@ export default async function UseCasesPage({
             isPartOf: { "@type": "WebSite", "@id": `${BASE_URL}/#website` },
             mainContentOfPage: { "@id": `${BASE_URL}/${locale}/use-cases` },
             about: { "@type": "Organization", "@id": `${BASE_URL}/#organization` },
+            breadcrumb: { "@id": `${BASE_URL}/${locale}/use-cases#breadcrumb` },
           };
         })()}
       />

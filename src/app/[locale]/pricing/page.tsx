@@ -95,10 +95,13 @@ export default async function PricingPage({
     <main className="min-h-screen bg-background text-foreground">
       <Header locale={locale} />
       <JsonLd
-        data={breadcrumbJsonLd([
-          { name: "VocazAI", url: `/${locale}` },
-          { name: tNav("pricing"), url: `/${locale}/pricing` },
-        ])}
+        data={breadcrumbJsonLd(
+          [
+            { name: "VocazAI", url: `/${locale}` },
+            { name: tNav("pricing"), url: `/${locale}/pricing` },
+          ],
+          { url: `/${locale}/pricing`, locale }
+        )}
       />
       {/* Product + AggregateOffer — declares the page as the canonical
           source of truth for VocazAI pricing. Without it, Google can't
@@ -153,6 +156,7 @@ export default async function PricingPage({
             isPartOf: { "@type": "WebSite", "@id": `${BASE}/#website` },
             mainEntity: { "@id": url },
             about: { "@type": "Organization", "@id": `${BASE}/#organization` },
+            breadcrumb: { "@id": `${url}#breadcrumb` },
             significantLink: wa,
           };
         })()}

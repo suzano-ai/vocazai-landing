@@ -17,11 +17,22 @@ function abs(url: string): string {
 /**
  * BreadcrumbList — tells search engines the page's place in the site
  * hierarchy. Emit on every non-home page.
+ *
+ * When `opts.url` is provided, the list is given a stable `@id`
+ * (`${abs(url)}#breadcrumb`) so per-page WebPage / CollectionPage /
+ * AboutPage entities can reference it via `breadcrumb: { @id: ... }`.
+ * Matching @ids let Google fold every reference into one node and
+ * concentrate authority signals on a single graph.
+ *
+ * When `opts.locale` is provided, `inLanguage` is emitted so the
+ * breadcrumb is correctly localized in the entity graph alongside
+ * the hreflang signals.
  */
 export function breadcrumbJsonLd(
-  items: { name: string; url: string }[]
+  items: { name: string; url: string }[],
+  opts?: { url?: string; locale?: string }
 ): Record<string, unknown> {
-  return {
+  const json: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: items.map((item, i) => ({
@@ -31,6 +42,9 @@ export function breadcrumbJsonLd(
       item: abs(item.url),
     })),
   };
+  if (opts?.url) json["@id"] = `${abs(opts.url)}#breadcrumb`;
+  if (opts?.locale) json.inLanguage = opts.locale;
+  return json;
 }
 
 /**
