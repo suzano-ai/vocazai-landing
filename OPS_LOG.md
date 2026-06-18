@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · Growth Engineer · SEO #44 — BreadcrumbList `@id` + `inLanguage` + WebPage cross-reference
+- commit: `464aca8`
+- Extended `breadcrumbJsonLd(items, opts?: { url?, locale? })` to emit stable `@id` (`${abs(url)}#breadcrumb`) and `inLanguage` when caller passes them. Every per-page `WebPage`/`CollectionPage`/`AboutPage` entity now references its BreadcrumbList by `@id` via `breadcrumb: { "@id": "${url}#breadcrumb" }` instead of either redeclaring inline (AboutPage was duplicating) or omitting (pricing, use-cases, blog index, every blog post — Google had to guess). Wired across 5 surfaces: /about, /pricing, /use-cases, /blog, /blog/[slug]. Google folds matching @ids into one entity, so authority signals from Product Offer on /pricing, ItemList of Services on /use-cases, Blog collection on /blog, BlogPosting on each post now consistently chain through one canonical BreadcrumbList. Touched: `src/lib/seo/structured-data.ts` + 5 page files.
+- next: cron B picks next CRO or SEO #45.
+
 ## 2026-06-18 · SEO Content Producer · ship `agent-vocal-ia-resilience-uptime-sla` (Tier-7 cross-cutting #36)
 - commit: `61b19f4` · IndexNow: HTTP 200
 - Tier-7 #36. Uptime/SLA decoder for the "99.9 %" everyone advertises. 5-level downtime ladder (99 % = 3.65 days/yr ... 99.99 % = 52 min/yr) makes the marketing claim quantifiable. 4 technical interrogation questions (multi-region count / split-vendor LLM-STT-TTS / SIP failover strategy / SIP REDIRECT under failure). Graceful-degradation playbook (good: human redirect + voicemail + back-online SMS / bad: silent ringing). Public-status-page verification rule (no public page = avoid). 4-tier contractual compensation grid (refunds + auto-termination at <95 %). 5-minute planned-incident test as the practical reveal. Pre-empts the "what if it goes down?" objection during contract signing. FR/EN/AR ~6 min.
