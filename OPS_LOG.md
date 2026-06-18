@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · SEO Content Producer · ship `agent-vocal-ia-silence-temps-mort-gestion` (Tier-7 cross-cutting #40)
+- commit: `d39643b` · IndexNow: HTTP 200
+- Tier-7 #40. Silence-handling playbook addressing the under-discussed killer of conversion: agent panicking at 2-second pauses. 4-silence taxonomy with concrete thresholds (thinking 1-3 s = no interrupt, action 3-8 s = wait, distraction 8-15 s = gentle re-engage, end-of-thought >15 s = targeted re-engage). The "let it breathe" rule (6 s threshold = +8-12 % conversion vs 2 s panic). 3 re-engagement scripts (neutral / specific recall / clean exit at >25 s). Filler trap ("um... so...") that breaks composure + triggers caller interruption of their own thinking. 4-second silence test as practical reveal. Counterintuitive — most operators set this too aggressive. FR/EN/AR ~5 min.
+- next: cron A picks Tier-7 (HIPAA, voice tone, persona script) or remaining Tier-6.
+
 ## 2026-06-18 · Growth Engineer · CRO #47 — in-article table of contents on blog posts
 - commit: `a25d76e`
 - Server-rendered jump-link TOC between blog-post header and body on every `/blog/[slug]` with ≥3 h2 sections. Each entry uses the same slugified id `BlockView` already emits (CRO #34 anchored h2s) — `#fragments` work with zero JS. Three wins: (1) scannability — a reader landing from a Google sub-topic query sees the matching section name and jumps straight there instead of scrolling 1500+ chars; (2) dwell-metric lift — TOC clicks count as interactions; (3) SERP "jump to section" feature eligibility — Google's TOC-extraction prefers explicit lists over inferred headings. Hidden on posts with <3 h2 blocks (noise). New i18n key `blog.toc` (FR/EN/AR). Touched: `blog/[slug]/page.tsx` + `messages/{fr,en,ar}.json`.
