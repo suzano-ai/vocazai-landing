@@ -140,6 +140,24 @@ export default async function BlogIndexPage({
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
               {t("subtitle")}
             </p>
+            {/* Depth signal — total post count + cumulative reading time.
+                Gives a buyer landing on /blog from search an immediate
+                sense of the resource's scale ("40 guides · 250 min of
+                reading") instead of having to scroll the grid to gauge
+                it. The numbers auto-update as new posts ship — no
+                copywriting maintenance required. */}
+            <div className="mt-10 inline-flex items-center gap-3 rounded-full border border-border bg-elevated px-4 py-1.5 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+              <span className="h-1 w-1 rounded-full bg-saffron-500" aria-hidden="true" />
+              <span className="text-foreground">
+                {POSTS_BY_DATE.length}{" "}
+                {t("postCount")}
+              </span>
+              <span aria-hidden="true" className="text-muted-foreground/50">·</span>
+              <span>
+                {POSTS_BY_DATE.reduce((n, p) => n + p.readingMinutes, 0)}{" "}
+                {t("totalMinutes")}
+              </span>
+            </div>
           </Reveal>
         </div>
       </section>
