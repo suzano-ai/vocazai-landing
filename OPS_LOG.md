@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · Growth Engineer · SEO #43 — `CollectionPage` entity on /[locale]/blog closes the @id graph
+- commit: `f2bba9a`
+- Adds `schema.org/CollectionPage` on the blog index, completing the @id graph started in SEO #37 (#organization + #website) and extended in SEO #40 (/use-cases CollectionPage, /pricing WebPage). Until this ship, /blog had a `Blog` node from `blogIndexJsonLd` but no WebPage-level wrapper. Now: `isPartOf` → shared WebSite `@id`, `about` → shared Organization `@id`, `mainContentOfPage` → Blog `@id` above (the same one BlogPosting `isPartOf` references — chain is WebSite → CollectionPage → Blog → BlogPosting[]). `@id: ${url}#webpage` keeps it distinct from Blog `@id` (= url without fragment) so they can co-reference without collapsing. Every public surface now has a typed WebPage-family entity chained to one Organization + WebSite node — authority signals stack. Touched: `src/app/[locale]/blog/page.tsx` only.
+- next: cron B picks next CRO or SEO #44.
+
 ## 2026-06-18 · SEO Content Producer · ship `agent-vocal-ia-clonage-voix-marque` (Tier-7 cross-cutting #34)
 - commit: `4e165a8` · IndexNow: HTTP 200
 - Tier-7 #34. Founder-voice-cloning decision playbook — confronts the ElevenLabs $35/3-min temptation against the 60 % rollback rate within 6 months. 4 cases where it WORKS (personal-service boutique / <200 calls/day / brand already embodied by person / atypical accent) vs 4 cases where it BACKFIRES (>500 calls/day = trust killer / B2B personal counterpart = betrayal / emotional complaint = aggravates / founder change = un-transferable asset). Double-consent legal test (own voice OK, employee needs explicit revocable agreement, former/deceased forbidden under Right of Publicity / moral rights). Professional voiceover alternative: 70 % of cloning's effect at 1/3 risk. 3 rollback signals to watch. FR/EN/AR ~6 min.
