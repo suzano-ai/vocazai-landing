@@ -186,6 +186,38 @@ export default async function LandingPage({
       <JsonLd data={faqJsonLd} />
       <JsonLd data={serviceJsonLd} />
       <JsonLd data={latestPostsJsonLd} />
+      {/* WebPage entity — closes the WebPage chain across the site. The
+          other public surfaces (/about, /pricing, /use-cases, /blog)
+          already declare their typed WebPage/CollectionPage/AboutPage
+          via SEO #37/#40/#43; only the landing was missing its own
+          entity. Wired into the same @id graph via `isPartOf` (the
+          shared WebSite) and `about` + `mainEntity` (the Organization),
+          with the per-locale OG image as `primaryImageOfPage` so
+          social/image-search referrers attribute the visual to the
+          right canonical URL. `significantLink` flags the WhatsApp
+          trial CTA as the page's primary action. */}
+      <JsonLd
+        data={(() => {
+          const landingUrl = `${BASE_URL}/${locale}`;
+          return {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "@id": `${landingUrl}#webpage`,
+            url: landingUrl,
+            inLanguage: locale,
+            isPartOf: { "@type": "WebSite", "@id": `${BASE_URL}/#website` },
+            about: { "@type": "Organization", "@id": `${BASE_URL}/#organization` },
+            mainEntity: { "@id": `${BASE_URL}/#organization` },
+            primaryImageOfPage: {
+              "@type": "ImageObject",
+              url: `${BASE_URL}/${locale}/opengraph-image`,
+              width: 1200,
+              height: 630,
+            },
+            significantLink: wa,
+          };
+        })()}
+      />
 
       {/* ════════════════════════════════════════════════════════════════
           BOOT SCREEN · the hero. CLI-style command + massive mono headline
