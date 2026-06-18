@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · SEO Content Producer · ship `agent-vocal-ia-resilience-uptime-sla` (Tier-7 cross-cutting #36)
+- commit: `61b19f4` · IndexNow: HTTP 200
+- Tier-7 #36. Uptime/SLA decoder for the "99.9 %" everyone advertises. 5-level downtime ladder (99 % = 3.65 days/yr ... 99.99 % = 52 min/yr) makes the marketing claim quantifiable. 4 technical interrogation questions (multi-region count / split-vendor LLM-STT-TTS / SIP failover strategy / SIP REDIRECT under failure). Graceful-degradation playbook (good: human redirect + voicemail + back-online SMS / bad: silent ringing). Public-status-page verification rule (no public page = avoid). 4-tier contractual compensation grid (refunds + auto-termination at <95 %). 5-minute planned-incident test as the practical reveal. Pre-empts the "what if it goes down?" objection during contract signing. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (HIPAA, load testing, model selection) or remaining Tier-6.
+
 ## 2026-06-18 · Growth Engineer · CRO #45 — "Most popular" badge on Growth + localize per-month suffix
 - commit: `52d7f3b`
 - Two related fixes on `PlanCard`, both stripping hardcoded French strings: (1) featured-plan badge "Recommandé" → localized `pricing.popularBadge` ("Most popular" / "Le plus populaire" / "الأكثر شيوعًا") — industry data shows the canonical "Most popular" phrasing lifts the targeted middle tier's pick rate 15-25 % over a bare card by anchoring attention on the recommended path. (2) Price suffix "/ mois" → localized `pricing.perMonth`, plus `ml-2` → `ms-2` so the margin flips correctly under RTL Arabic. Both passed as explicit props (`perMonth`, `badgeLabel`) so locale-aware strings flow from the page component. Touched: `pricing/page.tsx`, `messages/{fr,en,ar}.json`.
