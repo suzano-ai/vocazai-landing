@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · SEO Content Producer · ship `agent-vocal-ia-test-charge-pic-volume` (Tier-7 cross-cutting #37)
+- commit: `c4b11cd` · IndexNow: HTTP 200
+- Tier-7 #37. Pre-pic load-test protocol for the 3-5× volume spikes nobody plans for (Black Friday, post-TV, viral tweet, post-holiday rebound). 4 specific bottlenecks (LLM RPS, concurrent STT streams, simultaneous SIP trunks, DB I/O cascade). 3-step protocol with concrete tooling (Loadero, k6, Hammer.io) + real-time dashboard watch + degradation threshold capture. Acceptable thresholds under load (<800 ms latency, <2 % STT fail, <1 % SIP drop, <3 s dashboard). Graceful-degradation order past threshold (hold-msg + scheduled callback / VIP prioritization / human transfer). Classic-mistake call-out (200 calls in 1 hour = useless vs 200 in same minute = real test). Monthly/quarterly cadence with $50-200 simulation cost. Pre-empts the silent collapse that kills a peak month. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (HIPAA, model selection, dead air) or remaining Tier-6.
+
 ## 2026-06-18 · Growth Engineer · SEO #44 — BreadcrumbList `@id` + `inLanguage` + WebPage cross-reference
 - commit: `464aca8`
 - Extended `breadcrumbJsonLd(items, opts?: { url?, locale? })` to emit stable `@id` (`${abs(url)}#breadcrumb`) and `inLanguage` when caller passes them. Every per-page `WebPage`/`CollectionPage`/`AboutPage` entity now references its BreadcrumbList by `@id` via `breadcrumb: { "@id": "${url}#breadcrumb" }` instead of either redeclaring inline (AboutPage was duplicating) or omitting (pricing, use-cases, blog index, every blog post — Google had to guess). Wired across 5 surfaces: /about, /pricing, /use-cases, /blog, /blog/[slug]. Google folds matching @ids into one entity, so authority signals from Product Offer on /pricing, ItemList of Services on /use-cases, Blog collection on /blog, BlogPosting on each post now consistently chain through one canonical BreadcrumbList. Touched: `src/lib/seo/structured-data.ts` + 5 page files.
