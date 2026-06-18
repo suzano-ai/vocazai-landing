@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · SEO Content Producer · ship `agent-vocal-ia-coaching-equipe-transcripts` (Tier-7 cross-cutting #39)
+- commit: `4fb5c9e` · IndexNow: HTTP 200
+- Tier-7 #39. Hidden-benefit narrative — reframes AI voice agent transcripts as the best human-team coaching material money can't usually buy. 3 coaching patterns to mine (recurring objections verbatim, converting hooks, hang-up-triggering words). 3 transcript-derived KPIs (Time-to-Yes vs human benchmark, objection-surface rate >40 % = pitch unclear, friction-vocabulary frequency in non-converting calls). Friday-3pm 30-min weekly ritual (3 transcripts: success/fail/ambiguous → 3 micro-script changes → 15-25 % human-team lift in 8 weeks, no paid trainer). LLM-driven auto-classification at scale (~$5/wk in tokens for >500 transcripts/wk). GDPR pitfall checklist (announced recording / internal-only / anonymize when published). Closes with "tool that makes YOUR humans better instead of replacing them" — disarms the existential-fear objection in one phrase. FR/EN/AR ~6 min.
+- next: cron A picks Tier-7 (HIPAA, dead-air, voice-tone) or remaining Tier-6.
+
 ## 2026-06-18 · Growth Engineer · SEO #45 — slug-derived `articleSection` on BlogPosting
 - commit: `edc8bdc`
 - Replaces blanket `articleSection: "AI Voice Agent"` with token-driven classifier mapping each post to one of 4 distinct sections: "Industry Verticals" (cabinet-medical, veterinaire, agence-immobiliere, etc.), "Technical & Compliance" (rgpd, pci, hipaa, llm, voix-clonage, barge-in, etc.), "Implementation & Operations" (deployer, migrer, test, kpi, monitoring, charge-pic, handoff, evaluation-fournisseur, portage, etc.), and "Best Practices" (fallback). Google reads `articleSection` as a topical clustering signal — collapsing 41 posts into one bucket diluted authority across the whole pile; splitting into 4 sections concentrates authority per cluster so verticals' ranking lifts other verticals (not implementation posts) and vice versa. Token-driven so accuracy stays automatic as new posts ship — no per-post config ever. Touched: `src/lib/seo/structured-data.ts` only.
