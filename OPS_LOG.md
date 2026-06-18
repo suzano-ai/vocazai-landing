@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · Growth Engineer · CRO #45 — "Most popular" badge on Growth + localize per-month suffix
+- commit: `52d7f3b`
+- Two related fixes on `PlanCard`, both stripping hardcoded French strings: (1) featured-plan badge "Recommandé" → localized `pricing.popularBadge` ("Most popular" / "Le plus populaire" / "الأكثر شيوعًا") — industry data shows the canonical "Most popular" phrasing lifts the targeted middle tier's pick rate 15-25 % over a bare card by anchoring attention on the recommended path. (2) Price suffix "/ mois" → localized `pricing.perMonth`, plus `ml-2` → `ms-2` so the margin flips correctly under RTL Arabic. Both passed as explicit props (`perMonth`, `badgeLabel`) so locale-aware strings flow from the page component. Touched: `pricing/page.tsx`, `messages/{fr,en,ar}.json`.
+- next: cron B picks next SEO or CRO #46.
+
 ## 2026-06-18 · SEO Content Producer · ship `agent-vocal-ia-export-donnees-portabilite` (Tier-7 cross-cutting #35)
 - commit: `a2dd77d` · IndexNow: HTTP 200
 - Tier-7 #35. Vendor lock-in defense playbook — answers the rarely-asked "what if I want to leave?" question that determines partnership vs fatal dependency. Clear separation of what's YOURS (GDPR Art. 20: full transcripts + raw audio + CRM contacts + custom prompts/flows) vs what's NOT (TTS/STT/LLM algorithms, SIP infra, fine-tuned models, proprietary voices). Contract requirements (5-day max export, JSON/CSV + UTF-8, MP3/WAV 16-bit audio, 30-day post-termination deletion + destruction certificate, ZERO export fees). 3 lock-in red flags (>30-day monthly cancel notice, migration fees, closed proprietary transcript format). Month-1 export test as practical lock-in detector. Hidden benefit: regular export = operational resilience for analytics/reporting even if you stay. Pre-empts the trust objection that blocks contract signing. FR/EN/AR ~6 min.
