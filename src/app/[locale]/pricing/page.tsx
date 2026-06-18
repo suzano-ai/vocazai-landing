@@ -212,11 +212,13 @@ export default async function PricingPage({
                   <PlanCard
                     name={planName}
                     price={p.key === "enterprise" ? "—" : tCommon(`${p.key}Price`)}
+                    perMonth={t("perMonth")}
                     body={tCommon(`${p.key}Body`)}
                     cta={p.key === "enterprise" ? tCommon("ctaContact") : tCommon("cta")}
                     href={planWa}
                     features={p.features}
                     featured={p.featured}
+                    badgeLabel={t("popularBadge")}
                   />
                 </Reveal>
               );
@@ -416,19 +418,23 @@ export default async function PricingPage({
 function PlanCard({
   name,
   price,
+  perMonth,
   body,
   cta,
   href,
   features,
   featured,
+  badgeLabel,
 }: {
   name: string;
   price: string;
+  perMonth: string;
   body: string;
   cta: string;
   href: string;
   features: string[];
   featured: boolean;
+  badgeLabel: string;
 }) {
   return (
     <div
@@ -438,7 +444,7 @@ function PlanCard({
     >
       {featured && (
         <div className="absolute -top-3 left-8 inline-flex items-center gap-1 rounded-full bg-saffron-500 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-ink-900">
-          Recommandé
+          {badgeLabel}
         </div>
       )}
       <div className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
@@ -447,8 +453,8 @@ function PlanCard({
       <div className="mt-4 font-display text-4xl font-medium tabular-nums">
         {price}
         {price !== "—" && (
-          <span className="ml-2 font-sans text-sm font-normal text-muted-foreground">
-            / mois
+          <span className="ms-2 font-sans text-sm font-normal text-muted-foreground">
+            {perMonth}
           </span>
         )}
       </div>
