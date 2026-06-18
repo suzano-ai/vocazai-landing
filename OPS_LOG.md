@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · Growth Engineer · CRO #47 — in-article table of contents on blog posts
+- commit: `a25d76e`
+- Server-rendered jump-link TOC between blog-post header and body on every `/blog/[slug]` with ≥3 h2 sections. Each entry uses the same slugified id `BlockView` already emits (CRO #34 anchored h2s) — `#fragments` work with zero JS. Three wins: (1) scannability — a reader landing from a Google sub-topic query sees the matching section name and jumps straight there instead of scrolling 1500+ chars; (2) dwell-metric lift — TOC clicks count as interactions; (3) SERP "jump to section" feature eligibility — Google's TOC-extraction prefers explicit lists over inferred headings. Hidden on posts with <3 h2 blocks (noise). New i18n key `blog.toc` (FR/EN/AR). Touched: `blog/[slug]/page.tsx` + `messages/{fr,en,ar}.json`.
+- next: cron B picks next SEO or CRO #48.
+
 ## 2026-06-18 · SEO Content Producer · ship `agent-vocal-ia-coaching-equipe-transcripts` (Tier-7 cross-cutting #39)
 - commit: `4fb5c9e` · IndexNow: HTTP 200
 - Tier-7 #39. Hidden-benefit narrative — reframes AI voice agent transcripts as the best human-team coaching material money can't usually buy. 3 coaching patterns to mine (recurring objections verbatim, converting hooks, hang-up-triggering words). 3 transcript-derived KPIs (Time-to-Yes vs human benchmark, objection-surface rate >40 % = pitch unclear, friction-vocabulary frequency in non-converting calls). Friday-3pm 30-min weekly ritual (3 transcripts: success/fail/ambiguous → 3 micro-script changes → 15-25 % human-team lift in 8 weeks, no paid trainer). LLM-driven auto-classification at scale (~$5/wk in tokens for >500 transcripts/wk). GDPR pitfall checklist (announced recording / internal-only / anonymize when published). Closes with "tool that makes YOUR humans better instead of replacing them" — disarms the existential-fear objection in one phrase. FR/EN/AR ~6 min.
