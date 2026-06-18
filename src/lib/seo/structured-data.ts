@@ -82,6 +82,52 @@ export function blogPostingJsonLd(args: {
   // Google the post is a child of the blog entity, not a standalone page.
   const blogIndexId = `${SITE}/${args.inLanguage}/blog`;
 
+  // Topic-family classification — gives Google a finer-grained section
+  // signal than the blanket "AI Voice Agent". Token-driven so it stays
+  // accurate as new posts ship without per-post config: known vertical
+  // tail tokens fall in "Industry Verticals", operations/playbook tokens
+  // in "Implementation & Operations", regulatory/technical tokens in
+  // "Technical & Compliance"; everything else stays "Best Practices".
+  const articleSection = (() => {
+    if (!args.slug) return "AI Voice Agent";
+    const tokens = new Set(args.slug.split("-"));
+    const VERTICAL = [
+      "medical", "cabinet", "dentaire", "veterinaire", "clinique",
+      "laboratoire", "pharmacie", "agence", "immobiliere",
+      "restaurant", "coiffeur", "salon", "garage", "atelier",
+      "ecommerce", "sav", "salle", "sport", "taxi", "vtc",
+      "pressing", "comptable", "courtier", "assurance",
+      "formation", "syndic", "copropriete", "artisan", "plombier",
+      "agence", "com", "banque", "credit",
+    ];
+    const TECHNICAL = [
+      "rgpd", "pci", "hipaa", "spam", "reputation", "spoofing",
+      "securite", "conformite", "llm", "modele", "voix", "clonage",
+      "marque", "barge", "interrompue", "multilingue", "langue",
+      "trilingue", "stir", "shaken", "sip", "dtmf",
+      "paiement", "carte", "dss",
+    ];
+    const OPERATIONS = [
+      "deployer", "migrer", "vapi", "retell", "test", "tests",
+      "utilisateur", "charge", "pic", "volume", "kpi", "monitoring",
+      "quotidien", "couts", "caches", "pic-saisonnier", "saisonnier",
+      "debordement", "equipe", "humaine", "onboarding", "handoff",
+      "humain", "evaluation", "fournisseur", "portage", "numero",
+      "affichage", "sortant", "export", "donnees", "portabilite",
+      "weekends", "feries", "jours", "bruit", "environnement",
+      "noisy", "uptime", "sla", "resilience", "questions", "ouvertes",
+      "piege", "prompt", "template", "script", "multi", "tour",
+      "conversations", "prospection", "froide", "roi", "prouver",
+      "tres", "petite", "entreprise", "vs", "callbot", "erreurs",
+      "fatales", "enregistrer", "decrochage", "choisir",
+      "whatsapp", "meme", "agent",
+    ];
+    if (VERTICAL.some((t) => tokens.has(t))) return "AI Voice Agent — Industry Verticals";
+    if (TECHNICAL.some((t) => tokens.has(t))) return "AI Voice Agent — Technical & Compliance";
+    if (OPERATIONS.some((t) => tokens.has(t))) return "AI Voice Agent — Implementation & Operations";
+    return "AI Voice Agent — Best Practices";
+  })();
+
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -126,7 +172,7 @@ export function blogPostingJsonLd(args: {
       url: blogIndexId,
     },
     keywords: derivedKeywords,
-    articleSection: "AI Voice Agent",
+    articleSection,
     // Article rich-result eligibility on Google requires a non-empty
     // `image` field. We point at the per-locale OG route so the chosen
     // image matches the reading language; 1200x630 is Google's preferred
