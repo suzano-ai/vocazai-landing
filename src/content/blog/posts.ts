@@ -6796,6 +6796,88 @@ export const POSTS: BlogPost[] = [
       ],
     },
   },
+  {
+    slug: "agent-vocal-ia-silence-temps-mort-gestion",
+    date: "2026-06-18",
+    readingMinutes: 5,
+    title: {
+      fr: "Le silence du client : la compétence cachée qui fait la différence sur votre agent vocal IA",
+      en: "The customer's silence: the hidden skill that makes the difference on your AI voice agent",
+      ar: "صمت الزبون: المهارة الخفيّة التي تصنع الفرق على وكيلك الصوتي الذكي",
+    },
+    description: {
+      fr: "Un agent vocal IA mal configuré panique à 2 secondes de silence. Le bon agent attend, écoute, et relance au bon moment. Voici la grille des 4 silences et la règle « let it breathe ».",
+      en: "A poorly configured AI voice agent panics at 2 seconds of silence. The good one waits, listens, and re-engages at the right moment. Here's the 4-silence grid and the 'let it breathe' rule.",
+      ar: "وكيل صوتي ذكي سيّئ التهيئة يذعر عند ثانيتين من الصمت. الجيّد ينتظر، يستمع، ويُعيد التفاعل في الوقت المناسب. إليك شبكة الأربعة الصموت وقاعدة «اتركه يتنفّس»." },
+    body: {
+      fr: [
+        { type: "p", text: "Une conversation humaine n'est pas continue. Elle a des pauses : pour penser, vérifier l'agenda, refermer une porte, calmer un enfant. Un agent vocal IA mal réglé panique à 2 secondes de silence et relance maladroitement — ce qui casse la confiance. Voici la grille des 4 silences et la règle qui sépare un agent senior d'un débutant." },
+        { type: "h2", text: "Les 4 types de silence à reconnaître" },
+        { type: "ul", items: [
+          "Silence de réflexion (1-3 s) — le client cherche une info dans sa tête. Ne PAS interrompre.",
+          "Silence d'action (3-8 s) — il vérifie son calendrier, fouille un dossier. Attendre sans paniquer.",
+          "Silence de distraction (8-15 s) — quelqu'un lui parle dans la pièce, un autre appel arrive. Relance douce.",
+          "Silence de fin de pensée (> 15 s sans signal de fin) — il a oublié, ou le silence est anormal. Relance ciblée.",
+        ] },
+        { type: "h2", text: "La règle « let it breathe »" },
+        { type: "p", text: "Le seuil de relance optimal est 6 secondes, pas 2. Six secondes c'est très court à l'oreille humaine, mais ça donne au client le temps de finir sa pensée 80 % des cas. Un agent qui parle à 2 secondes est perçu comme pressé. Un agent qui attend 6 secondes paraît humain et attentif. La différence : 8-12 % de conversion en plus." },
+        { type: "h2", text: "Les 3 phrases de relance utiles" },
+        { type: "ul", items: [
+          "Neutre : « Je suis toujours là, prenez votre temps. » — préserve le tempo, ne brusque pas.",
+          "Spécifique : « Vous me regardiez votre agenda — voulez-vous que je relise les créneaux ? » — utile à la 2e relance.",
+          "Sortie propre : « Je vais raccrocher pour ne pas vous déranger plus longtemps, voulez-vous que je vous rappelle ? » — à utiliser à > 25 secondes de silence total.",
+        ] },
+        { type: "h2", text: "Le piège du remplissage" },
+        { type: "p", text: "Erreur fréquente : remplir le silence avec « euh… alors… donc… ». Ces tics donnent à l'agent l'air pâteux et perdu. Pire : ils déclenchent souvent une réponse du client (« vous êtes là ? ») qui interrompt sa propre réflexion. Mieux : silence pur, puis relance courte 6 secondes plus tard." },
+        { type: "h2", text: "Le test rapide" },
+        { type: "p", text: "Appelez votre agent et restez silencieux 4 secondes après sa question. S'il relance immédiatement (« vous m'entendez ? »), il est mal réglé. S'il attend, dit calmement « je suis toujours là, prenez votre temps » à 6 s, et reste patient, il est bien réglé. Premier mois VocazAI gratuit pour calibrer ce silence." },
+      ],
+      en: [
+        { type: "p", text: "A human conversation isn't continuous. It has pauses: to think, check a calendar, close a door, soothe a child. An ill-tuned AI voice agent panics at 2 seconds of silence and clumsily re-engages — which breaks trust. Here's the 4-silence grid and the rule that separates a senior agent from a rookie." },
+        { type: "h2", text: "The 4 types of silence to recognize" },
+        { type: "ul", items: [
+          "Thinking silence (1-3s) — caller searches for info in their head. Do NOT interrupt.",
+          "Action silence (3-8s) — checking calendar, digging through a file. Wait without panicking.",
+          "Distraction silence (8-15s) — someone talking in the room, another call coming in. Gentle re-engage.",
+          "End-of-thought silence (> 15s with no end signal) — they forgot or the silence is abnormal. Targeted re-engage.",
+        ] },
+        { type: "h2", text: "The 'let it breathe' rule" },
+        { type: "p", text: "Optimal re-engagement threshold is 6 seconds, not 2. Six seconds feels very short to a human ear, but it gives the caller time to finish their thought in 80% of cases. An agent that talks at 2s feels rushed. An agent that waits 6s feels human and attentive. Difference: 8-12% extra conversion." },
+        { type: "h2", text: "3 useful re-engagement lines" },
+        { type: "ul", items: [
+          "Neutral: 'I'm still here, take your time.' — preserves tempo, doesn't rush.",
+          "Specific: 'You were checking your calendar — want me to re-read the slots?' — useful at the 2nd re-engage.",
+          "Clean exit: 'I'll hang up to not keep you any longer — want me to call you back?' — to use at > 25 seconds of total silence.",
+        ] },
+        { type: "h2", text: "The filler trap" },
+        { type: "p", text: "Common mistake: filling silence with 'um... so... well...'. These tics make the agent sound foggy and lost. Worse: they often trigger the customer ('are you there?') which interrupts their own thinking. Better: pure silence, then short 6-second-later re-engage." },
+        { type: "h2", text: "Quick test" },
+        { type: "p", text: "Call your agent and stay silent 4 seconds after its question. If it re-engages immediately ('can you hear me?'), it's ill-tuned. If it waits, calmly says 'I'm still here, take your time' at 6s, and stays patient, it's well-tuned. First month VocazAI free to calibrate this silence." },
+      ],
+      ar: [
+        { type: "p", text: "محادثة بشرية ليست متواصلة. لها فترات صمت: للتفكير، فحص الأجندة، إغلاق باب، تهدئة طفل. وكيل صوتي ذكي سيّئ التهيئة يذعر عند ثانيتين من الصمت ويعيد التفاعل بشكل أخرق — ما يكسر الثقة. إليك شبكة الصموت الأربعة والقاعدة التي تفصل وكيلًا متمرّسًا من مبتدئ." },
+        { type: "h2", text: "أنواع الصمت الأربعة التي يجب التعرّف عليها" },
+        { type: "ul", items: [
+          "صمت تفكير (1-3 ثوانٍ) — المتّصل يبحث في رأسه عن معلومة. لا تقاطعه.",
+          "صمت فعل (3-8 ثوانٍ) — يفحص الأجندة، يبحث في ملف. انتظر دون ذعر.",
+          "صمت تشتيت (8-15 ثوانٍ) — أحد يتحدّث في الغرفة، مكالمة أخرى تأتي. إعادة تفاعل لطيفة.",
+          "صمت نهاية الفكرة (> 15 ثانية دون إشارة نهاية) — نسي أو الصمت غير طبيعي. إعادة تفاعل مستهدفة.",
+        ] },
+        { type: "h2", text: "قاعدة «اتركه يتنفّس»" },
+        { type: "p", text: "العتبة المثلى لإعادة التفاعل 6 ثوانٍ، لا 2. ستّ ثوانٍ تبدو قصيرة جدًّا للأذن البشرية، لكنّها تعطي المتّصل وقتًا لإنهاء فكرته في 80 % من الحالات. وكيل يتحدّث عند ثانيتين يُحَسّ مستعجلًا. وكيل ينتظر 6 ثوانٍ يبدو بشريًّا ومنتبهًا. الفرق: 8-12 % تحويل إضافي." },
+        { type: "h2", text: "3 جُمل مفيدة لإعادة التفاعل" },
+        { type: "ul", items: [
+          "محايد: «ما زلت هنا، خذ وقتك.» — يحفظ الإيقاع، لا يستعجل.",
+          "محدّد: «كنت تنظر في أجندتك — تريد أن أعيد قراءة المواعيد؟» — مفيد عند إعادة التفاعل الثانية.",
+          "خروج نظيف: «سأُغلق كي لا أُزعجك أكثر — تريد أن أُعاود الاتّصال؟» — تُستخدم بعد > 25 ثانية صمت إجمالي.",
+        ] },
+        { type: "h2", text: "فخّ الحشو" },
+        { type: "p", text: "خطأ شائع: ملء الصمت بـ«آه… إذًا… حسنًا…». هذه التشنّجات تجعل الوكيل يبدو غائمًا وضائعًا. الأسوأ: غالبًا تُثير ردّ المتّصل («أنت هنا؟»)، ما يقاطع تفكيره. الأفضل: صمت نقيّ، ثم إعادة تفاعل قصيرة بعد 6 ثوانٍ." },
+        { type: "h2", text: "اختبار سريع" },
+        { type: "p", text: "اتّصل بوكيلك وابقَ صامتًا 4 ثوانٍ بعد سؤاله. إن أعاد التفاعل فورًا («هل تسمعني؟»)، فهو سيّئ التهيئة. إن انتظر، قال بهدوء «ما زلت هنا، خذ وقتك» عند 6 ثوانٍ، وبقي صبورًا، فهو جيّد التهيئة. الشهر الأوّل من VocazAI مجاني لمعايرة هذا الصمت." },
+      ],
+    },
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
