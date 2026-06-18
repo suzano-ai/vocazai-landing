@@ -12,6 +12,11 @@
 
 ---
 
+## 2026-06-18 · Growth Engineer · SEO #46 — `WebPage` entity on /[locale] landing closes the WebPage chain
+- commit: `cb10a57`
+- Last missing WebPage-family entity wired. Now /about (AboutPage SEO #37), /pricing (WebPage SEO #40), /use-cases (CollectionPage SEO #40), /blog (CollectionPage SEO #43), and /[locale] (this ship) ALL declare typed entities chained to one Organization + WebSite. Landing's block: `@id: ${url}#webpage`, `isPartOf` → shared `#website`, `about` + `mainEntity` → `#organization`, `primaryImageOfPage` → per-locale /opengraph-image (social + image search attribution), `significantLink: wa` flags WhatsApp trial as primary action for click-flow signals. Every URL a crawler lands on now has consistent entity-graph membership. Touched: `src/app/[locale]/page.tsx` only.
+- next: cron B picks CRO #48 or SEO #47.
+
 ## 2026-06-18 · SEO Content Producer · ship `agent-vocal-ia-silence-temps-mort-gestion` (Tier-7 cross-cutting #40)
 - commit: `d39643b` · IndexNow: HTTP 200
 - Tier-7 #40. Silence-handling playbook addressing the under-discussed killer of conversion: agent panicking at 2-second pauses. 4-silence taxonomy with concrete thresholds (thinking 1-3 s = no interrupt, action 3-8 s = wait, distraction 8-15 s = gentle re-engage, end-of-thought >15 s = targeted re-engage). The "let it breathe" rule (6 s threshold = +8-12 % conversion vs 2 s panic). 3 re-engagement scripts (neutral / specific recall / clean exit at >25 s). Filler trap ("um... so...") that breaks composure + triggers caller interruption of their own thinking. 4-second silence test as practical reveal. Counterintuitive — most operators set this too aggressive. FR/EN/AR ~5 min.
